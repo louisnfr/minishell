@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/25 13:50:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/25 14:23:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <curses.h>
 # include <term.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
