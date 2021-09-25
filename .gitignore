@@ -38,6 +38,7 @@ minishell
 *.hex
 
 # Debug files
+.vscode
 *.dSYM/
 *.su
 *.idb
