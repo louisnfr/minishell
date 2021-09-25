@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/21 17:41:19 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/25 13:50:28 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAGS	= -Wall -Wextra -Werror
 ### EXECUTABLE ###
 NAME	= minishell
 ### INCLUDES ###
-INCLUDE	= inc
+INCLUDE		= inc
 LIBFT_PATH	= libft
 SRC_PATH	= src
 OBJ_PATH	= obj
