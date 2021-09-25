@@ -29,6 +29,7 @@
 *.dylib
 
 # Executables
+minishell
 *.exe
 *.out
 *.app
