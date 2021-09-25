@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/25 14:25:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/25 18:11:29 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int ac, char **av, char **envp)
 		prompt();
 		// truc pour attendre
 		// pourquoi gnl avant prompt
+		
 		get_next_line(0, &line);
 		printf("%s\n", line);
 	}
