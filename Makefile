@@ -6,25 +6,27 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/27 01:11:48 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/27 01:15:23 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+### EXECUTABLE ###
+NAME	= minishell
+
+### SOURCE FILES ###
+SOURCES = \
+		main.c
 
 ### COMPILATION ###
 CC		= clang
 FLAGS	= -Wall -Wextra -Werror
 RDL		= -lreadline
 
-### EXECUTABLE ###
-NAME	= minishell
 ### INCLUDES ###
 INCLUDE		= inc
 LIBFT_PATH	= libft
 SRC_PATH	= src
 OBJ_PATH	= obj
-
-### SOURCE FILES ###
-SOURCES = main.c
 
 ### OBJECTS ###
 SRC	= $(addprefix $(SRC_PATH)/,$(SOURCES))
