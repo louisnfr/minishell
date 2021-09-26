@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/27 01:07:42 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/27 01:11:27 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int ac, char **av, char **envp)
 		input = readline("minishell\033[1;32m$\033[0m ");
 		if (!ft_strcmp(input, "exit"))
 			exit(EXIT_SUCCESS);
+
 		printf("%s\n", input);
 		// prompt();
 		// truc pour attendre
