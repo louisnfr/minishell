@@ -6,13 +6,14 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/25 13:50:28 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/27 01:07:28 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ### COMPILATION ###
 CC		= clang
 FLAGS	= -Wall -Wextra -Werror
+EXT		= -lreadline
 
 ### EXECUTABLE ###
 NAME	= minishell
@@ -44,12 +45,12 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "$(YELLOW)libft..$(NOC)"
 	@make -sC $(LIBFT_PATH)
-	@$(CC) $(FLAGS) -L $(LIBFT_PATH) -o $@ $^ -lft
+	@$(CC) $(FLAGS) $(EXT) -L $(LIBFT_PATH) -o $@ $^ -lft
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj
-	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
+	@$(CC) $(FLAGS) $(EXT) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
 clean:
