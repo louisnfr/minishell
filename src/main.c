@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 01:08:06 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 01:15:56 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ void	extract(char *input)
 	// char	*tmp;
 
 	cmd = ft_split(input, 32);
+
+	if (!ft_strcmp(cmd[0], "/bin/ls"))
+	{
+		execve(cmd[0], cmd, g_env);
+		// quitte le process
+	}
 
 	if (!ft_strcmp(cmd[0], "cd"))
 	{
