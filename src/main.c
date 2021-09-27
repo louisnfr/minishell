@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 00:25:10 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 01:08:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 char	**g_env;
 
-char	*get_user(void)
+char	*get_env(char *arg)
 {
-	char	*usr;
+	char	*ret;
 	int		i;
 
 	i = 0;
-	while (!ft_strnstr(g_env[i], "USER", 4))
+	while (!ft_strnstr(g_env[i], arg, ft_strlen(arg)))
 		i++;
-	usr = g_env[i] + 5;
-	return (usr);
+	ret = g_env[i] + ft_strlen(arg) + 1;
+	return (ret);
 }
 
 void	prompt(void)
@@ -32,17 +32,15 @@ void	prompt(void)
 	char	*cwd;
 	char	*tmp;
 
-	usr = get_user();
+	usr = get_env("USER");
 	cwd = getcwd(NULL, 0);
-	tmp = ft_strjoin("/home/", usr);
-	if (ft_strnstr(cwd, tmp, ft_strlen(cwd)))
+	if (ft_strnstr(cwd, get_env("HOME"), ft_strlen(get_env("HOME"))))
 	{
-		free(tmp);
 		tmp = ft_substr(cwd, 6 + ft_strlen(usr), ft_strlen(cwd));
+		free(cwd);
+		cwd = ft_strjoin("~", tmp);
+		free(tmp);
 	}
-	free(cwd);
-	cwd = ft_strjoin("~", tmp);
-	free(tmp);
 	ft_putstr_fd("\e[32;1m", 1);
 	ft_putstr_fd(usr, 1);
 	ft_putstr_fd("\e[0m:", 1);
@@ -52,14 +50,42 @@ void	prompt(void)
 	free(cwd);
 }
 
-void	extract(char *input, char **env)
+void	free_split(char **args)
 {
-	(void)env;
+	int	size;
+	int	i;
+
+	i = 0;
+	size = 0;
+	while (args[size])
+		size++;
+	while (i < size)
+		free(args[i++]);
+	free(args);
+}
+
+void	extract(char *input)
+{
+	char	**cmd;
+	// char	*tmp;
+
+	cmd = ft_split(input, 32);
+
+	if (!ft_strcmp(cmd[0], "cd"))
+	{
+		if (!cmd[1])
+			chdir(get_env("HOME"));
+		else
+			chdir(cmd[1]);
+	}
+
 	if (!ft_strcmp(input, "exit"))
 	{
 		free(input);
+		free_split(cmd);
 		exit(EXIT_SUCCESS);
 	}
+	free_split(cmd);
 }
 
 int	main(int ac, char **av, char **env)
@@ -74,7 +100,7 @@ int	main(int ac, char **av, char **env)
 	{
 		prompt();
 		get_next_line(0, &input);
-		extract(input, env);
+		extract(input);
 		free(input);
 	}
 	return (0);
