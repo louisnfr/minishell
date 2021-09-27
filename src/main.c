@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 01:15:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 01:17:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,3 +111,12 @@ int	main(int ac, char **av, char **env)
 	}
 	return (0);
 }
+
+
+/*
+prompt
+get input
+parse input
+execute
+free
+*/
