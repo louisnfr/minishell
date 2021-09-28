@@ -6,23 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:13:28 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 16:15:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern char	**g_env;
-
-void	parse(char *input)
-{
-	char	**cmd;
-
-	cmd = ft_split(input, 32);
-	free(input);
-	exec(cmd);
-	free_split(cmd);
-}
 
 void	exec(char **cmd)
 {
@@ -45,4 +35,14 @@ void	exec(char **cmd)
 		free_split(cmd);
 		exit(EXIT_SUCCESS);
 	}
+}
+
+void	parse(char *input)
+{
+	char	**cmd;
+
+	cmd = ft_split(input, 32);
+	free(input);
+	exec(cmd);
+	free_split(cmd);
 }
