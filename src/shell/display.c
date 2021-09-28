@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 15:07:02 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 16:05:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	prompt(void)
 	cwd = getcwd(NULL, 0);
 	if (ft_strnstr(cwd, get_env("HOME"), ft_strlen(get_env("HOME"))))
 	{
-		tmp = ft_substr(cwd, 6 + ft_strlen(usr), ft_strlen(cwd));
+		tmp = ft_substr(cwd, ft_strlen(get_env("HOME")), ft_strlen(cwd));
 		free(cwd);
 		cwd = ft_strjoin("~", tmp);
 		free(tmp);
