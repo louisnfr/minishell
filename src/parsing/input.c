@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 19:14:26 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 19:34:58 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ int	is_builtin(char *cmd)
 		if (!ft_strcmp(cmd, builtins[i]))
 			return (1);
 	return (0);
+	// return commande trouvee?
 }
 
 void	exec(char **cmd)
 {
 	if (is_builtin(cmd[0]))
+	{
 		printf("builtin cmd\n");
+		ch_dir(cmd);
+	}
 	else
 	{
 		// execve in child
