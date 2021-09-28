@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:16:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 19:14:26 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,35 @@
 
 extern char	**g_env;
 
+int	is_builtin(char *cmd)
+{
+	char	*builtins[8];
+	int		i;
+
+	builtins[0] = "cd";
+	builtins[1] = "echo";
+	builtins[2] = "env";
+	builtins[3] = "exit";
+	builtins[4] = "export";
+	builtins[5] = "pwd";
+	builtins[6] = "unset";
+	builtins[7] = NULL;
+
+	i = -1;
+	while (builtins[++i])
+		if (!ft_strcmp(cmd, builtins[i]))
+			return (1);
+	return (0);
+}
+
 void	exec(char **cmd)
 {
-	if (!ft_strcmp(cmd[0], "/bin/ls"))
+	if (is_builtin(cmd[0]))
+		printf("builtin cmd\n");
+	else
 	{
-		execve(cmd[0], cmd, g_env);
-		// quitte le process
-	}
-
-	if (!ft_strcmp(cmd[0], "cd"))
-	{
-		if (!cmd[1])
-			chdir(get_env("HOME"));
-		else
-			chdir(cmd[1]);
-	}
-
-	if (!ft_strcmp(cmd[0], "exit"))
-	{
-		free_split(cmd);
-		exit(EXIT_SUCCESS);
+		// execve in child
+		printf("not builtin cmd\n");
 	}
 }
 

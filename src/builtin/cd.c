@@ -6,9 +6,16 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 15:03:52 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 18:43:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	ch_dir(char **cmd)
+{
+	if (!cmd[1])
+		chdir(get_env("HOME"));
+	else
+		chdir(cmd[1]);
+}
