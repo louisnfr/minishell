@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 15:30:07 by lraffin          ###   ########.fr       */
+/*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
+/*   Updated: 2021/09/28 15:32:42 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <errno.h>
-# include <sys/wait.h>
-# include <curses.h>
-# include <term.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+extern char **g_env;
 
+char	*get_env(char *arg)
+{
+	char	*ret;
+	int		i;
 
-void	prompt(void);
-char	*get_env(char *arg);
-
-#endif
+	i = 0;
+	while (!ft_strnstr(g_env[i], arg, ft_strlen(arg)))
+		i++;
+	ret = g_env[i] + ft_strlen(arg) + 1;
+	return (ret);
+}

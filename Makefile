@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/27 20:10:05 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/28 15:16:54 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,14 @@ NAME	= minishell
 
 ### SOURCE FILES ###
 SOURCES = \
-		main.c
+		main.c \
+		\
+		builtin/cd.c \
+		\
+		parsing/input.c \
+		\
+		shell/env/env.c \
+		shell/display.c
 
 ### COMPILATION ###
 CC		= clang
@@ -50,7 +57,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj
+	@mkdir -p obj/builtin obj/parsing obj/shell/env
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 

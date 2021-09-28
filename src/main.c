@@ -6,49 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 01:17:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 15:32:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	**g_env;
-
-char	*get_env(char *arg)
-{
-	char	*ret;
-	int		i;
-
-	i = 0;
-	while (!ft_strnstr(g_env[i], arg, ft_strlen(arg)))
-		i++;
-	ret = g_env[i] + ft_strlen(arg) + 1;
-	return (ret);
-}
-
-void	prompt(void)
-{
-	char	*usr;
-	char	*cwd;
-	char	*tmp;
-
-	usr = get_env("USER");
-	cwd = getcwd(NULL, 0);
-	if (ft_strnstr(cwd, get_env("HOME"), ft_strlen(get_env("HOME"))))
-	{
-		tmp = ft_substr(cwd, 6 + ft_strlen(usr), ft_strlen(cwd));
-		free(cwd);
-		cwd = ft_strjoin("~", tmp);
-		free(tmp);
-	}
-	ft_putstr_fd("\e[32;1m", 1);
-	ft_putstr_fd(usr, 1);
-	ft_putstr_fd("\e[0m:", 1);
-	ft_putstr_fd("\e[36;1m", 1);
-	ft_putstr_fd(cwd, 1);
-	ft_putstr_fd("$ \e[0m", 1);
-	free(cwd);
-}
 
 void	free_split(char **args)
 {
@@ -111,7 +75,6 @@ int	main(int ac, char **av, char **env)
 	}
 	return (0);
 }
-
 
 /*
 prompt
