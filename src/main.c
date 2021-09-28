@@ -28,6 +28,16 @@ void	free_split(char **args)
 	free(args);
 }
 
+void	signal_handler(int signo)
+{
+	(void)signo;
+	// if (SIGINT == signo)
+	// {
+		printf("slfksjd");
+	// 	signal_handler(SIGINT);
+	// }
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
@@ -39,6 +49,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		prompt();
+		signal(SIGINT, signal_handler);
 		get_next_line(0, &input);
 		parse(input);
 	}
@@ -48,7 +59,7 @@ int	main(int ac, char **av, char **env)
 /*
 prompt
 get input
-parse input
+parse input 
 execute
 free
 */
