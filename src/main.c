@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:08:27 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/28 16:16:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int ac, char **av, char **env)
 		prompt();
 		get_next_line(0, &input);
 		parse(input);
-		free(input);
 	}
 	return (0);
 }
