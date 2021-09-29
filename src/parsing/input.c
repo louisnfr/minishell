@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 12:41:57 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 13:47:27 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ char	*is_builtin(char *cmd)
 void	parse(char *input)
 {
 	char	**cmd;
+	int		i;
 
 	cmd = ft_split(input, 32);
+	i = -1;
+	while (cmd[++i])
+		cmd[i] = ft_strtrim(cmd[i], "\"");
 	free(input);
 	exec(cmd);
 	free_split(cmd);
