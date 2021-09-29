@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:49 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 16:32:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:36:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	exec_pwd(char **cmd)
 {
+	char	*pwd;
+
 	(void)cmd;
-	ft_putstr(getcwd(NULL, 0));
+	pwd = getcwd(NULL, 0);
+	ft_putstr(pwd);
 	ft_putchar('\n');
+	free(pwd);
 }

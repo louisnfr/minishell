@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:28:28 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:36:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ void	exec_cd(char **cmd)
 	pwd = getcwd(NULL, 0);
 	set_env("OLDPWD", oldpwd);
 	set_env("PWD", pwd);
+	free(pwd);
+	free(oldpwd);
 }

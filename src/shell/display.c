@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:50:31 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:38:08 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void	prompt(void)
 	ft_putstr_fd("\e[36;1m", 1);
 	ft_putstr_fd(cwd, 1);
 	ft_putstr_fd("$ \e[0m", 1);
-	// printf("\e[32;1m%s\e[0m:\e[36;1m%s$ \e[0m", usr, cwd); //s'affiche apres?
 	free(cwd);
 }

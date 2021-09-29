@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:17:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:40:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	exec_echo(char **cmd)
 	int	eol;
 
 	if (!cmd[1])
-	{
-		ft_putchar('\n');
-		return ;
-	}
+		return (ft_putchar('\n'));
 	i = 0;
 	eol = 1;
 	if (!ft_strcmp(cmd[1], "-n"))
@@ -37,7 +34,6 @@ void	exec_echo(char **cmd)
 		eol = 0;
 		i++;
 	}
-
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '$' && cmd[i][1])

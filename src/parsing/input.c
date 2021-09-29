@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 23:43:18 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:37:52 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*is_builtin(char *cmd)
 	builtins[5] = "pwd";
 	builtins[6] = "unset";
 	builtins[7] = NULL;
-
 	i = -1;
 	while (builtins[++i])
 		if (!ft_strcmp(cmd, builtins[i]))
@@ -40,8 +39,6 @@ void	parse(char *input)
 
 	cmd = ft_split(input, 32);
 	i = -1;
-	// while (cmd[++i])
-	// 	cmd[i] = ft_strtrim(cmd[i], "\"");
 	free(input);
 	exec(cmd);
 	free_split(cmd);

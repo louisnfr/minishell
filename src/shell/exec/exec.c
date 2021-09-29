@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 12:42:45 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:38:25 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,5 @@ void	exec(char **cmd)
 	else if (is_builtin(cmd[0]))
 		exec_builtin(cmd);
 	else
-	{
-		// execve in child
 		printf("not builtin cmd\n");
-	}
 }
