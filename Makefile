@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/29 11:58:18 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/29 22:56:23 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES = \
 		parsing/input.c \
 		\
 		shell/env/env.c \
+		shell/env/list.c \
 		shell/exec/exec.c \
 		shell/exec/exec_builtin.c \
 		shell/display.c \

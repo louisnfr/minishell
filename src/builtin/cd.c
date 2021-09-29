@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 16:36:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 23:23:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	exec_cd(char **cmd)
 {
 	char	*p;
-	char	*new_path;
+	// char	*new_path;
 	char	*tmp;
 
 	if (!cmd[1])
@@ -31,6 +31,6 @@ void	exec_cd(char **cmd)
 	}
 	else
 		chdir(cmd[1]);
-	new_path = getcwd(NULL, 0);
-	set_env("PWD", new_path);
+	// new_path = getcwd(NULL, 0);
+	// set_env("PWD", new_path);
 }
