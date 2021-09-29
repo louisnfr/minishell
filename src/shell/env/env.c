@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 23:34:50 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 23:46:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ t_env	*create_env(char **envp)
 	// incrementer SHLVL
 	return (g_env);
 }
-
-// extern char **g_env;
 
 // char	*get_env(char *arg)
 // {

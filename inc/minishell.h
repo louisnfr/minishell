@@ -6,13 +6,16 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 23:13:09 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 23:42:56 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/*
+** librairies
+*/
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,7 +28,10 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
+/*
+** global
+*/
+struct s_env	*g_env;
 /*
 ** structures
 */
@@ -72,6 +78,7 @@ char	*is_builtin(char *cmd);
 /*
 ** exit
 */
+void	free_env(t_env *g_env);
 void	free_split(char **args);
 
 #endif

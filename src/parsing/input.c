@@ -6,13 +6,11 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:44:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 23:43:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern char	**g_env;
 
 char	*is_builtin(char *cmd)
 {
