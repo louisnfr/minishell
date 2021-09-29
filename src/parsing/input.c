@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 13:54:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:44:24 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	parse(char *input)
 	int		i;
 
 	cmd = ft_split(input, 32);
-	for(int q=0; cmd[q]; q++)
-		printf("cmd[%d]: %s\n", q, cmd[q]);
 	i = -1;
 	// while (cmd[++i])
 	// 	cmd[i] = ft_strtrim(cmd[i], "\"");

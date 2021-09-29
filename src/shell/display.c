@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 12:00:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:50:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	prompt(void)
 	char	*cwd;
 	char	*tmp;
 
-	usr = get_env("USER");
+	usr = getenv("USER");
 	cwd = getcwd(NULL, 0);
-	if (ft_strnstr(cwd, get_env("HOME"), ft_strlen(get_env("HOME"))))
+	if (ft_strnstr(cwd, getenv("HOME"), ft_strlen(getenv("HOME"))))
 	{
-		tmp = ft_substr(cwd, ft_strlen(get_env("HOME")), ft_strlen(cwd));
+		tmp = ft_substr(cwd, ft_strlen(getenv("HOME")), ft_strlen(cwd));
 		free(cwd);
 		cwd = ft_strjoin("~", tmp);
 		free(tmp);

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 12:35:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:44:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 
 	(void)av;
-	g_env = env;
 	if (ac != 1)
 		exit(EXIT_FAILURE);
 	while (1)
 	{
+		g_env = env;
 		prompt();
 		// signal(SIGINT, signal_handler);
 		get_next_line(0, &input);

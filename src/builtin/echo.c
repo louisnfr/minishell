@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 13:46:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:50:45 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_var(char *cmd)
 {
-	if (get_env(cmd + 1))
-		ft_putstr(get_env(cmd + 1));
+	if (getenv(cmd + 1))
+		ft_putstr(getenv(cmd + 1));
 	else
 		return ;
 }
@@ -37,7 +37,7 @@ void	exec_echo(char **cmd)
 		eol = 0;
 		i++;
 	}
-	
+
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '$' && cmd[i][1])
