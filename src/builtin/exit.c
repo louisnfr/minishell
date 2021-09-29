@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 11:58:53 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 12:51:12 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	exec_exit(char **cmd)
 {
+	ft_putstr("exit\n");
 	free_split(cmd);
 	exit(EXIT_SUCCESS);
 }

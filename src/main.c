@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 11:40:43 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 12:35:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		prompt();
-		signal(SIGINT, signal_handler);
+		// signal(SIGINT, signal_handler);
 		get_next_line(0, &input);
 		parse(input);
 	}
