@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/29 22:56:23 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/30 01:06:17 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SOURCES = \
 		shell/exec/exec_builtin.c \
 		shell/display.c \
 		\
-		exit/free.c
+		exit/free.c \
+		exit/error.c
 
 
 ### COMPILATION ###

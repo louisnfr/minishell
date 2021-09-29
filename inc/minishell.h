@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:40:05 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 01:07:28 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	prompt(void);
 ** shell/env
 */
 t_env	*create_env(char **envp);
+void	update_env(void);
 char	*get_env(char *key);
 void	set_env(char *key, char *new_value);
 t_env	*new_var(char *name, char *value);
@@ -81,5 +82,6 @@ char	*is_builtin(char *cmd);
 */
 void	free_env(t_env *g_env);
 void	free_split(char **args);
+void	cd_error(char *pwd, char **cmd);
 
 #endif

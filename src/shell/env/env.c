@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:33:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 01:02:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,20 @@ t_env	*create_env(char **envp)
 		free_split(var);
 	}
 	// add_var(&g_env, new_var("OLDPWD", getcwd(NULL, 0)));
-	// incrementer SHLVL
 	return (g_env);
+}
+
+void	update_env(void)
+{
+	char	*tmp;
+	int		i;
+
+	tmp = get_env("SHLVL");
+	i = (ft_atoi(tmp) + 1);
+	// free(tmp);
+	tmp = ft_itoa(i);
+	set_env("SHLVL", tmp);
+	free(tmp);
 }
 
 char	*get_env(char *key)

@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 01:01:25 by lraffin          ###   ########.fr       */
+/*   Created: 2021/09/30 01:06:08 by lraffin           #+#    #+#             */
+/*   Updated: 2021/09/30 01:10:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	cd_error(char *pwd, char **cmd)
 {
-	char	*input;
-
-	(void)av;
-	if (ac != 1)
-		exit(EXIT_FAILURE);
-	g_env = create_env(envp);
-	update_env();
-	while (1)
-	{
-		prompt();
-		get_next_line(0, &input);
-		parse(input);
-	}
-	return (0);
+	ft_putstr("minishell: cd: ");
+	perror(cmd[1]);
+	free(pwd);
 }
