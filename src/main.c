@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 16:34:10 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 18:21:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	signal_handler(int signo)
 	// }
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	char	*input;
 
 	(void)av;
 	if (ac != 1)
 		exit(EXIT_FAILURE);
-	g_env = env;
+	create_env(envp);
 	while (1)
 	{
 		prompt();
