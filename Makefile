@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/28 15:16:54 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/29 11:46:53 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,12 @@ SOURCES = \
 		parsing/input.c \
 		\
 		shell/env/env.c \
-		shell/display.c
+		shell/exec/exec.c \
+		shell/exec/exec_builtin.c \
+		shell/display.c \
+		\
+		exit/free.c
+
 
 ### COMPILATION ###
 CC		= clang
@@ -57,7 +62,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/builtin obj/parsing obj/shell/env
+	@mkdir -p obj/builtin obj/parsing obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 

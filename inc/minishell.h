@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 19:31:39 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 11:47:30 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,31 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+/*
+** builtin
+*/
+void	exec_cd(char **cmd);
+/*
+** shell
+*/
 void	prompt(void);
+/*
+** shell/env
+*/
 char	*get_env(char *arg);
+/*
+** shell/exec
+*/
+void	exec(char **cmd);
+void	exec_builtin(char *cmd);
+/*
+** parsing
+*/
 void	parse(char *input);
+char	*is_builtin(char *cmd);
+/*
+** exit
+*/
 void	free_split(char **args);
-void	ch_dir(char **cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 19:34:58 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 11:27:50 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern char	**g_env;
 
-int	is_builtin(char *cmd)
+char	*is_builtin(char *cmd)
 {
 	char	*builtins[8];
 	int		i;
@@ -31,24 +31,10 @@ int	is_builtin(char *cmd)
 	i = -1;
 	while (builtins[++i])
 		if (!ft_strcmp(cmd, builtins[i]))
-			return (1);
-	return (0);
-	// return commande trouvee?
+			return (builtins[i]);
+	return (NULL);
 }
 
-void	exec(char **cmd)
-{
-	if (is_builtin(cmd[0]))
-	{
-		printf("builtin cmd\n");
-		ch_dir(cmd);
-	}
-	else
-	{
-		// execve in child
-		printf("not builtin cmd\n");
-	}
-}
 
 void	parse(char *input)
 {

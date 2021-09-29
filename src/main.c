@@ -6,27 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:16:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 11:40:43 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	**g_env;
-
-void	free_split(char **args)
-{
-	int	size;
-	int	i;
-
-	i = 0;
-	size = 0;
-	while (args[size])
-		size++;
-	while (i < size)
-		free(args[i++]);
-	free(args);
-}
 
 void	signal_handler(int signo)
 {
@@ -59,7 +45,7 @@ int	main(int ac, char **av, char **env)
 /*
 prompt
 get input
-parse input 
+parse input
 execute
 free
 */
