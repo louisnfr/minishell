@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 22:56:25 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 23:35:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:26:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ t_env	*new_var(char *key, char *value)
 	if (!var)
 		return (NULL);
 	var->key = malloc(sizeof(char) + (ft_strlen(key) + 1));
-	ft_memcpy(var->key, key, ft_strlen(key) + 1);
 	var->value = malloc(sizeof(char) + (ft_strlen(value) + 1));
+	if (!var->key || !var->value)
+		return (NULL);
+	ft_memcpy(var->key, key, ft_strlen(key) + 1);
 	ft_memcpy(var->value, value, ft_strlen(value) + 1);
 	var->next = NULL;
 	return (var);

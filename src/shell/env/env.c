@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:16:51 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:33:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void	set_env(char *key, char *new_value)
 		g_env = g_env->next;
 	}
 	free(g_env->value);
-	ft_memcpy(g_env->value, new_value, ft_strlen(new_value));
+	g_env->value = malloc(sizeof(char) + (ft_strlen(new_value) + 1));
+	if (!g_env->value)
+		return ;
+	ft_memcpy(g_env->value, new_value, ft_strlen(new_value) + 1);
 	g_env = head;
 }
