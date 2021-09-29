@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 11:47:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 11:57:10 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@
 /*
 ** builtin
 */
+void	exec_echo(char **cmd);
 void	exec_cd(char **cmd);
+void	exec_pwd(char **cmd);
+void	exec_env(char **cmd);
+void	exec_export(char **cmd);
+void	exec_unset(char **cmd);
+void	exec_exit(char **cmd);
 /*
 ** shell
 */
@@ -42,7 +48,7 @@ char	*get_env(char *arg);
 ** shell/exec
 */
 void	exec(char **cmd);
-void	exec_builtin(char *cmd);
+void	exec_builtin(char **cmd);
 /*
 ** parsing
 */

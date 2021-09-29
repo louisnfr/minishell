@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/29 11:46:53 by lraffin          ###   ########.fr        #
+#    Updated: 2021/09/29 11:58:18 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,13 @@ NAME	= minishell
 SOURCES = \
 		main.c \
 		\
+		builtin/echo.c \
 		builtin/cd.c \
+		builtin/pwd.c \
+		builtin/env.c \
+		builtin/export.c \
+		builtin/unset.c \
+		builtin/exit.c \
 		\
 		parsing/input.c \
 		\
