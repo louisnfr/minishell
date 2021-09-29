@@ -6,16 +6,16 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:50:45 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:17:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_var(char *cmd)
+void	print_var(char *key)
 {
-	if (getenv(cmd + 1))
-		ft_putstr(getenv(cmd + 1));
+	if (get_env(key))
+		ft_putstr(get_env(key));
 	else
 		return ;
 }
@@ -41,7 +41,7 @@ void	exec_echo(char **cmd)
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '$' && cmd[i][1])
-			print_var(cmd[i]);
+			print_var(cmd[i] + 1);
 		else
 		{
 			ft_putstr(cmd[i]);

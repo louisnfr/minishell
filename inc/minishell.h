@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 23:42:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 23:54:05 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	prompt(void);
 ** shell/env
 */
 t_env	*create_env(char **envp);
-char	*get_env(char *arg);
-void	set_env(char *var, char *value);
+char	*get_env(char *key);
+void	set_env(char *key, char *new_value);
 t_env	*new_var(char *name, char *value);
 t_env	*get_last(t_env *g_env);
 void	add_var(t_env **g_env, t_env *new_var);

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 23:46:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 00:16:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,41 @@ t_env	*create_env(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		var = ft_split(envp[i], '=');
+		var = ft_split(envp[i], '='); // mauvais split pour LS_COLORS
 		add_var(&g_env, new_var(var[0], var[1]));
 		free_split(var);
 	}
+	// add_var(&g_env, new_var("OLDPWD", getcwd(NULL, 0)));
 	// incrementer SHLVL
 	return (g_env);
 }
 
-// char	*get_env(char *arg)
-// {
-// 	char	*ret;
-// 	int		i;
+char	*get_env(char *key)
+{
+	t_env	*tmp;
 
-// 	i = 0;
-// 	while (!ft_strnstr(g_env[i], arg, ft_strlen(arg)))
-// 		i++;
-// 	ret = g_env[i] + ft_strlen(arg) + 1;
-// 	return (ret);
-// }
+	tmp = g_env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
-// void	set_env(char *var, char *value)
-// {
-// 	(void)value;
-// 	int	i;
+void	set_env(char *key, char *new_value)
+{
+	t_env	*head;
 
-// 	i = 0;
-// 	while (g_env[i] && !ft_strnstr(g_env[i], var, ft_strlen(var)))
-// 		i++;
-// }
+	head = g_env;
+	while (g_env)
+	{
+		if (!ft_strcmp(g_env->key, key))
+			break ;
+		g_env = g_env->next;
+	}
+	free(g_env->value);
+	ft_memcpy(g_env->value, new_value, ft_strlen(new_value));
+	g_env = head;
+}

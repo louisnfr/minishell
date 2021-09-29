@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:34:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:39:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/29 23:47:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_builtin(char **cmd)
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		exec_pwd(cmd);
 	else if (!ft_strcmp(cmd[0], "env"))
-		printf("env\n");
+		exec_env(cmd);
 	else if (!ft_strcmp(cmd[0], "export"))
 		printf("export\n");
 	else if (!ft_strcmp(cmd[0], "unset"))
