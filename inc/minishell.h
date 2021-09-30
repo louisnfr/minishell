@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 18:08:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 19:30:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,6 @@ t_bool	cmd_is_builtin(char *cmd);
 */
 void	free_env(t_env *g_env);
 void	free_split(char **args);
-void	cd_error(char *pwd, char **cmd);
+t_bool	cd_error(char *pwd, char **cmd);
 
 #endif
