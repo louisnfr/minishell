@@ -25,7 +25,10 @@ SOURCES = \
 		builtin/unset.c \
 		builtin/exit.c \
 		\
-		parsing/input.c \
+		parsing/parsing.c \
+		parsing/paths.c \
+		parsing/libft.c \
+		parsing/linked_list.c \
 		\
 		shell/env/env.c \
 		shell/env/list.c \
