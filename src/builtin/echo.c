@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 14:59:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 18:07:35 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ void	print_var(char *key, t_data *data)
 		return ;
 }
 
-void	exec_echo(char **cmd, t_data *data)
+t_bool	exec_echo(char **cmd, t_data *data)
 {
 	int	i;
 	int	eol;
 
 	if (!cmd[1])
-		return (ft_putchar('\n'));
+	{
+		ft_putchar('\n');
+		return (SUCCESS);
+	}
 	i = 0;
 	eol = 1;
 	if (!ft_strcmp(cmd[1], "-n"))
@@ -47,4 +50,5 @@ void	exec_echo(char **cmd, t_data *data)
 	}
 	if (eol)
 		ft_putchar('\n');
+	return (SUCCESS);
 }
