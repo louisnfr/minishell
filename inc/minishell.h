@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 14:58:57 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 18:08:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ typedef struct s_data
 /*
 ** builtin
 */
-void	exec_echo(char **cmd, t_data *data);
-void	exec_cd(char **cmd, t_data *data);
-void	exec_pwd(char **cmd, t_data *data);
-void	exec_env(char **cmd, t_data *data);
-void	exec_export(char **cmd, t_data *data);
-void	exec_unset(char **cmd, t_data *data);
+t_bool	exec_echo(char **cmd, t_data *data);
+t_bool	exec_cd(char **cmd, t_data *data);
+t_bool	exec_pwd(char **cmd, t_data *data);
+t_bool	exec_env(char **cmd, t_data *data);
+t_bool	exec_export(char **cmd, t_data *data);
+t_bool	exec_unset(char **cmd, t_data *data);
 void	exec_exit(char **cmd, t_data *data);
 /*
 ** shell

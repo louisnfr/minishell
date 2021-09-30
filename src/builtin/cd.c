@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 15:00:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 19:23:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cd(char **cmd, t_data *data)
+t_bool	exec_cd(char **cmd, t_data *data)
 {
 	char	*oldpwd;
 	char	*pwd;
@@ -39,4 +39,7 @@ void	exec_cd(char **cmd, t_data *data)
 	set_env("PWD", pwd, data);
 	free(pwd);
 	free(oldpwd);
+	return (SUCCESS);
 }
+
+
