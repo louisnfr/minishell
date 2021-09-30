@@ -57,7 +57,7 @@ char	**find_cmd_options(char **argv, int i)
 	return (options);
 }
 
-t_bool	parse(int ac, char *input, t_data *data, t_cmd *cmd_list)
+t_bool	parse(char *input, t_data *data, t_cmd *cmd_list)
 {
 	int		i;
 	char	*path;
@@ -68,9 +68,8 @@ t_bool	parse(int ac, char *input, t_data *data, t_cmd *cmd_list)
 	if (!argv)
 		return (FAIL);
 	i = -1;
-	while (ac--)
+	while (argv[++i])
 	{
-		i++;
 		path = NULL;
 		options = NULL;
 		if (is_separation(argv[i]))
@@ -87,6 +86,9 @@ t_bool	parse(int ac, char *input, t_data *data, t_cmd *cmd_list)
 			if (path)
 			{
 				options = find_cmd_options(argv, i);
+				int j = -1;
+				while (options && options[++j])
+					printf("%s\n", options[j]);
 				create_new_cmd(argv[i], options, path, &cmd_list);
 			}
 		}

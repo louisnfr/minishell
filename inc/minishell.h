@@ -96,7 +96,7 @@ void	print_env(t_env *g_env);
 /*
 ** shell/exec
 */
-void	exec(char **cmd, t_data *data);
+int		exec(char **envp, t_data *data);
 void	exec_builtin(char **cmd, t_data *data);
 /*
 ** libft
@@ -107,10 +107,11 @@ char	*ft_strjoin_and_free(char *s1, char *s2);
 /*
 ** parsing
 */
-void	init_cmd_list(t_cmd *cmd_list);
+void	setup_cmd_list(t_cmd *cmd_list);
+void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
-t_bool	parse(int ac, char *input, t_data *data, t_cmd *cmd_list);
+t_bool	parse(char *input, t_data *data, t_cmd *cmd_list);
 char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
 t_bool	cmd_is_builtin(char *cmd);

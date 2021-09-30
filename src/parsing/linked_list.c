@@ -24,6 +24,41 @@ void	print_list(t_cmd *cmd_list)
 	}
 }
 
+void	remove_from_list(t_cmd *cmd_list)
+{
+	if (cmd_list->left)
+	{
+		cmd_list->is_builtin = 0;
+		if (cmd_list->command)
+		{
+			free(cmd_list->command);
+			cmd_list->command = NULL;
+		}
+		if (cmd_list->options)
+		{	
+			free(cmd_list->options);
+			cmd_list->options = NULL;
+		}
+		if (cmd_list->path)
+		{
+			free(cmd_list->path);
+			cmd_list->path = NULL;
+		}
+		free(cmd_list);
+		cmd_list = NULL;
+	}
+}
+
+void	clean_cmd_list(t_cmd *cmd_list)
+{
+	while (cmd_list->left)
+	{
+		remove_from_list(cmd_list);
+		cmd_list = cmd_list->left;
+	}
+	cmd_list = NULL;
+}
+
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 {
 	t_cmd	*new_cmd;
@@ -33,6 +68,9 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 		return (FAIL);
 	new_cmd->command = cmd;
 	new_cmd->options = options;
+	int j = -1;
+	while (new_cmd->options && new_cmd->options[++j])
+		printf("%s\n", new_cmd->options[j]);
 	new_cmd->path = path;
 	new_cmd->is_builtin = FALSE;
 	new_cmd->left = NULL;
@@ -44,7 +82,7 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 	return (SUCCESS);
 }
 
-void	init_cmd_list(t_cmd *cmd_list)
+void	setup_cmd_list(t_cmd *cmd_list)
 {
 	cmd_list->command = NULL;
 	cmd_list->options = NULL;
