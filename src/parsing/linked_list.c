@@ -66,12 +66,11 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (FAIL);
-	new_cmd->command = cmd;
+	if (cmd)
+		new_cmd->command = ft_strdup(cmd);
 	new_cmd->options = options;
-	int j = -1;
-	while (new_cmd->options && new_cmd->options[++j])
-		printf("%s\n", new_cmd->options[j]);
-	new_cmd->path = path;
+	if (path)
+		new_cmd->path = ft_strdup(path);
 	new_cmd->is_builtin = FALSE;
 	new_cmd->left = NULL;
 	new_cmd->right = NULL;

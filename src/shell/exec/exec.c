@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 14:54:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 22:26:38 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,18 @@ char	**fill_cmd_array(t_cmd *cmd_list)
 	i = 0;
 	while (cmd_list->options && cmd_list->options[i])
 		i++;
+	cmd_array = NULL;
 	cmd_array = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!cmd_array)
 		return (NULL);
-	ft_memcpy(cmd_array[0], cmd_list->command, ft_strlen(cmd_list->command) + 1);
-	// i = 0;
-	while (cmd_list->options && cmd_list->options[++i])
-		ft_memcpy(cmd_array[i + 1], cmd_list->options[i], ft_strlen(cmd_list->options[i]) + 1);
+	cmd_array[0] = ft_strdup(cmd_list->command);
+	i = 0;
+	while (cmd_list->options && cmd_list->options[i])
+	{
+		cmd_array[i + 1] = ft_strdup(cmd_list->options[i]);
+		i++;
+	}
 	cmd_array[++i] = NULL;
-	
-
 	return (cmd_array);
 }
 
@@ -55,7 +57,7 @@ int	exec(char **envp, t_data *data)
 	pid_t	pid;
 	int		status;
 	int		exit_code;
-	t_cmd 	*cmd_list;
+	t_cmd	*cmd_list;
 
 	cmd_list = data->cmd_list;
 	cmd_list = cmd_list->left;

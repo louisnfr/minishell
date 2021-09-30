@@ -48,7 +48,7 @@ char	**find_cmd_options(char **argv, int i)
 	}
 	if (k)
 	{
-		options = (char **)malloc(sizeof(char *) * k);
+		options = (char **)malloc(sizeof(char *) * (k + 1));
 		k = 0;
 		while (argv[++i] && argv[i][0] == '-')
 			options[k++] = ft_strdup(argv[i]);
@@ -86,9 +86,6 @@ t_bool	parse(char *input, t_data *data, t_cmd *cmd_list)
 			if (path)
 			{
 				options = find_cmd_options(argv, i);
-				int j = -1;
-				while (options && options[++j])
-					printf("%s\n", options[j]);
 				create_new_cmd(argv[i], options, path, &cmd_list);
 			}
 		}
