@@ -16,7 +16,7 @@ void	exec(char **cmd, t_data *data)
 {
 	if (!cmd[0])
 		return ;
-	else if (is_builtin(cmd[0]))
+	else if (cmd_is_builtin(cmd[0]))
 		exec_builtin(cmd, data);
 	else
 		printf("not builtin cmd\n");

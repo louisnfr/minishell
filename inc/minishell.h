@@ -32,6 +32,7 @@
 /*
 ** structures
 */
+
 typedef struct s_env
 {
 	char			*key;
@@ -39,11 +40,34 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef int	t_bool;
+
+typedef enum t_boolean
+{
+	CHILD	= 0,
+	FAIL	= 0,
+	SUCCESS = 1,
+	LEFT	= 0,
+	RIGHT	= 1,
+}	t_boolean;
+
+typedef struct s_cmd
+{
+	char			*command;
+	char			**options;
+	char			*path;
+	t_bool			is_builtin;
+	struct s_cmd	*left;
+	struct s_cmd	*right;
+}			t_cmd;
+
 typedef struct s_data
 {
+	t_cmd	*cmd_list;
 	t_env	*env;
-
+	char	**all_paths;
 }	t_data;
+
 /*
 ** builtin
 */
@@ -75,10 +99,21 @@ void	print_env(t_env *g_env);
 void	exec(char **cmd, t_data *data);
 void	exec_builtin(char **cmd, t_data *data);
 /*
+** libft
+*/
+int		str_is_equal(const char *s1, const char *s2);
+void	clean_free(char **str);
+char	*ft_strjoin_and_free(char *s1, char *s2);
+/*
 ** parsing
 */
-void	parse(char *input, t_data *data);
-char	*is_builtin(char *cmd);
+void	init_cmd_list(t_cmd *cmd_list);
+t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
+void	print_list(t_cmd *cmd_list);
+t_bool	parse(int ac, char *input, t_data *data, t_cmd *cmd_list);
+char	**get_paths(char **envp);
+char	*find_cmd_path(char *command, char **all_paths);
+t_bool	cmd_is_builtin(char *cmd);
 /*
 ** exit
 */
