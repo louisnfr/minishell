@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:37:52 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 14:55:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*is_builtin(char *cmd)
 	return (NULL);
 }
 
-void	parse(char *input)
+void	parse(char *input, t_data *data)
 {
 	char	**cmd;
 	int		i;
@@ -40,6 +40,6 @@ void	parse(char *input)
 	cmd = ft_split(input, 32);
 	i = -1;
 	free(input);
-	exec(cmd);
+	exec(cmd, data);
 	free_split(cmd);
 }

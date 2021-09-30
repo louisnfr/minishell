@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 01:07:28 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 14:58:57 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 # include <readline/history.h>
 
 /*
-** global
-*/
-struct s_env	*g_env;
-/*
 ** structures
 */
 typedef struct s_env
@@ -42,16 +38,22 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_data
+{
+	t_env	*env;
+
+}	t_data;
 /*
 ** builtin
 */
-void	exec_echo(char **cmd);
-void	exec_cd(char **cmd);
-void	exec_pwd(char **cmd);
-void	exec_env(char **cmd);
-void	exec_export(char **cmd);
-void	exec_unset(char **cmd);
-void	exec_exit(char **cmd);
+void	exec_echo(char **cmd, t_data *data);
+void	exec_cd(char **cmd, t_data *data);
+void	exec_pwd(char **cmd, t_data *data);
+void	exec_env(char **cmd, t_data *data);
+void	exec_export(char **cmd, t_data *data);
+void	exec_unset(char **cmd, t_data *data);
+void	exec_exit(char **cmd, t_data *data);
 /*
 ** shell
 */
@@ -60,9 +62,9 @@ void	prompt(void);
 ** shell/env
 */
 t_env	*create_env(char **envp);
-void	update_env(void);
-char	*get_env(char *key);
-void	set_env(char *key, char *new_value);
+void	update_env(t_data *data);
+char	*get_env(char *key, t_data *data);
+void	set_env(char *key, char *new_value, t_data *data);
 t_env	*new_var(char *name, char *value);
 t_env	*get_last(t_env *g_env);
 void	add_var(t_env **g_env, t_env *new_var);
@@ -70,12 +72,12 @@ void	print_env(t_env *g_env);
 /*
 ** shell/exec
 */
-void	exec(char **cmd);
-void	exec_builtin(char **cmd);
+void	exec(char **cmd, t_data *data);
+void	exec_builtin(char **cmd, t_data *data);
 /*
 ** parsing
 */
-void	parse(char *input);
+void	parse(char *input, t_data *data);
 char	*is_builtin(char *cmd);
 /*
 ** exit

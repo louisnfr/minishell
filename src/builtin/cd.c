@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 01:11:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/09/30 15:00:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cd(char **cmd)
+void	exec_cd(char **cmd, t_data *data)
 {
 	char	*oldpwd;
 	char	*pwd;
@@ -35,8 +35,8 @@ void	exec_cd(char **cmd)
 		if (chdir(cmd[1]) < 0)
 			return (cd_error(oldpwd, cmd));
 	pwd = getcwd(NULL, 0);
-	set_env("OLDPWD", oldpwd);
-	set_env("PWD", pwd);
+	set_env("OLDPWD", oldpwd, data);
+	set_env("PWD", pwd, data);
 	free(pwd);
 	free(oldpwd);
 }
