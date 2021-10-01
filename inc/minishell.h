@@ -112,7 +112,7 @@ void	setup_cmd_list(t_cmd *cmd_list);
 void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
-t_bool	parse(char *input, t_data *data, t_cmd *cmd_list);
+t_bool	parse(char *input, t_data *data);
 char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
 t_bool	cmd_is_builtin(char *cmd);

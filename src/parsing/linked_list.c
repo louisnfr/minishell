@@ -26,27 +26,16 @@ void	print_list(t_cmd *cmd_list)
 
 void	remove_from_list(t_cmd *cmd_list)
 {
-	if (cmd_list->left)
-	{
-		cmd_list->is_builtin = 0;
-		if (cmd_list->command)
-		{
-			free(cmd_list->command);
-			cmd_list->command = NULL;
-		}
-		if (cmd_list->options)
-		{	
-			free(cmd_list->options);
-			cmd_list->options = NULL;
-		}
-		if (cmd_list->path)
-		{
-			free(cmd_list->path);
-			cmd_list->path = NULL;
-		}
-		free(cmd_list);
-		cmd_list = NULL;
+	cmd_list->is_builtin = 0;
+	clean_free(&cmd_list->command);
+	if (cmd_list->options)
+	{	
+		free(cmd_list->options);
+		cmd_list->options = NULL;
 	}
+	clean_free(&cmd_list->path);
+	free(cmd_list);
+	cmd_list = NULL;
 }
 
 void	clean_cmd_list(t_cmd *cmd_list)
@@ -66,6 +55,7 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (FAIL);
+	setup_cmd_list(new_cmd);
 	if (cmd)
 		new_cmd->command = ft_strdup(cmd);
 	new_cmd->options = options;

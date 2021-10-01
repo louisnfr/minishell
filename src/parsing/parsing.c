@@ -41,11 +41,8 @@ char	**find_cmd_options(char **argv, int i)
 	options = NULL;
 	if (!argv[++j])
 		return (options);
-	while (argv[j] && argv[j][0] == '-')
-	{
+	while (argv[j] && argv[j++][0] == '-')
 		k++;
-		j++;
-	}
 	if (k)
 	{
 		options = (char **)malloc(sizeof(char *) * (k + 1));
@@ -57,38 +54,50 @@ char	**find_cmd_options(char **argv, int i)
 	return (options);
 }
 
-t_bool	parse(char *input, t_data *data, t_cmd *cmd_list)
+void	handle_builtin_cmd(int i, char **argv, t_cmd *cmd_list)
 {
-	int		i;
+	char	**options;
+
+	options = NULL;
+	options = find_cmd_options(argv, i);
+	create_new_cmd(argv[i], options, NULL, &cmd_list);
+	cmd_list->is_builtin = TRUE;
+}
+
+void	handle_other_cmd(int i, char **argv, t_cmd *cmd_list, t_data *data)
+{
 	char	*path;
 	char	**options;
-	char	**argv;
 
+	path = NULL;
+	options = NULL;
+	path = find_cmd_path(argv[i], data->all_paths);
+	if (path)
+	{
+		options = find_cmd_options(argv, i);
+		create_new_cmd(argv[i], options, path, &cmd_list);
+	}
+}
+
+t_bool	parse(char *input, t_data *data)
+{
+	int		i;
+	char	**argv;
+	t_cmd	*cmd_list;
+
+	cmd_list = data->cmd_list;
 	argv = ft_split(input, ' ');
 	if (!argv)
 		return (FAIL);
 	i = -1;
 	while (argv[++i])
 	{
-		path = NULL;
-		options = NULL;
 		if (is_separation(argv[i]))
 			continue ;
 		if (cmd_is_builtin(argv[i]))
-		{
-			options = find_cmd_options(argv, i);
-			create_new_cmd(argv[i], options, NULL, &cmd_list);
-			cmd_list->is_builtin = TRUE;
-		}
+			handle_builtin_cmd(i, argv, cmd_list);
 		else
-		{
-			path = find_cmd_path(argv[i], data->all_paths);
-			if (path)
-			{
-				options = find_cmd_options(argv, i);
-				create_new_cmd(argv[i], options, path, &cmd_list);
-			}
-		}
+			handle_other_cmd(i, argv, cmd_list, data);
 	}
 	return (SUCCESS);
 }
