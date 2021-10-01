@@ -48,7 +48,7 @@ char	**find_cmd_args(char **argv, t_data *data)
 	return (args);
 }
 
-void	handle_builtin_cmd(char **argv, t_cmd *cmd_list, t_data *data)
+void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	char	*command;
 	char	**options;
@@ -60,15 +60,14 @@ void	handle_builtin_cmd(char **argv, t_cmd *cmd_list, t_data *data)
 	options = find_cmd_options(argv, data);
 	create_new_cmd(command, options, NULL, &cmd_list);
 	cmd_list->is_builtin = TRUE;
-	if (str_is_equal(command, "echo"))
-	{
-		args = find_cmd_args(argv, data);
-		cmd_list->args = args;
-	}
+	args = find_cmd_args(argv, data);
+	cmd_list->args = args;
+	if (delimiter)
+		cmd_list->delimiter = delimiter;
 	data->i++;
 }
 
-void	handle_other_cmd(char **argv, t_cmd *cmd_list, t_data *data)
+void	handle_other_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	char	*command;
 	char	*path;
@@ -87,6 +86,8 @@ void	handle_other_cmd(char **argv, t_cmd *cmd_list, t_data *data)
 	}
 	args = find_cmd_args(argv, data);
 	cmd_list->args = args;
+	if (delimiter)
+		cmd_list->delimiter = delimiter;
 	data->i++;
 }
 
@@ -94,7 +95,15 @@ t_bool	parse(char *input, t_data *data)
 {
 	char	**argv;
 	t_cmd	*cmd_list;
+	t_bool	is_heredoc;
+	int		delimiter;
 
+	delimiter = 0;
+	if (!input)
+		return (SUCCESS);
+	is_heredoc = FALSE;
+	if (check_heredoc(input))
+		is_heredoc = TRUE;
 	cmd_list = data->cmd_list;
 	argv = ft_split(input, ' ');
 	if (!argv)
@@ -103,11 +112,14 @@ t_bool	parse(char *input, t_data *data)
 	while (argv[data->i])
 	{
 		if (is_delimiter(argv[data->i]))
+		{
+			delimiter = get_delimiter(argv[data->i]);
 			data->i++;
+		}
 		else if (cmd_is_builtin(argv[data->i]))
-			handle_builtin_cmd(argv, cmd_list, data);
+			handle_builtin_cmd(delimiter, argv, cmd_list, data);
 		else
-			handle_other_cmd(argv, cmd_list, data);
+			handle_other_cmd(delimiter, argv, cmd_list, data);
 	}
 	return (SUCCESS);
 }

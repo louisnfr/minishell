@@ -62,6 +62,16 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list)
 	return (FAIL);
 }
 
+void	check_exit_code(int exit_code, t_cmd **cmd_list)
+{
+	if (*cmd_list)
+	{
+		if ((exit_code && (*cmd_list)->delimiter == AND)
+			|| (!exit_code && (*cmd_list)->delimiter == OR))
+			*cmd_list = (*cmd_list)->next;
+	}
+}
+
 int	exec(char **envp, t_data *data)
 {
 	pid_t	pid;
@@ -70,7 +80,7 @@ int	exec(char **envp, t_data *data)
 	t_cmd	*cmd_list;
 
 	cmd_list = data->cmd_list;
-	cmd_list = cmd_list->left;
+	cmd_list = cmd_list->next;
 	exit_code = EXIT_FAILURE;
 	pid = 0;
 	while (cmd_list)
@@ -83,8 +93,14 @@ int	exec(char **envp, t_data *data)
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))
 				exit_code = WEXITSTATUS(status);
+			cmd_list = cmd_list->next;
+			check_exit_code(exit_code, &cmd_list);
 		}
-		cmd_list = cmd_list->left;
+		else
+		{
+			exit_code = 127;
+			cmd_list = cmd_list->next;
+		}
 	}
 	return (exit_code);
 }

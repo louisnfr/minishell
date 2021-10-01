@@ -1,11 +1,38 @@
 #include "minishell.h"
 
+t_bool	check_heredoc(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i + 1])
+	{
+		if (input[i] == '<' && input[i + 1] == '<')
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
 t_bool	is_delimiter(char *str)
 {
 	return (str_is_equal(str, "&&")
 		|| str_is_equal(str, ";")
 		|| str_is_equal(str, "|")
 		|| str_is_equal(str, "||"));
+}
+
+int	get_delimiter(char *str)
+{
+	if (str_is_equal(str, "|"))
+		return (PIPE);
+	if (str_is_equal(str, "&&"))
+		return (AND);
+	if (str_is_equal(str, "||"))
+		return (OR);
+	if (str_is_equal(str, ";"))
+		return (SEMICOLON);
+	return (0);
 }
 
 t_bool	cmd_is_builtin(char *cmd)

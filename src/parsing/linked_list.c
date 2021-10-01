@@ -27,7 +27,9 @@ void	print_list(t_cmd *cmd_list)
 		}
 		if (tmp->path)
 			printf("Path : %s\n", tmp->path);
-		tmp = tmp->left;
+		if (tmp->delimiter)
+			printf("Delimiter = %d\n", tmp->delimiter);
+		tmp = tmp->next;
 		printf("\n");
 	}
 }
@@ -53,10 +55,10 @@ void	remove_from_list(t_cmd *cmd_list)
 
 void	clean_cmd_list(t_cmd *cmd_list)
 {
-	while (cmd_list->left)
+	while (cmd_list->next)
 	{
 		remove_from_list(cmd_list);
-		cmd_list = cmd_list->left;
+		cmd_list = cmd_list->next;
 	}
 	cmd_list = NULL;
 }
@@ -74,13 +76,11 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 	new_cmd->options = options;
 	if (path)
 		new_cmd->path = ft_strdup(path);
-	new_cmd->is_builtin = FALSE;
-	new_cmd->left = NULL;
-	new_cmd->right = NULL;
-	while ((*cmd_list)->left)
-		(*cmd_list) = (*cmd_list)->left;
-	(*cmd_list)->left = new_cmd;
-	(*cmd_list) = (*cmd_list)->left;
+	new_cmd->next = NULL;
+	while ((*cmd_list)->next)
+		(*cmd_list) = (*cmd_list)->next;
+	(*cmd_list)->next = new_cmd;
+	(*cmd_list) = (*cmd_list)->next;
 	return (SUCCESS);
 }
 
@@ -90,6 +90,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->options = NULL;
 	cmd_list->args = NULL;
 	cmd_list->path = NULL;
-	cmd_list->left = NULL;
-	cmd_list->right = NULL;
+	cmd_list->is_builtin = FALSE;
+	cmd_list->delimiter = 0;
+	cmd_list->next = NULL;
 }

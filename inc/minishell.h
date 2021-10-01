@@ -42,14 +42,20 @@ typedef struct s_env
 
 typedef int	t_bool;
 
-typedef enum t_boolean
+typedef enum s_boolean
 {
 	CHILD	= 0,
 	FAIL	= 0,
 	SUCCESS = 1,
-	LEFT	= 0,
-	RIGHT	= 1,
 }	t_boolean;
+
+typedef enum s_delimiter
+{
+	PIPE		= 1,
+	AND			= 2,
+	OR			= 3,
+	SEMICOLON	= 4,
+}	t_delimiter;
 
 typedef struct s_cmd
 {
@@ -58,8 +64,8 @@ typedef struct s_cmd
 	char			**args;
 	char			*path;
 	t_bool			is_builtin;
-	struct s_cmd	*left;
-	struct s_cmd	*right;
+	int				delimiter;
+	struct s_cmd	*next;
 }			t_cmd;
 
 typedef struct s_data
@@ -118,6 +124,8 @@ char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
 t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
+int		get_delimiter(char *str);
+t_bool	check_heredoc(char *input);
 /*
 ** exit
 */
