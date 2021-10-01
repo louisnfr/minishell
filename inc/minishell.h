@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 21:45:25 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/01 18:46:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ typedef struct s_data
 /*
 ** builtin
 */
-t_bool	exec_echo(char **cmd, t_data *data);
-t_bool	exec_cd(char **cmd, t_data *data);
-t_bool	exec_pwd(char **cmd, t_data *data);
-t_bool	exec_env(char **cmd, t_data *data);
-t_bool	exec_export(char **cmd, t_data *data);
-t_bool	exec_unset(char **cmd, t_data *data);
-void	exec_exit(char **cmd, t_data *data);
+t_bool	exec_echo(t_cmd *cmd_list, t_data *data);
+t_bool	exec_cd(t_cmd *cmd_list, t_data *data);
+t_bool	exec_pwd(t_cmd *cmd_list, t_data *data);
+t_bool	exec_env(t_cmd *cmd_list, t_data *data);
+t_bool	exec_export(t_cmd *cmd_list, t_data *data);
+t_bool	exec_unset(t_cmd *cmd_list, t_data *data);
+void	exec_exit(t_cmd *cmd_list, t_data *data);
 /*
 ** shell
 */
@@ -105,7 +105,7 @@ void	print_env(t_env *g_env);
 ** shell/exec
 */
 int		exec(char **envp, t_data *data);
-void	exec_builtin(char **cmd, t_data *data);
+void	exec_builtin(t_cmd *cmd_list, t_data *data);
 /*
 ** libft
 */
@@ -131,6 +131,6 @@ t_bool	check_heredoc(char *input);
 */
 void	free_env(t_env *g_env);
 void	free_split(char **args);
-t_bool	cd_error(char *pwd, char **cmd);
+t_bool	cd_error(char *pwd, t_cmd *cmd_list);
 
 #endif

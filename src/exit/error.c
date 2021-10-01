@@ -6,16 +6,16 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 01:06:08 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 18:03:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/01 18:45:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	cd_error(char *pwd, char **cmd)
+t_bool	cd_error(char *pwd, t_cmd *cmd_list)
 {
 	ft_putstr("minishell: cd: ");
-	perror(cmd[1]);
+	perror(cmd_list->args[0]);
 	free(pwd);
 	return (FAIL);
 }

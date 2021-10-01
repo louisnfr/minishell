@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 22:26:38 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/01 18:19:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,12 @@ int	exec(char **envp, t_data *data)
 	pid = 0;
 	while (cmd_list)
 	{
-//		if (cmd_list->is_builtin)
-//			exec_builtin(cmd_list, data);
-		if (cmd_list->path)
+		if (cmd_list->is_builtin)
+		{
+			exec_builtin(cmd_list, data);
+			cmd_list = cmd_list->next;
+		}
+		else if (cmd_list->path)
 		{
 			exec_command(pid, envp, cmd_list);
 			waitpid(pid, &status, 0);

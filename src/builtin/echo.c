@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 18:07:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/01 18:49:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,31 @@ void	print_var(char *key, t_data *data)
 		return ;
 }
 
-t_bool	exec_echo(char **cmd, t_data *data)
+t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 {
 	int	i;
 	int	eol;
 
-	if (!cmd[1])
+	if (!cmd_list->args)
 	{
 		ft_putchar('\n');
 		return (SUCCESS);
 	}
-	i = 0;
+	i = -1;
 	eol = 1;
-	if (!ft_strcmp(cmd[1], "-n"))
+	if (!ft_strcmp(cmd_list->args[0], "-n"))
 	{
 		eol = 0;
 		i++;
 	}
-	while (cmd[++i])
+	while (cmd_list->args[++i])
 	{
-		if (cmd[i][0] == '$' && cmd[i][1])
-			print_var(cmd[i] + 1, data);
+		if (cmd_list->args[i][0] == '$' && cmd_list->args[i][1])
+			print_var(cmd_list->args[i] + 1, data);
 		else
 		{
-			ft_putstr(cmd[i]);
-			if (cmd[i + 1])
+			ft_putstr(cmd_list->args[i]);
+			if (cmd_list->args[i + 1])
 				ft_putchar(32);
 		}
 	}

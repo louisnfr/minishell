@@ -94,14 +94,8 @@ void	handle_other_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 char	**get_argv(char *input)
 {
 	char	**argv;
-	int		i;
 
 	argv = ft_split(input, ' ');
-
-	i = -1;
-	while (argv[++i])
-		printf("argv[%d] = %s\n", i, argv[i]);
-
 	return (argv);
 }
 

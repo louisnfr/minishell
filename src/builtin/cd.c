@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 19:23:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/01 18:48:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	exec_cd(char **cmd, t_data *data)
+t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 {
 	char	*oldpwd;
 	char	*pwd;
@@ -20,20 +20,20 @@ t_bool	exec_cd(char **cmd, t_data *data)
 	char	*tmp;
 
 	oldpwd = getcwd(NULL, 0);
-	if (!cmd[1])
+	if (!cmd_list->args)
 		chdir(getenv("HOME"));
-	else if (cmd[1][0] == '~')
+	else if (cmd_list->args[0][1] == '~')
 	{
-		p = ft_substr(cmd[1], 1, ft_strlen(cmd[1]));
+		p = ft_substr(cmd_list->args[0], 1, ft_strlen(cmd_list->args[0]));
 		tmp = ft_strjoin(getenv("HOME"), p);
 		free(p);
 		if (chdir(tmp) < 0)
-			return (cd_error(oldpwd, cmd));
+			return (cd_error(oldpwd, cmd_list));
 		free(tmp);
 	}
 	else
-		if (chdir(cmd[1]) < 0)
-			return (cd_error(oldpwd, cmd));
+		if (chdir(cmd_list->args[0]) < 0)
+			return (cd_error(oldpwd, cmd_list));
 	pwd = getcwd(NULL, 0);
 	set_env("OLDPWD", oldpwd, data);
 	set_env("PWD", pwd, data);
@@ -41,5 +41,3 @@ t_bool	exec_cd(char **cmd, t_data *data)
 	free(oldpwd);
 	return (SUCCESS);
 }
-
-
