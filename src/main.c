@@ -23,6 +23,7 @@ t_data	*init_data(char **envp)
 	data->all_paths = get_paths(envp);
 	if (!data->all_paths)
 		return (NULL);
+	data->i = 0;
 	update_env(data);
 	return (data);
 }

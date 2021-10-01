@@ -13,9 +13,17 @@ void	print_list(t_cmd *cmd_list)
 		printf("Is_builtin : %d\n", tmp->is_builtin);
 		if (tmp->options)
 		{
-			i = 0;
-			while (tmp->options[i])
-				printf("Options : %s\n", tmp->options[i++]);
+			i = -1;
+			while (tmp->options[++i])
+				printf("Option[%d] : %s\t", i, tmp->options[i]);
+			printf("\n");
+		}
+		if (tmp->args)
+		{
+			i = -1;
+			while (tmp->args[++i])
+				printf("Arg[%d] : %s\t", i, tmp->args[i]);
+			printf("\n");
 		}
 		if (tmp->path)
 			printf("Path : %s\n", tmp->path);
@@ -32,6 +40,11 @@ void	remove_from_list(t_cmd *cmd_list)
 	{	
 		free(cmd_list->options);
 		cmd_list->options = NULL;
+	}
+	if (cmd_list->args)
+	{	
+		free(cmd_list->args);
+		cmd_list->args = NULL;
 	}
 	clean_free(&cmd_list->path);
 	free(cmd_list);
@@ -75,6 +88,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 {
 	cmd_list->command = NULL;
 	cmd_list->options = NULL;
+	cmd_list->args = NULL;
 	cmd_list->path = NULL;
 	cmd_list->left = NULL;
 	cmd_list->right = NULL;

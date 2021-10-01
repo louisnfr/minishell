@@ -1,42 +1,12 @@
 #include "minishell.h"
 
-t_bool	is_separation(char *str)
-{
-	return (str_is_equal(str, "&&")
-		|| str_is_equal(str, ";")
-		|| str_is_equal(str, "|")
-		|| str_is_equal(str, "||"));
-}
-
-t_bool	cmd_is_builtin(char *cmd)
-{
-	int		i;
-	char	*builtins[8];
-
-	builtins[0] = "cd";
-	builtins[1] = "echo";
-	builtins[2] = "env";
-	builtins[3] = "exit";
-	builtins[4] = "export";
-	builtins[5] = "pwd";
-	builtins[6] = "unset";
-	builtins[7] = NULL;
-	i = -1;
-	while (builtins[++i])
-	{
-		if (str_is_equal(cmd, builtins[i]))
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
-char	**find_cmd_options(char **argv, int i)
+char	**find_cmd_options(char **argv, t_data *data)
 {
 	int		j;
 	int		k;
 	char	**options;
 
-	j = i;
+	j = data->i;
 	k = 0;
 	options = NULL;
 	if (!argv[++j])
@@ -46,42 +16,82 @@ char	**find_cmd_options(char **argv, int i)
 	if (k)
 	{
 		options = (char **)malloc(sizeof(char *) * (k + 1));
-		k = 0;
-		while (argv[++i] && argv[i][0] == '-')
-			options[k++] = ft_strdup(argv[i]);
-		options[k] = NULL;
+		j = 0;
+		while (k--)
+			options[j++] = ft_strdup(argv[++data->i]);
+		options[j] = NULL;
 	}
 	return (options);
 }
 
-void	handle_builtin_cmd(int i, char **argv, t_cmd *cmd_list)
+char	**find_cmd_args(char **argv, t_data *data)
 {
-	char	**options;
+	int		j;
+	int		k;
+	char	**args;
 
-	options = NULL;
-	options = find_cmd_options(argv, i);
-	create_new_cmd(argv[i], options, NULL, &cmd_list);
-	cmd_list->is_builtin = TRUE;
+	j = data->i;
+	k = 0;
+	args = NULL;
+	if (!argv[++j])
+		return (args);
+	while (argv[j] && !is_delimiter(argv[j++]))
+		k++;
+	if (k)
+	{
+		args = (char **)malloc(sizeof(char *) * (k + 1));
+		j = 0;
+		while (k--)
+			args[j++] = ft_strdup(argv[++data->i]);
+		args[j] = NULL;
+	}
+	return (args);
 }
 
-void	handle_other_cmd(int i, char **argv, t_cmd *cmd_list, t_data *data)
+void	handle_builtin_cmd(char **argv, t_cmd *cmd_list, t_data *data)
 {
+	char	*command;
+	char	**options;
+	char	**args;
+
+	options = NULL;
+	args = NULL;
+	command = ft_strdup(argv[data->i]);
+	options = find_cmd_options(argv, data);
+	create_new_cmd(command, options, NULL, &cmd_list);
+	cmd_list->is_builtin = TRUE;
+	if (str_is_equal(command, "echo"))
+	{
+		args = find_cmd_args(argv, data);
+		cmd_list->args = args;
+	}
+	data->i++;
+}
+
+void	handle_other_cmd(char **argv, t_cmd *cmd_list, t_data *data)
+{
+	char	*command;
 	char	*path;
 	char	**options;
+	char	**args;
 
 	path = NULL;
 	options = NULL;
-	path = find_cmd_path(argv[i], data->all_paths);
+	args = NULL;
+	path = find_cmd_path(argv[data->i], data->all_paths);
 	if (path)
 	{
-		options = find_cmd_options(argv, i);
-		create_new_cmd(argv[i], options, path, &cmd_list);
+		command = ft_strdup(argv[data->i]);
+		options = find_cmd_options(argv, data);
+		create_new_cmd(command, options, path, &cmd_list);
 	}
+	args = find_cmd_args(argv, data);
+	cmd_list->args = args;
+	data->i++;
 }
 
 t_bool	parse(char *input, t_data *data)
 {
-	int		i;
 	char	**argv;
 	t_cmd	*cmd_list;
 
@@ -89,15 +99,15 @@ t_bool	parse(char *input, t_data *data)
 	argv = ft_split(input, ' ');
 	if (!argv)
 		return (FAIL);
-	i = -1;
-	while (argv[++i])
+	data->i = 0;
+	while (argv[data->i])
 	{
-		if (is_separation(argv[i]))
-			continue ;
-		if (cmd_is_builtin(argv[i]))
-			handle_builtin_cmd(i, argv, cmd_list);
+		if (is_delimiter(argv[data->i]))
+			data->i++;
+		else if (cmd_is_builtin(argv[data->i]))
+			handle_builtin_cmd(argv, cmd_list, data);
 		else
-			handle_other_cmd(i, argv, cmd_list, data);
+			handle_other_cmd(argv, cmd_list, data);
 	}
 	return (SUCCESS);
 }

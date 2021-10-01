@@ -55,7 +55,7 @@ typedef struct s_cmd
 {
 	char			*command;
 	char			**options;
-	char			**arg;
+	char			**args;
 	char			*path;
 	t_bool			is_builtin;
 	struct s_cmd	*left;
@@ -67,6 +67,7 @@ typedef struct s_data
 	t_cmd	*cmd_list;
 	t_env	*env;
 	char	**all_paths;
+	int		i;
 }	t_data;
 
 /*
@@ -116,6 +117,7 @@ t_bool	parse(char *input, t_data *data);
 char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
 t_bool	cmd_is_builtin(char *cmd);
+t_bool	is_delimiter(char *str);
 /*
 ** exit
 */

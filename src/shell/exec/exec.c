@@ -16,11 +16,15 @@ char	**fill_cmd_array(t_cmd *cmd_list)
 {
 	char	**cmd_array;
 	int		i;
+	int		j;
 
 	if (!cmd_list->command)
 		return (NULL);
 	i = 0;
 	while (cmd_list->options && cmd_list->options[i])
+		i++;
+	j = 0;
+	while (cmd_list->args && cmd_list->args[j++])
 		i++;
 	cmd_array = NULL;
 	cmd_array = (char **)malloc(sizeof(char *) * (i + 2));
@@ -31,6 +35,12 @@ char	**fill_cmd_array(t_cmd *cmd_list)
 	while (cmd_list->options && cmd_list->options[i])
 	{
 		cmd_array[i + 1] = ft_strdup(cmd_list->options[i]);
+		i++;
+	}
+	j = 0;
+	while (cmd_list->args && cmd_list->args[j])
+	{
+		cmd_array[i + 1] = ft_strdup(cmd_list->args[j++]);
 		i++;
 	}
 	cmd_array[++i] = NULL;
