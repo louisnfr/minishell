@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/01 18:46:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/01 19:56:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <curses.h>
+# include <termios.h>
+# include <sys/ioctl.h>
+# include <linux/kd.h>
 # include <term.h>
 # include <signal.h>
 # include <readline/readline.h>
