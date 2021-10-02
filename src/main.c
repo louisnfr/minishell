@@ -50,6 +50,7 @@ int main(int ac, char **av, char **envp)
 	data = init_data(envp);
 	if (!data)
 		return (EXIT_FAILURE);
+	printf("FAILURE : %d | SUCCESS : %d\n", EXIT_FAILURE, EXIT_SUCCESS);
 	while (1)
 	{
 		prompt();
@@ -57,7 +58,7 @@ int main(int ac, char **av, char **envp)
 		init_cmd_list(data);
 		parse(input, data);
 		exec(envp, data);
-		print_list(data->cmd_list);
+	//	print_list(data->cmd_list);
 		clean_cmd_list(data->cmd_list);
 	}
 	return (0);

@@ -28,7 +28,7 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	if (!cmd_list->args)
 	{
 		ft_putchar('\n');
-		return (SUCCESS);
+		return (EXIT_SUCCESS);
 	}
 	eol = 1;
 	if (cmd_list->options && !ft_strcmp(cmd_list->options[0], "-n"))
@@ -47,5 +47,5 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	}
 	if (eol)
 		ft_putchar('\n');
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

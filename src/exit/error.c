@@ -17,5 +17,5 @@ t_bool	cd_error(char *pwd, t_cmd *cmd_list)
 	ft_putstr("minishell: cd: ");
 	perror(cmd_list->args[0]);
 	free(pwd);
-	return (FAIL);
+	return (EXIT_FAILURE);
 }

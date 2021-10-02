@@ -39,5 +39,5 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	set_env("PWD", pwd, data);
 	free(pwd);
 	free(oldpwd);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

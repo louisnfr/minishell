@@ -108,7 +108,7 @@ void	print_env(t_env *g_env);
 ** shell/exec
 */
 int		exec(char **envp, t_data *data);
-void	exec_builtin(t_cmd *cmd_list, t_data *data);
+t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 /*
 ** libft
 */

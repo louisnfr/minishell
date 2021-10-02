@@ -16,5 +16,5 @@ t_bool	exec_env(t_cmd *cmd_list, t_data *data)
 {
 	(void)cmd_list;
 	print_env(data->env);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

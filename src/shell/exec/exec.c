@@ -87,8 +87,9 @@ int	exec(char **envp, t_data *data)
 	{
 		if (cmd_list->is_builtin)
 		{
-			exec_builtin(cmd_list, data);
+			exit_code = exec_builtin(cmd_list, data);
 			cmd_list = cmd_list->next;
+			check_exit_code(exit_code, &cmd_list);
 		}
 		else if (cmd_list->path)
 		{
@@ -102,6 +103,7 @@ int	exec(char **envp, t_data *data)
 		else
 		{
 			exit_code = 127;
+			perror(cmd_list->command);
 			cmd_list = cmd_list->next;
 		}
 	}
