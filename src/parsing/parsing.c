@@ -57,7 +57,15 @@ void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *dat
 	options = NULL;
 	args = NULL;
 	command = ft_strdup(argv[data->i]);
-	options = find_cmd_options(argv, data);
+	if (str_is_equal(command, "echo"))
+	{
+		if (argv[data->i + 1] && str_is_equal(argv[data->i + 1], "-n"))
+		{
+			options = (char **)malloc(sizeof(char *) * 2);
+			options[0] = ft_strdup(argv[++data->i]);
+			options[1] = NULL;
+		}
+	}
 	create_new_cmd(command, options, NULL, &cmd_list);
 	cmd_list->is_builtin = TRUE;
 	args = find_cmd_args(argv, data);

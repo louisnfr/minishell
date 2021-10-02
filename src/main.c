@@ -57,7 +57,7 @@ int main(int ac, char **av, char **envp)
 		init_cmd_list(data);
 		parse(input, data);
 		exec(envp, data);
-		//	print_list(data->cmd_list);
+		print_list(data->cmd_list);
 		clean_cmd_list(data->cmd_list);
 	}
 	return (0);
