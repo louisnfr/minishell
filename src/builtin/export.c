@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/04 17:45:49 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/04 20:00:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 {
 	char	**var;
+	int		i;
 
-	var = ft_split(cmd_list->args[0], '=');
-	add_var(&data->env, new_var(var[0], var[1]));
+	i = -1;
+	while (cmd_list->args[++i])
+	{
+		var = ft_split(cmd_list->args[i], '=');
+		add_var(&data->env, new_var(var[0], var[1]));
+		free_split(var);
+	}
 	return (EXIT_SUCCESS);
 }
