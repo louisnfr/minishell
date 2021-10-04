@@ -1,8 +1,6 @@
 # minishell
 
-## Signals
+42Paris, October 2021.
 
-CTRL-\ is the Linux key that generates the QUIT signal. Generally, that signal causes a program to terminate and dump core.
-
-CTRL-D is the Linux key that generates the EOF signal. Equivalent to exit command.
-
+The objective of this project is for you to create a simple shell. Yes, your
+little bash or zsh.
