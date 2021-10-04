@@ -48,6 +48,7 @@ char	**find_cmd_args(char **argv, t_data *data)
 	return (args);
 }
 
+
 void	check_ret_value(t_cmd *cmd_list, t_data *data)
 {
 	int	i;
@@ -56,9 +57,32 @@ void	check_ret_value(t_cmd *cmd_list, t_data *data)
 	while (cmd_list->args && cmd_list->args[++i])
 	{
 		if (str_is_equal(cmd_list->args[i], "$?"))
-				cmd_list->args[i] = ft_itoa(data->ret_value);
+			cmd_list->args[i] = ft_itoa(data->ret_value);
 	}
 }
+
+
+/*
+void	check_ret_value(t_cmd *cmd_list, t_data *data)
+{
+	int		i;
+	char	**tmp;
+	int		j;
+
+	i = -1;
+	j = 0;
+	tmp = cmd_list->args;
+	while (tmp && tmp[++i])
+	{
+		while (tmp[i][j + 1])
+		{
+			if (tmp[i][j] == '$' && tmp[i][j + 1] == '?')
+				cmd_list->args[i] = ft_itoa(data->ret_value);
+			j++;
+		}
+	}
+}
+*/
 
 void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {

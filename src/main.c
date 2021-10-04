@@ -39,6 +39,22 @@ t_bool init_cmd_list(t_data *data)
 	return (SUCCESS);
 }
 
+void	ft_getpid(t_data *data)
+{
+	pid_t	pid;
+
+	pid = fork();
+	printf("before pid = %d\n", pid);
+	if (pid == 0)
+		printf("child pid: %d\n", pid);
+	else
+	{
+		printf("child pid: %d\n", pid);
+		// kill(pid, SIGTERM);
+	}
+	data->pid = pid - 1;
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_data *data;
@@ -50,6 +66,7 @@ int main(int ac, char **av, char **envp)
 	data = init_data(envp);
 	if (!data)
 		return (EXIT_FAILURE);
+	// ft_getpid(data);
 	while (1)
 	{
 		input = readline(prompt());

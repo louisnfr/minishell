@@ -81,6 +81,7 @@ typedef struct s_data
 	char	**all_paths;
 	int		i;
 	int		ret_value;
+	pid_t	pid;
 }	t_data;
 
 /*
