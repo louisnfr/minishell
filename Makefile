@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/09/30 01:06:17 by lraffin          ###   ########.fr        #
+#    Updated: 2021/10/04 16:17:14 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SOURCES = \
 ### COMPILATION ###
 CC		= clang
 FLAGS	= -Wall -Wextra -Werror
+RDL		= -lreadline
 
 ### INCLUDES ###
 INCLUDE		= inc
@@ -71,7 +72,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "$(YELLOW)libft..$(NOC)"
 	@make -sC $(LIBFT_PATH)
-	@$(CC) $(FLAGS) -L $(LIBFT_PATH) -o $@ $^ -lft
+	@$(CC) $(FLAGS) $(RDL) -L $(LIBFT_PATH) -o $@ $^ -lft
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
