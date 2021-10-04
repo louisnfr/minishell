@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:34:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/04 17:48:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/04 17:55:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 	else if (!ft_strcmp(cmd_list->command, "export"))
 		return(exec_export(cmd_list, data));
 	else if (!ft_strcmp(cmd_list->command, "unset"))
-		printf("unset\n");
+		return(exec_unset(cmd_list, data));
 	else if (!ft_strcmp(cmd_list->command, "exit"))
 		exec_exit(cmd_list, data);
 	return (EXIT_FAILURE);
