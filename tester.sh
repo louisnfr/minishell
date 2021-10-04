@@ -18,7 +18,7 @@ function execute_test
 {
 	echo -en "${BLUE}[TEST CASE]  $1 : ${RESET}"
 
-	MY_RESULT=$(echo $@ "; exit/;" | ./minishell 2>&-)
+	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>&-)
 	MY_EXIT_STATUS=$(echo $?)
 
 	REF_BASH=$(echo $@ "; exit" | bash --posix 2>&-)
