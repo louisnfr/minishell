@@ -5,6 +5,11 @@ int	char_is_charset(char c)
 	return (c == ' ' || c == '&' || c == '|' || c == ';');
 }
 
+int	char_is_delimiter(char c)
+{
+	return (c == '&' || c == '|' || c == ';');
+}
+
 int	check_multiple_delimiters(char c1, char c2, char delimiter1, char delimiter2)
 {
 	if (c1 == delimiter1)
@@ -190,7 +195,7 @@ int	handle_delimiters(int i, char **str, char **strs)
 	if (!strs[i])
 		return (0);
 	j = 0;
-	while (**str && char_is_charset(**str))
+	while (**str && char_is_delimiter(**str))
 	{
 		strs[i][j++] = **str;
 		(*str)++;
