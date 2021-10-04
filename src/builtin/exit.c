@@ -15,7 +15,7 @@
 void	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	(void)cmd_list;
-	ft_putstr("exit\n");
+	// ft_putstr("exit\n");
 	// free_split(cmd);
 	// free data
 	free_env(data->env);
