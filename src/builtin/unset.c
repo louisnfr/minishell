@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/04 18:24:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/04 20:07:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,17 @@ t_bool	exec_unset(t_cmd *cmd_list, t_data *data)
 {
 	t_env	*prev;
 	t_env	*tmp;
+	int		i;
 
-	prev = find_prev_var(cmd_list->args[0], data->env);
-	if (!prev)
-		return (EXIT_FAILURE);
-	tmp = prev->next->next;
-	free(prev->next);
-	prev->next = tmp;
+	i = -1;
+	while (cmd_list->args[++i])
+	{
+		prev = find_prev_var(cmd_list->args[i], data->env);
+		if (!prev)
+			return (EXIT_FAILURE);
+		tmp = prev->next->next;
+		free(prev->next);
+		prev->next = tmp;
+	}
 	return (EXIT_SUCCESS);
 }
