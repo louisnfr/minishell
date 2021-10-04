@@ -18,7 +18,7 @@ function execute_test
 {
 	echo -en "${BLUE}[TEST CASE]  $1 : ${RESET}"
 
-	MY_RESULT=$(echo $@ "; exit/; | ./minishell 2>&-)
+	MY_RESULT=$(echo $@ "; exit/;" | ./minishell 2>&-)
 	MY_EXIT_STATUS=$(echo $?)
 
 	REF_BASH=$(echo $@ "; exit" | bash --posix 2>&-)
@@ -26,7 +26,7 @@ function execute_test
 
 	if [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]
 	then
-	   	echo -e "\t✅  "
+	   	echo -e "\t✅ "
 	else
 	   	echo -e "\t❌ "
 	fi
@@ -47,8 +47,10 @@ function execute_test
 }
 
 
+execute_test 'pwd'
 execute_test 'pwd; ls -z'
 execute_test 'ls||pwd'
 
 
 printf "${GREEN}...................... END TEST ......................${RESET}\n\n"
+
