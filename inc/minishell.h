@@ -26,11 +26,14 @@
 # include <curses.h>
 # include <termios.h>
 # include <sys/ioctl.h>
-# include <linux/kd.h>
 # include <term.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# ifdef __linux__
+#  include <linux/kd.h>
+# endif
 
 /*
 ** structures

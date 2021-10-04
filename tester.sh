@@ -47,8 +47,8 @@ function execute_test
 }
 
 
-execute_test 'cd . ; pwd'
-execute_test 'cd .. ; pwd'
+execute_test 'ls ; pwd'
+execute_test 'ls || pwd'
 
 
 printf "${GREEN}...................... END TEST ......................${RESET}\n\n"
