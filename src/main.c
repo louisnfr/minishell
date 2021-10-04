@@ -50,7 +50,6 @@ int main(int ac, char **av, char **envp)
 	data = init_data(envp);
 	if (!data)
 		return (EXIT_FAILURE);
-	printf("FAILURE : %d | SUCCESS : %d\n", EXIT_FAILURE, EXIT_SUCCESS);
 	while (1)
 	{
 		prompt();

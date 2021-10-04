@@ -77,6 +77,7 @@ typedef struct s_data
 	t_env	*env;
 	char	**all_paths;
 	int		i;
+	int		ret_value;
 }	t_data;
 
 /*
@@ -112,6 +113,7 @@ t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 /*
 ** libft
 */
+int		ft_isspace(int c);
 int		str_is_equal(const char *s1, const char *s2);
 void	clean_free(char **str);
 char	*ft_strjoin_and_free(char *s1, char *s2);
@@ -123,6 +125,7 @@ void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
 t_bool	parse(char *input, t_data *data);
+char	**split_arguments(char *str);
 char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
 t_bool	cmd_is_builtin(char *cmd);

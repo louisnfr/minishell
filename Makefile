@@ -26,6 +26,7 @@ SOURCES = \
 		builtin/exit.c \
 		\
 		parsing/parsing.c \
+		parsing/split_arguments.c \
 		parsing/parsing_utils.c \
 		parsing/paths.c \
 		parsing/libft.c \

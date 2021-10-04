@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+int	ft_isspace(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
 int	str_is_equal(const char *s1, const char *s2)
 {
 	return (!ft_strncmp(s1, s2, ft_strlen(s1))

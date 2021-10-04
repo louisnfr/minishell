@@ -103,9 +103,10 @@ int	exec(char **envp, t_data *data)
 		else
 		{
 			exit_code = 127;
-			perror(cmd_list->command);
+			printf("bash: %s: command not found\n", cmd_list->command);
 			cmd_list = cmd_list->next;
 		}
 	}
+	data->ret_value = exit_code;
 	return (exit_code);
 }

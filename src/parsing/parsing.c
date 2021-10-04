@@ -48,6 +48,18 @@ char	**find_cmd_args(char **argv, t_data *data)
 	return (args);
 }
 
+void	check_ret_value(t_cmd *cmd_list, t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (cmd_list->args && cmd_list->args[++i])
+	{
+		if (str_is_equal(cmd_list->args[i], "$?"))
+				cmd_list->args[i] = ft_itoa(data->ret_value);
+	}
+}
+
 void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	char	*command;
@@ -72,6 +84,7 @@ void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *dat
 	cmd_list->args = args;
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
+	check_ret_value(cmd_list, data);
 	data->i++;
 }
 
@@ -86,16 +99,14 @@ void	handle_other_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 	options = NULL;
 	args = NULL;
 	path = find_cmd_path(argv[data->i], data->all_paths);
-	if (path)
-	{
-		command = ft_strdup(argv[data->i]);
-		options = find_cmd_options(argv, data);
-		create_new_cmd(command, options, path, &cmd_list);
-	}
+	command = ft_strdup(argv[data->i]);
+	options = find_cmd_options(argv, data);
+	create_new_cmd(command, options, path, &cmd_list);
 	args = find_cmd_args(argv, data);
 	cmd_list->args = args;
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
+	check_ret_value(cmd_list, data);
 	data->i++;
 }
 
@@ -103,7 +114,7 @@ char	**get_argv(char *input)
 {
 	char	**argv;
 
-	argv = ft_split(input, ' ');
+	argv = split_arguments(input);
 	return (argv);
 }
 
