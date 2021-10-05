@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/04 16:17:14 by lraffin          ###   ########.fr        #
+#    Updated: 2021/10/05 21:48:56 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SOURCES = \
 		builtin/exit.c \
 		\
 		parsing/parsing.c \
+		parsing/check_input.c \
 		parsing/upgrade_input.c \
 		parsing/split_arguments.c \
 		parsing/parsing_utils.c \

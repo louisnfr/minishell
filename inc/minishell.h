@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/05 16:18:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/05 21:48:39 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
 t_bool	parse(char *input, t_data *data);
+char	*check_input(char *input);
 char	*upgrade_input(char *input, t_data *data);
 char	**split_arguments(char *str);
 char	**get_paths(char **envp);

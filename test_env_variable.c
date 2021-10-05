@@ -11,6 +11,12 @@ typedef struct s_env
 
 /////////////////////////////////////
 
+
+int	ft_isspace(int c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -243,7 +249,12 @@ static int	get_length(char *str, t_env *env)
 	env_var = NULL;
 	while (str && str[i + 1])
 	{
-		if (str[i] == '$' && !is_charset(str[i + 1]))
+		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '$')
+		{
+			i += 2;
+			continue;
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && !is_charset(str[i + 1]))
 		{
 			j = i + 1;
 			var_length = 0;
@@ -280,6 +291,71 @@ void	fonction(void)
 	system("leaks a.out");
 }
 
+char	*check_comment(char *input)
+{
+	char	*new_input;
+	int		length;
+	int		i;
+
+	length = -1;
+	new_input = NULL;
+	while (input[++length])
+	{
+		while (input[length] && ft_isspace(input[length]))
+			length++;
+		if (input[length] == '#')
+			break ;
+		while (input[length] && !ft_isspace(input[length]))
+		{
+			if (input[length] == '\"')
+			{
+				length++;
+				while (input[length] && input[length] != '\"')
+					length++;
+			}
+			else if (input[length] == '\'')
+			{
+				length++;
+				while (input[length] && input[length] != '\'')
+					length++;
+			}
+			length++;
+		}
+	}
+	if (length == (int)ft_strlen(input))
+		return (input);
+	new_input = (char *)malloc(sizeof(char) * (length + 1));
+	if (!new_input)
+		return (NULL);
+	i = -1;
+	while (++i < length)
+		new_input[i] = input[i];
+	new_input[i] = '\0';
+	free(input);
+	return (new_input);
+}
+
+int	check_unclosed_quotes(char *input, char quote)
+{
+	int	i;
+
+	i = -1;
+	while (input && input[++i])
+	{
+		if (input[i] == quote)
+		{
+			i++;
+			while (input[i] && input[i] != quote)
+				i++;
+			if (input[i])
+				continue ;
+			printf("bash: syntax error: missing quote `%c'\n", quote);
+			return (0);
+		}
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
@@ -289,7 +365,13 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 2)
 		return (1);
 	input = ft_strdup(argv[1]);
-	printf("Input : | %s |\n", input);
+	printf("\nInput : |%s|\n", input);
+	input = check_comment(input);
+	if (!check_unclosed_quotes(input, '\"'))
+		return (1);
+	if (!check_unclosed_quotes(input, '\''))
+		return (1);
+	printf("\nInput : |%s|\n\n", input);
 	env = create_env(envp);
 	input = check_env_variable(input, env);
 //	printf("input = %s\n", input);
