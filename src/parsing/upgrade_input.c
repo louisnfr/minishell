@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	get_length(char *str, int value_length, char character)
+static int	get_length(char *str, int value_length, char character)
 {
 	int	i;
 	int	length;

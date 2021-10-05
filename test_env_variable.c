@@ -222,6 +222,48 @@ char	*ft_strdup(const char *s1)
 
  /////////////////////////////////////////////
 
+static int	is_charset(char c)
+{
+	return (c == ' ' || c == '$' || c == '?' || c == '#');
+}
+
+static int	get_length(char *str, t_env *env)
+{
+	int		i;
+	int		j;
+	int		length;
+	int		var_length;
+	char	*env_var;
+
+	(void)env;
+	if (!str)
+		return (0);
+	i = 0;
+	length = 0;
+	env_var = NULL;
+	while (str && str[i + 1])
+	{
+		if (str[i] == '$' && !is_charset(str[i + 1]))
+		{
+			j = i + 1;
+			var_length = 0;
+			while (str && !is_charset(str[j++]))
+				var_length++;
+			env_var = (char *)malloc(sizeof(char) * (var_length + 1));
+			var_length = 0;
+			while (str && !is_charset(str[++i]))
+				env_var[var_length++] = str[i];
+			env_var[var_length] = '\0';
+			printf("env_var = %s\n", env_var);
+			free(env_var);
+			env_var = NULL;
+		}
+		else
+			i++;
+	}
+	return (0);
+}
+
 char	*check_env_variable(char *input, t_env *env)
 {
 	char	*new_str;
@@ -229,6 +271,7 @@ char	*check_env_variable(char *input, t_env *env)
 
 	new_str = NULL;
 	length = get_length(input, env);
+//	printf("length = %d\n", length);
 	return (new_str);
 }
 
@@ -246,12 +289,13 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 2)
 		return (1);
 	input = ft_strdup(argv[1]);
+	printf("Input : | %s |\n", input);
 	env = create_env(envp);
 	input = check_env_variable(input, env);
-	printf("input = %s\n", input);
+//	printf("input = %s\n", input);
 	free_env(env);
 	free(input);
 	input = NULL;
-	atexit(fonction);
+//	atexit(fonction);
 	return (0);
 }
