@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/05 14:58:31 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/05 15:10:48 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_env	*create_env(char **envp)
 		add_var(&g_env, new_var(var[0], var[1]));
 		free_split(var);
 	}
-	// print_env(g_env);
 	return (g_env);
 }
 
