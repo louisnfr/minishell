@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/04 17:04:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/05 15:25:29 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ char	*prompt(void)
 	usr = ft_strjoin(usr, "\e[0m:");
 	usr = ft_strjoin(usr, "\e[36;1m");
 	usr = ft_strjoin(usr, cwd);
-	usr = ft_strjoin(usr, "$ \e[0m");
-	return (usr);
+	cwd = ft_strjoin(usr, "$ \e[0m");
+	return (cwd);
 }
 
 /* "\e[32;1m[usr]\e[0m:\e[36;1m[cwd]$ \e[0m" */
