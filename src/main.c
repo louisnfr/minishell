@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/05 14:51:22 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/06 00:22:20 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_bool	ft_getpid(t_data *data)
 		kill(pid, SIGTERM);
 	wait(NULL);
 	data->pid = pid - 1;
-	return (SUCCESS);	
+	return (SUCCESS);
 }
 
 int main(int ac, char **av, char **envp)
@@ -68,6 +68,7 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		input = readline(prompt());
+		add_history(input);
 		init_cmd_list(data);
 		parse(input, data);
 		exec(envp, data);
