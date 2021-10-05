@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 14:26:24 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/05 14:26:26 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_bool	check_heredoc(char *input)
@@ -32,6 +44,10 @@ int	get_delimiter(char *str)
 		return (OR);
 	if (str_is_equal(str, ";"))
 		return (SEMICOLON);
+	if (str_is_equal(str, "<"))
+		return (LEFT_MARK);
+	if (str_is_equal(str, ">"))
+		return (RIGHT_MARK);
 	return (0);
 }
 

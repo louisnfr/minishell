@@ -26,8 +26,10 @@ SOURCES = \
 		builtin/exit.c \
 		\
 		parsing/parsing.c \
+		parsing/upgrade_input.c \
 		parsing/split_arguments.c \
 		parsing/parsing_utils.c \
+		parsing/parse_commands.c \
 		parsing/paths.c \
 		parsing/libft.c \
 		parsing/linked_list.c \

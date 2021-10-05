@@ -61,6 +61,8 @@ typedef enum s_delimiter
 	AND			= 2,
 	OR			= 3,
 	SEMICOLON	= 4,
+	LEFT_MARK	= 5,
+	RIGHT_MARK	= 6,
 }	t_delimiter;
 
 typedef struct s_cmd
@@ -121,6 +123,7 @@ int		ft_isspace(int c);
 int		str_is_equal(const char *s1, const char *s2);
 void	clean_free(char **str);
 char	*ft_strjoin_and_free(char *s1, char *s2);
+void	free_double_str(char **str);
 /*
 ** parsing
 */
@@ -129,9 +132,12 @@ void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
 t_bool	parse(char *input, t_data *data);
+char	*upgrade_input(char *input, t_data *data);
 char	**split_arguments(char *str);
 char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
+char	**find_cmd_options(char **argv, t_data *data);
+char	**find_cmd_args(char **argv, t_data *data);
 t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
 int		get_delimiter(char *str);

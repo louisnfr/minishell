@@ -41,3 +41,16 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	clean_free(&s1);
 	return (dest);
 }
+
+void	free_double_str(char **str)
+{
+	int	i;
+
+	if (!str)
+		return ;
+	i = -1;
+	while (str && str[++i])
+		clean_free(&str[i]);
+	free(str);
+	str = NULL;
+}

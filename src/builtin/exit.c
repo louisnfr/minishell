@@ -12,12 +12,26 @@
 
 #include "minishell.h"
 
+void	fonction(void)
+{
+	system("leaks minishell");
+}
+
+void	clean_data(t_data *data)
+{
+	clean_cmd_list(data->cmd_list);
+	data->cmd_list = NULL;
+	free_env(data->env);
+	free_double_str(data->all_paths);
+}
+
 void	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	(void)cmd_list;
 	// ft_putstr("exit\n");
 	// free_split(cmd);
 	// free data
-	free_env(data->env);
+	clean_data(data);
+	atexit(fonction);
 	exit(EXIT_SUCCESS);
 }

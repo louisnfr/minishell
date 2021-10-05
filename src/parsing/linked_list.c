@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   linked_list.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 14:26:46 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/05 14:26:47 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_list(t_cmd *cmd_list)
@@ -39,15 +51,9 @@ void	remove_from_list(t_cmd *cmd_list)
 	cmd_list->is_builtin = 0;
 	clean_free(&cmd_list->command);
 	if (cmd_list->options)
-	{	
-		free(cmd_list->options);
-		cmd_list->options = NULL;
-	}
+		free_double_str(cmd_list->options);
 	if (cmd_list->args)
-	{	
-		free(cmd_list->args);
-		cmd_list->args = NULL;
-	}
+		free_double_str(cmd_list->args);
 	clean_free(&cmd_list->path);
 	free(cmd_list);
 	cmd_list = NULL;
@@ -60,6 +66,7 @@ void	clean_cmd_list(t_cmd *cmd_list)
 		remove_from_list(cmd_list);
 		cmd_list = cmd_list->next;
 	}
+	remove_from_list(cmd_list);
 	cmd_list = NULL;
 }
 
@@ -72,10 +79,17 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 		return (FAIL);
 	setup_cmd_list(new_cmd);
 	if (cmd)
+	{
 		new_cmd->command = ft_strdup(cmd);
+		clean_free(&cmd);
+	}
 	new_cmd->options = options;
+	free_double_str(options);
 	if (path)
+	{
 		new_cmd->path = ft_strdup(path);
+		clean_free(&path);
+	}
 	new_cmd->next = NULL;
 	while ((*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;

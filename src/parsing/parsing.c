@@ -1,88 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/05 14:26:15 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/05 14:26:17 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-char	**find_cmd_options(char **argv, t_data *data)
-{
-	int		j;
-	int		k;
-	char	**options;
-
-	j = data->i;
-	k = 0;
-	options = NULL;
-	if (!argv[++j])
-		return (options);
-	while (argv[j] && argv[j++][0] == '-')
-		k++;
-	if (k)
-	{
-		options = (char **)malloc(sizeof(char *) * (k + 1));
-		j = 0;
-		while (k--)
-			options[j++] = ft_strdup(argv[++data->i]);
-		options[j] = NULL;
-	}
-	return (options);
-}
-
-char	**find_cmd_args(char **argv, t_data *data)
-{
-	int		j;
-	int		k;
-	char	**args;
-
-	j = data->i;
-	k = 0;
-	args = NULL;
-	if (!argv[++j])
-		return (args);
-	while (argv[j] && !is_delimiter(argv[j++]))
-		k++;
-	if (k)
-	{
-		args = (char **)malloc(sizeof(char *) * (k + 1));
-		j = 0;
-		while (k--)
-			args[j++] = ft_strdup(argv[++data->i]);
-		args[j] = NULL;
-	}
-	return (args);
-}
-
-
-void	check_ret_value(t_cmd *cmd_list, t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (cmd_list->args && cmd_list->args[++i])
-	{
-		if (str_is_equal(cmd_list->args[i], "$?"))
-			cmd_list->args[i] = ft_itoa(data->ret_value);
-	}
-}
-
-
-/*
-void	check_ret_value(t_cmd *cmd_list, t_data *data)
-{
-	int		i;
-	char	**tmp;
-	int		j;
-
-	i = -1;
-	j = 0;
-	tmp = cmd_list->args;
-	while (tmp && tmp[++i])
-	{
-		while (tmp[i][j + 1])
-		{
-			if (tmp[i][j] == '$' && tmp[i][j + 1] == '?')
-				cmd_list->args[i] = ft_itoa(data->ret_value);
-			j++;
-		}
-	}
-}
-*/
 
 void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
@@ -108,7 +36,6 @@ void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *dat
 	cmd_list->args = args;
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
-	check_ret_value(cmd_list, data);
 	data->i++;
 }
 
@@ -130,15 +57,17 @@ void	handle_other_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 	cmd_list->args = args;
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
-	check_ret_value(cmd_list, data);
 	data->i++;
 }
 
-char	**get_argv(char *input)
+char	**get_argv(char *input, t_data *data)
 {
 	char	**argv;
 
+	input = upgrade_input(input, data);
 	argv = split_arguments(input);
+	free(input);
+	input = NULL;
 	return (argv);
 }
 
@@ -146,31 +75,25 @@ t_bool	parse(char *input, t_data *data)
 {
 	char	**argv;
 	t_cmd	*cmd_list;
-	t_bool	is_heredoc;
 	int		delimiter;
 
-	delimiter = 0;
 	if (!input)
 		return (SUCCESS);
-	is_heredoc = FALSE;
-	if (check_heredoc(input))
-		is_heredoc = TRUE;
+	delimiter = 0;
 	cmd_list = data->cmd_list;
-	argv = get_argv(input);
+	argv = get_argv(input, data);
 	if (!argv)
 		return (FAIL);
 	data->i = 0;
 	while (argv[data->i])
 	{
 		if (is_delimiter(argv[data->i]))
-		{
-			delimiter = get_delimiter(argv[data->i]);
-			data->i++;
-		}
+			delimiter = get_delimiter(argv[data->i++]);
 		else if (cmd_is_builtin(argv[data->i]))
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
 		else
 			handle_other_cmd(delimiter, argv, cmd_list, data);
 	}
+	free_double_str(argv);
 	return (SUCCESS);
 }
