@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/04 16:49:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/05 14:48:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int		ft_isspace(int c);
 int		str_is_equal(const char *s1, const char *s2);
 void	clean_free(char **str);
 char	*ft_strjoin_and_free(char *s1, char *s2);
+char	**ft_split_on_first(const char *s, char c);
 /*
 ** parsing
 */
