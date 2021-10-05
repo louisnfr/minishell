@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/05 15:10:48 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/05 15:16:26 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_env	*create_env(char **envp)
 	while (envp[++i])
 	{
 		var = ft_split_on_first(envp[i], '=');
-		printf("%s=%s\n", var[0], var[1]);
 		add_var(&g_env, new_var(var[0], var[1]));
 		free_split(var);
 	}
