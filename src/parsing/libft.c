@@ -53,6 +53,8 @@ void	free_double_str(char **str)
 		clean_free(&str[i]);
 	free(str);
 	str = NULL;
+}
+
 static size_t	sizeof_word(const char *s, char c)
 {
 	size_t	i;
