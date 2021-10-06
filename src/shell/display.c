@@ -27,11 +27,11 @@ char	*prompt(void)
 		cwd = ft_strjoin("~", tmp);
 		free(tmp);
 	}
-	usr = ft_strjoin("\e[32;1m", usr);
-	usr = ft_strjoin(usr, "\e[0m:");
-	usr = ft_strjoin(usr, "\e[36;1m");
+	usr = ft_strjoin("\001\e[32;1m\002", usr);
+	usr = ft_strjoin(usr, "\001\e[0m\002:");
+	usr = ft_strjoin(usr, "\001\e[36;1m\002");
 	usr = ft_strjoin(usr, cwd);
-	cwd = ft_strjoin(usr, "$ \e[0m");
+	cwd = ft_strjoin(usr, "$ \001\e[0m\002");
 	return (cwd);
 }
 
