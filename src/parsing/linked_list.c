@@ -84,7 +84,6 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 		clean_free(&cmd);
 	}
 	new_cmd->options = options;
-	free_double_str(options);
 	if (path)
 	{
 		new_cmd->path = ft_strdup(path);
