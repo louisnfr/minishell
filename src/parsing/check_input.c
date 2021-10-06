@@ -81,8 +81,8 @@ char	*check_input(char *input)
 		return (NULL);
 	new_str = NULL;
 	new_str = check_comment(input);
-	if (!check_unclosed_quotes(input, '\"')
-		|| !check_unclosed_quotes(input, '\''))
+	if (!check_unclosed_quotes(new_str, '\"')
+		|| !check_unclosed_quotes(new_str, '\''))
 		return (NULL);
 	return (new_str);
 }

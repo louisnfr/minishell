@@ -194,20 +194,6 @@ t_env	*create_env(char **envp)
 	return (g_env);
 }
 
-char	*get_env(char *key, t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
 char	*ft_strdup(const char *s1)
 {
 	char	*dst;
@@ -224,71 +210,6 @@ char	*ft_strdup(const char *s1)
 	}
 	dst[i] = 0;
 	return (dst);
-}
-
- /////////////////////////////////////////////
-
-static int	is_charset(char c)
-{
-	return (c == ' ' || c == '$' || c == '?' || c == '#');
-}
-
-static int	get_length(char *str, t_env *env)
-{
-	int		i;
-	int		j;
-	int		length;
-	int		var_length;
-	char	*env_var;
-
-	(void)env;
-	if (!str)
-		return (0);
-	i = 0;
-	length = 0;
-	env_var = NULL;
-	while (str && str[i + 1])
-	{
-		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '$')
-		{
-			i += 2;
-			continue;
-		}
-		if (str[i] && str[i + 1] && str[i] == '$' && !is_charset(str[i + 1]))
-		{
-			j = i + 1;
-			var_length = 0;
-			while (str && !is_charset(str[j++]))
-				var_length++;
-			env_var = (char *)malloc(sizeof(char) * (var_length + 1));
-			var_length = 0;
-			while (str && !is_charset(str[++i]))
-				env_var[var_length++] = str[i];
-			env_var[var_length] = '\0';
-			printf("env_var = %s\n", env_var);
-			free(env_var);
-			env_var = NULL;
-		}
-		else
-			i++;
-	}
-	return (0);
-}
-
-char	*check_env_variable(char *input, t_env *env)
-{
-	char	*new_str;
-	int		length;
-
-	new_str = NULL;
-	length = get_length(input, env);
-//	printf("length = %d\n", length);
-	return (new_str);
-}
-
-void	fonction(void)
-{
-	system("leaks a.out");
 }
 
 char	*check_comment(char *input)
@@ -356,6 +277,128 @@ int	check_unclosed_quotes(char *input, char quote)
 	return (1);
 }
 
+
+char	*get_env(char *key, t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+static int	is_charset(char c)
+{
+	return (c == ' ' || c == '$' || c == '?' || c == '#' || c == '\'' || c == '\"');
+}
+
+int	get_length_env_var(char *env_var, t_env *env)
+{
+	char	*ret;
+
+	ret = NULL;
+	ret = get_env(env_var, env);
+	if (ret)
+		return (ft_strlen(ret));
+	return (0);
+}
+
+char	*get_env_variable(char *str, int *i)
+{
+	char	*env_var;
+	int		var_length;
+	int		j;
+
+	j = *i + 1;
+	var_length = 0;
+	env_var = NULL;
+	while (str && !is_charset(str[j++]))
+		var_length++;
+	if (var_length)
+	{
+		env_var = NULL;
+		env_var = (char *)malloc(sizeof(char) * (var_length + 1));
+		if (!env_var)
+			return (NULL);
+		var_length = 0;
+		while (str && !is_charset(str[++(*i)]))
+			env_var[var_length++] = str[*i];
+		env_var[var_length] = '\0';
+		printf("env_var = %s\n", env_var);
+	}
+	return(env_var);
+}
+
+static int	get_length(char *str, t_env *env)
+{
+	int		i;
+	int		length;
+	char	*env_var;
+
+	if (!str)
+		return (0);
+	i = 0;
+	length = 0;
+	env_var = NULL;
+	while (str && str[i + 1])
+	{
+		if (str[i] && str[i] == '\'')
+		{
+			i++;
+			length++;
+			while (str[i] && str[i] != '\'')
+			{
+				i++;
+				length++;
+			}	
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '$')
+		{
+			i += 2;
+			length += 2;
+			continue;
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && !is_charset(str[i + 1]))
+		{
+			env_var = get_env_variable(str, &i);
+			printf("length_env_var : %d\n", get_length_env_var(env_var, env));
+			length += get_length_env_var(env_var, env);
+		//	printf("length_env_variable : %d\n", get_length_env_var(env_var, env));
+			free(env_var);
+		}
+		else
+		{
+			i++;
+			length++;
+		}
+	}
+	return (length);
+}
+
+char	*check_env_variable(char *input, t_env *env)
+{
+	char	*new_str;
+	int		length;
+
+	new_str = NULL;
+	length = get_length(input, env);
+	printf("length = %d\n", length);
+	return (new_str);
+}
+
+void	fonction(void)
+{
+	system("leaks a.out");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
@@ -373,8 +416,10 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	printf("\nInput : |%s|\n\n", input);
 	env = create_env(envp);
+
 	input = check_env_variable(input, env);
 //	printf("input = %s\n", input);
+
 	free_env(env);
 	free(input);
 	input = NULL;
