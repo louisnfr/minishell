@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/01 18:48:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/06 15:32:38 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	oldpwd = getcwd(NULL, 0);
 	if (!cmd_list->args)
 		chdir(getenv("HOME"));
-	else if (cmd_list->args[0][1] == '~')
+	else if (cmd_list->args[0][0] == '~')
 	{
 		p = ft_substr(cmd_list->args[0], 1, ft_strlen(cmd_list->args[0]));
 		tmp = ft_strjoin(getenv("HOME"), p);
