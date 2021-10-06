@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/06 00:22:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/06 17:47:36 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ t_bool	ft_getpid(t_data *data)
 	return (SUCCESS);
 }
 
+void	sig_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		ft_putstr(prompt());
+		signal(SIGINT, sig_handler);
+	}
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_data *data;
@@ -67,6 +77,7 @@ int main(int ac, char **av, char **envp)
 		return (EXIT_FAILURE);
 	while (1)
 	{
+		signal(SIGINT, sig_handler);
 		input = readline(prompt());
 		add_history(input);
 		init_cmd_list(data);
