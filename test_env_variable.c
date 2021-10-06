@@ -292,6 +292,64 @@ char	*get_env(char *key, t_env *env)
 	return (NULL);
 }
 
+/*
+static int	get_length(char *str, t_env *env)
+{
+	int		i;
+	int		length;
+	char	*env_var;
+
+	i = 0;
+	if (!str || !str[i])
+		return (0);
+	length = 0;
+	env_var = NULL;
+	while (str && str[i + 1])
+	{
+		if (str[i] && str[i] == '\'')
+		{
+			i++;
+			length++;
+			while (str[i] && str[i] != '\'')
+			{
+				i++;
+				length++;
+			}	
+			if (!str[i + 1])
+				length--;
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '$')
+		{
+			i += 2;
+			if (str[i])
+				length += 2;
+			else
+				length++;
+			continue;
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && !is_charset(str[i + 1]))
+		{
+			env_var = get_env_variable(str, &i);
+			printf("i = %d | length_env_var : %d\n", i, get_length_env_var(env_var, env));
+			length += get_length_env_var(env_var, env);
+		//	printf("length_env_variable : %d\n", get_length_env_var(env_var, env));
+			free(env_var);
+			env_var = NULL;
+			if (!str[i])
+				length--;
+		}
+		else
+		{
+			i++;
+			length++;
+		}
+	}
+	length++;
+	return (length);
+}
+*/
+
+
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
@@ -311,7 +369,7 @@ int	get_length_env_var(char *env_var, t_env *env)
 	return (0);
 }
 
-char	*get_env_variable(char *str, int *i)
+char	*get_key_variable(char *str, int *i)
 {
 	char	*env_var;
 	int		var_length;
@@ -329,7 +387,7 @@ char	*get_env_variable(char *str, int *i)
 		if (!env_var)
 			return (NULL);
 		var_length = 0;
-		while (str && !is_charset(str[++(*i)]))
+		while (str && str[++(*i)] && !is_charset(str[*i]))
 			env_var[var_length++] = str[*i];
 		env_var[var_length] = '\0';
 		printf("env_var = %s\n", env_var);
@@ -337,51 +395,144 @@ char	*get_env_variable(char *str, int *i)
 	return(env_var);
 }
 
+void	handle_simple_quotes(int *i, int *length, char *str)
+{
+	(*i)++;
+	(*length)++;
+	while (str[*i] && str[*i] != '\'')
+	{
+		(*i)++;
+		(*length)++;
+	}	
+	if (!str[*i + 1])
+		(*length)--;
+}
+
+void	handle_double_dollars(int *i, int *length, char *str)
+{
+	(*i) += 2;
+	if (str[*i])
+		(*length) += 2;
+	else
+		(*length)++;
+}
+
+void	handle_env_variable(int *i, int *length, char *str, t_env *env)
+{
+	char	*env_var;
+
+	env_var = NULL;
+	env_var = get_key_variable(str, &(*i));
+	(*length) += get_length_env_var(env_var, env);
+	free(env_var);
+	env_var = NULL;
+	if (!str[*i])
+		(*length)--;
+}
+
 static int	get_length(char *str, t_env *env)
 {
 	int		i;
 	int		length;
-	char	*env_var;
 
-	if (!str)
-		return (0);
 	i = 0;
+	if (!str || !str[i])
+		return (0);
 	length = 0;
-	env_var = NULL;
 	while (str && str[i + 1])
 	{
 		if (str[i] && str[i] == '\'')
-		{
-			i++;
-			length++;
-			while (str[i] && str[i] != '\'')
-			{
-				i++;
-				length++;
-			}	
-		}
+			handle_simple_quotes(&i, &length, str);
 		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '$')
 		{
-			i += 2;
-			length += 2;
+			handle_double_dollars(&i, &length, str);
 			continue;
 		}
 		if (str[i] && str[i + 1] && str[i] == '$' && !is_charset(str[i + 1]))
-		{
-			env_var = get_env_variable(str, &i);
-			printf("length_env_var : %d\n", get_length_env_var(env_var, env));
-			length += get_length_env_var(env_var, env);
-		//	printf("length_env_variable : %d\n", get_length_env_var(env_var, env));
-			free(env_var);
-		}
+			handle_env_variable(&i, &length, str, env);
 		else
 		{
 			i++;
 			length++;
 		}
 	}
-	return (length);
+	return (++length);
 }
+
+ //*********************************************************
+
+void	fill_simple_quotes(char *new_str, char *str, int *i, int *j)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\'')
+	{
+		new_str[*j] = str[*i];
+		(*i)++;
+		(*j)++;
+	}	
+}
+
+void	fill_double_dollars(char *new_str, char *str, int *i, int *j)
+{
+	while (str[*i] && str[*i] == '$')
+	{
+		new_str[*j] = str[*i];
+		(*i)++;
+		(*j)++;
+	}
+}
+
+void	fill_env_var(char *new_str, char *str, int *i, int *j, t_env *env)
+{
+	int		k;
+	char	*key;
+	char	*value;
+
+	k = 0;
+	key = NULL;
+	value = NULL;
+	key = get_key_variable(str, &(*i));
+	value = get_env(key, env);
+	while (value[k])
+		new_str[(*j)++] = value[k++];
+	free(key);
+	key = NULL;
+	free(value);
+	value = NULL;
+}
+
+static int	fill_new_str(char *new_str, char *str, t_env *env)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!str || !str[i])
+		return (0);
+	while (str && str[i + 1])
+	{
+		if (str[i] && str[i] == '\'')
+		{
+			fill_simple_quotes(new_str, str, &i, &j);
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '$')
+		{
+			fill_double_dollars(new_str, str, &i, &j);
+			continue;
+		}
+		if (str[i] && str[i + 1] && str[i] == '$' && !is_charset(str[i + 1]))
+		{
+			fill_env_var(&(*new_str), str, &i, &j, env);
+		}
+		else
+		{
+			new_str[j++] = str[i++];
+		}
+	}
+	return (1);
+}
+
 
 char	*check_env_variable(char *input, t_env *env)
 {
@@ -391,6 +542,12 @@ char	*check_env_variable(char *input, t_env *env)
 	new_str = NULL;
 	length = get_length(input, env);
 	printf("length = %d\n", length);
+	new_str = (char *)malloc(sizeof(char) * (length + 1));
+	if (!new_str)
+		return (NULL);
+	fill_new_str(new_str, input, env);
+	free(input);
+	input = NULL;
 	return (new_str);
 }
 
@@ -418,7 +575,7 @@ int	main(int argc, char **argv, char **envp)
 	env = create_env(envp);
 
 	input = check_env_variable(input, env);
-//	printf("input = %s\n", input);
+	printf("input = %s\n", input);
 
 	free_env(env);
 	free(input);
