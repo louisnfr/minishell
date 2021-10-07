@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 14:26:59 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 13:11:52 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/07 19:22:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	count_arguments(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!is_charset_split(str[i]))
+		if (str[i] && !is_charset_split(str[i]))
 		{
-			if (str[i] == '\'')
+			if (str[i] && str[i] == '\'')
 			{
 				i++;
 				while (str[i] && str[i] != '\'')
 					i++;
 				i++;
 			}
-			if (str[i] == '\"')
+			if (str[i] && str[i] == '\"')
 			{
 				i++;
 				while (str[i] && str[i] != '\"')
@@ -73,7 +73,7 @@ int	handle_words(int i, char **str, char **strs)
 	j = 0;
 	while (**str && !is_charset_split(**str))
 	{
-		if (**str == '\'')
+		if (**str && **str == '\'')
 		{
 			(*str)++;
 			while (**str && **str != '\'')
@@ -83,7 +83,7 @@ int	handle_words(int i, char **str, char **strs)
 			}
 			(*str)++;
 		}
-		else if (**str == '\"')
+		else if (**str && **str == '\"')
 		{
 			(*str)++;
 			while (**str && **str != '\"')
@@ -103,7 +103,7 @@ int	handle_words(int i, char **str, char **strs)
 	return (1);
 }
 
-char	**split_arguments(char *str)
+char	**split_input(char *str)
 {
 	int		words;
 	char	**strs;
@@ -120,12 +120,12 @@ char	**split_arguments(char *str)
 	{
 		while (*str && ft_isspace(*str))
 			str++;
-		if (!is_charset_split(*str))
+		if (*str && !is_charset_split(*str))
 		{
 			if (!handle_words(i, &str, &(*strs)))
 				return (NULL);
 		}
-		else if (is_charset_split(*str))
+		else if (*str && is_charset_split(*str))
 		{
 			if (!handle_delimiters(i, &str, &(*strs)))
 				return (NULL);

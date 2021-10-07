@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_env_var.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/07 17:39:03 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	handle_special_cases(char *new_str, char *str, int *i, int *j)
@@ -40,7 +52,7 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	j = 0;
 	if (!str || !str[i])
 		return (0);
-	while (str && str[i + 1])
+	while (str && str[i] && str[i + 1])
 	{
 		if (handle_special_cases(new_str, str, &i, &j))
 			continue ;

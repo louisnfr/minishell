@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_new_length.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/07 17:37:18 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	handle_env_variable(int *i, int *length, char *str, t_data *data)
@@ -48,7 +60,7 @@ int	get_length_new_input(char *str, t_data *data)
 	length = 0;
 	if (!str || !str[i])
 		return (0);
-	while (str && str[i + 1])
+	while (str && str[i] && str[i + 1])
 	{
 		if (handle_simple_quotes_and_double_dollars(&i, &length, str))
 			continue ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/07 12:53:39 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/07 19:55:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,30 +135,33 @@ void	print_list(t_cmd *cmd_list);
 /*
 ** parsing
 */
-t_bool	parse(char *input, t_data *data);
-char	*check_input(char *input);
-char	*upgrade_input(char *input, t_data *data);
 char	**get_paths(char **envp);
+/*
+** parsing/parse_input
+*/
+t_bool	parse(char *input, t_data *data);
 char	*find_cmd_path(char *command, char **all_paths);
 char	**find_cmd_options(char **argv, t_data *data);
 char	**find_cmd_args(char **argv, t_data *data);
 t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
 int		get_delimiter(char *str);
-t_bool	check_heredoc(char *input);
 /*
-** parsing/env_var
+** parsing/upgrade_input
 */
+char	*check_input(char *input);
+char	*upgrade_input(char *input, t_data *data);
 char	*parse_env_variable(char *input, t_data *data);
 int		is_charset_env(char c);
 char	*get_env_value(char *str, int *i, t_data *data);
 char	*get_env_key(char *str, int *i);
 int		get_length_env_value(char *env_key, t_data *data);
 int		get_length_new_input(char *str, t_data *data);
+char	*transform_special_value(char *str, char *value, char character);
 /*
-** parsing/split
+** parsing/split_input
 */
-char	**split_arguments(char *str);
+char	**split_input(char *str);
 int		is_charset_split(char c);
 int		is_delimiter_split(char c);
 int		is_other_delimiter(char c1, char c2, char delimiter);

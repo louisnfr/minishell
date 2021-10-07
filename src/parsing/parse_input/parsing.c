@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 14:26:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/05 22:15:49 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/07 19:22:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
+void	handle_builtin_cmd(
+	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	char	*command;
 	char	**options;
@@ -39,7 +40,8 @@ void	handle_builtin_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *dat
 	data->i++;
 }
 
-void	handle_other_cmd(int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
+void	handle_other_cmd(
+	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	char	*command;
 	char	*path;
@@ -68,9 +70,8 @@ char	**get_argv(char *input, t_data *data)
 	if (!input)
 		return (NULL);
 	input = upgrade_input(input, data);
-	argv = split_arguments(input);
-	free(input);
-	input = NULL;
+	argv = split_input(input);
+	clean_free(&input);
 	return (argv);
 }
 

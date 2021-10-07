@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/07 17:41:34 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_charset_env(char c)
@@ -26,7 +38,7 @@ char	*get_env_key(char *str, int *i)
 	j = *i + 1;
 	var_length = 0;
 	env_var = NULL;
-	while (str && !is_charset_env(str[j++]))
+	while (str && str[j] && !is_charset_env(str[j++]))
 		var_length++;
 	if (var_length)
 	{

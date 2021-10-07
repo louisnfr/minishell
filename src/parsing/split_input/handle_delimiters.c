@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_delimiters.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/07 17:39:19 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/07 17:39:19 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_error_delimiter(int j, char *str, int delimiter)
@@ -6,7 +18,7 @@ int	check_error_delimiter(int j, char *str, int delimiter)
 
 	while (str[j] && ft_isspace(str[j]))
 		j++;
-	if (j && str[j] == delimiter)
+	if (j && str[j] && str[j] == delimiter)
 	{
 		if (str[j + 1] == delimiter)
 			return (display_error_msg_delimiter(2, str[j]));
@@ -26,7 +38,7 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words)
 	int	j;
 
 	count = 0;
-	if (str[*i] != delimiter)
+	if (str[*i] && str[*i] != delimiter)
 		return (1);
 	(*words)++;
 	while (str[*i] && str[*i] == delimiter)
@@ -50,7 +62,7 @@ int	handle_delimiters(int i, char **str, char **strs)
 
 	j = 0;
 	tmp = ft_strdup(*str);
-	while (tmp[j] && is_charset_split(tmp[j]))
+	while (tmp && tmp[j] && is_charset_split(tmp[j]))
 		j++;
 	free(tmp);
 	tmp = NULL;

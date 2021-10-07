@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/07 12:56:26 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/07 20:00:23 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,17 +25,18 @@ SOURCES = \
 		builtin/unset.c \
 		builtin/exit.c \
 		\
-		parsing/parsing.c \
-		parsing/check_input.c \
-		parsing/upgrade_input.c \
-		parsing/env_variable/handle_env_var.c \
-		parsing/env_variable/get_new_length.c \
-		parsing/env_variable/utils.c \
-		parsing/split/split_arguments.c \
-		parsing/split/handle_delimiters.c \
-		parsing/split/utils.c \
-		parsing/parsing_utils.c \
-		parsing/parse_commands.c \
+		parsing/upgrade_input/check_input.c \
+		parsing/upgrade_input/upgrade_input.c \
+		parsing/upgrade_input/env_var.c \
+		parsing/upgrade_input/env_var_length.c \
+		parsing/upgrade_input/env_var_utils.c \
+		parsing/upgrade_input/special_value.c \
+		parsing/split_input/split.c \
+		parsing/split_input/handle_delimiters.c \
+		parsing/split_input/split_utils.c \
+		parsing/parse_input/parsing.c \
+		parsing/parse_input/parsing_utils.c \
+		parsing/parse_input/parse_commands.c \
 		parsing/get_paths.c \
 		parsing/libft.c \
 		parsing/linked_list.c \
@@ -84,7 +85,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/builtin obj/parsing obj/parsing/env_variable obj/parsing/split obj/shell/env obj/shell/exec obj/exit
+	@mkdir -p obj/builtin obj/parsing obj/parsing/parse_input obj/parsing/upgrade_input obj/parsing/split_input obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
