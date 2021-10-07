@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/05 21:48:56 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/07 12:56:26 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,15 @@ SOURCES = \
 		parsing/parsing.c \
 		parsing/check_input.c \
 		parsing/upgrade_input.c \
-		parsing/split_arguments.c \
+		parsing/env_variable/handle_env_var.c \
+		parsing/env_variable/get_new_length.c \
+		parsing/env_variable/utils.c \
+		parsing/split/split_arguments.c \
+		parsing/split/handle_delimiters.c \
+		parsing/split/utils.c \
 		parsing/parsing_utils.c \
 		parsing/parse_commands.c \
-		parsing/paths.c \
+		parsing/get_paths.c \
 		parsing/libft.c \
 		parsing/linked_list.c \
 		\
@@ -79,7 +84,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/builtin obj/parsing obj/shell/env obj/shell/exec obj/exit
+	@mkdir -p obj/builtin obj/parsing obj/parsing/env_variable obj/parsing/split obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 

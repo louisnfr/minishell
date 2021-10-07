@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/01 19:16:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/07 11:54:00 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	int	i;
 	int	eol;
 
+	(void)data;
 	if (!cmd_list->args)
 	{
 		ft_putchar('\n');
@@ -36,14 +37,14 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	i = -1;
 	while (cmd_list->args[++i])
 	{
-		if (cmd_list->args[i][0] == '$' && cmd_list->args[i][1])
-			print_var(cmd_list->args[i] + 1, data);
-		else
-		{
+	//	if (cmd_list->args[i][0] == '$' && cmd_list->args[i][1])
+	//		print_var(cmd_list->args[i] + 1, data);
+	//	else
+	//	{
 			ft_putstr(cmd_list->args[i]);
 			if (cmd_list->args[i + 1])
 				ft_putchar(32);
-		}
+	//	}
 	}
 	if (eol)
 		ft_putchar('\n');

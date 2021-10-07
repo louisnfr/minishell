@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/05 21:48:39 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/07 12:53:39 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,18 @@ char	*ft_strjoin_and_free(char *s1, char *s2);
 void	free_double_str(char **str);
 char	**ft_split_on_first(const char *s, char c);
 /*
-** parsing
+** linked_list
 */
 void	setup_cmd_list(t_cmd *cmd_list);
 void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
+/*
+** parsing
+*/
 t_bool	parse(char *input, t_data *data);
 char	*check_input(char *input);
 char	*upgrade_input(char *input, t_data *data);
-char	**split_arguments(char *str);
 char	**get_paths(char **envp);
 char	*find_cmd_path(char *command, char **all_paths);
 char	**find_cmd_options(char **argv, t_data *data);
@@ -144,6 +146,29 @@ t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
 int		get_delimiter(char *str);
 t_bool	check_heredoc(char *input);
+/*
+** parsing/env_var
+*/
+char	*parse_env_variable(char *input, t_data *data);
+int		is_charset_env(char c);
+char	*get_env_value(char *str, int *i, t_data *data);
+char	*get_env_key(char *str, int *i);
+int		get_length_env_value(char *env_key, t_data *data);
+int		get_length_new_input(char *str, t_data *data);
+/*
+** parsing/split
+*/
+char	**split_arguments(char *str);
+int		is_charset_split(char c);
+int		is_delimiter_split(char c);
+int		is_other_delimiter(char c1, char c2, char delimiter);
+int		check_multiple_delimiters(
+			char c1, char c2, char delimiter1, char delimiter2);
+int		display_error_msg_delimiter(int count, char delimiter);
+int		handle_delimiters(int i, char **str, char **strs);
+int		check_delimiter(char *str, char delimiter, int *i, int *words);
+int		check_error_delimiter(int j, char *str, int delimiter);
+
 /*
 ** exit
 */
