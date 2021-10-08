@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 18:49:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/08 22:26:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ void	print_export(t_data *data)
 	{
 		ft_putstr("export ");
 		ft_putstr(tmp->key);
-		if (tmp->value)
+		if (tmp->is_value)
 		{
 			ft_putchar('=');
+			ft_putchar('"');
 			ft_putstr(tmp->value);
+			ft_putchar('"');
 		}
 		ft_putchar('\n');
 		tmp = tmp->next;
@@ -48,19 +50,41 @@ void	print_export(t_data *data)
 t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 {
 	char	**var;
+	int		ret;
 	int		i;
 
+	ret = EXIT_SUCCESS;
 	i = -1;
 	if (!cmd_list->args)
 		print_export(data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
-		var = ft_split_on_first(cmd_list->args[i], '=');
-		if (!already_exists(var[0], data))
-			add_var(&data->env, new_var(var[0], var[1]));
+		if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
+		{
+			if (ft_str_isdigit(cmd_list->args[i]))
+			{
+				printf("export: `%s': not a valid identifier\n", cmd_list->args[i]);
+				ret = EXIT_FAILURE;
+			}
+			if (!already_exists(cmd_list->args[i], data))
+				add_var(&data->env, new_var(cmd_list->args[i], "\0", 0));
+			else
+				printf("existe deja\n");
+		}
 		else
-			printf("existe deja\n");
-		free_split(var);
+		{
+			var = ft_split_on_first(cmd_list->args[i], '=');
+			if (ft_str_isdigit(var[0]))
+			{
+				printf("export: `%s': not a valid identifier\n", var[0]);
+				ret = EXIT_FAILURE;
+			}
+			else if (!already_exists(var[0], data))
+				add_var(&data->env, new_var(var[0], var[1], 1));
+			else
+				printf("existe deja\n");
+			free_split(var);
+		}
 	}
-	return (EXIT_SUCCESS);
+	return (ret);
 }

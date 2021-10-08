@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 22:56:25 by lraffin           #+#    #+#             */
-/*   Updated: 2021/09/30 00:26:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/08 22:15:04 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*new_var(char *key, char *value)
+t_env	*new_var(char *key, char *value, int is_value)
 {
 	t_env	*var;
 
@@ -25,6 +25,7 @@ t_env	*new_var(char *key, char *value)
 		return (NULL);
 	ft_memcpy(var->key, key, ft_strlen(key) + 1);
 	ft_memcpy(var->value, value, ft_strlen(value) + 1);
+	var->is_value = is_value;
 	var->next = NULL;
 	return (var);
 }

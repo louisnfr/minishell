@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 18:55:12 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/08 22:14:40 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				is_value;
 	struct s_env	*next;
 }	t_env;
 
@@ -108,7 +109,7 @@ t_env	*create_env(char **envp);
 void	update_env(t_data *data);
 char	*get_env(char *key, t_data *data);
 void	set_env(char *key, char *new_value, t_data *data);
-t_env	*new_var(char *name, char *value);
+t_env	*new_var(char *name, char *value, int is_value);
 t_env	*get_last(t_env *g_env);
 void	add_var(t_env **g_env, t_env *new_var);
 void	print_env(t_env *g_env);
@@ -121,6 +122,7 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list);
 /*
 ** libft
 */
+int		ft_str_isdigit(char *s);
 int		ft_isspace(int c);
 int		str_is_equal(const char *s1, const char *s2);
 void	clean_free(char **str);

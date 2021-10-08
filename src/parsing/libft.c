@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:01 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:40:02 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:47:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_str_isdigit(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s && s[++i])
+		if (ft_isdigit(s[i]))
+			return (1);
+	return (0);
+}
 
 int	ft_isspace(int c)
 {
