@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/08 12:16:04 by efrancon         ###   ########.fr        #
+#    Updated: 2021/10/08 18:56:21 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SOURCES = \
 		shell/env/env.c \
 		shell/env/list.c \
 		shell/exec/exec.c \
+		shell/exec/exec_command.c \
 		shell/exec/exec_builtin.c \
 		shell/display.c \
 		\

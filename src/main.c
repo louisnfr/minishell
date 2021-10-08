@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 12:01:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/08 17:23:21 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_data *init_data(char **envp)
+t_data	*init_data(char **envp)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -29,7 +29,7 @@ t_data *init_data(char **envp)
 	return (data);
 }
 
-t_bool init_cmd_list(t_data *data)
+t_bool	init_cmd_list(t_data *data)
 {
 	data->cmd_list = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!data->cmd_list)
@@ -64,10 +64,10 @@ void	sig_handler(int signum)
 	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_data *data;
-	char *input;
+	t_data	*data;
+	char	*input;
 
 	(void)av;
 	if (ac != 1)

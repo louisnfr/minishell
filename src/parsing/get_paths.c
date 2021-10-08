@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   get_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:39:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/08 17:40:40 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_path_executable(char *command)
+{
+	char	*path;
+	int		i;
+	int		j;
+
+	path = NULL;
+	if (!command)
+		return (path);
+	path = (char *)malloc(sizeof(char) * (ft_strlen(command) - 1));
+	i = 2;
+	j = 0;
+	while (command[i])
+		path[j++] = command[i++];
+	path[j] = '\0';
+	return (path);
+}
 
 char	*find_cmd_path(char *command, char **all_paths)
 {
@@ -18,6 +36,10 @@ char	*find_cmd_path(char *command, char **all_paths)
 	char	*cmd_path;
 
 	i = -1;
+	if (command[0] && command[0] == '/')
+		return (ft_strdup(command));
+	if (command[0] && command[0] == '.' && command[1] && command[1] == '/')
+		return (get_path_executable(command));
 	while (all_paths[++i])
 	{
 		cmd_path = ft_strjoin(all_paths[i], command);
