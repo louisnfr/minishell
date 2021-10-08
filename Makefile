@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/07 20:00:23 by efrancon         ###   ########.fr        #
+#    Updated: 2021/10/08 12:16:04 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SOURCES = \
 		parsing/upgrade_input/env_var_utils.c \
 		parsing/upgrade_input/special_value.c \
 		parsing/split_input/split.c \
-		parsing/split_input/handle_delimiters.c \
+		parsing/split_input/split_length.c \
+		parsing/split_input/split_delimiters.c \
 		parsing/split_input/split_utils.c \
 		parsing/parse_input/parsing.c \
 		parsing/parse_input/parsing_utils.c \

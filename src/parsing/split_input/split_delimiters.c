@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:19 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:39:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/08 12:00:52 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words)
 	int	j;
 
 	count = 0;
-	if (str[*i] && str[*i] != delimiter)
+	if (!str[*i] || (str[*i] && str[*i] != delimiter))
 		return (1);
 	(*words)++;
 	while (str[*i] && str[*i] == delimiter)

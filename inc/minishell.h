@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/07 19:55:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/08 12:17:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ char	*transform_special_value(char *str, char *value, char character);
 ** parsing/split_input
 */
 char	**split_input(char *str);
+int		split_count_words(char *str);
 int		is_charset_split(char c);
 int		is_delimiter_split(char c);
 int		is_other_delimiter(char c1, char c2, char delimiter);

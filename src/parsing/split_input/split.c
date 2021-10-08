@@ -1,62 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_arguments.c                                  :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 14:26:59 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 19:22:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/08 12:23:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_arguments(char *str)
+static void	fill_quotes(char **str, char **strs, int *i, int *j)
 {
-	int	args;
-	int	i;
-
-	i = 0;
-	args = 0;
-	while (str[i] && ft_isspace(str[i]))
-		i++;
-	while (str[i])
+	if (**str && **str == '\'')
 	{
-		if (str[i] && !is_charset_split(str[i]))
+		(*str)++;
+		while (**str && **str != '\'')
 		{
-			if (str[i] && str[i] == '\'')
-			{
-				i++;
-				while (str[i] && str[i] != '\'')
-					i++;
-				i++;
-			}
-			if (str[i] && str[i] == '\"')
-			{
-				i++;
-				while (str[i] && str[i] != '\"')
-					i++;
-				i++;
-			}
-			else
-			{
-				while (str[i] && !is_charset_split(str[i]))
-					i++;
-			}
-			args++;
+			strs[*i][(*j)++] = **str;
+			(*str)++;
 		}
-		if (!check_delimiter(str, '|', &i, &args)
-			|| !check_delimiter(str, '&', &i, &args)
-			|| !check_delimiter(str, ';', &i, &args))
-			return (-1);
-		while (str[i] && ft_isspace(str[i]))
-			i++;
+		(*str)++;
 	}
-	return (args);
+	else if (**str && **str == '\"')
+	{
+		(*str)++;
+		while (**str && **str != '\"')
+		{
+			strs[*i][(*j)++] = **str;
+			(*str)++;
+		}
+		(*str)++;
+	}
 }
 
-int	handle_words(int i, char **str, char **strs)
+int	fill_words(int i, char **str, char **strs)
 {
 	int		j;
 	char	*tmp;
@@ -73,26 +53,8 @@ int	handle_words(int i, char **str, char **strs)
 	j = 0;
 	while (**str && !is_charset_split(**str))
 	{
-		if (**str && **str == '\'')
-		{
-			(*str)++;
-			while (**str && **str != '\'')
-			{
-				strs[i][j++] = **str;
-				(*str)++;
-			}
-			(*str)++;
-		}
-		else if (**str && **str == '\"')
-		{
-			(*str)++;
-			while (**str && **str != '\"')
-			{
-				strs[i][j++] = **str;
-				(*str)++;
-			}
-			(*str)++;
-		}
+		if (**str && (**str == '\'' || **str == '\"'))
+			fill_quotes(str, strs, &i, &j);
 		else
 		{
 			strs[i][j++] = **str;
@@ -103,18 +65,10 @@ int	handle_words(int i, char **str, char **strs)
 	return (1);
 }
 
-char	**split_input(char *str)
+int	handle_split_input(int words, char *str, char **strs)
 {
-	int		words;
-	char	**strs;
-	int		i;
+	int	i;
 
-	words = count_arguments(str);
-	if (words == -1)
-		return (NULL);
-	strs = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!strs)
-		return (NULL);
 	i = -1;
 	while (++i < words)
 	{
@@ -122,15 +76,31 @@ char	**split_input(char *str)
 			str++;
 		if (*str && !is_charset_split(*str))
 		{
-			if (!handle_words(i, &str, &(*strs)))
-				return (NULL);
+			if (!fill_words(i, &str, &(*strs)))
+				return (FAIL);
 		}
 		else if (*str && is_charset_split(*str))
 		{
 			if (!handle_delimiters(i, &str, &(*strs)))
-				return (NULL);
+				return (FAIL);
 		}
 	}
 	strs[i] = NULL;
+	return (SUCCESS);
+}
+
+char	**split_input(char *str)
+{
+	int		words;
+	char	**strs;
+
+	words = split_count_words(str);
+	if (words == -1)
+		return (NULL);
+	strs = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!strs)
+		return (NULL);
+	if (!handle_split_input(words, str, strs))
+		return (NULL);
 	return (strs);
 }
