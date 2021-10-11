@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 22:14:40 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/11 12:55:43 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef enum s_delimiter
 
 typedef struct s_cmd
 {
+	int				input;
+	int				output;
 	char			*command;
 	char			**options;
 	char			**args;
@@ -119,6 +121,7 @@ void	print_env(t_env *g_env);
 int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list);
+void	manage_pipes(t_cmd **cmd_list);
 /*
 ** libft
 */
@@ -176,7 +179,10 @@ int		display_error_msg_delimiter(int count, char delimiter);
 int		handle_delimiters(int i, char **str, char **strs);
 int		check_delimiter(char *str, char delimiter, int *i, int *words);
 int		check_error_delimiter(int j, char *str, int delimiter);
-
+/*
+** parsing/pipes
+*/
+void	parse_pipes(t_cmd *cmd_list);
 /*
 ** exit
 */
