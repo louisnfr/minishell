@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/11 12:56:21 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/11 18:34:31 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -g3
 RDL		= -lreadline
 
 ### INCLUDES ###

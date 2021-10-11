@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/09 18:12:19 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/11 15:55:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

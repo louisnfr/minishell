@@ -57,12 +57,16 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 	if (pid == CHILD)
 	{
 		cmd_array = fill_cmd_array(cmd_list);
-		if ((cmd_list && cmd_list->delimiter == PIPE)
-			|| (cmd_list->next && cmd_list->next->delimiter == PIPE))
-			manage_pipes(&cmd_list, data);
+		manage_pipes(&cmd_list, data);
 		execve(cmd_list->path, cmd_array, envp);
 		printf("bash: %s: %s\n", cmd_list->command, strerror(errno));
 		return (FAIL);
+	}
+	else	
+	{
+		wait(NULL);
+		close(cmd_list->input);
+		close(cmd_list->output);
 	}
 	return (SUCCESS);
 }
