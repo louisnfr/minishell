@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/08 17:19:47 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/11 11:30:21 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ t_bool	parse(char *input, t_data *data)
 			handle_other_cmd(delimiter, argv, cmd_list, data);
 	}
 	free_double_str(argv);
+	parse_pipes(cmd_list);
 	return (SUCCESS);
 }
