@@ -10,26 +10,33 @@ void	exit_error_with_msg(char *error_msg, char *errno_msg, t_data *data)
 		ft_putstr_fd(errno_msg, 2);
 	}
 	ft_putchar_fd('\n', 2);
-	exec_exit(cmd_list, data);
+	exec_exit(data->cmd_list, data);
 }
 
-void	close_pipe(t_cmd *cmd_list, t_data *data)
+void	close_pipe(t_cmd **cmd_list, t_data *data)
 {
-	while (cmd_list)
+	t_cmd	*cmd;
+
+	cmd = *cmd_list;
+	printf("cmd_list->cmd = %s\n", cmd->command);
+	while (cmd)
 	{
-		if (cmd_list->input > 2 && close(cmd_list->input) == -1)
+		if (cmd->input > 2 && close(cmd->input) == -1)
 			exit_error_with_msg("close() failed: ", strerror(errno), data);
-		if (cmd_list->output > 2 && close(cmd_list->output) == -1)
+		if (cmd->output > 2 && close(cmd->output) == -1)
 			exit_error_with_msg("close() failed: ", strerror(errno), data);
-		cmd_list = cmd_list->next;
+		cmd = cmd->next;
 	}
 }
 
-void	manage_pipes(t_cmd **cmd_list)
+void	manage_pipes(t_cmd **cmd_list, t_data *data)
 {
-	if ((*cmd_list)->output == -1)
+	(void)data;
+	if ((*cmd_list)->input == -1 || (*cmd_list)->output == -1)
 		return ;
-//	dup2(cmd_list->input, STDIN_FILENO);
-//	dup2(cmd_list->output, STDOUT_FILENO);
-//	close_pipe(cmd_list);
+	if ((*cmd_list)->input != 0)
+		dup2((*cmd_list)->input, STDIN_FILENO);
+	if ((*cmd_list)->output != 1)
+		dup2((*cmd_list)->output, STDOUT_FILENO);
+	close_pipe(cmd_list, data);
 }

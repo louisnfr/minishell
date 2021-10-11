@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 12:29:36 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/11 14:15:32 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_bool	handle_execution(
 	}
 	else if ((*cmd_list)->path)
 	{
-		exec_command(pid, envp, *cmd_list);
+		exec_command(pid, envp, *cmd_list, data);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			*exit_code = WEXITSTATUS(status);
@@ -59,8 +59,6 @@ int	exec(char **envp, t_data *data)
 	exit_code = EXIT_FAILURE;
 	while (cmd_list)
 	{
-		if (cmd_list->next && cmd_list->next->delimiter == PIPE)
-			manage_pipes(&cmd_list);
 		if (!handle_execution(&exit_code, envp, &cmd_list, data))
 		{
 			exit_code = 127;
