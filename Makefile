@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/11 11:44:24 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/11 12:56:21 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SOURCES = \
 		parsing/parse_input/parsing.c \
 		parsing/parse_input/parsing_utils.c \
 		parsing/parse_input/parse_commands.c \
+		parsing/pipes/fd_array.c \
 		parsing/get_paths.c \
 		parsing/libft.c \
 		parsing/linked_list.c \
@@ -88,7 +89,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/builtin obj/parsing obj/parsing/parse_input obj/parsing/upgrade_input obj/parsing/split_input obj/shell/env obj/shell/exec obj/exit
+	@mkdir -p obj/builtin obj/parsing obj/parsing/parse_input obj/parsing/upgrade_input obj/parsing/split_input obj/parsing/pipes obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
