@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/08 18:56:21 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/11 11:44:24 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SOURCES = \
 		shell/exec/exec.c \
 		shell/exec/exec_command.c \
 		shell/exec/exec_builtin.c \
+		shell/exec/manage_pipes.c \
 		shell/display.c \
 		\
 		exit/free.c \
