@@ -47,7 +47,7 @@ char	**fill_cmd_array(t_cmd *cmd_list)
 	return (cmd_array);
 }
 
-t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list)
+t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 
@@ -57,6 +57,9 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list)
 	if (pid == CHILD)
 	{
 		cmd_array = fill_cmd_array(cmd_list);
+		if ((cmd_list && cmd_list->delimiter == PIPE)
+			|| (cmd_list->next && cmd_list->next->delimiter == PIPE))
+			manage_pipes(&cmd_list, data);
 		execve(cmd_list->path, cmd_array, envp);
 		printf("bash: %s: %s\n", cmd_list->command, strerror(errno));
 		return (FAIL);

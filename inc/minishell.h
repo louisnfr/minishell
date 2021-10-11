@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 12:55:43 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/11 14:15:47 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void	print_env(t_env *g_env);
 */
 int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
-t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list);
-void	manage_pipes(t_cmd **cmd_list);
+t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data);
+void	manage_pipes(t_cmd **cmd_list, t_data *data);
 /*
 ** libft
 */
