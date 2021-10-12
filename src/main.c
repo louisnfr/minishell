@@ -25,6 +25,7 @@ t_data	*init_data(char **envp)
 		return (NULL);
 	data->i = 0;
 	data->pid = 0;
+	data->tab_delimiters = ft_strdup("|&;<>");
 	update_env(data);
 	return (data);
 }

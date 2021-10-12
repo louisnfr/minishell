@@ -89,12 +89,12 @@ int	handle_split_input(int words, char *str, char **strs)
 	return (SUCCESS);
 }
 
-char	**split_input(char *str)
+char	**split_input(char *str, t_data *data)
 {
 	int		words;
 	char	**strs;
 
-	words = split_count_words(str);
+	words = split_count_words(str, data);
 	if (words == -1)
 		return (NULL);
 	strs = (char **)malloc(sizeof(char *) * (words + 1));

@@ -56,6 +56,8 @@ void	remove_from_list(t_cmd *cmd_list)
 	if (cmd_list->args)
 		free_double_str(cmd_list->args);
 	clean_free(&cmd_list->path);
+	clean_free(&cmd_list->heredoc);
+	clean_free(&cmd_list->heredoc_delimiter);
 	free(cmd_list);
 	cmd_list = NULL;
 }
@@ -108,5 +110,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->delimiter = 0;
 	cmd_list->input = 0;
 	cmd_list->output = 1;
+	cmd_list->heredoc = NULL;
+	cmd_list->heredoc_delimiter = NULL;
 	cmd_list->next = NULL;
 }

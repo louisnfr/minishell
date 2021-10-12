@@ -35,7 +35,9 @@ void	handle_builtin_cmd(
 	cmd_list->is_builtin = TRUE;
 	args = find_cmd_args(argv, data);
 	cmd_list->args = args;
-	if (delimiter)
+	if (delimiter && is_redirection(delimiter))
+		handle_redirection(delimiter, cmd_list);
+	else if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;
 }
@@ -57,7 +59,9 @@ void	handle_other_cmd(
 	create_new_cmd(command, options, path, &cmd_list);
 	args = find_cmd_args(argv, data);
 	cmd_list->args = args;
-	if (delimiter)
+	if (delimiter && is_redirection(delimiter))
+		handle_redirection(delimiter, cmd_list);
+	else if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;
 }
@@ -70,7 +74,7 @@ char	**get_argv(char *input, t_data *data)
 	if (!input)
 		return (NULL);
 	input = upgrade_input(input, data);
-	argv = split_input(input);
+	argv = split_input(input, data);
 	clean_free(&input);
 	return (argv);
 }

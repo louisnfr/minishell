@@ -22,6 +22,7 @@ void	clean_data(t_data *data)
 	clean_cmd_list(data->cmd_list);
 	data->cmd_list = NULL;
 	free_env(data->env);
+	clean_free(&data->tab_delimiters);
 	free_double_str(data->all_paths);
 }
 

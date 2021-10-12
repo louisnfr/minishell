@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	check_error_delimiter(int j, char *str, int delimiter)
+int	check_error_delimiter(int j, char *str, int delimiter, t_data *data)
 {
 	int	ret ;
 
@@ -24,15 +24,13 @@ int	check_error_delimiter(int j, char *str, int delimiter)
 			return (display_error_msg_delimiter(2, str[j]));
 		return (display_error_msg_delimiter(1, str[j]));
 	}
-	ret = is_other_delimiter(str[j], str[j + 1], delimiter);
-	if (ret == 1)
-		return (display_error_msg_delimiter(1, str[j]));
-	if (ret == 2)
-		return (display_error_msg_delimiter(2, str[j]));
+	ret = check_multiple_delimiters(str, j, data);
+	if (ret > 0 && ret < 4)
+		return (display_error_msg_delimiter(ret, str[j]));
 	return (1);
 }
 
-int	check_delimiter(char *str, char delimiter, int *i, int *words)
+int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 {
 	int	count;
 	int	j;
@@ -46,13 +44,17 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words)
 		(*i)++;
 		count++;
 	}
-	if ((delimiter == '|' && count == 3) || (delimiter == '&' && count == 3))
+	if ((delimiter == '|' && count == 3) || (delimiter == '&' && count == 3) ||
+		(delimiter == '>' && count == 3) || (delimiter == '<' && count == 4))
 		return (display_error_msg_delimiter(1, delimiter));
 	if ((delimiter == '|' && count > 3) || (delimiter == '&' && count > 3)
-		|| (delimiter == ';' && count > 1))
+		|| (delimiter == ';' && count > 1) || (delimiter == '>' && count > 3)
+		|| (delimiter == '<' && count == 5))
 		return (display_error_msg_delimiter(2, delimiter));
+	if (delimiter == '<' && count > 5)
+		return (display_error_msg_delimiter(3, delimiter));
 	j = *i;
-	return (check_error_delimiter(j, str, delimiter));
+	return (check_error_delimiter(j, str, delimiter, data));
 }
 
 int	handle_delimiters(int i, char **str, char **strs)

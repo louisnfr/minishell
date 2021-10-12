@@ -59,12 +59,14 @@ typedef enum s_boolean
 
 typedef enum s_delimiter
 {
-	PIPE		= 1,
-	AND			= 2,
-	OR			= 3,
-	SEMICOLON	= 4,
-	LEFT_MARK	= 5,
-	RIGHT_MARK	= 6,
+	PIPE				= 1,
+	AND					= 2,
+	OR					= 3,
+	SEMICOLON			= 4,
+	LEFT_MARK			= 5,
+	HEREDOC				= 6,
+	RIGHT_MARK			= 7,
+	DOUBLE_RIGHT_MARK	= 8,
 }	t_delimiter;
 
 typedef struct s_cmd
@@ -78,6 +80,8 @@ typedef struct s_cmd
 	t_bool			is_builtin;
 	int				delimiter;
 	struct s_cmd	*next;
+	char			*heredoc;
+	char			*heredoc_delimiter;
 }			t_cmd;
 
 typedef struct s_data
@@ -88,6 +92,7 @@ typedef struct s_data
 	int		i;
 	int		ret_value;
 	pid_t	pid;
+	char	*tab_delimiters;
 }	t_data;
 
 /*
@@ -157,6 +162,8 @@ char	**find_cmd_args(char **argv, t_data *data);
 t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
 int		get_delimiter(char *str);
+t_bool	is_redirection(int delimiter);
+void	handle_redirection(int delimiter, t_cmd *cmd_list);
 /*
 ** parsing/upgrade_input
 */
@@ -172,17 +179,17 @@ char	*transform_special_value(char *str, char *value, char character);
 /*
 ** parsing/split_input
 */
-char	**split_input(char *str);
-int		split_count_words(char *str);
+char	**split_input(char *str, t_data *data);
+int		split_count_words(char *str, t_data *data);
 int		is_charset_split(char c);
 int		is_delimiter_split(char c);
 int		is_other_delimiter(char c1, char c2, char delimiter);
 int		check_multiple_delimiters(
-			char c1, char c2, char delimiter1, char delimiter2);
+			char *str, int j, t_data *data);
 int		display_error_msg_delimiter(int count, char delimiter);
 int		handle_delimiters(int i, char **str, char **strs);
-int		check_delimiter(char *str, char delimiter, int *i, int *words);
-int		check_error_delimiter(int j, char *str, int delimiter);
+int		check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data);
+int		check_error_delimiter(int j, char *str, int delimiter, t_data *data);
 /*
 ** parsing/pipes
 */

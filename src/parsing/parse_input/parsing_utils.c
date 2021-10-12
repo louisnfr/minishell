@@ -31,7 +31,11 @@ t_bool	is_delimiter(char *str)
 	return (str_is_equal(str, "&&")
 		|| str_is_equal(str, ";")
 		|| str_is_equal(str, "|")
-		|| str_is_equal(str, "||"));
+		|| str_is_equal(str, "||")
+		|| str_is_equal(str, "<")
+		|| str_is_equal(str, "<<")
+		|| str_is_equal(str, ">")
+		|| str_is_equal(str, ">>"));
 }
 
 int	get_delimiter(char *str)
@@ -46,11 +50,15 @@ int	get_delimiter(char *str)
 		return (SEMICOLON);
 	if (str_is_equal(str, "<"))
 		return (LEFT_MARK);
+	if (str_is_equal(str, "<<"))
+		return (HEREDOC);
 	if (str_is_equal(str, ">"))
 		return (RIGHT_MARK);
+	if (str_is_equal(str, ">>"))
+		return (DOUBLE_RIGHT_MARK);
 	return (0);
 }
-
+	
 t_bool	cmd_is_builtin(char *cmd)
 {
 	int		i;

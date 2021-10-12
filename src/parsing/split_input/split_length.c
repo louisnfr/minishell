@@ -35,7 +35,7 @@ static void	count_normal_words(char *str, int *i)
 	}
 }
 
-int	split_count_words(char *str)
+int	split_count_words(char *str, t_data *data)
 {
 	int	words;
 	int	i;
@@ -51,9 +51,11 @@ int	split_count_words(char *str)
 			count_normal_words(str, &i);
 			words++;
 		}
-		if (!check_delimiter(str, '|', &i, &words)
-			|| !check_delimiter(str, '&', &i, &words)
-			|| !check_delimiter(str, ';', &i, &words))
+		if (!check_delimiter(str, '|', &i, &words, data)
+			|| !check_delimiter(str, '&', &i, &words, data)
+			|| !check_delimiter(str, ';', &i, &words, data)
+			|| !check_delimiter(str, '>', &i, &words, data)
+			|| !check_delimiter(str, '<', &i, &words, data))
 			return (-1);
 	}
 	return (words);

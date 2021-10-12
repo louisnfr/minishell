@@ -38,6 +38,7 @@ SOURCES = \
 		parsing/parse_input/parsing.c \
 		parsing/parse_input/parsing_utils.c \
 		parsing/parse_input/parse_commands.c \
+		parsing/parse_input/parse_redirections.c \
 		parsing/pipes/pipe_fd.c \
 		parsing/get_paths.c \
 		parsing/libft.c \
