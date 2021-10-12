@@ -26,23 +26,23 @@ t_bool	already_exists(char *var, t_data *data)
 	return (FALSE);
 }
 
-void	print_export(t_data *data)
+void	print_export(t_cmd *cmd_list, t_data *data)
 {
 	t_env	*tmp;
 
 	tmp = data->env;
 	while (tmp)
 	{
-		ft_putstr("export ");
-		ft_putstr(tmp->key);
+		ft_putstr_fd("export ", cmd_list->output);
+		ft_putstr_fd(tmp->key, cmd_list->output);
 		if (tmp->is_value)
 		{
-			ft_putchar('=');
-			ft_putchar('"');
-			ft_putstr(tmp->value);
-			ft_putchar('"');
+			ft_putchar_fd('=', cmd_list->output);
+			ft_putchar_fd('"', cmd_list->output);
+			ft_putstr_fd(tmp->value, cmd_list->output);
+			ft_putchar_fd('"', cmd_list->output);
 		}
-		ft_putchar('\n');
+		ft_putchar_fd('\n', cmd_list->output);
 		tmp = tmp->next;
 	}
 }
@@ -56,14 +56,15 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 	ret = EXIT_SUCCESS;
 	i = -1;
 	if (!cmd_list->args)
-		print_export(data);
+		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
 		if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
 		{
 			if (ft_str_isdigit(cmd_list->args[i]))
 			{
-				printf("export: `%s': not a valid identifier\n", cmd_list->args[i]);
+				printf("export: `%s': not a valid identifier\n",
+					cmd_list->args[i]);
 				ret = EXIT_FAILURE;
 			}
 			if (!already_exists(cmd_list->args[i], data))

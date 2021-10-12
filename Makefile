@@ -38,7 +38,7 @@ SOURCES = \
 		parsing/parse_input/parsing.c \
 		parsing/parse_input/parsing_utils.c \
 		parsing/parse_input/parse_commands.c \
-		parsing/pipes/fd_array.c \
+		parsing/pipes/pipe_fd.c \
 		parsing/get_paths.c \
 		parsing/libft.c \
 		parsing/linked_list.c \
@@ -49,6 +49,7 @@ SOURCES = \
 		shell/exec/exec_command.c \
 		shell/exec/exec_builtin.c \
 		shell/exec/exec_pipes.c \
+		shell/exec/exec_pipes_utils.c \
 		shell/display.c \
 		\
 		exit/free.c \

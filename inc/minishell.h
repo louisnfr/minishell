@@ -122,8 +122,10 @@ int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data);
 char	**fill_cmd_array(t_cmd *cmd_list);
-int		exec_pipes(pid_t pid, char **envp, t_cmd **cmd_list, t_data *data);
-void	close_fd(t_data *data);
+int		exec_pipes(char **envp, t_cmd **cmd_list, t_data *data);
+void	close_all_fd(t_data *data);
+void	close_fd(t_cmd **cmd_list);
+void	exit_error_with_msg(char *error_msg, char *errno_msg, t_data *data);
 /*
 ** libft
 */

@@ -30,9 +30,8 @@ t_bool	handle_execution(
 
 	pid = 0;
 	status = 0;
-	if (((*cmd_list)->is_builtin || (*cmd_list)->path)
-		&& ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE))
-		*exit_code = exec_pipes(pid, envp, cmd_list, data);
+	if ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
+		*exit_code = exec_pipes(envp, cmd_list, data);
 	else if ((*cmd_list)->is_builtin)
 	{
 		*exit_code = exec_builtin(*cmd_list, data);

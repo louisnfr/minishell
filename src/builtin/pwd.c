@@ -21,8 +21,8 @@ t_bool	exec_pwd(t_cmd *cmd_list, t_data *data)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (FAIL);
-	ft_putstr(pwd);
-	ft_putchar('\n');
+	ft_putstr_fd(pwd, cmd_list->output);
+	ft_putchar_fd('\n', cmd_list->output);
 	free(pwd);
 	return (EXIT_SUCCESS);
 }
