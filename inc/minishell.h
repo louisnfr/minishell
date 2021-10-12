@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 18:22:24 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/11 22:04:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void	print_env(t_env *g_env);
 int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data);
-void	manage_pipes(t_cmd **cmd_list, t_data *data);
+char	**fill_cmd_array(t_cmd *cmd_list);
+int		exec_pipes(pid_t pid, char **envp, t_cmd **cmd_list, t_data *data);
 void	close_fd(t_data *data);
 /*
 ** libft

@@ -51,22 +51,18 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 
+	(void)data;
 	pid = fork();
 	if (pid < 0)
 		return (FAIL);
 	if (pid == CHILD)
 	{
 		cmd_array = fill_cmd_array(cmd_list);
-		manage_pipes(&cmd_list, data);
 		execve(cmd_list->path, cmd_array, envp);
 		printf("bash: %s: %s\n", cmd_list->command, strerror(errno));
 		return (FAIL);
 	}
-	else	
-	{
+	else
 		wait(NULL);
-		close(cmd_list->input);
-		close(cmd_list->output);
-	}
 	return (SUCCESS);
 }

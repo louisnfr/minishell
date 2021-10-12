@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/11 18:34:31 by efrancon         ###   ########.fr        #
+#    Updated: 2021/10/11 22:20:43 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SOURCES = \
 		shell/exec/exec.c \
 		shell/exec/exec_command.c \
 		shell/exec/exec_builtin.c \
-		shell/exec/manage_pipes.c \
+		shell/exec/exec_pipes.c \
 		shell/display.c \
 		\
 		exit/free.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 16:11:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/12 10:11:50 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ t_bool	handle_execution(
 
 	pid = 0;
 	status = 0;
-	if ((*cmd_list)->is_builtin)
+	if (((*cmd_list)->is_builtin || (*cmd_list)->path)
+		&& ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE))
+		*exit_code = exec_pipes(pid, envp, cmd_list, data);
+	else if ((*cmd_list)->is_builtin)
 	{
 		*exit_code = exec_builtin(*cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
-		check_exit_code(*exit_code, cmd_list);
 	}
 	else if ((*cmd_list)->path)
 	{
@@ -43,10 +45,10 @@ t_bool	handle_execution(
 		if (WIFEXITED(status))
 			*exit_code = WEXITSTATUS(status);
 		*cmd_list = (*cmd_list)->next;
-		check_exit_code(*exit_code, cmd_list);
 	}
 	else
 		return (FAIL);
+	check_exit_code(*exit_code, cmd_list);
 	return (SUCCESS);
 }
 
