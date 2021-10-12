@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:40:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/12 22:00:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_bool	check_heredoc(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i + 1])
-	{
-		if (input[i] == '<' && input[i + 1] == '<')
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}
-
-t_bool	is_delimiter(char *str)
-{
-	return (str_is_equal(str, "&&")
-		|| str_is_equal(str, ";")
-		|| str_is_equal(str, "|")
-		|| str_is_equal(str, "||")
-		|| str_is_equal(str, "<")
-		|| str_is_equal(str, "<<")
-		|| str_is_equal(str, ">")
-		|| str_is_equal(str, ">>"));
-}
 
 int	get_delimiter(char *str)
 {
@@ -48,6 +22,19 @@ int	get_delimiter(char *str)
 		return (OR);
 	if (str_is_equal(str, ";"))
 		return (SEMICOLON);
+	return (0);
+}
+
+t_bool	is_delimiter(char *str)
+{
+	return (str_is_equal(str, "&&")
+		|| str_is_equal(str, ";")
+		|| str_is_equal(str, "|")
+		|| str_is_equal(str, "||"));
+}
+
+int	get_redirection(char *str)
+{
 	if (str_is_equal(str, "<"))
 		return (LEFT_MARK);
 	if (str_is_equal(str, "<<"))
@@ -58,7 +45,15 @@ int	get_delimiter(char *str)
 		return (DOUBLE_RIGHT_MARK);
 	return (0);
 }
-	
+
+t_bool	is_redirection(char *str)
+{
+	return (str_is_equal(str, "<")
+		|| str_is_equal(str, "<<")
+		|| str_is_equal(str, ">")
+		|| str_is_equal(str, ">>"));
+}
+
 t_bool	cmd_is_builtin(char *cmd)
 {
 	int		i;

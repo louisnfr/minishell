@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 22:04:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/12 22:46:45 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ typedef struct s_cmd
 	char			*path;
 	t_bool			is_builtin;
 	int				delimiter;
-	struct s_cmd	*next;
+	int				redirection;
 	char			*heredoc;
 	char			*heredoc_delimiter;
+	struct s_cmd	*next;
 }			t_cmd;
 
 typedef struct s_data
@@ -162,8 +163,9 @@ char	**find_cmd_args(char **argv, t_data *data);
 t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
 int		get_delimiter(char *str);
-t_bool	is_redirection(int delimiter);
-void	handle_redirection(int delimiter, t_cmd *cmd_list);
+t_bool	is_redirection(char *str);
+int		get_redirection(char *str);
+void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
 /*
 ** parsing/upgrade_input
 */

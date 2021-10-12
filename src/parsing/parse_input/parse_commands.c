@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:40:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/12 22:36:53 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**find_cmd_args(char **argv, t_data *data)
 	args = NULL;
 	if (!argv[++j])
 		return (args);
-	while (argv[j] && !is_delimiter(argv[j++]))
+	while (argv[j] && !is_delimiter(argv[j]) && !is_redirection(argv[j++]))
 		k++;
 	if (k)
 	{

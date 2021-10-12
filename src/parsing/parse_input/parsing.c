@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/11 11:30:21 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/12 22:48:05 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	handle_builtin_cmd(
 	cmd_list->is_builtin = TRUE;
 	args = find_cmd_args(argv, data);
 	cmd_list->args = args;
-	if (delimiter && is_redirection(delimiter))
-		handle_redirection(delimiter, cmd_list);
-	else if (delimiter)
+	if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;
+	parse_redirections(argv, cmd_list, data);
 }
 
 void	handle_other_cmd(
@@ -59,11 +58,10 @@ void	handle_other_cmd(
 	create_new_cmd(command, options, path, &cmd_list);
 	args = find_cmd_args(argv, data);
 	cmd_list->args = args;
-	if (delimiter && is_redirection(delimiter))
-		handle_redirection(delimiter, cmd_list);
-	else if (delimiter)
+	if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;
+	parse_redirections(argv, cmd_list, data);
 }
 
 char	**get_argv(char *input, t_data *data)
