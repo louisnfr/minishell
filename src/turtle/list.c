@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 04:12:04 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 04:59:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,14 @@ void	print_history(t_history *hist)
 	hist = getlast(hist);
 	while (hist)
 	{
-		printf("%5d  %s (%s)\n", i, hist->cmd, hist->new);
+		printf("%5d  %s\n", i, hist->cmd);
 		hist = hist->previous;
 		i++;
 	}
 }
 
-void	insert_char_history(t_history *hist, int cx, char c, int search)
+void	insert_char_history(
+	t_history *hist, unsigned int cx, char c, int search)
 {
 	while (hist)
 	{
@@ -92,7 +93,7 @@ void	insert_char_history(t_history *hist, int cx, char c, int search)
 	hist->new = insert_char(hist->new, cx, c);
 }
 
-void	del_char_history(t_history *hist, int cx, int search)
+void	del_char_history(t_history *hist, unsigned int cx, int search)
 {
 	while (hist)
 	{
@@ -117,7 +118,7 @@ void	clear_hist(t_history *hist, int search)
 	}
 }
 
-char	*insert_char(char *s, int cx, char c)
+char	*insert_char(char *s, unsigned int cx, char c)
 {
 	if (s)
 	{
@@ -134,7 +135,7 @@ char	*insert_char(char *s, int cx, char c)
 	return (s);
 }
 
-void	delete_char(char *s, int cx)
+void	delete_char(char *s, unsigned int cx)
 {
 	if (cx < 0 || cx > ft_strlen(s))
 		return ;

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:21 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 04:18:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 04:58:42 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ t_history	*new_cmd(char *cmd, int num);
 t_history	*getlast(t_history *hist);
 void		add_cmd(t_history **hist, t_history *new);
 
-void		insert_char_history(t_history *hist, int cx, char c, int search);
-void		del_char_history(t_history *hist, int cx, int search);
+void		insert_char_history(t_history *hist, unsigned int cx, char c, int search);
+void		del_char_history(t_history *hist, unsigned int cx, int search);
 
-char		*insert_char(char *current, int cx, char c);
-void		delete_char(char *s, int cx);
+char		*insert_char(char *current, unsigned int cx, char c);
+void		delete_char(char *s, unsigned int cx);
 
 char		*find_cmd_history(t_history *hist, int h_num);
 void		print_history(t_history *hist);
