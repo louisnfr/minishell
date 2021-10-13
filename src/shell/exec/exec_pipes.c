@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/12 15:16:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/13 11:10:51 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static t_bool	exec_command_pipe(
 		return (FAIL);
 	if (pid == CHILD)
 	{
+		if ((*cmd_list)->input == -1 || (*cmd_list)->output == -1)
+		{
+			*exit_code = 1;
+			return (SUCCESS);
+		}
 		dup2((*cmd_list)->input, STDIN_FILENO);
 		dup2((*cmd_list)->output, STDOUT_FILENO);
 		close_all_fd(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/12 15:17:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/13 11:13:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 		return (FAIL);
 	if (pid == CHILD)
 	{
+		if (cmd_list->input == -1 || cmd_list->output == -1)
+			return (FAIL);
+		if (cmd_list->redirection)
+		{
+			dup2(cmd_list->input, STDIN_FILENO);
+			dup2(cmd_list->output, STDOUT_FILENO);
+			close_all_fd(data);
+		}
 		cmd_array = fill_cmd_array(cmd_list);
 		execve(cmd_list->path, cmd_array, envp);
 		printf("bash: %s: %s\n", cmd_list->command, strerror(errno));

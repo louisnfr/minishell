@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:34:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 05:21:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 11:03:38 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 {
+	if (cmd_list->input == -1 || cmd_list->output == -1)
+		return (EXIT_FAILURE);
 	if (!ft_strcmp(cmd_list->command, "echo"))
 		return (exec_echo(cmd_list, data));
 	else if (!ft_strcmp(cmd_list->command, "cd"))

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/12 10:11:50 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 11:08:56 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ t_bool	handle_execution(
 	}
 	else if ((*cmd_list)->path)
 	{
-		exec_command(pid, envp, *cmd_list, data);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			*exit_code = WEXITSTATUS(status);
+		if (exec_command(pid, envp, *cmd_list, data))
+		{
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+				*exit_code = WEXITSTATUS(status);
+		}
 		*cmd_list = (*cmd_list)->next;
 	}
 	else

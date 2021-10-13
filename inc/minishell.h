@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 10:08:28 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 12:54:15 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ typedef enum s_delimiter
 	OR					= 3,
 	SEMICOLON			= 4,
 	LEFT_MARK			= 5,
-	HEREDOC				= 6,
-	RIGHT_MARK			= 7,
-	DOUBLE_RIGHT_MARK	= 8,
+	RIGHT_MARK			= 6,
+	DOUBLE_RIGHT_MARK	= 7,
+	HEREDOC				= 8,
 }	t_delimiter;
 
 typedef struct s_cmd
@@ -160,6 +160,7 @@ void	print_list(t_cmd *cmd_list);
 ** parsing
 */
 char	**get_paths(char **envp);
+void	parse_pipes(t_cmd *cmd_list);
 /*
 ** parsing/parse_input
 */
@@ -185,6 +186,9 @@ char	*get_env_key(char *str, int *i);
 int		get_length_env_value(char *env_key, t_data *data);
 int		get_length_new_input(char *str, t_data *data);
 char	*transform_special_value(char *str, char *value, char character);
+void	handle_env_variable(int *i, int *length, char *str, t_data *data);
+char	*get_env_value(char *str, int *i, t_data *data);
+void	fill_env_value(char *new_str, int *j, char *value);
 /*
 ** parsing/split_input
 */
@@ -200,9 +204,11 @@ int		handle_delimiters(int i, char **str, char **strs);
 int		check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data);
 int		check_error_delimiter(int j, char *str, int delimiter, t_data *data);
 /*
-** parsing/pipes
+** parsing/heredoc
 */
-void	parse_pipes(t_cmd *cmd_list);
+t_bool	read_heredoc(t_cmd *cmd_list, t_data *data);
+char	*heredoc_env_variable(char *input, t_data *data);
+char	*heredoc_special_value(char *str, char *value, char character);
 /*
 ** exit
 */
