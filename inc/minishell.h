@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 22:04:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 04:18:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+
+# include "turtle.h"
+# include "struct.h"
+# include "enum.h"
 
 # ifdef __linux__
 #  include <linux/kd.h>

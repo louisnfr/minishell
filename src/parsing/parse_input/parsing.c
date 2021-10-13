@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/11 11:30:21 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 04:44:23 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,17 @@ t_bool	parse(char *input, t_data *data)
 	while (argv[data->i])
 	{
 		if (is_delimiter(argv[data->i]))
+		{
 			delimiter = get_delimiter(argv[data->i++]);
+		}
 		else if (cmd_is_builtin(argv[data->i]))
+		{
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
+		}
 		else
+		{
 			handle_other_cmd(delimiter, argv, cmd_list, data);
+		}
 	}
 	free_double_str(argv);
 	parse_pipes(cmd_list);

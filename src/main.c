@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/11 15:51:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/13 04:54:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,11 @@ t_bool	ft_getpid(t_data *data)
 	return (SUCCESS);
 }
 
-void	sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		ft_putstr(prompt());
-		signal(SIGINT, sig_handler);
-	}
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
-	char	*input;
+	t_config	*sh;
+	char		*input;
 
 	(void)av;
 	if (ac != 1)
@@ -76,16 +67,25 @@ int	main(int ac, char **av, char **envp)
 	data = init_data(envp);
 	if (!data || !ft_getpid(data))
 		return (EXIT_FAILURE);
+	input = NULL;
+	sh = init_config(envp);
+	enable_raw_mode(sh);
 	while (1)
 	{
-		signal(SIGINT, sig_handler);
-		input = readline(prompt());
-		add_history(input);
-		init_cmd_list(data);
-		parse(input, data);
-//		print_list(data->cmd_list);
-		exec(envp, data);
-		clean_cmd_list(data->cmd_list);
+		write(1, "\e[32;1mturtle\e[0;1m$ \e[0m", 25);
+		input = shell_process_keypress(sh, sh->history);
+		write(1, "\n", 1);
+		if (input && ft_strlen(input) > 0)
+		{
+			add_cmd(&sh->history, new_cmd(input, sh->h_num));
+			init_cmd_list(data);
+			parse(input, data);
+			exec(envp, data);
+			sh->h_num++;
+			clear_hist(sh->history, sh->search);
+			clean_cmd_list(data->cmd_list);
+		}
+		// free(input);
 	}
 	return (0);
 }
