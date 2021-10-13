@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/05 16:33:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 06:14:05 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 	// write(1, "exit\n", 6);
 	// free_split(cmd);
 	// free data
+	printf("exit\n");
+	disable_raw_mode(data->sh);
+	free_history(data->sh->history);
+	free(data->sh);
 	clean_data(data);
 	// atexit(fonction);
 	exit(data->ret_value);
