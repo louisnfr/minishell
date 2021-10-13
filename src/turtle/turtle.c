@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   turtle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 05:42:36 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 10:05:28 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			}
 			sh->search++;
 		}
-		else if (isprint(c))
+		else if (ft_isprint(c))
 		{
 			cx_max++;
 			i++;
