@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/12 22:00:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 10:09:55 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_bool	is_redirection(char *str)
 t_bool	cmd_is_builtin(char *cmd)
 {
 	int		i;
-	char	*builtins[8];
+	char	*builtins[9];
 
 	builtins[0] = "cd";
 	builtins[1] = "echo";
@@ -66,7 +66,8 @@ t_bool	cmd_is_builtin(char *cmd)
 	builtins[4] = "export";
 	builtins[5] = "pwd";
 	builtins[6] = "unset";
-	builtins[7] = NULL;
+	builtins[7] = "history";
+	builtins[8] = NULL;
 	i = -1;
 	while (builtins[++i])
 	{

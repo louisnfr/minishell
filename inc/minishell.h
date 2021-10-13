@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/12 22:46:45 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 10:08:28 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 /*
 ** librairies
 */
-# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -31,6 +30,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+
+# include "libft.h"
+# include "enum.h"
+# include "struct.h"
+
 
 # ifdef __linux__
 #  include <linux/kd.h>
@@ -87,13 +91,15 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	t_cmd	*cmd_list;
-	t_env	*env;
-	char	**all_paths;
-	int		i;
-	int		ret_value;
-	pid_t	pid;
-	char	*tab_delimiters;
+	t_cmd		*cmd_list;
+	t_env		*env;
+	t_config	*sh;
+	char		**all_paths;
+	char		*tab_delimiters;
+	char		*pr;
+	int			ret_value;
+	pid_t		pid;
+	int			i;
 }	t_data;
 
 /*
@@ -103,6 +109,7 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data);
 t_bool	exec_cd(t_cmd *cmd_list, t_data *data);
 t_bool	exec_pwd(t_cmd *cmd_list, t_data *data);
 t_bool	exec_env(t_cmd *cmd_list, t_data *data);
+t_bool	exec_history(t_cmd *cmd_list, t_data *data);
 t_bool	exec_export(t_cmd *cmd_list, t_data *data);
 t_bool	exec_unset(t_cmd *cmd_list, t_data *data);
 void	exec_exit(t_cmd *cmd_list, t_data *data);
@@ -202,5 +209,55 @@ void	parse_pipes(t_cmd *cmd_list);
 void	free_env(t_env *g_env);
 void	free_split(char **args);
 t_bool	cd_error(char *pwd, t_cmd *cmd_list);
+
+/*** TURTLE FUNCTIONS ***/
+
+/*** raw ***/
+
+void		disable_raw_mode(t_config *sh);
+void		enable_raw_mode(t_config *sh);
+void		init_shell(t_config *sh);
+
+/*** turtle ***/
+
+int			shell_read_key(t_config *sh);
+char		*shell_process_keypress(
+	t_data *data, t_config *sh, t_history *hist);
+int			get_pos_cursor(int *cx, int *cy);
+
+/*** init ***/
+
+void		init_shell(t_config *sh);
+t_config	*init_config(char **envp);
+t_history	*init_history(void);
+
+/*** lists ***/
+
+t_history	*new_cmd(char *cmd, int num);
+t_history	*getlast(t_history *hist);
+void		add_cmd(t_history **hist, t_history *new);
+
+void		insert_char_history(t_history *hist, unsigned int cx, char c, int search);
+void		del_char_history(t_history *hist, unsigned int cx, int search);
+
+char		*insert_char(char *current, unsigned int cx, char c);
+void		delete_char(char *s, unsigned int cx);
+
+char		*find_cmd_history(t_history *hist, int h_num);
+void		print_history(t_history *hist);
+void		clear_hist(t_history *hist, int search);
+
+/*** utils ***/
+
+int			ctrl_key(int k);
+void		clear_prompt(t_data *data);
+char		*ft_strjoin(char *s1, char *s2);
+
+/*** exit ***/
+
+void		exit_error(const char *s, t_config *sh);
+void		exit_free(t_config *sh, t_history *hist);
+void		free_history(t_history *hist);
+
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/11 22:20:43 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/13 05:25:15 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SOURCES = \
 		builtin/cd.c \
 		builtin/pwd.c \
 		builtin/env.c \
+		builtin/history.c \
 		builtin/export.c \
 		builtin/unset.c \
 		builtin/exit.c \
@@ -54,7 +55,15 @@ SOURCES = \
 		shell/display.c \
 		\
 		exit/free.c \
-		exit/error.c
+		exit/error.c \
+		\
+		turtle/exit.c \
+		turtle/init.c \
+		turtle/list.c \
+		turtle/main.c \
+		turtle/raw.c \
+		turtle/turtle.c \
+		turtle/utils.c
 
 
 ### COMPILATION ###
@@ -91,7 +100,8 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/builtin obj/parsing obj/parsing/parse_input obj/parsing/upgrade_input obj/parsing/split_input obj/parsing/pipes obj/shell/env obj/shell/exec obj/exit
+	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parse_input obj/parsing/upgrade_input
+	@mkdir -p obj/parsing/split_input obj/parsing/pipes obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 

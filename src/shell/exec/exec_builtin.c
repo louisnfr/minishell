@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:34:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 18:18:12 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/13 05:21:25 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 		return (exec_pwd(cmd_list, data));
 	else if (!ft_strcmp(cmd_list->command, "env"))
 		return (exec_env(cmd_list, data));
+	else if (!ft_strcmp(cmd_list->command, "history"))
+		return (exec_history(cmd_list, data));
 	else if (!ft_strcmp(cmd_list->command, "export"))
 		return (exec_export(cmd_list, data));
 	else if (!ft_strcmp(cmd_list->command, "unset"))

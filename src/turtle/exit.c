@@ -5,38 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 06:14:05 by lraffin          ###   ########.fr       */
+/*   Created: 2021/10/03 09:23:22 by lraffin           #+#    #+#             */
+/*   Updated: 2021/10/13 05:53:02 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fonction(void)
+void	exit_error(const char *s, t_config *sh)
 {
-	system("leaks minishell");
+	if (errno == 0)
+		write(2, s, strlen(s));
+	else
+		perror(s);
+	if (sh->init_termios)
+		disable_raw_mode(sh);
+	exit(EXIT_FAILURE);
 }
 
-void	clean_data(t_data *data)
+void	exit_free(t_config *sh, t_history *hist)
 {
-	clean_cmd_list(data->cmd_list);
-	data->cmd_list = NULL;
-	free_env(data->env);
-	clean_free(&data->tab_delimiters);
-	free_double_str(data->all_paths);
-}
-
-void	exec_exit(t_cmd *cmd_list, t_data *data)
-{
-	(void)cmd_list;
-	// write(1, "exit\n", 6);
-	// free_split(cmd);
-	// free data
 	printf("exit\n");
-	disable_raw_mode(data->sh);
-	free_history(data->sh->history);
-	free(data->sh);
-	clean_data(data);
-	// atexit(fonction);
-	exit(data->ret_value);
+	disable_raw_mode(sh);
+	free_history(hist);
+	free(sh);
+	sh = NULL;
+	hist = NULL;
+	exit(0);
+}
+
+void	free_history(t_history *hist)
+{
+	t_history	*tmp;
+
+	tmp = hist;
+	while (tmp)
+	{
+		hist = hist->next;
+		free(tmp->cmd);
+		free(tmp->new);
+		free(tmp);
+		tmp = NULL;
+		tmp = hist;
+	}
+	free(tmp);
+	free(hist);
+	hist = NULL;
 }
