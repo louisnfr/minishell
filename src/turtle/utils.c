@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:19 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 04:12:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 05:41:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	ctrl_key(int k)
 	return (k & 0x1f);
 }
 
-void	clear_prompt(void)
+void	clear_prompt(t_data *data)
 {
 	write(STDOUT_FILENO, "\x1b[2K", 4);
 	write(STDOUT_FILENO, "\x1b[999D", 6);
-	write(1, "\e[32;1mturtle\e[0;1m$ \e[0m", 25);
+	write(1, data->pr, ft_strlen(data->pr));
 }
 
 char	*ft_strjoin(char *s1, char *s2)

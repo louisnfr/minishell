@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 04:12:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 05:42:36 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	shell_read_key(t_config *sh)
 		return (c);
 }
 
-char	*shell_process_keypress(t_config *sh, t_history *hist)
+char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 {
 	char	*input;
 	char	*current;
@@ -111,7 +111,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 			write(1, "\x1b[s", 3);
 			write(1, "\x1b[2J", 4);
 			write(1, "\x1b[H", 3);
-			write(1, "\e[32;1mturtle\e[0;1m$ \e[0m", 25);
+			write(1, data->pr, ft_strlen(data->pr));
 			if (current && sh->search == sh->h_num)
 				write(1, current, ft_strlen(current));
 			else
@@ -141,7 +141,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 			}
 			write(1, "\x1b[2K", 4);
 			write(1, "\x1b[999D", 6);
-			write(1, "\e[32;1mturtle\e[0;1m$ \e[0m", 25);
+			write(1, data->pr, ft_strlen(data->pr));
 		}
 		else if (c == DELETE)
 		{
@@ -153,7 +153,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 					cx++;
 					delete_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
-					clear_prompt();
+					clear_prompt(data);
 					write(1, current, ft_strlen(current));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -168,7 +168,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					strcpy(input, find_cmd_history(hist, sh->search));
-					clear_prompt();
+					clear_prompt(data);
 					write(1, input, ft_strlen(input));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -185,7 +185,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 				{
 					delete_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
-					clear_prompt();
+					clear_prompt(data);
 					write(1, current, ft_strlen(current));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -198,7 +198,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					strcpy(input, find_cmd_history(hist, sh->search));
-					clear_prompt();
+					clear_prompt(data);
 					write(1, input, ft_strlen(input));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -233,7 +233,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 					free(input);
 				input = malloc(sizeof(char) * (ft_strlen(prev_cmd) + 1));
 				strcpy(input, prev_cmd);
-				clear_prompt();
+				clear_prompt(data);
 				write(1, input, ft_strlen(input));
 				cx = ft_strlen(input);
 				cx_max = ft_strlen(input);
@@ -244,7 +244,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 			if (sh->search == sh->h_num)
 				continue ;
 			next_cmd = find_cmd_history(hist, sh->search + 1);
-			clear_prompt();
+			clear_prompt(data);
 			if (next_cmd)
 			{
 				if (input)
@@ -275,7 +275,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 			{
 				current = insert_char(current, cx, a);
 				write(1, "\x1b[s", 3);
-				clear_prompt();
+				clear_prompt(data);
 				write(1, current, ft_strlen(current));
 				write(1, "\x1b[u", 3);
 				write(1, "\x1b[1C", 4);
@@ -288,7 +288,7 @@ char	*shell_process_keypress(t_config *sh, t_history *hist)
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				strcpy(input, find_cmd_history(hist, sh->search));
-				clear_prompt();
+				clear_prompt(data);
 				write(1, input, ft_strlen(input));
 				write(1, "\x1b[u", 3);
 				write(1, "\x1b[1C", 4);

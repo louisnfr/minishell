@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:40:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/13 05:28:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	get_delimiter(char *str)
 		return (DOUBLE_RIGHT_MARK);
 	return (0);
 }
-	
+
 t_bool	cmd_is_builtin(char *cmd)
 {
 	int		i;
-	char	*builtins[8];
+	char	*builtins[9];
 
 	builtins[0] = "cd";
 	builtins[1] = "echo";
@@ -71,7 +71,8 @@ t_bool	cmd_is_builtin(char *cmd)
 	builtins[4] = "export";
 	builtins[5] = "pwd";
 	builtins[6] = "unset";
-	builtins[7] = NULL;
+	builtins[7] = "history";
+	builtins[8] = NULL;
 	i = -1;
 	while (builtins[++i])
 	{

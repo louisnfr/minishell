@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/13 04:20:12 by lraffin          ###   ########.fr        #
+#    Updated: 2021/10/13 05:25:15 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SOURCES = \
 		builtin/cd.c \
 		builtin/pwd.c \
 		builtin/env.c \
+		builtin/history.c \
 		builtin/export.c \
 		builtin/unset.c \
 		builtin/exit.c \

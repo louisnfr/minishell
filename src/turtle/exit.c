@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:23:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 04:17:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 05:53:02 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	exit_free(t_config *sh, t_history *hist)
 {
 	printf("exit\n");
 	disable_raw_mode(sh);
-	print_history(hist);
 	free_history(hist);
 	free(sh);
 	sh = NULL;

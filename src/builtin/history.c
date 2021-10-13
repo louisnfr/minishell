@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 05:49:05 by lraffin          ###   ########.fr       */
+/*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
+/*   Updated: 2021/10/13 05:59:40 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "minishell.h"
 
-typedef struct s_history
+t_bool	exec_history(t_cmd *cmd_list, t_data *data)
 {
-	char				*cmd;
-	char				*new;
-	struct s_history	*next;
-	struct s_history	*previous;
-	int					num;
-}	t_history;
-
-typedef struct s_config
-{
-	char				**envp;
-	struct s_history	*history;
-	int					cx;
-	int					cy;
-	int					h_num;
-	int					search;
-	struct termios		orig_termios;
-	t_bool				init_termios;
-}	t_config;
-
-#endif
+	(void)cmd_list;
+	print_history(data->sh->history);
+	return (EXIT_SUCCESS);
+}

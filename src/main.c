@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 04:54:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 05:56:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ t_bool	ft_getpid(t_data *data)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data	*data;
-	t_config	*sh;
+	t_data		*data;
 	char		*input;
 
 	(void)av;
@@ -68,24 +67,25 @@ int	main(int ac, char **av, char **envp)
 	if (!data || !ft_getpid(data))
 		return (EXIT_FAILURE);
 	input = NULL;
-	sh = init_config(envp);
-	enable_raw_mode(sh);
+	data->sh = init_config(envp);
 	while (1)
 	{
-		write(1, "\e[32;1mturtle\e[0;1m$ \e[0m", 25);
-		input = shell_process_keypress(sh, sh->history);
+		data->pr = prompt();
+		write(1, data->pr, ft_strlen(data->pr));
+		enable_raw_mode(data->sh);
+		input = shell_process_keypress(data, data->sh, data->sh->history);
+		disable_raw_mode(data->sh);
 		write(1, "\n", 1);
 		if (input && ft_strlen(input) > 0)
 		{
-			add_cmd(&sh->history, new_cmd(input, sh->h_num));
+			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
 			init_cmd_list(data);
 			parse(input, data);
 			exec(envp, data);
-			sh->h_num++;
-			clear_hist(sh->history, sh->search);
+			clear_hist(data->sh->history, data->sh->search);
 			clean_cmd_list(data->cmd_list);
+			data->sh->h_num++;
 		}
-		// free(input);
 	}
 	return (0);
 }
