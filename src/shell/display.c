@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 05:37:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/13 06:04:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ char	*prompt(void)
 		cwd = ft_strjoin("~", tmp);
 		free(tmp);
 	}
-	usr = ft_strjoin("\e[32;1m", usr);
+	usr = ft_strjoin("\e[92;1m", usr);
 	usr = ft_strjoin(usr, "\e[0m:");
-	usr = ft_strjoin(usr, "\e[36;1m");
+	usr = ft_strjoin(usr, "\e[34;1m");
 	usr = ft_strjoin(usr, cwd);
-	cwd = ft_strjoin(usr, "$ \e[0m");
+	cwd = ft_strjoin(usr, "\e[0m$ ");
 	return (cwd);
 }
 
