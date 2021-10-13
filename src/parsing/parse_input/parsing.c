@@ -94,17 +94,11 @@ t_bool	parse(char *input, t_data *data)
 	while (argv[data->i])
 	{
 		if (is_delimiter(argv[data->i]))
-		{
 			delimiter = get_delimiter(argv[data->i++]);
-		}
 		else if (cmd_is_builtin(argv[data->i]))
-		{
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
-		}
 		else
-		{
 			handle_other_cmd(delimiter, argv, cmd_list, data);
-		}
 	}
 	free_double_str(argv);
 	parse_pipes(cmd_list);

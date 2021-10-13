@@ -206,7 +206,7 @@ int		check_error_delimiter(int j, char *str, int delimiter, t_data *data);
 /*
 ** parsing/heredoc
 */
-t_bool	read_heredoc(t_cmd *cmd_list, t_data *data);
+t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes);
 char	*heredoc_env_variable(char *input, t_data *data);
 char	*heredoc_special_value(char *str, char *value, char character);
 /*

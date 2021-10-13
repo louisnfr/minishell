@@ -36,7 +36,7 @@ static void	fill_quotes(char **str, char **strs, int *i, int *j)
 	}
 }
 
-int	fill_words(int i, char **str, char **strs)
+t_bool	fill_words(int i, char **str, char **strs)
 {
 	int		j;
 	char	*tmp;
@@ -45,11 +45,10 @@ int	fill_words(int i, char **str, char **strs)
 	tmp = ft_strdup(*str);
 	while (tmp[j] && !is_charset_split(tmp[j]))
 		j++;
-	free(tmp);
-	tmp = NULL;
+	clean_free(&tmp);
 	strs[i] = (char *)malloc(sizeof(char) * (j + 1));
 	if (!strs[i])
-		return (0);
+		return (FAIL);
 	j = 0;
 	while (**str && !is_charset_split(**str))
 	{
@@ -62,7 +61,44 @@ int	fill_words(int i, char **str, char **strs)
 		}
 	}
 	strs[i][j] = '\0';
-	return (1);
+	return (SUCCESS);
+}
+
+t_bool	handle_heredoc_quotes(int *i, char **str, char **strs)
+{
+	int		j;
+	char	*tmp;
+	char	charset;
+
+	while (**str && ft_isspace(**str))
+		(*str)++;
+	if (!(**str) || (**str && **str != '\'' && **str != '\"'))
+		return (SUCCESS);
+	charset = **str;
+	j = 1;
+	tmp = ft_strdup(*str);
+	while (tmp[j] && tmp[j] != charset)
+		j++;
+	free(tmp);
+	tmp = NULL;
+	strs[++(*i)] = (char *)malloc(sizeof(char) * (j + 1));
+	if (!strs[*i])
+		return (FAIL);
+	j = 0;
+	strs[*i][j++] = **str;
+	(*str)++;
+	while (**str)
+	{
+		strs[*i][j++] = **str;
+		(*str)++;
+		if (**str && **str == charset)
+		{
+			strs[*i][j++] = **str;
+			break ;
+		}
+	}
+	strs[*i][j] = '\0';
+	return (SUCCESS);
 }
 
 int	handle_split_input(int words, char *str, char **strs)
@@ -84,6 +120,8 @@ int	handle_split_input(int words, char *str, char **strs)
 			if (!handle_delimiters(i, &str, &(*strs)))
 				return (FAIL);
 		}
+		if (strs[i] && str_is_equal(strs[i], "<<"))
+			handle_heredoc_quotes(&i, &str, &(*strs));
 	}
 	strs[i] = NULL;
 	return (SUCCESS);

@@ -28,6 +28,51 @@ t_bool	is_file_name(char *file)
 	return (FAIL);
 }
 
+char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
+{
+	char	*new_delimiter;
+	int		i;
+	char	charset;
+	int		j;
+
+	if (!delimiter || !delimiter[0]
+		|| (delimiter[0] && delimiter[0] != '\"' && delimiter[0] != '\''))
+		return (delimiter);
+	charset = delimiter[0];
+	new_delimiter = NULL;
+	i = 0;
+	j = 0;
+	while (delimiter[++i] && delimiter[i] != charset)
+		j++;
+	new_delimiter = (char *)malloc(sizeof(char) * (j + 1));
+	if (!new_delimiter)
+		return (NULL);
+	i = 1;
+	j = 0;
+	while (delimiter[i] && delimiter[i] != charset)
+		new_delimiter[j++] = delimiter[i++];
+	new_delimiter[j] = '\0';
+	*quotes = 1;
+	clean_free(&delimiter);
+	return (new_delimiter);
+}
+
+void	redir_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
+{
+	t_bool	quotes;
+
+	quotes = 0;
+	cmd_list->heredoc = ft_strdup("heredoc");
+	if (!argv[data->i])
+		return ;
+	cmd_list->heredoc_delimiter = parse_heredoc_delimiter(
+		ft_strdup(argv[data->i]), &quotes);
+	read_heredoc(cmd_list, data, quotes);
+	cmd_list->input = open(cmd_list->heredoc, O_RDONLY);
+	if (cmd_list->input == -1)
+		display_error_msg(cmd_list->heredoc, strerror(errno));
+}
+
 void	handle_redirection(
 	int redirection, char **argv, t_cmd *cmd_list, t_data *data)
 {
@@ -59,15 +104,7 @@ void	handle_redirection(
 		}
 	}
 	if (redirection == HEREDOC)
-	{
-		cmd_list->heredoc = ft_strdup("heredoc");
-	//	printf("delimiter = %s\n", argv[data->i]);
-		cmd_list->heredoc_delimiter = ft_strdup(argv[data->i]);
-		read_heredoc(cmd_list, data);
-		cmd_list->input = open(cmd_list->heredoc, O_RDONLY);
-		if (cmd_list->input == -1)
-			display_error_msg(cmd_list->heredoc, strerror(errno));
-	}
+		redir_heredoc(argv, cmd_list, data);
 }
 
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data)
@@ -79,6 +116,8 @@ void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data)
 		redirection = get_redirection(argv[data->i]);
 		cmd_list->redirection = redirection;
 		data->i++;
+		if (!argv[data->i])
+			return ;
 		handle_redirection(redirection, argv, cmd_list, data);
 		data->i++;
 	}

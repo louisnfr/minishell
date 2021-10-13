@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
+/*   Updated: 2021/10/13 14:09:09 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*parse_heredoc_line(char *line, t_data *data)
@@ -23,7 +35,7 @@ char	*parse_heredoc_line(char *line, t_data *data)
 	return (new_line);
 }
 
-t_bool	read_heredoc(t_cmd *cmd_list, t_data *data)
+t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes)
 {
 	char	*line;
 	int		fd;
@@ -38,7 +50,8 @@ t_bool	read_heredoc(t_cmd *cmd_list, t_data *data)
 		get_next_line(0, &line);
 		if (str_is_equal(line, cmd_list->heredoc_delimiter))
 			break ;
-		line = parse_heredoc_line(line, data);
+		if (!quotes)
+			line = parse_heredoc_line(line, data);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		clean_free(&line);
