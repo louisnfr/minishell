@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 11:08:56 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 19:34:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	exec(char **envp, t_data *data)
 		if (!handle_execution(&exit_code, envp, &cmd_list, data))
 		{
 			exit_code = 127;
-			printf("bash: %s: command not found\n", cmd_list->command);
+			display_error_message(cmd_list->command, "command not found", cmd_list->error_output);
 			cmd_list = cmd_list->next;
 		}
 	}

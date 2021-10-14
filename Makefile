@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/14 12:50:48 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/14 14:13:47 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SOURCES = \
 		parsing/parse_input/parsing_utils.c \
 		parsing/parse_input/parse_commands.c \
 		parsing/parse_input/parse_redirections.c \
+		parsing/parse_input/check_argv.c \
 		parsing/heredoc/heredoc.c \
 		parsing/heredoc/env_var.c \
 		parsing/heredoc/special_value.c \

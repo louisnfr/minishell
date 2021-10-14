@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 13:03:16 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 19:33:07 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	input = upgrade_input(input, data);
 	argv = split_input(input, data);
-//	check_argv(argv);
 	clean_free(&input);
+	if (!argv)
+		return (NULL);
+	argv = check_argv(argv);
+	if (!argv)
+		return (NULL);
 	return (argv);
 }
 
@@ -90,7 +94,10 @@ t_bool	parse(char *input, t_data *data)
 	cmd_list = data->cmd_list;
 	argv = get_argv(input, data);
 	if (!argv)
+	{
+		data->ret_value = 2;
 		return (FAIL);
+	}
 	data->i = 0;
 	while (argv[data->i])
 	{

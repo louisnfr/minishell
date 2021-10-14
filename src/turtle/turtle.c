@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   turtle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 10:05:28 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 17:27:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

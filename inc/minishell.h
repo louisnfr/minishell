@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 13:02:27 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 19:28:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	exec_exit(t_cmd *cmd_list, t_data *data);
 char	*prompt(void);
 void	display_error_message(char *cmd, char *errno_msg, int fd);
 void	syntax_error_char_msg(int nb, char token);
-void	syntax_error_str_msg(char *token);
+char	**syntax_error_str_msg(char *token);
 /*
 ** shell/env
 */
@@ -192,6 +192,7 @@ int		get_delimiter(char *str);
 t_bool	is_redirection(char *str);
 int		get_redirection(char *str);
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
+char	**check_argv(char **argv);
 /*
 ** parsing/upgrade_input
 */

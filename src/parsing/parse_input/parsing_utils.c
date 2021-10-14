@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 10:09:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 16:54:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ int	get_redirection(char *str)
 		return (RIGHT_MARK);
 	if (str_is_equal(str, ">>"))
 		return (DOUBLE_RIGHT_MARK);
+	if (str_is_equal(str, "2>"))
+		return (ERROR);
+	if (str_is_equal(str, "2>>"))
+		return (DOUBLE_ERROR);
+	if (str_is_equal(str, "2>&1"))
+		return (ERROR_AND_STDOUT);
 	return (0);
 }
 
@@ -51,7 +57,10 @@ t_bool	is_redirection(char *str)
 	return (str_is_equal(str, "<")
 		|| str_is_equal(str, "<<")
 		|| str_is_equal(str, ">")
-		|| str_is_equal(str, ">>"));
+		|| str_is_equal(str, ">>")
+		|| str_is_equal(str, "2>")
+		|| str_is_equal(str, "2>>")
+		|| str_is_equal(str, "2>&1"));
 }
 
 t_bool	cmd_is_builtin(char *cmd)

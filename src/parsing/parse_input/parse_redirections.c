@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 12:58:56 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 19:37:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	redir_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
 	cmd_list->input = open(cmd_list->heredoc, O_RDONLY);
 	if (cmd_list->input == -1)
 		display_error_msg(cmd_list->heredoc, strerror(errno));
+	unlink(cmd_list->heredoc);
 }
 
 void	handle_redirection(
@@ -105,6 +106,26 @@ void	handle_redirection(
 	}
 	if (redirection == HEREDOC)
 		redir_heredoc(argv, cmd_list, data);
+	if (redirection == ERROR)
+	{
+		if (is_file_name(argv[data->i]))
+		{
+			cmd_list->error_output = open(argv[data->i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (cmd_list->error_output == -1)
+				display_error_msg(argv[data->i], strerror(errno));
+		}
+	}	
+	if (redirection == DOUBLE_ERROR)
+	{
+		if (is_file_name(argv[data->i]))
+		{
+			cmd_list->error_output = open(argv[data->i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (cmd_list->error_output == -1)
+				display_error_msg(argv[data->i], strerror(errno));
+		}
+	}
+	if (redirection == ERROR_AND_STDOUT)
+		cmd_list->error_output = cmd_list->output;
 }
 
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data)

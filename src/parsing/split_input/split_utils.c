@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:39:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/14 17:48:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ int	display_error_msg_delimiter(int count, char delimiter)
 			ft_putchar_fd(delimiter, 1);
 		ft_putstr_fd("'\n", 1);
 	}
-	return (0);
+	return (FAIL);
 }
