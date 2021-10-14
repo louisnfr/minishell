@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 04:49:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/14 12:42:38 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,6 @@ void	print_list(t_cmd *cmd_list)
 	}
 }
 
-void	remove_from_list(t_cmd *cmd_list)
-{
-	cmd_list->is_builtin = 0;
-	clean_free(&cmd_list->command);
-	if (cmd_list->options)
-		free_double_str(cmd_list->options);
-	if (cmd_list->args)
-		free_double_str(cmd_list->args);
-	clean_free(&cmd_list->path);
-	clean_free(&cmd_list->heredoc);
-	clean_free(&cmd_list->heredoc_delimiter);
-	free(cmd_list);
-	cmd_list = NULL;
-}
-
-void	clean_cmd_list(t_cmd *cmd_list)
-{
-	while (cmd_list->next)
-	{
-		remove_from_list(cmd_list);
-		cmd_list = cmd_list->next;
-	}
-	remove_from_list(cmd_list);
-	cmd_list = NULL;
-}
 
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 {
@@ -110,6 +85,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->delimiter = 0;
 	cmd_list->input = 0;
 	cmd_list->output = 1;
+	cmd_list->error_output = 2;
 	cmd_list->heredoc = NULL;
 	cmd_list->heredoc_delimiter = NULL;
 	cmd_list->next = NULL;

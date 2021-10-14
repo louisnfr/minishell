@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/13 12:47:08 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/14 12:50:48 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ NAME	= minishell
 ### SOURCE FILES ###
 SOURCES = \
 		main.c \
+		init.c \
+		clean.c \
 		\
 		builtin/echo.c \
 		builtin/cd.c \
@@ -56,6 +58,7 @@ SOURCES = \
 		shell/exec/exec_pipes.c \
 		shell/exec/exec_pipes_utils.c \
 		shell/display.c \
+		shell/error_msg.c \
 		\
 		exit/free.c \
 		exit/error.c \

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 11:13:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 12:37:04 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 		}
 		cmd_array = fill_cmd_array(cmd_list);
 		execve(cmd_list->path, cmd_array, envp);
-		printf("bash: %s: %s\n", cmd_list->command, strerror(errno));
+		display_error_message(
+			cmd_list->command, strerror(errno), cmd_list->error_output);
+		clean_data(data);
 		return (FAIL);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 10:10:23 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 13:03:16 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	input = upgrade_input(input, data);
 	argv = split_input(input, data);
+//	check_argv(argv);
 	clean_free(&input);
 	return (argv);
 }

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 11:10:51 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 12:37:13 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static t_bool	exec_command_pipe(
 		close_all_fd(data);
 		cmd_array = fill_cmd_array(*cmd_list);
 		execve((*cmd_list)->path, cmd_array, envp);
-		printf("bash: %s: %s\n", (*cmd_list)->command, strerror(errno));
+		display_error_message(
+			(*cmd_list)->command, strerror(errno), (*cmd_list)->error_output);
+		clean_data(data);
 		return (FAIL);
 	}
 	else
@@ -49,7 +51,8 @@ static t_bool	exec_command_pipe(
 static int	handle_error(t_cmd **cmd_list)
 {
 	ft_putstr_fd(NULL, (*cmd_list)->output);
-	printf("bash: %s: command not found\n", (*cmd_list)->command);
+	display_error_message(
+		(*cmd_list)->command, "command not found", (*cmd_list)->error_output);
 	return (127);
 }
 

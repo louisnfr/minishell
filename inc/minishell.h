@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 12:54:15 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 13:02:27 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,16 @@ typedef enum s_delimiter
 	RIGHT_MARK			= 6,
 	DOUBLE_RIGHT_MARK	= 7,
 	HEREDOC				= 8,
+	ERROR				= 9,
+	DOUBLE_ERROR		= 10,
+	ERROR_AND_STDOUT	= 11,
 }	t_delimiter;
 
 typedef struct s_cmd
 {
 	int				input;
 	int				output;
+	int				error_output;
 	char			*command;
 	char			**options;
 	char			**args;
@@ -102,6 +106,17 @@ typedef struct s_data
 	int			i;
 }	t_data;
 
+
+/*
+** init
+*/
+t_bool	ft_getpid(t_data *data);
+t_bool	init_cmd_list(t_data *data);
+t_data	*init_data(char **envp);
+/*
+** clean
+*/
+void	clean_data(t_data *data);
 /*
 ** builtin
 */
@@ -117,6 +132,9 @@ void	exec_exit(t_cmd *cmd_list, t_data *data);
 ** shell
 */
 char	*prompt(void);
+void	display_error_message(char *cmd, char *errno_msg, int fd);
+void	syntax_error_char_msg(int nb, char token);
+void	syntax_error_str_msg(char *token);
 /*
 ** shell/env
 */

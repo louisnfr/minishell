@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:32 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:39:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/14 12:59:01 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_bool	check_unclosed_quotes(char *input, char quote)
 				i++;
 			if (input[i])
 				continue ;
-			printf("bash: syntax error: unclosed quotes `%c'\n", quote);
+			ft_putstr_fd("bash: syntax error: unclosed quotes `", 2);
+			ft_putchar_fd(quote, 2);
+			ft_putstr_fd("'\n", 2);
 			return (FAIL);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 06:14:05 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/14 12:44:54 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 void	fonction(void)
 {
 	system("leaks minishell");
-}
-
-void	clean_data(t_data *data)
-{
-	clean_cmd_list(data->cmd_list);
-	data->cmd_list = NULL;
-	free_env(data->env);
-	clean_free(&data->tab_delimiters);
-	free_double_str(data->all_paths);
 }
 
 /*
