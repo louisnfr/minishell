@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 22:26:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/14 17:49:37 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 					cmd_list->args[i]);
 				ret = EXIT_FAILURE;
 			}
-			if (!already_exists(cmd_list->args[i], data))
+			else if (!already_exists(cmd_list->args[i], data))
 				add_var(&data->env, new_var(cmd_list->args[i], "\0", 0));
 			else
 				printf("existe deja\n");
