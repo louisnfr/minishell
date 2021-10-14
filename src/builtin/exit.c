@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 12:44:54 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 22:37:07 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ t_bool	str_is_digit(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]) && !(str[i] == '+' || str[i] == '-'))
 			return (FAIL);
 	}
 	return (SUCCESS);
 }
 
-int	get_exit_code(t_cmd *cmd_list)
+int	get_exit_code(t_cmd *cmd_list, t_data *data)
 {
 	int	exit_code;
 
@@ -70,6 +70,8 @@ int	get_exit_code(t_cmd *cmd_list)
 			exit_code = 1;
 		}
 	}
+	else
+		exit_code = data->ret_value;
 	return (exit_code);
 }
 
@@ -78,7 +80,7 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 	int	exit_code;
 
 	printf("exit\n");
-	exit_code = get_exit_code(cmd_list);
+	exit_code = get_exit_code(cmd_list, data);
 	disable_raw_mode(data->sh);
 	free_history(data->sh->history);
 	free(data->sh);

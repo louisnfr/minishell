@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 12:37:04 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 22:22:02 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 		{
 			dup2(cmd_list->input, STDIN_FILENO);
 			dup2(cmd_list->output, STDOUT_FILENO);
+			dup2(cmd_list->error_output, STDERR_FILENO);
 			close_all_fd(data);
 		}
 		cmd_array = fill_cmd_array(cmd_list);
@@ -84,7 +85,7 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 		clean_data(data);
 		return (FAIL);
 	}
-	else
-		wait(NULL);
+//	else
+//		wait(NULL);
 	return (SUCCESS);
 }

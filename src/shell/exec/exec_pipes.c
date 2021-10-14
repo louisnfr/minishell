@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 12:37:13 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 20:09:32 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_bool	exec_command_pipe(
 		}
 		dup2((*cmd_list)->input, STDIN_FILENO);
 		dup2((*cmd_list)->output, STDOUT_FILENO);
+		dup2((*cmd_list)->error_output, STDERR_FILENO);
 		close_all_fd(data);
 		cmd_array = fill_cmd_array(*cmd_list);
 		execve((*cmd_list)->path, cmd_array, envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 19:33:07 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/14 22:14:01 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ char	**get_argv(char *input, t_data *data)
 	argv = check_argv(argv);
 	if (!argv)
 		return (NULL);
+
+/*	int i = -1;
+	while (argv[++i])
+		printf("argv[%d] = %s\n", i, argv[i]);
+*/
 	return (argv);
 }
 

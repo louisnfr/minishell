@@ -6,12 +6,13 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:32 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 12:59:01 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/14 22:51:34 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 t_bool	check_unclosed_quotes(char *input, char quote)
 {
 	int	i;
@@ -22,6 +23,36 @@ t_bool	check_unclosed_quotes(char *input, char quote)
 		if (input[i] == quote)
 		{
 			i++;
+			while (input[i] && input[i] != quote)
+				i++;
+			if (input[i])
+				continue ;
+			ft_putstr_fd("bash: syntax error: unclosed quotes `", 2);
+			ft_putchar_fd(quote, 2);
+			ft_putstr_fd("'\n", 2);
+			return (FAIL);
+		}
+	}
+	return (SUCCESS);
+}
+*/
+
+static t_bool	char_is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
+}
+
+t_bool	check_unclosed_quotes(char *input)
+{
+	int		i;
+	char	quote;
+
+	i = -1;
+	while (input && input[++i])
+	{
+		if (input[i] && char_is_quote(input[i]))
+		{
+			quote = input[i++];
 			while (input[i] && input[i] != quote)
 				i++;
 			if (input[i])
@@ -95,8 +126,9 @@ char	*check_input(char *input)
 		return (NULL);
 	new_str = NULL;
 	new_str = check_comment(input);
-	if (!check_unclosed_quotes(new_str, '\"')
-		|| !check_unclosed_quotes(new_str, '\''))
+//	if (!check_unclosed_quotes(new_str, '\"', '\'')
+//		|| !check_unclosed_quotes(new_str, '\'', '\"'))
+	if (!check_unclosed_quotes(new_str))
 		return (NULL);
 	return (new_str);
 }
