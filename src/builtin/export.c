@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 12:23:01 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 15:56:26 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	export_digit_error(t_cmd *cmd_list, int i)
+int	export_error(t_cmd *cmd_list, int i)
 {
 	ft_putstr_fd("export: `", cmd_list->error_output);
 	ft_putstr_fd(cmd_list->args[i], cmd_list->error_output);
@@ -20,11 +20,11 @@ int	export_digit_error(t_cmd *cmd_list, int i)
 	return (EXIT_FAILURE);
 }
 
-t_bool	already_exists(char *var, t_data *data)
+t_bool	already_exists(char *var, t_env *env)
 {
 	t_env	*tmp;
 
-	tmp = data->env;
+	tmp = env;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, var))
@@ -67,21 +67,24 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
-		if (ft_isdigit(cmd_list->args[i][0]))
-			ret = export_digit_error(cmd_list, i);
+		if (ft_isdigit(cmd_list->args[i][0]) || cmd_list->args[i][0] == '=')
+			ret = export_error(cmd_list, i);
 		else if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
-			if (!already_exists(cmd_list->args[i], data))
+		{
+			if (!already_exists(cmd_list->args[i], data->export))
 				add_var(&data->export, new_var(cmd_list->args[i], "\0", 0));
+		}
 		else
 		{
 			var = ft_split_on_first(cmd_list->args[i], '=');
-			if (!already_exists(var[0], data))
-			{
+			if (!already_exists(var[0], data->env))
 				add_var(&data->env, new_var(var[0], var[1], 1));
-				add_var(&data->export, new_var(var[0], var[1], 1));
-			}
 			else
-				set_env;
+				set_env(var[0], var[1], data->env);
+			if (!already_exists(var[0], data->export))
+				add_var(&data->export, new_var(var[0], var[1], 1));
+			else
+				set_env(var[0], var[1], data->export);
 			free_split(var);
 		}
 	}

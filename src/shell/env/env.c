@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 11:18:27 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 15:54:37 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	update_env(t_data *data)
 	char	*tmp;
 	int		i;
 
-	// edit_env();
 	tmp = get_env("SHLVL", data);
 	i = (ft_atoi(tmp) + 1);
 	tmp = ft_itoa(i);
@@ -67,6 +66,7 @@ void	set_env(char *key, char *new_value, t_env *env)
 			break ;
 		env = env->next;
 	}
+	env->is_value = 1;
 	free(env->value);
 	env->value = malloc(sizeof(char) + (ft_strlen(new_value) + 1));
 	if (!env->value)
