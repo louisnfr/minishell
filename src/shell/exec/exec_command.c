@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 22:22:02 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/15 15:01:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

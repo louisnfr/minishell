@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 22:37:07 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/15 15:25:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,18 @@ t_bool	str_is_digit(char *str)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
+	if (!ft_isdigit(str[i]) && !(str[i] == '+' || str[i] == '-'))
+		return (FAIL);
 	while (str[++i])
 	{
-		if (!ft_isdigit(str[i]) && !(str[i] == '+' || str[i] == '-'))
+		if (!ft_isdigit(str[i]))
 			return (FAIL);
 	}
 	return (SUCCESS);
 }
 
-int	get_exit_code(t_cmd *cmd_list, t_data *data)
+int	get_exit_code(t_cmd *cmd_list, t_data *data, t_bool *quit_exit)
 {
 	int	exit_code;
 
@@ -61,13 +63,14 @@ int	get_exit_code(t_cmd *cmd_list, t_data *data)
 			else
 			{
 				printf("bash: exit: too many arguments\n");
-				exit_code = 1;
+				data->ret_value = 1;
+				*quit_exit = TRUE;
 			}
 		}
 		else
 		{
 			printf("bash: exit: %s: numeric argument required\n", cmd_list->args[0]);
-			exit_code = 1;
+			exit_code = 2;
 		}
 	}
 	else
@@ -77,10 +80,14 @@ int	get_exit_code(t_cmd *cmd_list, t_data *data)
 
 void	exec_exit(t_cmd *cmd_list, t_data *data)
 {
-	int	exit_code;
-
+	int		exit_code;
+	t_bool	quit_exit;
+	
 	printf("exit\n");
-	exit_code = get_exit_code(cmd_list, data);
+	quit_exit = FALSE;
+	exit_code = get_exit_code(cmd_list, data, &quit_exit);
+	if (quit_exit)
+		return ;
 	disable_raw_mode(data->sh);
 	free_history(data->sh->history);
 	free(data->sh);

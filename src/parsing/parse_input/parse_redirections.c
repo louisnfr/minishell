@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 22:40:44 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/15 15:35:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
 void	redir_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
 {
 	t_bool	quotes;
-
+		
 	quotes = 0;
-	cmd_list->heredoc = ft_strdup("heredoc");
+	cmd_list->heredoc = ft_strjoin(get_env("HOME", data), "/heredoc");
+	printf("cmd_list->heredoc = %s\n", cmd_list->heredoc);
 	if (!argv[data->i])
 		return ;
 	cmd_list->heredoc_delimiter = parse_heredoc_delimiter(
 		ft_strdup(argv[data->i]), &quotes);
 	read_heredoc(cmd_list, data, quotes);
 	cmd_list->input = open(cmd_list->heredoc, O_RDONLY);
-	if (cmd_list->input == -1)
-		display_error_msg(cmd_list->error_output, cmd_list->heredoc, strerror(errno));
+	printf("fd = %d\n", cmd_list->input);
 	unlink(cmd_list->heredoc);
 }
 

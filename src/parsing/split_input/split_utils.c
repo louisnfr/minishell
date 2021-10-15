@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 17:48:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/15 15:54:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	check_left_marks(char *str, int j)
 		i++;
 		count++;
 	}
+	if (count > 0 && count < 4)
+		return (-1);
 	if (count == 4)
 		return (1);
 	if (count == 5)
@@ -56,6 +58,8 @@ int	check_right_marks(char *str, int j)
 		i++;
 		count++;
 	}
+	if (count > 0 && count < 3)
+		return (-1);
 	if (count == 3)
 		return (1);
 	if (count > 3)
@@ -91,13 +95,15 @@ int	display_error_msg_delimiter(int count, char delimiter)
 {
 	int	i;
 
-	if (count)
+	if (count == -1)
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+	else if (count)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `", 1);
+		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 		i = -1;
 		while (++i < count)
-			ft_putchar_fd(delimiter, 1);
-		ft_putstr_fd("'\n", 1);
+			ft_putchar_fd(delimiter, 2);
+		ft_putstr_fd("'\n", 2);
 	}
 	return (FAIL);
 }
