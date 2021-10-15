@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 11:17:44 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 19:07:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ char	**split_input(char *str, t_data *data);
 int		split_count_words(char *str, t_data *data);
 int		is_charset_split(char c);
 int		is_delimiter_split(char c);
-int		is_other_delimiter(char c1, char c2, char delimiter);
 int		check_multiple_delimiters(
 			char *str, int j, t_data *data);
 int		display_error_msg_delimiter(int count, char delimiter);

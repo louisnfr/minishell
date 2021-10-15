@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:32 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 22:51:34 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/15 18:03:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_bool	check_unclosed_quotes(char *input)
 
 static int	get_length(char *input, int length)
 {
-	while (input && input[++length])
+	while (input && input[length++])
 	{
 		while (input[length] && ft_isspace(input[length]))
 			length++;
@@ -103,7 +103,7 @@ char	*check_comment(char *input)
 	if (!input)
 		return (NULL);
 	new_input = NULL;
-	length = -1;
+	length = 0;
 	length = get_length(input, length);
 	if (length == (int)ft_strlen(input))
 		return (input);
@@ -126,8 +126,6 @@ char	*check_input(char *input)
 		return (NULL);
 	new_str = NULL;
 	new_str = check_comment(input);
-//	if (!check_unclosed_quotes(new_str, '\"', '\'')
-//		|| !check_unclosed_quotes(new_str, '\'', '\"'))
 	if (!check_unclosed_quotes(new_str))
 		return (NULL);
 	return (new_str);

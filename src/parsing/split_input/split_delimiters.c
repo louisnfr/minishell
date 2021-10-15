@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:19 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 18:38:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/15 15:52:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_error_delimiter(int j, char *str, int delimiter, t_data *data)
 		return (display_error_msg_delimiter(1, str[j]));
 	}
 	ret = check_multiple_delimiters(str, j, data);
-	if (ret > 0 && ret < 4)
+	if ((ret > 0 && ret < 4) || ret == -1)
 	{
 		if (!is_error_redir(str, j))
 			return (display_error_msg_delimiter(ret, str[j]));

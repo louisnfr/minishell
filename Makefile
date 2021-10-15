@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/14 14:13:47 by efrancon         ###   ########.fr        #
+#    Updated: 2021/10/15 19:04:53 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror -g3
+FLAGS	= -Wall -Wextra -Werror -g3 #-fsanitize=address
 RDL		= -lreadline
 
 ### INCLUDES ###

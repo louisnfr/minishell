@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/15 11:50:26 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 19:07:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes)
 	char	*line;
 	int		fd;
 
-	fd = open(cmd_list->heredoc, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
+	{
+		display_error_message(cmd_list->heredoc, strerror(errno), cmd_list->error_output);
 		return (FAIL);
+	}
 	line = NULL;
 	while (1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 22:25:49 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/15 14:59:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_bool	handle_execution(
 			if (WIFEXITED(status))
 				*exit_code = WEXITSTATUS(status);
 		}
+		close_fd(cmd_list);
 		*cmd_list = (*cmd_list)->next;
 	}
 	else
