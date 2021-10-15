@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 12:02:13 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 12:14:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 {
 	char	*oldpwd;
 	char	*pwd;
-	char	*p;
 	char	*tmp;
+	char	*p;
 
 	oldpwd = getcwd(NULL, 0);
 	if (!cmd_list->args)

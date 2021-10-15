@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 11:39:36 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 12:23:01 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,18 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 		if (ft_isdigit(cmd_list->args[i][0]))
 			ret = export_digit_error(cmd_list, i);
 		else if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
-		{
-			printf("pas de '='\n");
 			if (!already_exists(cmd_list->args[i], data))
-				add_var(&data->env, new_var(cmd_list->args[i], "\0", 0));
-			else
-				printf("existe deja\n");
-		}
+				add_var(&data->export, new_var(cmd_list->args[i], "\0", 0));
 		else
 		{
 			var = ft_split_on_first(cmd_list->args[i], '=');
 			if (!already_exists(var[0], data))
+			{
 				add_var(&data->env, new_var(var[0], var[1], 1));
+				add_var(&data->export, new_var(var[0], var[1], 1));
+			}
 			else
-				printf("existe deja\n");
+				set_env;
 			free_split(var);
 		}
 	}
