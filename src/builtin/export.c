@@ -6,11 +6,19 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 17:49:37 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 11:39:36 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	export_digit_error(t_cmd *cmd_list, int i)
+{
+	ft_putstr_fd("export: `", cmd_list->error_output);
+	ft_putstr_fd(cmd_list->args[i], cmd_list->error_output);
+	ft_putstr_fd("': not a valid identifier\n", cmd_list->error_output);
+	return (EXIT_FAILURE);
+}
 
 t_bool	already_exists(char *var, t_data *data)
 {
@@ -30,7 +38,7 @@ void	print_export(t_cmd *cmd_list, t_data *data)
 {
 	t_env	*tmp;
 
-	tmp = data->env;
+	tmp = data->export;
 	while (tmp)
 	{
 		ft_putstr_fd("export ", cmd_list->output);
@@ -59,15 +67,12 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
-		if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
+		if (ft_isdigit(cmd_list->args[i][0]))
+			ret = export_digit_error(cmd_list, i);
+		else if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
 		{
-			if (ft_str_isdigit(cmd_list->args[i]))
-			{
-				printf("export: `%s': not a valid identifier\n",
-					cmd_list->args[i]);
-				ret = EXIT_FAILURE;
-			}
-			else if (!already_exists(cmd_list->args[i], data))
+			printf("pas de '='\n");
+			if (!already_exists(cmd_list->args[i], data))
 				add_var(&data->env, new_var(cmd_list->args[i], "\0", 0));
 			else
 				printf("existe deja\n");
@@ -75,12 +80,7 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 		else
 		{
 			var = ft_split_on_first(cmd_list->args[i], '=');
-			if (ft_str_isdigit(var[0]))
-			{
-				printf("export: `%s': not a valid identifier\n", var[0]);
-				ret = EXIT_FAILURE;
-			}
-			else if (!already_exists(var[0], data))
+			if (!already_exists(var[0], data))
 				add_var(&data->env, new_var(var[0], var[1], 1));
 			else
 				printf("existe deja\n");

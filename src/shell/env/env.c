@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/08 22:15:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 11:18:27 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	update_env(t_data *data)
 	char	*tmp;
 	int		i;
 
+	// edit_env();
 	tmp = get_env("SHLVL", data);
 	i = (ft_atoi(tmp) + 1);
 	tmp = ft_itoa(i);
-	set_env("SHLVL", tmp, data);
+	set_env("SHLVL", "3", data->env);
 	free(tmp);
 }
 
@@ -55,21 +56,21 @@ char	*get_env(char *key, t_data *data)
 	return (NULL);
 }
 
-void	set_env(char *key, char *new_value, t_data *data)
+void	set_env(char *key, char *new_value, t_env *env)
 {
 	t_env	*head;
 
-	head = data->env;
-	while (data->env)
+	head = env;
+	while (env)
 	{
-		if (!ft_strcmp(data->env->key, key))
+		if (!ft_strcmp(env->key, key))
 			break ;
-		data->env = data->env->next;
+		env = env->next;
 	}
-	free(data->env->value);
-	data->env->value = malloc(sizeof(char) + (ft_strlen(new_value) + 1));
-	if (!data->env->value)
+	free(env->value);
+	env->value = malloc(sizeof(char) + (ft_strlen(new_value) + 1));
+	if (!env->value)
 		return ;
-	ft_memcpy(data->env->value, new_value, ft_strlen(new_value) + 1);
-	data->env = head;
+	ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
+	env = head;
 }

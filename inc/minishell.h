@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 22:21:47 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/15 11:17:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,13 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
+	t_config	*sh;
 	t_cmd		*cmd_list;
 	t_env		*env;
-	t_config	*sh;
+	t_env		*export;
 	char		**all_paths;
 	char		*tab_delimiters;
-	char		*pr;
+	char		*prpt;
 	int			ret_value;
 	pid_t		pid;
 	int			i;
@@ -141,7 +142,7 @@ char	**syntax_error_str_msg(char *token);
 t_env	*create_env(char **envp);
 void	update_env(t_data *data);
 char	*get_env(char *key, t_data *data);
-void	set_env(char *key, char *new_value, t_data *data);
+void	set_env(char *key, char *new_value, t_env *env);
 t_env	*new_var(char *name, char *value, int is_value);
 t_env	*get_last(t_env *g_env);
 void	add_var(t_env **g_env, t_env *new_var);

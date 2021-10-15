@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:19 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/13 05:41:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/15 11:20:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	clear_prompt(t_data *data)
 {
 	write(STDOUT_FILENO, "\x1b[2K", 4);
 	write(STDOUT_FILENO, "\x1b[999D", 6);
-	write(1, data->pr, ft_strlen(data->pr));
+	write(1, data->prpt, ft_strlen(data->prpt));
 }
 
 char	*ft_strjoin(char *s1, char *s2)

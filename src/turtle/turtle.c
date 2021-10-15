@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   turtle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 17:27:14 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/15 11:19:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			write(1, "\x1b[s", 3);
 			write(1, "\x1b[2J", 4);
 			write(1, "\x1b[H", 3);
-			write(1, data->pr, ft_strlen(data->pr));
+			write(1, data->prpt, ft_strlen(data->prpt));
 			if (current && sh->search == sh->h_num)
 				write(1, current, ft_strlen(current));
 			else
@@ -141,7 +141,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			}
 			write(1, "\x1b[2K", 4);
 			write(1, "\x1b[999D", 6);
-			write(1, data->pr, ft_strlen(data->pr));
+			write(1, data->prpt, ft_strlen(data->prpt));
 		}
 		else if (c == DELETE)
 		{

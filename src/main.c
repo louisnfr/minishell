@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 19:39:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/15 11:14:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,17 @@ int	main(int ac, char **av, char **envp)
 	t_data		*data;
 	char		*input;
 
-	(void)av;
-	if (ac != 1)
+	if (ac != 1 || av[1])
 		exit(EXIT_FAILURE);
 	data = init_data(envp);
 	if (!data || !ft_getpid(data))
 		return (EXIT_FAILURE);
-	input = NULL;
 	data->sh = init_config(envp);
+	input = NULL;
 	while (1)
 	{
-		data->pr = prompt();
-		write(1, data->pr, ft_strlen(data->pr));
+		data->prpt = prompt();
+		write(1, data->prpt, ft_strlen(data->prpt));
 		enable_raw_mode(data->sh);
 		input = shell_process_keypress(data, data->sh, data->sh->history);
 		disable_raw_mode(data->sh);

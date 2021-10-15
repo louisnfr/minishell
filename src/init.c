@@ -8,6 +8,7 @@ t_data	*init_data(char **envp)
 	if (!data)
 		return (NULL);
 	data->env = create_env(envp);
+	data->export = create_env(envp);
 	data->all_paths = get_paths(envp);
 	if (!data->all_paths)
 		return (NULL);
