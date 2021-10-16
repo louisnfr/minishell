@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/16 14:35:54 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/16 18:50:49 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror -g3 #-fsanitize=address
+FLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
 RDL		= -lreadline
 
 ### INCLUDES ###
