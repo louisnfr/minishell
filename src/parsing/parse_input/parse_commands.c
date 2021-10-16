@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/12 22:36:53 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/16 12:07:39 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,12 @@ char	**find_cmd_args(char **argv, t_data *data)
 	{
 		args = (char **)malloc(sizeof(char *) * (k + 1));
 		j = 0;
-		while (k--)
-			args[j++] = ft_strdup(argv[++data->i]);
+		while (j < k)
+		{
+			data->i++;
+			args[j] = ft_strdup(argv[data->i]);
+			j++;
+		}
 		args[j] = NULL;
 	}
 	return (args);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 14:26:59 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 19:17:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/16 14:32:15 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ static void	fill_quotes(char **str, char **strs, int *i, int *j)
 	}
 }
 
+void	count_in_quotes(int *j, char *tmp)
+{
+	char	quote;
+
+	quote = tmp[*j];
+	(*j)++;
+	while (tmp[*j] && tmp[*j] != quote)
+		(*j)++;
+	(*j)++;
+}
+
 t_bool	fill_words(int i, char **str, char **strs)
 {
 	int		j;
@@ -44,9 +55,14 @@ t_bool	fill_words(int i, char **str, char **strs)
 	j = 0;
 	tmp = ft_strdup(*str);
 	while (tmp[j] && !is_charset_split(tmp[j]))
-		j++;
+	{
+		if (tmp[j] && (tmp[j] == '\'' || tmp[j] == '\"'))
+			count_in_quotes(&j, tmp);
+		else
+			j++;
+	}
 	clean_free(&tmp);
-	strs[i] = (char *)malloc(sizeof(char) * (j + 1));
+	strs[i] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!strs[i])
 		return (FAIL);
 	j = 0;
@@ -81,7 +97,7 @@ t_bool	handle_heredoc_quotes(int *i, char **str, char **strs)
 		j++;
 	free(tmp);
 	tmp = NULL;
-	strs[++(*i)] = (char *)malloc(sizeof(char) * (j + 1));
+	strs[++(*i)] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!strs[*i])
 		return (FAIL);
 	j = 0;
@@ -135,7 +151,7 @@ char	**split_input(char *str, t_data *data)
 	words = split_count_words(str, data);
 	if (words == -1)
 		return (NULL);
-	strs = (char **)malloc(sizeof(char *) * (words + 1));
+	strs = (char **)ft_calloc(1, sizeof(char *) * (words + 1));
 	if (!strs)
 		return (NULL);
 	if (!handle_split_input(words, str, strs))

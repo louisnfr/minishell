@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/15 19:05:08 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/16 14:30:16 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	int	i;
 	int	j;
 	int	double_quotes;
+	int	str_length;
 
 	i = 0;
 	j = 0;
 	double_quotes = 1;
+	str_length = ft_strlen(str);
 	if (!str || !str[i])
 		return (0);
-	while (str && str[i] && str[i + 1])
+	while (str[i] && str[i + 1] && i < str_length)
 	{
 		if (str[i] && str[i] == '\"')
 			double_quotes *= -1;
@@ -66,36 +68,11 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 		else
 			new_str[j++] = str[i++];
 	}
-	new_str[j++] = str[i];
+	if (str[i] && i < str_length)
+		new_str[j++] = str[i];
 	new_str[j] = '\0';
 	return (1);
 }
-
-/*
-static int	fill_new_input(char *new_str, char *str, t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (!str || !str[i])
-		return (0);
-	while (str && str[i] && str[i + 1])
-	{
-		if (handle_special_cases(&double_quotes, new_str, str, &i, &j))
-			continue ;
-		if (str[i] && str[i + 1] && str[i] == '$'
-			&& !is_charset_env(str[i + 1]))
-			fill_env_value(new_str, &j, get_env_value(str, &i, data));
-		else
-			new_str[j++] = str[i++];
-	}
-	new_str[j++] = str[i];
-	new_str[j] = '\0';
-	return (1);
-}
-*/
 
 char	*parse_env_variable(char *input, t_data *data)
 {
@@ -109,6 +86,5 @@ char	*parse_env_variable(char *input, t_data *data)
 		return (NULL);
 	fill_new_input(new_input, input, data);
 	clean_free(&input);
-	
 	return (new_input);
 }

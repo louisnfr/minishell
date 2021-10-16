@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 22:14:01 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/16 14:31:14 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	input = upgrade_input(input, data);
 	argv = split_input(input, data);
-	clean_free(&input);
 	if (!argv)
 		return (NULL);
 	argv = check_argv(argv);
 	if (!argv)
 		return (NULL);
-
+		
 /*	int i = -1;
 	while (argv[++i])
 		printf("argv[%d] = %s\n", i, argv[i]);
 */
+	clean_free(&input);
 	return (argv);
 }
 

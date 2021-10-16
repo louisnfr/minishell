@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_delimiters.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:19 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/15 15:52:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/16 12:09:26 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 	int		j;
 	t_bool	is_beginning;
 	int		ret;
+	
 	count = 0;
 	if (!str[*i] || (str[*i] && str[*i] != delimiter))
 		return (1);

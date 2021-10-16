@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 19:07:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/16 14:30:31 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int	main(int ac, char **av, char **envp)
 			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
 			init_cmd_list(data);
 			if (parse(input, data))
+			{
+	//			print_list(data->cmd_list);
 				exec(envp, data);
-	//		print_list(data->cmd_list);
+			}
 			clear_hist(data->sh->history, data->sh->search);
 			clean_cmd_list(data->cmd_list);
 			data->sh->h_num++;

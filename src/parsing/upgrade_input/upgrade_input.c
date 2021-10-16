@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upgrade_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:34 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 19:49:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/15 20:18:53 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
