@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 17:46:05 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/18 19:29:59 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_data
 	int			i;
 	int			*simple_quotes;
 	int			i_quotes;
+	int			tab_length;
 }	t_data;
 
 
@@ -165,6 +166,7 @@ int		get_error_code(void);
 t_bool	count_wildcard_arg(int *i, char *wildcard_arg);
 t_bool	fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg);
 int		matching_name(char *filename, char *wildcard);
+t_bool	must_be_transformed(char *arg, t_data *data);
 /*
 ** libft
 */
@@ -187,6 +189,8 @@ void	print_list(t_cmd *cmd_list);
 */
 char	**get_paths(char **envp);
 void	parse_pipes(t_cmd *cmd_list);
+t_bool	check_simple_quotes(char *input, t_data *data);
+int		get_count_ret_value(char *input);
 /*
 ** parsing/parse_input
 */

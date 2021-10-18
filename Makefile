@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/18 16:18:53 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/18 18:54:31 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SOURCES = \
 		parsing/get_paths.c \
 		parsing/libft.c \
 		parsing/linked_list.c \
+		parsing/simple_quotes.c \
 		\
 		shell/env/env.c \
 		shell/env/list.c \
@@ -59,6 +60,7 @@ SOURCES = \
 		shell/exec/exec_pipes.c \
 		shell/exec/exec_pipes_utils.c \
 		shell/exec/fill_wildcard.c \
+		shell/exec/transform_ret_value.c \
 		shell/display.c \
 		shell/error_msg.c \
 		\
