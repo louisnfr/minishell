@@ -6,12 +6,23 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 20:03:51 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/18 20:06:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
+{
+	if (chdir(dir) < 0)
+	{
+		if (error_msg)
+			return (cd_error_msg(error_msg, cmd_list));
+		else
+			return (cd_error(cmd_list));
+	}
+	return (EXIT_SUCCESS);
+}
 void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 {
 	if (!get_env("PWD", data))
@@ -32,17 +43,6 @@ void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 	free(oldpwd);
 }
 
-t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
-{
-	if (chdir(dir) < 0)
-	{
-		if (error_msg)
-			return (cd_error_msg(error_msg, cmd_list));
-		else
-			return (cd_error(cmd_list));
-	}
-	return (EXIT_SUCCESS);
-}
 
 t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 {
