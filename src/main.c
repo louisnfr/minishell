@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/16 18:20:12 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/17 12:03:34 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac, char **av, char **envp)
 			init_cmd_list(data);
 			if (parse(input, data))
 			{
-				print_list(data->cmd_list);
+	//			print_list(data->cmd_list);
 				exec(envp, data);
 			}
 			clear_hist(data->sh->history, data->sh->search);

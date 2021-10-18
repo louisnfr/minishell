@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 19:07:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/18 17:46:05 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+#include <dirent.h>
 
 # include "libft.h"
 # include "enum.h"
@@ -105,6 +106,8 @@ typedef struct s_data
 	int			ret_value;
 	pid_t		pid;
 	int			i;
+	int			*simple_quotes;
+	int			i_quotes;
 }	t_data;
 
 
@@ -153,11 +156,15 @@ void	print_env(t_env *g_env);
 int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data);
-char	**fill_cmd_array(t_cmd *cmd_list);
+char	**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int		exec_pipes(char **envp, t_cmd **cmd_list, t_data *data);
 void	close_all_fd(t_data *data);
 void	close_fd(t_cmd **cmd_list);
 void	exit_error_with_msg(char *error_msg, char *errno_msg, t_data *data);
+int		get_error_code(void);
+t_bool	count_wildcard_arg(int *i, char *wildcard_arg);
+t_bool	fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg);
+int		matching_name(char *filename, char *wildcard);
 /*
 ** libft
 */

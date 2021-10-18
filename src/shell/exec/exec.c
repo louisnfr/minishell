@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/16 14:29:06 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/17 17:31:19 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_bool	handle_execution(
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))
 				*exit_code = WEXITSTATUS(status);
+			close_fd(cmd_list);
 		}
-		close_fd(cmd_list);
 		*cmd_list = (*cmd_list)->next;
 	}
 	else
@@ -69,7 +69,7 @@ int	exec(char **envp, t_data *data)
 			display_error_message(cmd_list->command, "command not found", cmd_list->error_output);
 			cmd_list = cmd_list->next;
 		}
+		data->ret_value = exit_code;
 	}
-	data->ret_value = exit_code;
 	return (exit_code);
 }

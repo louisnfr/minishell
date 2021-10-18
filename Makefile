@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/16 18:50:49 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/18 16:18:53 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SOURCES = \
 		shell/exec/exec_builtin.c \
 		shell/exec/exec_pipes.c \
 		shell/exec/exec_pipes_utils.c \
+		shell/exec/fill_wildcard.c \
 		shell/display.c \
 		shell/error_msg.c \
 		\
