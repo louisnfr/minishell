@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 19:07:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/18 18:57:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,8 @@ char	*heredoc_special_value(char *str, char *value, char character);
 */
 void	free_env(t_env *g_env);
 void	free_split(char **args);
-t_bool	cd_error(char *pwd, t_cmd *cmd_list);
+t_bool	cd_error(t_cmd *cmd_list);
+t_bool	cd_error_msg(char *s, t_cmd *cmd_list);
 
 /*** TURTLE FUNCTIONS ***/
 
