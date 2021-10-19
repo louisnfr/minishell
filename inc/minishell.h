@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 19:07:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 13:44:14 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+#include <dirent.h>
 
 # include "libft.h"
 # include "enum.h"
@@ -153,11 +154,15 @@ void	print_env(t_env *g_env);
 int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data);
-char	**fill_cmd_array(t_cmd *cmd_list);
+char	**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int		exec_pipes(char **envp, t_cmd **cmd_list, t_data *data);
 void	close_all_fd(t_data *data);
 void	close_fd(t_cmd **cmd_list);
 void	exit_error_with_msg(char *error_msg, char *errno_msg, t_data *data);
+int		get_error_code(void);
+t_bool	count_wildcard_arg(int *i, char *wildcard_arg);
+t_bool	fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg);
+int		matching_name(char *filename, char *wildcard);
 /*
 ** libft
 */
@@ -169,17 +174,14 @@ char	*ft_strjoin_and_free(char *s1, char *s2);
 void	free_double_str(char **str);
 char	**ft_split_on_first(const char *s, char c);
 /*
-** linked_list
+** parsing/utils
 */
+char	**get_paths(char **envp);
 void	setup_cmd_list(t_cmd *cmd_list);
 void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
-/*
-** parsing
-*/
-char	**get_paths(char **envp);
-void	parse_pipes(t_cmd *cmd_list);
+
 /*
 ** parsing/parse_input
 */
@@ -193,11 +195,11 @@ int		get_delimiter(char *str);
 t_bool	is_redirection(char *str);
 int		get_redirection(char *str);
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
-char	**check_argv(char **argv);
+void	parse_pipes(t_cmd *cmd_list);
+void	parse_ret_value(t_cmd *cmd_list, t_data *data);
 /*
-** parsing/upgrade_input
+** parsing/lexer
 */
-char	*check_input(char *input);
 char	*upgrade_input(char *input, t_data *data);
 char	*parse_env_variable(char *input, t_data *data);
 int		is_charset_env(char c);
@@ -205,35 +207,51 @@ char	*get_env_value(char *str, int *i, t_data *data);
 char	*get_env_key(char *str, int *i);
 int		get_length_env_value(char *env_key, t_data *data);
 int		get_length_new_input(char *str, t_data *data);
-char	*transform_special_value(char *str, char *value, char character);
+char	*transform_pid_value(char *str, char *value);
+char	*transform_ret_value(char *str, char *value);
 void	handle_env_variable(int *i, int *length, char *str, t_data *data);
 char	*get_env_value(char *str, int *i, t_data *data);
 void	fill_env_value(char *new_str, int *j, char *value);
 /*
-** parsing/split_input
+** parsing/split
 */
 char	**split_input(char *str, t_data *data);
 int		split_count_words(char *str, t_data *data);
 int		is_charset_split(char c);
 int		is_delimiter_split(char c);
+int		handle_delimiters(int i, char **str, char **strs);
+void	count_in_quotes_split(int *j, char *tmp);
+void	fill_quotes_split(char **str, char **strs, int *i, int *j);
+/*
+** parsing/checker
+*/
+char	*check_input(char *input);
+void	*display_error_msg_simple_dot(void);
+int		check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data);
+int		check_error_delimiter(int j, char *str, int delimiter, t_data *data);
 int		check_multiple_delimiters(
 			char *str, int j, t_data *data);
 int		display_error_msg_delimiter(int count, char delimiter);
-int		handle_delimiters(int i, char **str, char **strs);
-int		check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data);
-int		check_error_delimiter(int j, char *str, int delimiter, t_data *data);
+t_bool	check_beginning(char *str, int *i);
+t_bool	check_error_redir(char *str, int *i);
+int		is_error_redir(char *str, int j);
+int		check_right_marks(char *str, int j);
+int		check_left_marks(char *str, int j);
+char	**check_argv(char **argv);
 /*
 ** parsing/heredoc
 */
 t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes);
 char	*heredoc_env_variable(char *input, t_data *data);
 char	*heredoc_special_value(char *str, char *value, char character);
+t_bool	handle_heredoc_quotes(int *i, char **str, char **strs);
 /*
 ** exit
 */
 void	free_env(t_env *g_env);
 void	free_split(char **args);
-t_bool	cd_error(char *pwd, t_cmd *cmd_list);
+t_bool	cd_error(t_cmd *cmd_list);
+t_bool	cd_error_msg(char *s, t_cmd *cmd_list);
 
 /*** TURTLE FUNCTIONS ***/
 
