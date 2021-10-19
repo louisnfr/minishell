@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/07 17:41:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 16:16:55 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_length_env_value(char *env_key, t_data *data)
 	char	*env_value;
 
 	env_value = NULL;
-	env_value = get_env(env_key, data);
+	env_value = get_env(env_key, data->env);
 	if (env_value)
 		return (ft_strlen(env_value));
 	return (0);
@@ -64,7 +64,7 @@ char	*get_env_value(char *str, int *i, t_data *data)
 	env_key = NULL;
 	env_value = NULL;
 	env_key = get_env_key(str, &(*i));
-	env_value = get_env(env_key, data);
+	env_value = get_env(env_key, data->env);
 	clean_free(&env_key);
 	return (env_value);
 }
