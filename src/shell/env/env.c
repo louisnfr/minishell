@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 16:18:44 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 19:29:01 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,44 @@ void	set_env(char *key, char *new_value, t_env *env)
 		return ;
 	ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
 	env = head;
+}
+
+int	get_env_size(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		env = env->next;
+		i++;
+	}
+	return (i);
+}
+
+char	**env_to_char(t_env *env)
+{
+	char	**envp;
+	t_env	*tmp;
+	int		i;
+
+	envp = ft_calloc(1, sizeof(char *) * (get_env_size(env) + 1));
+	if (!envp)
+		return (NULL);
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		envp[i] = ft_calloc(1, sizeof(char)
+				* (ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2));
+		if (!envp[i])
+			return (NULL);
+		envp[i] = ft_strjoin_and_free(envp[i], tmp->key);
+		envp[i] = ft_strjoin_and_free(envp[i], "=");
+		envp[i] = ft_strjoin_and_free(envp[i], tmp->value);
+		i++;
+		tmp = tmp->next;
+	}
+	envp[i] = 0;
+	return (envp);
 }
