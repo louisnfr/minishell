@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 13:44:14 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 18:26:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ char	**ft_split_on_first(const char *s, char c);
 /*
 ** parsing/utils
 */
-char	**get_paths(char **envp);
+char	**get_paths(t_data *data);
 void	setup_cmd_list(t_cmd *cmd_list);
 void	clean_cmd_list(t_cmd *cmd_list);
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);

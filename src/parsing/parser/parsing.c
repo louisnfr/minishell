@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 11:26:00 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 19:05:59 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_bool	is_option_echo(char **argv, t_data *data)
+{
+	int	j;
+	int	ret;
+	
+	ret = FAIL;
+	if (!argv)
+		return (FAIL);
+	while (argv[++data->i] && argv[data->i][0] == '-')
+	{
+		j = 1;
+		if (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
+		{
+			j++;
+			while (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
+				j++;
+			if (argv[data->i][j])
+				break;
+			ret = SUCCESS;
+		}
+		else
+			break ;
+		
+	}
+	data->i--;
+	return (ret);
+}
 
 void	handle_builtin_cmd(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
@@ -24,10 +52,10 @@ void	handle_builtin_cmd(
 	command = ft_strdup(argv[data->i]);
 	if (str_is_equal(command, "echo"))
 	{
-		if (argv[data->i + 1] && str_is_equal(argv[data->i + 1], "-n"))
+		if (is_option_echo(argv, data))
 		{
 			options = (char **)malloc(sizeof(char *) * 2);
-			options[0] = ft_strdup(argv[++data->i]);
+			options[0] = ft_strdup("-n");
 			options[1] = NULL;
 		}
 	}

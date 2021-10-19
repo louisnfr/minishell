@@ -9,7 +9,6 @@ t_data	*init_data(char **envp)
 		return (NULL);
 	data->env = create_env(envp);
 	data->export = create_env(envp);
-	data->all_paths = get_paths(envp);
 	if (!data->all_paths)
 		return (NULL);
 	data->i = 0;
@@ -17,6 +16,7 @@ t_data	*init_data(char **envp)
 	data->ret_value = 0;
 	data->tab_delimiters = ft_strdup("|&;<>");
 	update_env(data);
+	data->all_paths = get_paths(data);
 	return (data);
 }
 
