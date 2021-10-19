@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/18 17:59:32 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 11:26:00 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	**get_argv(char *input, t_data *data)
 	if (!input)
 		return (NULL);
 	input = upgrade_input(input, data);
-	check_simple_quotes(input, data);
 	argv = split_input(input, data);
 	if (!argv)
 		return (NULL);

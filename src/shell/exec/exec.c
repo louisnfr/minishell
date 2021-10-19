@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/17 17:31:19 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 10:21:30 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ t_bool	handle_execution(
 		*cmd_list = (*cmd_list)->next;
 	}
 	else
+	{
+		parse_ret_value(*cmd_list, data);
 		return (FAIL);
+	}
 	check_exit_code(*exit_code, cmd_list);
 	return (SUCCESS);
 }

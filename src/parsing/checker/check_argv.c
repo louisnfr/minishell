@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 14:18:50 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/18 17:58:20 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 11:43:43 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,6 @@ char	**handle_error_redirections(char **argv)
 	return (new_argv);
 }
 
-void	*display_error_msg_simple_dot(void)
-{
-	ft_putstr_fd("bash: .: filename argument required\n", 2);
-	ft_putstr_fd(".: usage: . filename [arguments]\n", 2);
-	return (NULL);
-}
-
 char	**check_argv(char **argv)
 {
 	int	i;
@@ -108,8 +101,6 @@ char	**check_argv(char **argv)
 		return (NULL);
 	if (argv[i] && str_is_equal(argv[i], ".") && !argv[i + 1])
 		return (display_error_msg_simple_dot());
-	if (argv[i] && (str_is_equal(argv[i], ".") || str_is_equal(argv[i], "..")))
-		return (NULL);
 	if (argv[i] && (is_delimiter(argv[i]) || str_is_equal(argv[i], "&")))
 		return (syntax_error_str_msg(argv[i]));
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))

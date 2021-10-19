@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:34:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 17:31:30 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 11:25:24 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ void	parse_ret_value(t_cmd *cmd_list, t_data *data)
 	int		i;
 	char	*ret_value;
 
-	i = 0;
 	ret_value = ft_itoa(data->ret_value);
+	cmd_list->command = transform_ret_value(cmd_list->command, ret_value);
+	i = 0;
 	while (cmd_list->args && cmd_list->args[i])
 	{
-		if (ft_strchr(cmd_list->args[i], '$') && ft_strchr(cmd_list->args[i], '?'))
-			cmd_list->args[i] = transform_special_value(
-				cmd_list->args[i], ret_value, '?');
+		cmd_list->args[i] = transform_ret_value(cmd_list->args[i], ret_value);
 		i++;
 	}
 	clean_free(&ret_value);

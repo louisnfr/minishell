@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   special_value.c                                    :+:      :+:    :+:   */
+/*   pid_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 10:16:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/16 14:09:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 12:04:28 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_length_simple_quotes(int *double_quotes, int *i, char *str)
+static void	get_length_simple_quotes(int *double_quotes, int *i, char *str)
 {
 	if (*double_quotes != -1 && str[*i] && str[*i] == '\'')
 	{
@@ -54,7 +54,7 @@ static int	get_length(char *str, int value_length, char character)
 	return (length);
 }
 
-void	fill_simple_quotes(int *double_quotes, char *new_str, char *str, int *i, int *j)
+static void	fill_simple_quotes(int *double_quotes, char *new_str, char *str, int *i, int *j)
 {
 	if (*double_quotes != -1 && str[*i] && str[*i] == '\'')
 	{
@@ -64,7 +64,7 @@ void	fill_simple_quotes(int *double_quotes, char *new_str, char *str, int *i, in
 	}
 }
 
-void	fill_new_str(char *str, char *new_str, char *value, char character)
+static void	fill_new_str(char *str, char *new_str, char *value, char character)
 {
 	int	i;
 	int	j;
@@ -98,17 +98,17 @@ void	fill_new_str(char *str, char *new_str, char *value, char character)
 	new_str[j] = '\0';
 }
 
-char	*transform_special_value(char *str, char *value, char character)
+char	*transform_pid_value(char *str, char *value)
 {
 	char	*new_str;
 	int		length;
 
 	new_str = NULL;
-	length = get_length(str, ft_strlen(value), character);
+	length = get_length(str, ft_strlen(value), '$');
 	new_str = (char *)malloc(sizeof(char) * (length + 1));
 	if (!new_str)
 		return (NULL);
-	fill_new_str(&(*str), &(*new_str), value, character);
+	fill_new_str(&(*str), &(*new_str), value, '$');
 	clean_free(&str);
 	return (new_str);
 }

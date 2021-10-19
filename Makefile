@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/18 16:18:53 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/19 12:05:40 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,28 +28,37 @@ SOURCES = \
 		builtin/unset.c \
 		builtin/exit.c \
 		\
-		parsing/upgrade_input/check_input.c \
-		parsing/upgrade_input/upgrade_input.c \
-		parsing/upgrade_input/env_var.c \
-		parsing/upgrade_input/env_var_length.c \
-		parsing/upgrade_input/env_var_utils.c \
-		parsing/upgrade_input/special_value.c \
-		parsing/split_input/split.c \
-		parsing/split_input/split_length.c \
-		parsing/split_input/split_delimiters.c \
-		parsing/split_input/split_utils.c \
-		parsing/parse_input/parsing.c \
-		parsing/parse_input/parsing_utils.c \
-		parsing/parse_input/parse_commands.c \
-		parsing/parse_input/parse_redirections.c \
-		parsing/parse_input/check_argv.c \
-		parsing/heredoc/heredoc.c \
-		parsing/heredoc/env_var.c \
-		parsing/heredoc/special_value.c \
-		parsing/pipe_fd.c \
-		parsing/get_paths.c \
-		parsing/libft.c \
-		parsing/linked_list.c \
+		parsing/lexer/upgrade_input.c \
+		parsing/lexer/env_var.c \
+		parsing/lexer/env_var_length.c \
+		parsing/lexer/env_var_utils.c \
+		parsing/lexer/pid_value.c \
+		parsing/lexer/ret_value.c \
+		\
+		parsing/split/split.c \
+		parsing/split/split_length.c \
+		parsing/split/split_utils.c \
+		\
+		parsing/parser/parsing.c \
+		parsing/parser/parsing_utils.c \
+		parsing/parser/parse_commands.c \
+		parsing/parser/parse_redirections.c \
+		parsing/parser/pipe_fd.c \
+		\
+		parsing/interpreter/heredoc.c \
+		parsing/interpreter/heredoc_env_var.c \
+		parsing/interpreter/heredoc_special_value.c \
+		parsing/interpreter/heredoc_split.c \
+		\
+		parsing/checker/check_input.c \
+		parsing/checker/check_argv.c \
+		parsing/checker/check_delimiters_1.c \
+		parsing/checker/check_delimiters_2.c \
+		parsing/checker/error_msg.c \
+		\
+		parsing/utils/get_paths.c \
+		parsing/utils/libft.c \
+		parsing/utils/linked_list.c \
 		\
 		shell/env/env.c \
 		shell/env/list.c \
@@ -108,8 +117,9 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parse_input obj/parsing/upgrade_input
-	@mkdir -p obj/parsing/split_input obj/parsing/heredoc obj/shell/env obj/shell/exec obj/exit
+	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
+	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/interpreter obj/parsing/utils
+	@mkdir -p obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
