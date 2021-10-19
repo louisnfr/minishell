@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 19:34:18 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 19:57:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 }
 
 t_bool	handle_execution(
-	int *exit_code, char **envp, t_cmd **cmd_list, t_data *data)
+	int *exit_code, t_cmd **cmd_list, t_data *data)
 {
 	pid_t	pid;
 	int		status;
@@ -31,7 +31,7 @@ t_bool	handle_execution(
 	pid = 0;
 	status = 0;
 	if ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
-		*exit_code = exec_pipes(envp, cmd_list, data);
+		*exit_code = exec_pipes(cmd_list, data);
 	else if ((*cmd_list)->is_builtin)
 	{
 		*exit_code = exec_builtin(*cmd_list, data);
@@ -57,7 +57,7 @@ t_bool	handle_execution(
 	return (SUCCESS);
 }
 
-int	exec(char **envp, t_data *data)
+int	exec(t_data *data)
 {
 	int		exit_code;
 	t_cmd	*cmd_list;
@@ -66,7 +66,7 @@ int	exec(char **envp, t_data *data)
 	exit_code = EXIT_FAILURE;
 	while (cmd_list)
 	{
-		if (!handle_execution(&exit_code, envp, &cmd_list, data))
+		if (!handle_execution(&exit_code, &cmd_list, data))
 		{
 			exit_code = 127;
 			display_error_message(cmd_list->command, "command not found", cmd_list->error_output);
