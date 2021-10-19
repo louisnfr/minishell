@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 17:46:05 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 13:39:51 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,8 @@ char	*heredoc_special_value(char *str, char *value, char character);
 */
 void	free_env(t_env *g_env);
 void	free_split(char **args);
-t_bool	cd_error(char *pwd, t_cmd *cmd_list);
+t_bool	cd_error(t_cmd *cmd_list);
+t_bool	cd_error_msg(char *s, t_cmd *cmd_list);
 
 /*** TURTLE FUNCTIONS ***/
 
