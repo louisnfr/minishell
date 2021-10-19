@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 14:18:50 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/16 13:20:21 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 11:43:43 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ char	**check_argv(char **argv)
 	i = 0;
 	if (!argv[i])
 		return (NULL);
+	if (argv[i] && str_is_equal(argv[i], ".") && !argv[i + 1])
+		return (display_error_msg_simple_dot());
 	if (argv[i] && (is_delimiter(argv[i]) || str_is_equal(argv[i], "&")))
 		return (syntax_error_str_msg(argv[i]));
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   special_value.c                                    :+:      :+:    :+:   */
+/*   heredoc_special_value.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 14:08:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 12:14:39 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ static int	heredoc_get_length(char *str, int value_length, char character)
 	int	i;
 	int	length;
 	int	count;
+	int	str_length;
 
 	i = 0;
 	count = 0;
 	if (!str)
 		return (0);
+	str_length = ft_strlen(str);
 	length = ft_strlen(str);
-	while (str && str[i + 1])
+	while (i < str_length && str[i] && str[i + 1])
 	{
 		if (str[i] == '$' && str[i + 1] == character)
 		{
@@ -43,10 +45,14 @@ static void	heredoc_fill_new_str(
 	int	i;
 	int	j;
 	int	k;
+	int	str_length;
 
 	i = 0;
 	j = 0;
-	while (str && str[i + 1])
+	if (!str || !str[i])
+		return ;
+	str_length = ft_strlen(str);
+	while (i < str_length && str[i] && str[i + 1])
 	{
 		if (str[i] == '$' && str[i + 1] == character)
 		{
@@ -58,7 +64,7 @@ static void	heredoc_fill_new_str(
 		else
 			new_str[j++] = str[i++];
 	}
-	if (str[i])
+	if (i < str_length && str[i])
 		new_str[j++] = str[i];
 	new_str[j] = '\0';
 }

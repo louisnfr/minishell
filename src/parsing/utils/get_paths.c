@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/08 17:40:40 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/16 18:48:06 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ char	*find_cmd_path(char *command, char **all_paths)
 	char	*cmd_path;
 
 	i = -1;
-	if (command[0] && command[0] == '/')
+	if (command && command[0] && command[0] == '/')
 		return (ft_strdup(command));
-	if (command[0] && command[0] == '.' && command[1] && command[1] == '/')
+	if (command && command[0] && command[0] == '.' && command[1] && command[1] == '/')
 		return (get_path_executable(command));
-	while (all_paths[++i])
+	if (command && (str_is_equal(command, ".") || str_is_equal(command, "..")))
+		return (NULL);
+	while (all_paths && all_paths[++i])
 	{
 		cmd_path = ft_strjoin(all_paths[i], command);
 		if (access(cmd_path, F_OK) == 0)
