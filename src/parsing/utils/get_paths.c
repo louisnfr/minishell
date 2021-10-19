@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 18:36:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 19:23:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**get_paths(t_data *data)
 	char	*path_variable;
 	char	**all_paths;
 
-	path_variable = get_env("PATH", data);
+	path_variable = get_env("PATH", data->env);
 	if (!path_variable)
 		return (NULL);
 	all_paths = ft_split(path_variable, ':');
@@ -68,3 +68,36 @@ char	**get_paths(t_data *data)
 	all_paths[i] = NULL;
 	return (all_paths);
 }
+
+/*
+char	*get_path_variable(char **env)
+{
+	int		i;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp("PATH=", env[i], 5))
+			return (env[i] + 5);
+	}
+	return (NULL);
+}
+
+char	**get_paths(char **env)
+{
+	int		i;
+	char	*path_variable;
+	char	**all_paths;
+
+	path_variable = get_path_variable(env);
+    if (!path_variable)
+		return (NULL);
+	all_paths = ft_split(path_variable, ':');
+	i = -1;
+	while (all_paths[++i])
+		all_paths[i] = ft_strjoin_and_free(all_paths[i], "/");
+	all_paths[i] = NULL;
+	return (all_paths);
+}
+
+*/
