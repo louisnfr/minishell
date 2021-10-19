@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:32 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 11:41:23 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 15:59:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,29 @@ t_bool	check_unclosed_quotes(char *input)
 
 static int	get_length(char *input, int length)
 {
-	while (input && input[length++])
+	int	input_len;
+
+	if (!input)
+		return (0);
+	input_len = ft_strlen(input);
+	while (length < input_len && input[length++])
 	{
-		while (input[length] && ft_isspace(input[length]))
+		while (length < input_len && input[length] && ft_isspace(input[length]))
 			length++;
-		if (input[length] == '#')
+		if (input[length] && input[length] == '#')
 			break ;
-		while (input[length] && !ft_isspace(input[length]))
+		while (length < input_len && input[length] && !ft_isspace(input[length]))
 		{
-			if (input[length] == '\"')
+			if (input[length] && input[length] == '\"')
 			{
 				length++;
-				while (input[length] && input[length] != '\"')
+				while (length < input_len && input[length] && input[length] != '\"')
 					length++;
 			}
-			else if (input[length] == '\'')
+			else if (input[length] && input[length] == '\'')
 			{
 				length++;
-				while (input[length] && input[length] != '\'')
+				while (length < input_len && input[length] && input[length] != '\'')
 					length++;
 			}		
 			length++;

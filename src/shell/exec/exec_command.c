@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 10:16:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 19:23:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 	}
 	fill_args(&(*cmd_array), &i, cmd_list, data);	
 	cmd_array[++i] = NULL;
+	cmd_list->path = find_cmd_path(cmd_list->command, get_paths(data));
 	return (cmd_array);
 }
 
@@ -95,7 +96,6 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 
-	(void)data;
 	pid = fork();
 	if (pid < 0)
 		return (FAIL);
