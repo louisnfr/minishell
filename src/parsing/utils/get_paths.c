@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/16 18:48:06 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 18:36:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,13 @@ char	*find_cmd_path(char *command, char **all_paths)
 	return (NULL);
 }
 
-char	*get_path_variable(char **envp)
-{
-	int		i;
-
-	i = -1;
-	while (envp[++i])
-	{
-		if (!ft_strncmp("PATH=", envp[i], 5))
-			return (envp[i] + 5);
-	}
-	return (NULL);
-}
-
-char	**get_paths(char **envp)
+char	**get_paths(t_data *data)
 {
 	int		i;
 	char	*path_variable;
 	char	**all_paths;
 
-	path_variable = get_path_variable(envp);
+	path_variable = get_env("PATH", data);
 	if (!path_variable)
 		return (NULL);
 	all_paths = ft_split(path_variable, ':');
