@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 19:57:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 20:02:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	exec_exit(t_cmd *cmd_list, t_data *data);
 /*
 ** shell
 */
-char	*prompt(void);
+char	*prompt(t_data *data);
 void	display_error_message(char *cmd, char *errno_msg, int fd);
 void	syntax_error_char_msg(int nb, char token);
 char	**syntax_error_str_msg(char *token);

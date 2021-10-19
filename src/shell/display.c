@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/14 12:50:27 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 20:04:12 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*prompt(void)
+char	*prompt(t_data *data)
 {
 	char	*usr;
 	char	*cwd;
 	char	*tmp;
 
-	usr = getenv("USER");
+	usr = get_env("USER", data->env);
 	cwd = getcwd(NULL, 0);
-	if (ft_strnstr(cwd, getenv("HOME"), ft_strlen(getenv("HOME"))))
+	if (ft_strnstr(cwd, get_env("HOME", data->env),
+		ft_strlen(get_env("HOME", data->env))))
 	{
-		tmp = ft_substr(cwd, ft_strlen(getenv("HOME")), ft_strlen(cwd));
+		tmp = ft_substr(cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
 		free(cwd);
 		cwd = ft_strjoin("~", tmp);
 		free(tmp);

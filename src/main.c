@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 19:57:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 20:04:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char **envp)
 	input = NULL;
 	while (1)
 	{
-		data->prpt = prompt();
+		data->prpt = prompt(data);
 		write(1, data->prpt, ft_strlen(data->prpt));
 		enable_raw_mode(data->sh);
 		input = shell_process_keypress(data, data->sh, data->sh->history);
