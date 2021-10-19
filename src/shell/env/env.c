@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 15:17:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 16:18:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ void	update_env(t_data *data)
 	char	*tmp;
 	int		i;
 
-	tmp = get_env("SHLVL", data);
+	tmp = get_env("SHLVL", data->env);
 	i = (ft_atoi(tmp) + 1);
 	tmp = ft_itoa(i);
 	set_env("SHLVL", tmp, data->env);
 	free(tmp);
 }
 
-char	*get_env(char *key, t_data *data)
+char	*get_env(char *key, t_env *env)
 {
 	t_env	*tmp;
 
-	tmp = data->env;
+	tmp = env;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, key))

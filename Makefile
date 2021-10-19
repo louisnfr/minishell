@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/19 15:40:15 by lraffin          ###   ########.fr        #
+#    Updated: 2021/10/19 16:32:45 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS	= -Wall -Wextra -Werror -g3 # -fsanitize=address
 RDL		= -lreadline
 
 ### INCLUDES ###

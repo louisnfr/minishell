@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 15:11:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 16:11:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char	**syntax_error_str_msg(char *token);
 */
 t_env	*create_env(char **envp);
 void	update_env(t_data *data);
-char	*get_env(char *key, t_data *data);
+char	*get_env(char *key, t_env *env);
 void	set_env(char *key, char *new_value, t_env *env);
 t_env	*new_var(char *name, char *value, int is_value);
 t_env	*get_last(t_env *g_env);

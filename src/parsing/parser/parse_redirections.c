@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 12:07:03 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 16:18:28 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
 void	redir_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
 {
 	t_bool	quotes;
-		
+
 	quotes = 0;
-	cmd_list->heredoc = ft_strjoin(get_env("HOME", data), "/heredoc");
+	cmd_list->heredoc = ft_strjoin(get_env("HOME", data->env), "/heredoc");
 	if (!argv[data->i])
 		return ;
 	cmd_list->heredoc_delimiter = parse_heredoc_delimiter(

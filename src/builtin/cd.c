@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 20:06:06 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 16:16:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
 }
 void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 {
-	if (!get_env("PWD", data))
+	if (!get_env("PWD", data->env))
 	{
 		add_var(&data->env, new_var("PWD", pwd, 1));
 		add_var(&data->export, new_var("PWD", pwd, 1));
 	}
-	if (!get_env("OLDPWD", data))
+	if (!get_env("OLDPWD", data->env))
 	{
 		add_var(&data->env, new_var("OLDPWD", oldpwd, 1));
 		add_var(&data->export, new_var("OLDPWD", oldpwd, 1));
@@ -43,7 +43,6 @@ void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 	free(oldpwd);
 }
 
-
 t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 {
 	char	*tmp;
@@ -51,11 +50,11 @@ t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 	tmp = NULL;
 	if (cdpath[ft_strlen(cdpath) - 1] != '/')
 	{
-		tmp = ft_strjoin(get_env("CDPATH", data), "/");
+		tmp = ft_strjoin(get_env("CDPATH", data->env), "/");
 		tmp = ft_strjoin(tmp, cmd_list->args[0]);
 	}
 	else
-		tmp = ft_strjoin(get_env("CDPATH", data), cmd_list->args[0]);
+		tmp = ft_strjoin(get_env("CDPATH", data->env), cmd_list->args[0]);
 	if (chdir(tmp) < 0)
 	{
 		if (chdir(cmd_list->args[0]) < 0)
@@ -74,11 +73,11 @@ t_bool	handle_dash(t_data *data, t_cmd *cmd_list)
 {
 	int	ret;
 
-	if (!get_env("OLDPWD", data))
+	if (!get_env("OLDPWD", data->env))
 		return (cd_error_msg("cd: OLDPWD not set\n", cmd_list));
-	ft_putstr_fd(get_env("OLDPWD", data), cmd_list->output);
+	ft_putstr_fd(get_env("OLDPWD", data->env), cmd_list->output);
 	ft_putstr_fd("\n", cmd_list->output);
-	ret = ch_dir(get_env("OLDPWD", data), NULL, cmd_list);
+	ret = ch_dir(get_env("OLDPWD", data->env), NULL, cmd_list);
 	return (ret);
 }
 
@@ -90,11 +89,11 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	int		ret;
 
 	oldpwd = getcwd(NULL, 0);
-	cdpath = get_env("CDPATH", data);
+	cdpath = get_env("CDPATH", data->env);
 	if (cmd_list->args && cmd_list->args[1])
 		return (cd_error_msg("cd: too many arguments\n", cmd_list));
 	if (!cmd_list->args || !ft_strcmp(cmd_list->args[0], "--"))
-		ret = ch_dir(get_env("HOME", data), "cd: HOME not set\n", cmd_list);
+		ret = ch_dir(get_env("HOME", data->env), "cd: HOME not set\n", cmd_list);
 	else if (!ft_strcmp(cmd_list->args[0], "-"))
 		ret = handle_dash(data, cmd_list);
 	else

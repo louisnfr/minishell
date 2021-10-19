@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 15:34:36 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 16:12:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_var(char *key, t_data *data)
 {
-	if (get_env(key, data))
-		ft_putstr(get_env(key, data));
+	if (get_env(key, data->env))
+		ft_putstr(get_env(key, data->env));
 	else
 		return ;
 }
