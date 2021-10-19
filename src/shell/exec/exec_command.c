@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 19:34:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 23:11:27 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 	cmd_array = malloc_cmd_array(cmd_array, cmd_list);
 	if (!cmd_array)
 		return (NULL);
-	parse_ret_value(cmd_list, data);
+	parse_special_value(cmd_list, data);
 	cmd_array[0] = ft_strdup(cmd_list->command);
 	i = 0;
 	while (cmd_list->options && cmd_list->options[i])
@@ -78,7 +78,6 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 	}
 	fill_args(&(*cmd_array), &i, cmd_list, data);
 	cmd_array[++i] = NULL;
-	cmd_list->path = find_cmd_path(cmd_list->command, get_paths(data));
 	return (cmd_array);
 }
 
@@ -92,11 +91,22 @@ int	get_error_code(void)
 	return (1);
 }
 
+t_bool	error_exec_cmd(char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data)
+{
+	display_error_message(
+		cmd_list->command, error_msg, cmd_list->error_output);
+	close_fd(&cmd_list);
+	clean_data(data);
+	exit(exit_code);
+	return (FAIL);
+}
+
 t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 	char	**envp;
 
+	cmd_list->path = find_cmd_path(cmd_list->command, get_paths(data));
 	pid = fork();
 	if (pid < 0)
 		return (FAIL);
@@ -113,13 +123,10 @@ t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data)
 		}
 		cmd_array = fill_cmd_array(cmd_list, data);
 		envp = env_to_char(data->env);
+		if (!cmd_list->path)
+			return (error_exec_cmd("No such file or directory", 127, cmd_list, data));
 		execve(cmd_list->path, cmd_array, envp);
-		display_error_message(
-			cmd_list->command, strerror(errno), cmd_list->error_output);
-		close_fd(&cmd_list);
-		clean_data(data);
-		exit(get_error_code());
-		return (FAIL);
+		return (error_exec_cmd(strerror(errno), get_error_code(), cmd_list, data));
 	}
 	return (SUCCESS);
 }

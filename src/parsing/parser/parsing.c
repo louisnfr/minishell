@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 19:05:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 22:22:11 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ char	**get_argv(char *input, t_data *data)
 	input = check_input(input);
 	if (!input)
 		return (NULL);
-	input = upgrade_input(input, data);
 	argv = split_input(input, data);
 	if (!argv)
 		return (NULL);

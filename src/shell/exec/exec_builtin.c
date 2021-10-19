@@ -6,27 +6,11 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:34:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 11:25:24 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 22:07:04 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	parse_ret_value(t_cmd *cmd_list, t_data *data)
-{
-	int		i;
-	char	*ret_value;
-
-	ret_value = ft_itoa(data->ret_value);
-	cmd_list->command = transform_ret_value(cmd_list->command, ret_value);
-	i = 0;
-	while (cmd_list->args && cmd_list->args[i])
-	{
-		cmd_list->args[i] = transform_ret_value(cmd_list->args[i], ret_value);
-		i++;
-	}
-	clean_free(&ret_value);
-}
 
 t_bool	fill_wildcard_arg_builtin(char **new_args, int *i, char *wildcard_arg)
 {
@@ -107,7 +91,7 @@ t_bool	parse_wildcard_args(t_cmd *cmd_list)
 
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 {
-	parse_ret_value(cmd_list, data);
+	parse_special_value(cmd_list, data);
 	parse_wildcard_args(cmd_list);
 	if (cmd_list->input == -1 || cmd_list->output == -1)
 		return (EXIT_FAILURE);

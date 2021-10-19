@@ -6,21 +6,31 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:34 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 10:26:53 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 22:26:26 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*upgrade_input(char *input, t_data *data)
+void	parse_special_value(t_cmd *cmd_list, t_data *data)
 {
+	int		i;
 	char	*pid_value;
+	char	*ret_value;
 
-	if (!ft_strchr(input, '$'))
-		return (input);
-	input = parse_env_variable(input, data);
 	pid_value = ft_itoa(data->pid);
-	input = transform_pid_value(input, pid_value);
+	ret_value = ft_itoa(data->ret_value);
+	cmd_list->command = parse_env_variable(cmd_list->command, data);
+	cmd_list->command = transform_pid_value(cmd_list->command, pid_value);
+	cmd_list->command = transform_ret_value(cmd_list->command, ret_value);
+	i = 0;
+	while (cmd_list->args && cmd_list->args[i])
+	{
+		cmd_list->args[i] = parse_env_variable(cmd_list->args[i], data);
+		cmd_list->args[i] = transform_pid_value(cmd_list->args[i], pid_value);
+		cmd_list->args[i] = transform_ret_value(cmd_list->args[i], ret_value);
+		i++;
+	}
 	clean_free(&pid_value);
-	return (input);
+	clean_free(&ret_value);
 }

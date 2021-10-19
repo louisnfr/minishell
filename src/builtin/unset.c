@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 16:33:31 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 23:22:25 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ t_bool	unset(t_env *env, t_cmd *cmd_list)
 
 t_bool	exec_unset(t_cmd *cmd_list, t_data *data)
 {
+	if (cmd_list->args && cmd_list->args[0]
+		&& str_is_equal(cmd_list->args[0], "PATH")
+		&& cmd_list->next && cmd_list->next->delimiter == PIPE)
+		return (EXIT_SUCCESS);
 	unset(data->env, cmd_list);
 	unset(data->export, cmd_list);
 	return (EXIT_SUCCESS);

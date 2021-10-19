@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 20:02:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 23:02:08 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	print_env(t_env *g_env, t_cmd *cmd_list);
 int		exec(t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
 t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data);
+t_bool	error_exec_cmd(char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);
 char	**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int		exec_pipes(t_cmd **cmd_list, t_data *data);
 void	close_all_fd(t_data *data);
@@ -199,7 +200,7 @@ t_bool	is_redirection(char *str);
 int		get_redirection(char *str);
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
 void	parse_pipes(t_cmd *cmd_list);
-void	parse_ret_value(t_cmd *cmd_list, t_data *data);
+void	parse_special_value(t_cmd *cmd_list, t_data *data);
 /*
 ** parsing/lexer
 */

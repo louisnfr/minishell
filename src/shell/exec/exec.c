@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 19:57:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 23:10:52 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_bool	handle_execution(
 	}
 	else
 	{
-		parse_ret_value(*cmd_list, data);
+		parse_special_value(*cmd_list, data);
 		return (FAIL);
 	}
 	check_exit_code(*exit_code, cmd_list);

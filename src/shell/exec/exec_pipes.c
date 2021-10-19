@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 19:56:18 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 23:13:55 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ static t_bool	exec_command_pipe(
 		close_all_fd(data);
 		cmd_array = fill_cmd_array(*cmd_list, data);
 		envp = env_to_char(data->env);
+		if (!(*cmd_list)->path)
+			return (error_exec_cmd("No such file or directory", 127, *cmd_list, data));
 		execve((*cmd_list)->path, cmd_array, envp);
-		display_error_message(
-			(*cmd_list)->command, strerror(errno), (*cmd_list)->error_output);
-		close_fd(cmd_list);
-		clean_data(data);
-		exit(get_error_code());
-		return (FAIL);
+		return (error_exec_cmd(strerror(errno), get_error_code(), *cmd_list, data));
 	}
 	else
 	{
@@ -66,6 +63,7 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	int		exit_code;
 
 	exit_code = EXIT_SUCCESS;
+	(*cmd_list)->path = find_cmd_path((*cmd_list)->command, get_paths(data));
 	while ((*cmd_list) && ((*cmd_list)->delimiter == PIPE
 			|| ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)))
 	{
