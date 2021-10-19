@@ -6,45 +6,34 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 14:26:59 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/16 14:32:15 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 11:52:45 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	fill_quotes(char **str, char **strs, int *i, int *j)
+int	handle_delimiters(int i, char **str, char **strs)
 {
-	if (**str && **str == '\'')
+	int		j;
+	char	*tmp;
+
+	j = 0;
+	tmp = ft_strdup(*str);
+	while (tmp && tmp[j] && is_charset_split(tmp[j]))
+		j++;
+	free(tmp);
+	tmp = NULL;
+	strs[i] = (char *)malloc(sizeof(char) * (j + 1));
+	if (!strs[i])
+		return (0);
+	j = 0;
+	while (**str && is_delimiter_split(**str))
 	{
-		(*str)++;
-		while (**str && **str != '\'')
-		{
-			strs[*i][(*j)++] = **str;
-			(*str)++;
-		}
+		strs[i][j++] = **str;
 		(*str)++;
 	}
-	else if (**str && **str == '\"')
-	{
-		(*str)++;
-		while (**str && **str != '\"')
-		{
-			strs[*i][(*j)++] = **str;
-			(*str)++;
-		}
-		(*str)++;
-	}
-}
-
-void	count_in_quotes(int *j, char *tmp)
-{
-	char	quote;
-
-	quote = tmp[*j];
-	(*j)++;
-	while (tmp[*j] && tmp[*j] != quote)
-		(*j)++;
-	(*j)++;
+	strs[i][j] = '\0';
+	return (1);
 }
 
 t_bool	fill_words(int i, char **str, char **strs)
@@ -57,7 +46,7 @@ t_bool	fill_words(int i, char **str, char **strs)
 	while (tmp[j] && !is_charset_split(tmp[j]))
 	{
 		if (tmp[j] && (tmp[j] == '\'' || tmp[j] == '\"'))
-			count_in_quotes(&j, tmp);
+			count_in_quotes_split(&j, tmp);
 		else
 			j++;
 	}
@@ -69,7 +58,7 @@ t_bool	fill_words(int i, char **str, char **strs)
 	while (**str && !is_charset_split(**str))
 	{
 		if (**str && (**str == '\'' || **str == '\"'))
-			fill_quotes(str, strs, &i, &j);
+			fill_quotes_split(str, strs, &i, &j);
 		else
 		{
 			strs[i][j++] = **str;
@@ -77,43 +66,6 @@ t_bool	fill_words(int i, char **str, char **strs)
 		}
 	}
 	strs[i][j] = '\0';
-	return (SUCCESS);
-}
-
-t_bool	handle_heredoc_quotes(int *i, char **str, char **strs)
-{
-	int		j;
-	char	*tmp;
-	char	charset;
-
-	while (**str && ft_isspace(**str))
-		(*str)++;
-	if (!(**str) || (**str && **str != '\'' && **str != '\"'))
-		return (SUCCESS);
-	charset = **str;
-	j = 1;
-	tmp = ft_strdup(*str);
-	while (tmp[j] && tmp[j] != charset)
-		j++;
-	free(tmp);
-	tmp = NULL;
-	strs[++(*i)] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
-	if (!strs[*i])
-		return (FAIL);
-	j = 0;
-	strs[*i][j++] = **str;
-	(*str)++;
-	while (**str)
-	{
-		strs[*i][j++] = **str;
-		(*str)++;
-		if (**str && **str == charset)
-		{
-			strs[*i][j++] = **str;
-			break ;
-		}
-	}
-	strs[*i][j] = '\0';
 	return (SUCCESS);
 }
 

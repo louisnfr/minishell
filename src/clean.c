@@ -44,8 +44,6 @@ void	clean_data(t_data *data)
 	data->i = 0;
 	data->pid = 0;
 	data->ret_value = 0;
-	if (data->simple_quotes)
-		free(data->simple_quotes);
 	clean_cmd_list(data->cmd_list);
 	data->cmd_list = NULL;
 	free_env(data->env);

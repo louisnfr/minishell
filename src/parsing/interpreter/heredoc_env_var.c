@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_var.c                                          :+:      :+:    :+:   */
+/*   heredoc_env_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/13 14:08:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 12:11:18 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,16 @@ static int	heredoc_handle_special_case(char *new_str, char *str, int *i, int *j)
 
 static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+	int	str_length;
 
 	i = 0;
 	j = 0;
 	if (!str || !str[i])
 		return (0);
-	while (str && str[i] && str[i + 1])
+	str_length = ft_strlen(str);
+	while (i < str_length && str[i] && str[i + 1])
 	{
 		if (heredoc_handle_special_case(new_str, str, &i, &j))
 			continue ;
@@ -84,7 +86,8 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 		else
 			new_str[j++] = str[i++];
 	}
-	new_str[j++] = str[i];
+	if (i < str_length && str[i])
+		new_str[j++] = str[i];
 	new_str[j] = '\0';
 	return (1);
 }

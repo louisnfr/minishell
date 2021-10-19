@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/18 19:43:57 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 11:30:19 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,11 @@ int	main(int ac, char **av, char **envp)
 			init_cmd_list(data);
 			if (parse(input, data))
 			{
-	//			print_list(data->cmd_list);
+//				print_list(data->cmd_list);
 				exec(envp, data);
 			}
 			clear_hist(data->sh->history, data->sh->search);
 			clean_cmd_list(data->cmd_list);
-			if (data->simple_quotes)
-			{
-				free(data->simple_quotes);
-				data->simple_quotes = NULL;
-			}
-			data->i_quotes = 0;
 			data->sh->h_num++;
 		}
 	}

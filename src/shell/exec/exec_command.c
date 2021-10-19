@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/18 18:50:08 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 10:16:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	fill_args(char **cmd_array, int *i, t_cmd *cmd_list, t_data *data)
 	ret_value = ft_itoa(data->ret_value);
 	while (cmd_list->args && cmd_list->args[j])
 	{
-		if (must_be_transformed(cmd_list->args[j], data))
-			cmd_list->args[j] = transform_special_value(cmd_list->args[j], ret_value, '?');
 		if (ft_strchr(cmd_list->args[j], '*'))
 			fill_wildcard_arg(&(*cmd_array), i, cmd_list->args[j]);
 		else
@@ -70,6 +68,7 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 	cmd_array = malloc_cmd_array(cmd_array, cmd_list);
 	if (!cmd_array)
 		return (NULL);
+	parse_ret_value(cmd_list, data);
 	cmd_array[0] = ft_strdup(cmd_list->command);
 	i = 0;
 	while (cmd_list->options && cmd_list->options[i])
