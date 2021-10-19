@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:28:32 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/01 18:47:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 15:11:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_bool	exec_env(t_cmd *cmd_list, t_data *data)
 {
-	(void)cmd_list;
-	print_env(data->env);
+	print_env(data->env, cmd_list);
 	return (EXIT_SUCCESS);
 }

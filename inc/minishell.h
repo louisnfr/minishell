@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 13:44:14 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 15:11:25 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	set_env(char *key, char *new_value, t_env *env);
 t_env	*new_var(char *name, char *value, int is_value);
 t_env	*get_last(t_env *g_env);
 void	add_var(t_env **g_env, t_env *new_var);
-void	print_env(t_env *g_env);
+void	print_env(t_env *g_env, t_cmd *cmd_list);
 /*
 ** shell/exec
 */
