@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 19:23:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/19 19:34:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 		cmd_array[i + 1] = ft_strdup(cmd_list->options[i]);
 		i++;
 	}
-	fill_args(&(*cmd_array), &i, cmd_list, data);	
+	fill_args(&(*cmd_array), &i, cmd_list, data);
 	cmd_array[++i] = NULL;
 	cmd_list->path = find_cmd_path(cmd_list->command, get_paths(data));
 	return (cmd_array);
@@ -92,9 +92,10 @@ int	get_error_code(void)
 	return (1);
 }
 
-t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
+t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
+	char	**envp;
 
 	pid = fork();
 	if (pid < 0)
@@ -111,6 +112,7 @@ t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data)
 			close_all_fd(data);
 		}
 		cmd_array = fill_cmd_array(cmd_list, data);
+		envp = env_to_char(data->env);
 		execve(cmd_list->path, cmd_array, envp);
 		display_error_message(
 			cmd_list->command, strerror(errno), cmd_list->error_output);

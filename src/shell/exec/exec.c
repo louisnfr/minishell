@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 10:21:30 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/19 19:34:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_bool	handle_execution(
 	}
 	else if ((*cmd_list)->path)
 	{
-		if (exec_command(pid, envp, *cmd_list, data))
+		if (exec_command(pid, *cmd_list, data))
 		{
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))

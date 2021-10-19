@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 19:30:48 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/19 19:33:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	print_env(t_env *g_env, t_cmd *cmd_list);
 */
 int		exec(char **envp, t_data *data);
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data);
-t_bool	exec_command(pid_t pid, char **envp, t_cmd *cmd_list, t_data *data);
+t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data);
 char	**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int		exec_pipes(char **envp, t_cmd **cmd_list, t_data *data);
 void	close_all_fd(t_data *data);
