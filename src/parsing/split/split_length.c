@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 12:17:06 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 18:14:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/20 18:10:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ int	split_count_words(char *str, t_data *data)
 {
 	int	words;
 	int	i;
-
+	int	str_length;
+	
 	i = 0;
 	words = 0;
-	while (str[i])
+	str_length = ft_strlen(str);
+	while (str && i < str_length && str[i])
 	{
 		while (str[i] && ft_isspace(str[i]))
 			i++;

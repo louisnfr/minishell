@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 13:31:52 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:39:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,13 +144,13 @@ char		*parse_env_variable(char *input, t_data *data);
 int			is_charset_env(char c);
 char		*get_env_value(char *str, int *i, t_data *data);
 char		*get_env_key(char *str, int *i);
-int			get_length_env_value(char *env_key, t_data *data);
+int			get_length_env_value(int *double_quotes, char *env_key, t_data *data);
 int			get_length_new_input(char *str, t_data *data);
 char		*transform_pid_value(char *str, char *value);
 char		*transform_ret_value(char *str, char *value);
-void		handle_env_variable(int *i, int *length, char *str, t_data *data);
+void		handle_env_variable(int *double_quotes, int *i, int *length, char *str, t_data *data);
 char		*get_env_value(char *str, int *i, t_data *data);
-void		fill_env_value(char *new_str, int *j, char *value);
+void		fill_env_value(int *double_quotes, char *new_str, int *j, char *value);
 /*
 ** parsing/split
 */

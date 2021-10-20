@@ -11,6 +11,7 @@ int	display_error_msg_delimiter(int count, char delimiter, t_data *data)
 {
 	int	i;
 
+	(void)data;
 	if (count == -1)
 		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 	else if (count)
@@ -21,6 +22,5 @@ int	display_error_msg_delimiter(int count, char delimiter, t_data *data)
 			ft_putchar_fd(delimiter, 2);
 		ft_putstr_fd("'\n", 2);
 	}
-	data->ret_value = 258;
 	return (FAIL);
 }
