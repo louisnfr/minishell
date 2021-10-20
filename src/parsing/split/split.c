@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 14:26:59 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 11:52:45 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:26:05 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_delimiters(int i, char **str, char **strs)
 		j++;
 	free(tmp);
 	tmp = NULL;
-	strs[i] = (char *)malloc(sizeof(char) * (j + 1));
+	strs[i] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!strs[i])
 		return (0);
 	j = 0;

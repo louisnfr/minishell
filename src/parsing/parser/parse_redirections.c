@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 16:18:28 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:25:41 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	display_error_msg(int fd, char *filename, char *errno_msg)
+void	display_error_msg_redir(int fd, char *filename, char *errno_msg)
 {
 	ft_putstr_fd("bash: ", fd);
 	ft_putstr_fd(filename, fd);
@@ -44,7 +44,7 @@ char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
 	j = 0;
 	while (delimiter[++i] && delimiter[i] != charset)
 		j++;
-	new_delimiter = (char *)malloc(sizeof(char) * (j + 1));
+	new_delimiter = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!new_delimiter)
 		return (NULL);
 	i = 1;
@@ -81,7 +81,7 @@ void	handle_redirection(
 		{
 			cmd_list->output = open(argv[data->i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (cmd_list->output == -1)
-				display_error_msg(cmd_list->error_output, argv[data->i], strerror(errno));
+				display_error_msg_redir(cmd_list->error_output, argv[data->i], strerror(errno));
 		}
 	}
 	if (redirection == DOUBLE_RIGHT_MARK)
@@ -90,7 +90,7 @@ void	handle_redirection(
 		{
 			cmd_list->output = open(argv[data->i], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (cmd_list->output == -1)
-				display_error_msg(cmd_list->error_output, argv[data->i], strerror(errno));
+				display_error_msg_redir(cmd_list->error_output, argv[data->i], strerror(errno));
 		}
 	}
 	if (redirection == LEFT_MARK)
@@ -99,7 +99,7 @@ void	handle_redirection(
 		{
 			cmd_list->input = open(argv[data->i], O_RDONLY);
 			if (cmd_list->input == -1)
-				display_error_msg(cmd_list->error_output, argv[data->i], strerror(errno));
+				display_error_msg_redir(cmd_list->error_output, argv[data->i], strerror(errno));
 		}
 	}
 	if (redirection == HEREDOC)
@@ -110,7 +110,7 @@ void	handle_redirection(
 		{
 			cmd_list->error_output = open(argv[data->i], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 			if (cmd_list->error_output == -1)
-				display_error_msg(cmd_list->error_output, argv[data->i], strerror(errno));
+				display_error_msg_redir(cmd_list->error_output, argv[data->i], strerror(errno));
 		}
 	}
 	if (redirection == DOUBLE_ERROR)
@@ -119,7 +119,7 @@ void	handle_redirection(
 		{
 			cmd_list->error_output = open(argv[data->i], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (cmd_list->error_output == -1)
-				display_error_msg(cmd_list->error_output, argv[data->i], strerror(errno));
+				display_error_msg_redir(cmd_list->error_output, argv[data->i], strerror(errno));
 		}
 	}
 	data->i++;

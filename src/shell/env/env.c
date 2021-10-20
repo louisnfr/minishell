@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 19:29:01 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:26:56 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	set_env(char *key, char *new_value, t_env *env)
 	}
 	env->is_value = 1;
 	free(env->value);
-	env->value = malloc(sizeof(char) + (ft_strlen(new_value) + 1));
+	env->value = ft_calloc(1, sizeof(char) + (ft_strlen(new_value) + 1));
 	if (!env->value)
 		return ;
 	ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);

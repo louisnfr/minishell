@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 23:02:08 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 12:51:35 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list);
 void	print_list(t_cmd *cmd_list);
 
 /*
-** parsing/parse_input
+** parsing/parser
 */
 t_bool	parse(char *input, t_data *data);
 char	*find_cmd_path(char *command, char **all_paths);
@@ -199,6 +199,8 @@ int		get_delimiter(char *str);
 t_bool	is_redirection(char *str);
 int		get_redirection(char *str);
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
+t_bool	is_file_name(char *file);
+void	display_error_msg_redir(int fd, char *filename, char *errno_msg);
 void	parse_pipes(t_cmd *cmd_list);
 void	parse_special_value(t_cmd *cmd_list, t_data *data);
 /*
@@ -235,7 +237,7 @@ int		check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data
 int		check_error_delimiter(int j, char *str, int delimiter, t_data *data);
 int		check_multiple_delimiters(
 			char *str, int j, t_data *data);
-int		display_error_msg_delimiter(int count, char delimiter);
+int		display_error_msg_delimiter(int count, char delimiter, t_data *data);
 t_bool	check_beginning(char *str, int *i);
 t_bool	check_error_redir(char *str, int *i);
 int		is_error_redir(char *str, int j);

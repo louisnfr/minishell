@@ -7,7 +7,7 @@ void	*display_error_msg_simple_dot(void)
 	return (NULL);
 }
 
-int	display_error_msg_delimiter(int count, char delimiter)
+int	display_error_msg_delimiter(int count, char delimiter, t_data *data)
 {
 	int	i;
 
@@ -21,5 +21,6 @@ int	display_error_msg_delimiter(int count, char delimiter)
 			ft_putchar_fd(delimiter, 2);
 		ft_putstr_fd("'\n", 2);
 	}
+	data->ret_value = 258;
 	return (FAIL);
 }

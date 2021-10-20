@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 16:16:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:24:35 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_env_key(char *str, int *i)
 	if (var_length)
 	{
 		env_var = NULL;
-		env_var = (char *)malloc(sizeof(char) * (var_length + 1));
+		env_var = (char *)ft_calloc(1, sizeof(char) * (var_length + 1));
 		if (!env_var)
 			return (NULL);
 		var_length = 0;

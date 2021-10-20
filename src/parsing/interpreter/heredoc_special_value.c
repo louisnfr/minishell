@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 12:14:39 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:24:23 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*heredoc_special_value(char *str, char *value, char character)
 
 	new_str = NULL;
 	length = heredoc_get_length(str, ft_strlen(value), character);
-	new_str = (char *)malloc(sizeof(char) * (length + 1));
+	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
 		return (NULL);
 	heredoc_fill_new_str(&(*str), &(*new_str), value, character);

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 14:18:50 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 11:43:43 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:23:44 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**handle_error_redirections(char **argv)
 	if (length == -1)
 		return (argv);
 	new_argv = NULL;
-	new_argv = (char **)malloc(sizeof(char *) * (length + 1));
+	new_argv = (char **)ft_calloc(1, sizeof(char *) * (length + 1));
 	if (!argv)
 		return (NULL);
 	if (!fill_new_argv(length, argv, new_argv))
@@ -103,7 +103,7 @@ char	**check_argv(char **argv)
 		return (display_error_msg_simple_dot());
 	if (argv[i] && (is_delimiter(argv[i]) || str_is_equal(argv[i], "&")))
 		return (syntax_error_str_msg(argv[i]));
-	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))
+	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")) && !str_is_equal(argv[i], "<"))
 		return (syntax_error_str_msg("newline"));
 	while (argv[i + 1])
 		i++;	

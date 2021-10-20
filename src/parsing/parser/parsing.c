@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 22:22:11 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:25:54 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	handle_builtin_cmd(
 	{
 		if (is_option_echo(argv, data))
 		{
-			options = (char **)malloc(sizeof(char *) * 2);
+			options = (char **)ft_calloc(1, sizeof(char *) * 2);
 			options[0] = ft_strdup("-n");
 			options[1] = NULL;
 		}
@@ -90,6 +90,27 @@ void	handle_other_cmd(
 		cmd_list->delimiter = delimiter;
 	data->i++;
 	parse_redirections(argv, cmd_list, data);
+}
+
+void	handle_start_redir(char **argv, t_cmd *cmd_list, t_data *data)
+{
+	int	fd;
+
+	data->i++;
+	if (argv[data->i] && is_file_name(argv[data->i]))
+		fd = open(argv[data->i], O_RDONLY);
+	if (!argv[++data->i])
+		return ;
+	if (cmd_is_builtin(argv[data->i]))
+		handle_builtin_cmd(0, argv, cmd_list, data);
+	else
+		handle_other_cmd(0, argv, cmd_list, data);
+	while (cmd_list->next)
+		cmd_list = cmd_list->next;
+	cmd_list->redirection = LEFT_MARK;
+	cmd_list->input = fd;
+	if (cmd_list->input == -1)
+		display_error_msg_redir(cmd_list->error_output, argv[data->i - 1], strerror(errno));
 }
 
 char	**get_argv(char *input, t_data *data)
@@ -131,6 +152,8 @@ t_bool	parse(char *input, t_data *data)
 		return (FAIL);
 	}
 	data->i = 0;
+	if (argv[data->i] && str_is_equal(argv[data->i], "<"))
+		handle_start_redir(argv, cmd_list, data);
 	while (argv[data->i])
 	{
 		if (is_delimiter(argv[data->i]))

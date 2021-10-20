@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:01 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/08 21:47:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 13:27:03 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	if (!s1)
 		return (ft_strdup(s2));
 	length = ft_strlen(s1) + ft_strlen(s2);
-	dest = (char *)malloc(sizeof(char) * (length + 1));
+	dest = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!dest)
 		return (NULL);
 	i = -1;

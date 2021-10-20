@@ -53,6 +53,10 @@ int	matching_name(char *filename, char *wildcard)
 
 	i = 0;
 	j = 0;
+	if (!wildcard || !filename)
+		return (0);
+	if (filename[0] && filename[0] == '.' && wildcard[0] && wildcard[0] != '.')
+		return (0);
 	while (j < (int)ft_strlen(wildcard))
 	{
 		if (wildcard[j] && wildcard[j] == '*')

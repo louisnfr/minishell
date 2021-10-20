@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 12:11:18 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:24:06 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*heredoc_env_variable(char *input, t_data *data)
 
 	new_input = NULL;
 	new_length = heredoc_length_new_input(input, data);
-	new_input = (char *)malloc(sizeof(char) * (new_length + 1));
+	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
 		return (NULL);
 	heredoc_fill_new_input(new_input, input, data);

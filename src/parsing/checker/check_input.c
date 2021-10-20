@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:32 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 15:59:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/20 13:23:55 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*check_comment(char *input)
 	length = get_length(input, length);
 	if (length == (int)ft_strlen(input))
 		return (input);
-	new_input = (char *)malloc(sizeof(char) * (length + 1));
+	new_input = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_input)
 		return (NULL);
 	i = -1;

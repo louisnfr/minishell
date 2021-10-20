@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 10:16:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 22:25:42 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:25:09 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	*transform_ret_value(char *str, char *value)
 
 	new_str = NULL;
 	length = get_length(str, ft_strlen(value));
-	new_str = (char *)malloc(sizeof(char) * (length + 1));
+	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
 		return (NULL);
 	fill_new_str(&(*str), &(*new_str), value);

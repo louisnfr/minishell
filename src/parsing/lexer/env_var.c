@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/16 14:30:16 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:24:48 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*parse_env_variable(char *input, t_data *data)
 
 	new_input = NULL;
 	new_length = get_length_new_input(input, data);
-	new_input = (char *)malloc(sizeof(char) * (new_length + 1));
+	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
 		return (NULL);
 	fill_new_input(new_input, input, data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 19:23:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/20 13:26:16 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_path_executable(char *command)
 	path = NULL;
 	if (!command)
 		return (path);
-	path = (char *)malloc(sizeof(char) * (ft_strlen(command) - 1));
+	path = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(command) - 1));
 	i = 2;
 	j = 0;
 	while (command[i])

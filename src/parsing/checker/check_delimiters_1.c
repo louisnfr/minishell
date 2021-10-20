@@ -33,14 +33,14 @@ int	check_error_delimiter(int j, char *str, int delimiter, t_data *data)
 	if (j && str[j] && str[j] == delimiter)
 	{
 		if (str[j + 1] == delimiter)
-			return (display_error_msg_delimiter(2, str[j]));
-		return (display_error_msg_delimiter(1, str[j]));
+			return (display_error_msg_delimiter(2, str[j], data));
+		return (display_error_msg_delimiter(1, str[j], data));
 	}
 	ret = check_multiple_delimiters(str, j, data);
 	if ((ret > 0 && ret < 4) || ret == -1)
 	{
 		if (!is_error_redir(str, j))
-			return (display_error_msg_delimiter(ret, str[j]));
+			return (display_error_msg_delimiter(ret, str[j], data));
 		return (2);
 	}
 	return (1);
@@ -64,16 +64,16 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 		count++;
 	}
 	if ((delimiter == '|' && count == 3 && !is_beginning)
-		|| (delimiter == '&' && count == 3 && !is_beginning) ||
+		|| (delimiter == '&' && (count == 1 || count == 3) && !is_beginning) ||
 		(delimiter == '>' && count == 3) || (delimiter == '<' && count == 3))
-		return (display_error_msg_delimiter(1, delimiter));
+		return (display_error_msg_delimiter(1, delimiter, data));
 	if ((delimiter == '|' && count == 3) || (delimiter == '&' && count == 3)
 		|| (delimiter == '|' && count > 3) || (delimiter == '&' && count > 3)
 		|| (delimiter == ';' && count > 1) || (delimiter == '>' && count > 3)
 		|| (delimiter == '<' && count == 4))
-		return (display_error_msg_delimiter(2, delimiter));
+		return (display_error_msg_delimiter(2, delimiter, data));
 	if (delimiter == '<' && count > 4)
-		return (display_error_msg_delimiter(3, delimiter));
+		return (display_error_msg_delimiter(3, delimiter, data));
 	j = *i;
 	ret = check_error_delimiter(j, str, delimiter, data);
 	if (ret == 2)

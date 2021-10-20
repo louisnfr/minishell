@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 12:42:38 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 13:20:56 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	print_list(t_cmd *cmd_list)
 			printf("Path : %s\n", tmp->path);
 		if (tmp->delimiter)
 			printf("Delimiter = %d\n", tmp->delimiter);
+		if (tmp->redirection)
+			printf("Redirection = %d\n", tmp->redirection);
 		tmp = tmp->next;
 		printf("\n");
 	}
@@ -52,7 +54,7 @@ t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 {
 	t_cmd	*new_cmd;
 
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	new_cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!new_cmd)
 		return (FAIL);
 	setup_cmd_list(new_cmd);
@@ -83,6 +85,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->path = NULL;
 	cmd_list->is_builtin = FALSE;
 	cmd_list->delimiter = 0;
+	cmd_list->redirection = 0;
 	cmd_list->input = 0;
 	cmd_list->output = 1;
 	cmd_list->error_output = 2;
