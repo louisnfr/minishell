@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:24:35 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:57:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,38 @@ int	is_charset_env(char c)
 		|| c == '\'' || c == '\"');
 }
 
-int	get_length_env_value(char *env_key, t_data *data)
+int	get_length_env_value(int *double_quotes, char *env_key, t_data *data)
 {
 	char	*env_value;
-
+	int		length;
+	int		i;
+	int		value_length;
+	
 	env_value = NULL;
 	env_value = get_env(env_key, data->env);
-	if (env_value)
-		return (ft_strlen(env_value));
-	return (0);
+	if (!env_value)
+		return (0);
+	value_length = ft_strlen(env_value);
+	if (*double_quotes == -1)
+		return (value_length);
+	i = 0;
+	length = 0;
+	while (i < value_length && env_value[i])
+	{
+		if (env_value[i] && ft_isspace(env_value[i]))
+		{
+			i++;
+			length++;
+			while (env_value[i] && ft_isspace(env_value[i]))
+				i++;
+		}
+		else
+		{
+			i++;
+			length++;
+		}
+	}
+	return (length);
 }
 
 char	*get_env_key(char *str, int *i)

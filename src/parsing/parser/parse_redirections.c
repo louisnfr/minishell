@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 18:01:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 18:21:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
 	return (new_delimiter);
 }
 
-void	redir_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
+void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	t_bool	quotes;
 
 	quotes = 0;
 	cmd_list->heredoc = ft_strjoin(get_env("HOME", data->env), "/heredoc");
-	if (!argv[data->i])
+	if (!argv[*j])
 		return ;
 	cmd_list->heredoc_delimiter = parse_heredoc_delimiter(
-		ft_strdup(argv[data->i]), &quotes);
+		ft_strdup(argv[*j]), &quotes);
 	read_heredoc(cmd_list, data, quotes);
 	cmd_list->input = open(cmd_list->heredoc, O_RDONLY);
 	unlink(cmd_list->heredoc);
@@ -102,8 +102,6 @@ void	handle_redirection(
 				display_error_msg_redir(cmd_list->error_output, argv[data->i], strerror(errno));
 		}
 	}
-	if (redirection == HEREDOC)
-		redir_heredoc(argv, cmd_list, data);
 	if (redirection == ERROR)
 	{
 		if (is_file_name(argv[data->i]))
@@ -130,10 +128,57 @@ void	handle_redirection(
 	}
 }
 
+static void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
+{
+	redir_heredoc(j, argv, cmd_list, data);
+	(*j)++;
+	if (argv[*j] && str_is_equal(argv[*j], "2>&1"))
+	{
+		cmd_list->error_output = cmd_list->output;
+		(*j)++;
+	}	
+}
+
+void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data)
+{
+	int	redirection;
+	int	j;
+	
+	j = data->i;
+	redirection = 0;
+	while (argv[j] && is_redirection(argv[j]))
+	{
+		redirection = get_redirection(argv[j]);
+		j++;
+		if (!argv[j])
+			return ;
+		if (redirection == HEREDOC)
+			handle_heredoc(&j, argv, cmd_list, data);
+		else
+			j++;
+	}
+	while (argv[data->i] && is_redirection(argv[data->i]))
+	{
+		redirection = get_redirection(argv[data->i]);
+		data->i++;
+		if (!argv[data->i])
+			return ;
+		if (redirection != HEREDOC)
+			handle_redirection(redirection, argv, cmd_list, data);
+		else
+			data->i++;
+	}
+	cmd_list->redirection = redirection;
+}
+
+/*
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data)
 {
 	int	redirection;
 
+	if (!check_heredoc_proprity(argv, data))
+		return ;
+	redirection = 0;
 	while (argv[data->i] && is_redirection(argv[data->i]))
 	{
 		redirection = get_redirection(argv[data->i]);
@@ -144,3 +189,4 @@ void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data)
 		handle_redirection(redirection, argv, cmd_list, data);
 	}
 }
+*/

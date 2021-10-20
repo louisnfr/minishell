@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:24:48 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:44:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,34 @@ int	handle_special_cases(int *double_quotes, char *new_str, char *str, int *i, i
 	return (0);
 }
 
-void	fill_env_value(char *new_str, int *j, char *value)
+void	fill_env_value(int *double_quotes, char *new_str, int *j, char *value)
 {
 	int	k;
-
+	int	value_length;
+	
 	if (!value)
 		return ;
 	k = 0;
-	while (value && value[k])
-		new_str[(*j)++] = value[k++];
+	value_length = ft_strlen(value);
+	if (*double_quotes == -1)
+	{
+		while (k < value_length && value[k])
+			new_str[(*j)++] = value[k++];
+	}
+	else
+	{
+		while (k < value_length && value[k])
+		{
+			if (value[k] && ft_isspace(value[k]))
+			{
+				new_str[(*j)++] = value[k++];
+				while (value[k] && ft_isspace(value[k]))
+					k++;
+			}
+			else
+				new_str[(*j)++] = value[k++];	
+		}
+	}
 }
 
 static int	fill_new_input(char *new_str, char *str, t_data *data)
@@ -64,7 +83,7 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 			continue ;
 		if (str[i] && str[i + 1] && str[i] == '$'
 			&& !is_charset_env(str[i + 1]))
-			fill_env_value(new_str, &j, get_env_value(str, &i, data));
+			fill_env_value(&double_quotes, new_str, &j, get_env_value(str, &i, data));
 		else
 			new_str[j++] = str[i++];
 	}
