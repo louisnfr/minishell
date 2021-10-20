@@ -54,7 +54,7 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 	int		ret;
 	
 	count = 0;
-	if (!str[*i] || (str[*i] && str[*i] != delimiter))
+	if (!str || *i >= (int)ft_strlen(str) || !str[*i] || (str[*i] && str[*i] != delimiter))
 		return (1);
 	(*words)++;
 	is_beginning = check_beginning(str, i);

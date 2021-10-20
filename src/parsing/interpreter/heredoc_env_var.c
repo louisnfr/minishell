@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_env_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:24:06 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:47:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	heredoc_length_new_input(char *str, t_data *data)
 {
 	int		i;
 	int		length;
-
+	
 	i = 0;
 	length = 0;
 	if (!str || !str[i])
@@ -41,7 +41,7 @@ static int	heredoc_length_new_input(char *str, t_data *data)
 			continue ;
 		if (str[i] && str[i + 1] && str[i] == '$'
 			&& !is_charset_env(str[i + 1]))
-			handle_env_variable(&i, &length, str, data);
+			handle_env_variable((void *)-1, &i, &length, str, data);
 		else
 		{
 			i++;
@@ -82,7 +82,7 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 			continue ;
 		if (str[i] && str[i + 1] && str[i] == '$'
 			&& !is_charset_env(str[i + 1]))
-			fill_env_value(new_str, &j, get_env_value(str, &i, data));
+			fill_env_value((void *)-1, new_str, &j, get_env_value(str, &i, data));
 		else
 			new_str[j++] = str[i++];
 	}

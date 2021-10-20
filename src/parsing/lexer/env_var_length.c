@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_length.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/16 14:13:26 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:33:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_env_variable(int *i, int *length, char *str, t_data *data)
+void	handle_env_variable(int *double_quotes, int *i, int *length, char *str, t_data *data)
 {
 	char	*env_key;
 
 	env_key = NULL;
 	env_key = get_env_key(str, &(*i));
-	(*length) += get_length_env_value(env_key, data);
+	(*length) += get_length_env_value(double_quotes, env_key, data);
 	free(env_key);
 	env_key = NULL;
 	if (!str[*i])
@@ -72,7 +72,7 @@ int	get_length_new_input(char *str, t_data *data)
 			continue ;
 		if (str[i] && str[i + 1] && str[i] == '$'
 			&& !is_charset_env(str[i + 1]))
-			handle_env_variable(&i, &length, str, data);
+			handle_env_variable(&double_quotes, &i, &length, str, data);
 		else
 		{
 			i++;

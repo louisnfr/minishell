@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 23:10:52 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:21:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ t_bool	handle_execution(
 	return (SUCCESS);
 }
 
+void	handle_error_msg_exec(char *command, int fd_error)
+{
+	if (ft_strchr(command, '/'))
+		display_error_message(command, "No such file or directory", fd_error);
+	else
+		display_error_message(command, "command not found", fd_error);
+}
+
 int	exec(t_data *data)
 {
 	int		exit_code;
@@ -69,7 +77,7 @@ int	exec(t_data *data)
 		if (!handle_execution(&exit_code, &cmd_list, data))
 		{
 			exit_code = 127;
-			display_error_message(cmd_list->command, "command not found", cmd_list->error_output);
+			handle_error_msg_exec(cmd_list->command, cmd_list->error_output);
 			cmd_list = cmd_list->next;
 		}
 		data->ret_value = exit_code;
