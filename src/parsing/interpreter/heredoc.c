@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/15 19:07:23 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/20 17:23:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes)
 	line = NULL;
 	while (1)
 	{
-		ft_putstr_fd("> ", 1);
-		get_next_line(0, &line);
-		if (str_is_equal(line, cmd_list->heredoc_delimiter))
+		line = heredoc_shell(data, data->sh, data->sh->history, cmd_list->heredoc_delimiter);
+		if (!line)
+			return (FAIL);
+		if (line && str_is_equal(line, cmd_list->heredoc_delimiter))
 			break ;
 		if (!quotes)
 			line = parse_heredoc_line(line, data);
@@ -63,4 +64,17 @@ t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes)
 	if (close(fd) == -1)
 		return (FAIL);
 	return (SUCCESS);
+}
+
+char	*heredoc_shell(t_data *data, t_config *sh, t_history *hist, char *delimiter)
+{
+	char	*line;
+
+	line = NULL;
+	enable_heredoc_raw_mode(data->sh);
+	write(1, "> ", 2);
+	line = heredoc_process_keypress(data, sh, hist, delimiter);
+	write(1, "\n", 1);
+	disable_raw_mode(data->sh);
+	return (line);
 }

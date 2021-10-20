@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 13:31:52 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/20 17:11:39 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ char		**check_argv(char **argv);
 /*
 ** parsing/heredoc
 */
+char		*heredoc_shell(t_data *data, t_config *sh, t_history *hist, char *delimiter);
 t_bool		read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes);
 char		*heredoc_env_variable(char *input, t_data *data);
 char		*heredoc_special_value(char *str, char *value, char character);
@@ -200,11 +201,14 @@ t_bool		cd_error_msg(char *s, t_cmd *cmd_list);
 
 void		disable_raw_mode(t_config *sh);
 void		enable_raw_mode(t_config *sh);
+void		enable_heredoc_raw_mode(t_config *sh);
 void		init_shell(t_config *sh);
 
 /*** turtle ***/
 
 int			shell_read_key(t_config *sh);
+char		*heredoc_process_keypress(
+				t_data *data, t_config *sh, t_history *hist, char *delimiter);
 char		*shell_process_keypress(
 				t_data *data, t_config *sh, t_history *hist);
 int			get_pos_cursor(int *cx, int *cy);

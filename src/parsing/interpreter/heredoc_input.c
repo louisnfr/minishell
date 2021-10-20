@@ -1,71 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   turtle.c                                           :+:      :+:    :+:   */
+/*   heredoc_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 17:39:23 by lraffin          ###   ########.fr       */
+/*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
+/*   Updated: 2021/10/20 17:45:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	shell_read_key(t_config *sh)
-{
-	char	seq[3];
-	int		nread;
-	char	c;
-
-	while (1)
-	{
-		nread = read(STDIN_FILENO, &c, 1);
-		if (nread == -1 && errno != EAGAIN)
-			exit_error("read", sh);
-		if (nread == 1)
-			break ;
-	}
-	if (c == '\x1b')
-	{
-		if (read(STDIN_FILENO, &seq[0], 1) != 1)
-			return ('\x1b');
-		if (read(STDIN_FILENO, &seq[1], 1) != 1)
-			return ('\x1b');
-		if (seq[0] == '[')
-		{
-			if (seq[1] >= '0' && seq[1] <= '9')
-			{
-				if (read(STDIN_FILENO, &seq[2], 1) != 1)
-					return ('\x1b');
-				if (seq[2] == '~')
-				{
-					switch (seq[1])
-					{
-						case '3':
-							return (DELETE);
-					}
-				}
-			}
-			switch (seq[1])
-			{
-				case 'A':
-					return (ARROW_UP);
-				case 'B':
-					return (ARROW_DOWN);
-				case 'C':
-					return (ARROW_RIGHT);
-				case 'D':
-					return (ARROW_LEFT);
-			}
-		}
-		return ('\x1b');
-	}
-	else
-		return (c);
-}
-
-char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
+char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char *delimiter)
 {
 	char	*input;
 	char	*current;
@@ -80,6 +27,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	int		i;
 	int		k;
 
+	(void)data;
 	input = NULL;
 	current = NULL;
 	i = 0;
@@ -95,10 +43,15 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 		c = shell_read_key(sh);
 		if (c == ctrl_key('d'))
 		{
-			if (sh->search == sh->h_num && (!current || !ft_strlen(current)))
-				exit_free(sh, hist);
-			else if (sh->search != sh->h_num && (!input || !ft_strlen(input)))
-				exit_free(sh, hist);
+			write(1, "warning: here-document delimited by end-of-file wanted `",
+					 56);
+			write(1, delimiter, ft_strlen(delimiter));
+			write(1, "')", 2);
+			return (NULL);
+			// if (sh->search == sh->h_num && (!current || !ft_strlen(current)))
+			// 	exit_free(sh, hist);
+			// else if (sh->search != sh->h_num && (!input || !ft_strlen(input)))
+			// 	exit_free(sh, hist);
 		}
 		else if (c == ctrl_key('c'))
 		{
@@ -112,7 +65,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			write(1, "\x1b[s", 3);
 			write(1, "\x1b[2J", 4);
 			write(1, "\x1b[H", 3);
-			write(1, data->prpt, ft_strlen(data->prpt));
+			write(1, "> ", 2);
 			if (current && sh->search == sh->h_num)
 				write(1, current, ft_strlen(current));
 			else
@@ -142,7 +95,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			}
 			write(1, "\x1b[2K", 4);
 			write(1, "\x1b[999D", 6);
-			write(1, data->prpt, ft_strlen(data->prpt));
+			write(1, "> ", 2);
 		}
 		else if (c == DELETE)
 		{
@@ -154,7 +107,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 					cx++;
 					delete_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
-					clear_prompt(data);
+					write(STDOUT_FILENO, "\x1b[2K", 4);
+					write(STDOUT_FILENO, "\x1b[999D", 6);
+					write(1, "> ", 2);
 					write(1, current, ft_strlen(current));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -169,7 +124,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					strcpy(input, find_cmd_history(hist, sh->search));
-					clear_prompt(data);
+					write(STDOUT_FILENO, "\x1b[2K", 4);
+					write(STDOUT_FILENO, "\x1b[999D", 6);
+					write(1, "> ", 2);
 					write(1, input, ft_strlen(input));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -186,7 +143,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				{
 					delete_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
-					clear_prompt(data);
+					write(STDOUT_FILENO, "\x1b[2K", 4);
+					write(STDOUT_FILENO, "\x1b[999D", 6);
+					write(1, "> ", 2);
 					write(1, current, ft_strlen(current));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -199,7 +158,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					strcpy(input, find_cmd_history(hist, sh->search));
-					clear_prompt(data);
+					write(STDOUT_FILENO, "\x1b[2K", 4);
+					write(STDOUT_FILENO, "\x1b[999D", 6);
+					write(1, "> ", 2);
 					write(1, input, ft_strlen(input));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -234,7 +195,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 					free(input);
 				input = malloc(sizeof(char) * (ft_strlen(prev_cmd) + 1));
 				strcpy(input, prev_cmd);
-				clear_prompt(data);
+				write(STDOUT_FILENO, "\x1b[2K", 4);
+				write(STDOUT_FILENO, "\x1b[999D", 6);
+				write(1, "> ", 2);
 				write(1, input, ft_strlen(input));
 				cx = ft_strlen(input);
 				cx_max = ft_strlen(input);
@@ -245,9 +208,12 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			if (sh->search == sh->h_num)
 				continue ;
 			next_cmd = find_cmd_history(hist, sh->search + 1);
-			clear_prompt(data);
+			write(STDOUT_FILENO, "\x1b[2K", 4);
+			write(STDOUT_FILENO, "\x1b[999D", 6);
+			write(1, "> ", 2);
 			if (next_cmd)
 			{
+				// printf("check33\n");
 				if (input)
 					free(input);
 				input = malloc(sizeof(char) * (ft_strlen(next_cmd) + 1));
@@ -258,10 +224,11 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			}
 			else if (!next_cmd)
 			{
+				// printf("check\n");
 				free(input);
 				input = NULL;
-				if (current)
-					write(1, current, ft_strlen(current));
+				// if (current)
+				// 	write(1, current, ft_strlen(current));
 				cx = ft_strlen(current);
 				cx_max = ft_strlen(current);
 			}
@@ -276,7 +243,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			{
 				current = insert_char(current, cx, a);
 				write(1, "\x1b[s", 3);
-				clear_prompt(data);
+				write(STDOUT_FILENO, "\x1b[2K", 4);
+				write(STDOUT_FILENO, "\x1b[999D", 6);
+				write(1, "> ", 2);
 				write(1, current, ft_strlen(current));
 				write(1, "\x1b[u", 3);
 				write(1, "\x1b[1C", 4);
@@ -289,7 +258,9 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				strcpy(input, find_cmd_history(hist, sh->search));
-				clear_prompt(data);
+				write(STDOUT_FILENO, "\x1b[2K", 4);
+				write(STDOUT_FILENO, "\x1b[999D", 6);
+				write(1, "> ", 2);
 				write(1, input, ft_strlen(input));
 				write(1, "\x1b[u", 3);
 				write(1, "\x1b[1C", 4);
@@ -299,6 +270,11 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	}
 	if (current && sh->search == sh->h_num)
 		return (current);
+	else if (!current && sh->search == sh->h_num)
+	{
+		current = ft_strdup("");
+		return (current);
+	}
 	free(current);
 	return (input);
 }

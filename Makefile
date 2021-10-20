@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/19 22:03:17 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/10/20 15:25:37 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SOURCES = \
 		parsing/parser/pipe_fd.c \
 		\
 		parsing/interpreter/heredoc.c \
+		parsing/interpreter/heredoc_input.c \
 		parsing/interpreter/heredoc_env_var.c \
 		parsing/interpreter/heredoc_special_value.c \
 		parsing/interpreter/heredoc_split.c \
@@ -85,7 +86,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS	= -Wall -Wextra -Werror -g3 # -fsanitize=address
 RDL		= -lreadline
 
 ### INCLUDES ###

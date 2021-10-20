@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 16:12:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 15:42:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	int	i;
 	int	eol;
 
+	print_list(data->cmd_list);
 	(void)data;
 	if (!cmd_list->args)
 	{
