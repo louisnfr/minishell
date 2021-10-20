@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 11:11:50 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/20 12:57:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,27 @@ typedef enum s_key
 	ARROW_RIGHT,
 	DELETE,
 }	t_key;
+
+typedef enum s_boolean
+{
+	CHILD	= 0,
+	FAIL	= 0,
+	SUCCESS = 1,
+}	t_boolean;
+
+typedef enum s_delimiter
+{
+	PIPE				= 1,
+	AND					= 2,
+	OR					= 3,
+	SEMICOLON			= 4,
+	LEFT_MARK			= 5,
+	RIGHT_MARK			= 6,
+	DOUBLE_RIGHT_MARK	= 7,
+	HEREDOC				= 8,
+	ERROR				= 9,
+	DOUBLE_ERROR		= 10,
+	ERROR_AND_STDOUT	= 11,
+}	t_delimiter;
 
 #endif
