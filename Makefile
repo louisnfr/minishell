@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/20 18:21:15 by efrancon         ###   ########.fr        #
+#    Updated: 2021/10/21 13:51:22 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror -g3 # -fsanitize=address
+FLAGS	= -Wall -Wextra -Werror -g3 #-fsanitize=address
 RDL		= -lreadline
 
 ### INCLUDES ###

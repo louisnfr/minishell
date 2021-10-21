@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 11:53:45 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 14:02:44 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av, char **envp)
 				exec(data);
 			}
 			clear_hist(data->sh->history, data->sh->search);
-			clean_cmd_list(data->cmd_list);
+			clean_cmd_list(&data->cmd_list);
 		}
 	}
 	return (0);

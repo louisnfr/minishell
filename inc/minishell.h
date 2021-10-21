@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 11:45:48 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 14:02:35 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char		**ft_split_on_first(const char *s, char c);
 //char	**get_paths(t_data *data);
 char		**get_paths(t_data *data);
 void		setup_cmd_list(t_cmd *cmd_list);
-void		clean_cmd_list(t_cmd *cmd_list);
+void		clean_cmd_list(t_cmd **cmd_list);
 t_bool		create_new_cmd(
 				char *cmd, char **options, char *path, t_cmd **cmd_list);
 void		print_list(t_cmd *cmd_list);
