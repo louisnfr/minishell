@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 15:07:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/21 15:26:58 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **envp)
 		exit(EXIT_FAILURE);
 	pid = ft_getpid();
 	data = init_data(envp, pid);
-	if (!data /*|| !ft_getpid(data)*/)
+	if (!data)
 		return (EXIT_FAILURE);
 	data->sh = init_config(envp);
 	input = NULL;
