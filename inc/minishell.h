@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 14:02:35 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 15:08:08 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@
 /*
 ** init
 */
-t_bool		ft_getpid(t_data *data);
+pid_t		ft_getpid(void);
 t_bool		init_cmd_list(t_data *data);
-t_data		*init_data(char **envp);
+t_data		*init_data(char **envp, pid_t pid);
 /*
 ** clean
 */

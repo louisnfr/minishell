@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 14:02:44 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 15:07:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
 	char		*input;
+	pid_t		pid;
 
 	if (ac != 1 || av[1])
 		exit(EXIT_FAILURE);
-	data = init_data(envp);
-	if (!data || !ft_getpid(data))
+	pid = ft_getpid();
+	data = init_data(envp, pid);
+	if (!data /*|| !ft_getpid(data)*/)
 		return (EXIT_FAILURE);
 	data->sh = init_config(envp);
 	input = NULL;

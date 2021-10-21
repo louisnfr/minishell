@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_data	*init_data(char **envp)
+t_data	*init_data(char **envp, pid_t pid)
 {
 	t_data	*data;
 
@@ -10,7 +10,7 @@ t_data	*init_data(char **envp)
 	data->env = create_env(envp);
 	data->export = create_env(envp);
 	data->i = 0;
-	data->pid = 0;
+	data->pid = pid;
 	data->ret_value = 0;
 	data->envp = NULL;
 	data->tab_delimiters = ft_strdup("|&;<>");
@@ -32,7 +32,7 @@ t_bool	init_cmd_list(t_data *data)
 	return (SUCCESS);
 }
 
-t_bool	ft_getpid(t_data *data)
+pid_t	ft_getpid(void)
 {
 	pid_t	pid;
 
@@ -42,6 +42,5 @@ t_bool	ft_getpid(t_data *data)
 	if (pid != 0)
 		kill(pid, SIGTERM);
 	wait(NULL);
-	data->pid = pid - 1;
-	return (SUCCESS);
+	return (pid - 1);
 }
