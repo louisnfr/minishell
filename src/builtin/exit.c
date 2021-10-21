@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 13:50:42 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 15:18:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 	free_history(data->sh->history);
 	free(data->sh);
 	clean_data(data);
-	atexit(fonction);
+//	atexit(fonction);
 	exit(exit_code);
 }

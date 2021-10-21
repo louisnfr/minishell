@@ -18,6 +18,7 @@ t_data	*init_data(char **envp, pid_t pid)
 	data->all_paths = get_paths(data);
 	if (!data->all_paths)
 		return (NULL);
+	data->cmd_list = NULL;
 	return (data);
 }
 
@@ -27,8 +28,6 @@ t_bool	init_cmd_list(t_data *data)
 	if (!data->cmd_list)
 		return (FAIL);
 	setup_cmd_list(data->cmd_list);
-	if (!create_new_cmd(NULL, NULL, NULL, &data->cmd_list))
-		return (FAIL);
 	return (SUCCESS);
 }
 
