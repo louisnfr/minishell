@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:26:16 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 11:21:51 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ char	*get_path_executable(char *command)
 	return (path);
 }
 
-char	*find_cmd_path(char *command, char **all_paths)
+char	*find_cmd_path(char *command, char *path, char **all_paths)
 {
 	int		i;
 	char	*cmd_path;
 
 	i = -1;
+	clean_free(&path);
 	if (command && command[0] && command[0] == '/')
 		return (ft_strdup(command));
 	if (command && command[0] && command[0] == '.' && command[1] && command[1] == '/')
@@ -68,36 +69,3 @@ char	**get_paths(t_data *data)
 	all_paths[i] = NULL;
 	return (all_paths);
 }
-
-/*
-char	*get_path_variable(char **env)
-{
-	int		i;
-
-	i = -1;
-	while (env[++i])
-	{
-		if (!ft_strncmp("PATH=", env[i], 5))
-			return (env[i] + 5);
-	}
-	return (NULL);
-}
-
-char	**get_paths(char **env)
-{
-	int		i;
-	char	*path_variable;
-	char	**all_paths;
-
-	path_variable = get_path_variable(env);
-    if (!path_variable)
-		return (NULL);
-	all_paths = ft_split(path_variable, ':');
-	i = -1;
-	while (all_paths[++i])
-		all_paths[i] = ft_strjoin_and_free(all_paths[i], "/");
-	all_paths[i] = NULL;
-	return (all_paths);
-}
-
-*/

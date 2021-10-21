@@ -44,9 +44,11 @@ void	clean_data(t_data *data)
 	data->i = 0;
 	data->pid = 0;
 	data->ret_value = 0;
+	free_double_str(data->all_paths);
+	free_double_str(data->envp);
 	clean_cmd_list(data->cmd_list);
 	data->cmd_list = NULL;
 	free_env(data->env);
 	clean_free(&data->tab_delimiters);
-	free_double_str(data->all_paths);
+	clean_free(&data->prpt);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 17:46:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/21 11:53:45 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char **av, char **envp)
 	input = NULL;
 	while (1)
 	{
+		clean_free(&data->prpt);
 		data->prpt = prompt(data);
 		write(1, data->prpt, ft_strlen(data->prpt));
 		enable_raw_mode(data->sh);

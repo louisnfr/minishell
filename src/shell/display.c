@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 18:17:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/21 11:38:11 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ char	*prompt(t_data *data)
 		ft_strlen(get_env("HOME", data->env))))
 	{
 		tmp = ft_substr(cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
-		free(cwd);
+		clean_free(&cwd);
 		cwd = ft_strjoin("~", tmp);
-		free(tmp);
+		clean_free(&tmp);
 	}
 	usr = ft_strjoin("\e[92;1m", usr);
 	usr = ft_strjoin_and_free(usr, "\e[0m:");
 	usr = ft_strjoin_and_free(usr, "\e[34;1m");
 	usr = ft_strjoin_and_free(usr, cwd);
+	clean_free(&cwd);
 	cwd = ft_strjoin_and_free(usr, "\e[0m$ ");
 	return (cwd);
 }

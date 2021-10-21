@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 23:11:27 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 12:57:40 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,26 @@ t_bool	error_exec_cmd(char *error_msg, int exit_code, t_cmd *cmd_list, t_data *d
 	return (FAIL);
 }
 
+void	update_path(t_cmd **cmd_list, t_data *data)
+{
+	free_double_str(data->all_paths);
+	data->all_paths = get_paths(data);
+	(*cmd_list)->path = find_cmd_path(
+		(*cmd_list)->command, (*cmd_list)->path, data->all_paths);
+}
+
 t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
-	char	**envp;
 
-	cmd_list->path = find_cmd_path(cmd_list->command, get_paths(data));
+	update_path(&cmd_list, data);
+	if (cmd_list->input == -1 || cmd_list->output == -1)
+		return (FAIL);
 	pid = fork();
 	if (pid < 0)
 		return (FAIL);
 	if (pid == CHILD)
 	{
-		if (cmd_list->input == -1 || cmd_list->output == -1)
-			return (FAIL);
 		if (cmd_list->redirection)
 		{
 			dup2(cmd_list->input, STDIN_FILENO);
@@ -122,10 +129,10 @@ t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data)
 			close_all_fd(data);
 		}
 		cmd_array = fill_cmd_array(cmd_list, data);
-		envp = env_to_char(data->env);
+		data->envp = env_to_char(data->env);
 		if (!cmd_list->path)
 			return (error_exec_cmd("No such file or directory", 127, cmd_list, data));
-		execve(cmd_list->path, cmd_array, envp);
+		execve(cmd_list->path, cmd_array, data->envp);
 		return (error_exec_cmd(strerror(errno), get_error_code(), cmd_list, data));
 	}
 	return (SUCCESS);

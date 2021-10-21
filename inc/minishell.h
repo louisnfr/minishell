@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 18:21:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/21 11:45:48 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int			get_error_code(void);
 t_bool		count_wildcard_arg(int *i, char *wildcard_arg);
 t_bool		fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg);
 int			matching_name(char *filename, char *wildcard);
+void		update_path(t_cmd **cmd_list, t_data *data);
 /*
 ** libft
 */
@@ -123,7 +124,7 @@ void		print_list(t_cmd *cmd_list);
 ** parsing/parser
 */
 t_bool	parse(char *input, t_data *data);
-char	*find_cmd_path(char *command, char **all_paths);
+char	*find_cmd_path(char *command, char *path, char **all_paths);
 char	**find_cmd_options(char **argv, t_data *data);
 char	**find_cmd_args(char **argv, t_data *data);
 t_bool	cmd_is_builtin(char *cmd);

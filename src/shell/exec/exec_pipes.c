@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 23:13:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 13:12:38 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,26 @@ static t_bool	exec_command_pipe(
 	pid_t	pid;
 	int		status;
 	char	**cmd_array;
-	char	**envp;
 
+	if ((*cmd_list)->input == -1 || (*cmd_list)->output == -1)
+	{
+		*exit_code = 1;
+		return (SUCCESS);
+	}
 	pid = fork();
 	if (pid < 0)
 		return (FAIL);
 	if (pid == CHILD)
 	{
-		if ((*cmd_list)->input == -1 || (*cmd_list)->output == -1)
-		{
-			*exit_code = 1;
-			return (SUCCESS);
-		}
 		dup2((*cmd_list)->input, STDIN_FILENO);
 		dup2((*cmd_list)->output, STDOUT_FILENO);
 		dup2((*cmd_list)->error_output, STDERR_FILENO);
 		close_all_fd(data);
 		cmd_array = fill_cmd_array(*cmd_list, data);
-		envp = env_to_char(data->env);
+		data->envp = env_to_char(data->env);
 		if (!(*cmd_list)->path)
 			return (error_exec_cmd("No such file or directory", 127, *cmd_list, data));
-		execve((*cmd_list)->path, cmd_array, envp);
+		execve((*cmd_list)->path, cmd_array, data->envp);
 		return (error_exec_cmd(strerror(errno), get_error_code(), *cmd_list, data));
 	}
 	else
@@ -63,7 +62,7 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	int		exit_code;
 
 	exit_code = EXIT_SUCCESS;
-	(*cmd_list)->path = find_cmd_path((*cmd_list)->command, get_paths(data));
+	update_path(cmd_list, data);
 	while ((*cmd_list) && ((*cmd_list)->delimiter == PIPE
 			|| ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)))
 	{

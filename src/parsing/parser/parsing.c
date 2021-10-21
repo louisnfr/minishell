@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:25:54 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/21 10:40:47 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	handle_other_cmd(
 	path = NULL;
 	options = NULL;
 	args = NULL;
-	path = find_cmd_path(argv[data->i], data->all_paths);
+	path = find_cmd_path(argv[data->i], NULL, data->all_paths);
 	command = ft_strdup(argv[data->i]);
 	options = find_cmd_options(argv, data);
 	create_new_cmd(command, options, path, &cmd_list);
