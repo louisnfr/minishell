@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 17:56:58 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/10/21 14:41:35 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 	while (c != 13)
 	{
 		c = shell_read_key(sh);
-		if (c == ctrl_key('d'))
+		if (c == ctrl_key('d') && ft_strlen(current) == 0)
 		{
-			write(1, "warning: here-document delimited by end-of-file wanted `",
-					 56);
-			write(1, delimiter, ft_strlen(delimiter));
-			write(1, "')", 2);
-			return (NULL);
+			if ((sh->search == sh->h_num && (!current || !ft_strlen(current)))
+				|| (sh->search != sh->h_num && (!input || !ft_strlen(input))))
+			{
+				write(1, "warning: here-document delimited by end-of-file wanted `",
+							56);
+				write(1, delimiter, ft_strlen(delimiter));
+				write(1, "')", 2);
+				return (NULL);
+			}
 		}
 		else if (c == ctrl_key('c'))
 		{
