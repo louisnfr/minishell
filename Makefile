@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/21 15:57:42 by efrancon         ###   ########.fr        #
+#    Updated: 2021/10/25 01:15:21 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,8 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-FLAGS	= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g3
+DEBUG_F	= -fsanitize=address
 RDL		= -lreadline
 
 ### INCLUDES ###
@@ -114,14 +115,14 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "$(YELLOW)libft..$(NOC)"
 	@make -sC $(LIBFT_PATH)
-	@$(CC) $(FLAGS) $(RDL) -L $(LIBFT_PATH) -o $@ $^ -lft
+	@$(CC) $(CFLAGS) $(RDL) -L $(LIBFT_PATH) -o $@ $^ -lft
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/interpreter obj/parsing/utils
 	@mkdir -p obj/shell/env obj/shell/exec obj/exit
-	@$(CC) $(FLAGS) -I$(INCLUDE) -c -o $@ $<
+	@$(CC) $(CFLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
 clean:
@@ -136,6 +137,10 @@ fclean: clean
 
 re: fclean all
 
+debug: CFLAGS += $(DEBUG_F)
+debug: fclean
+debug: re
+
 norm:
 	-@norminette $(SRC_PATH)
 	-@norminette $(INCLUDE)
@@ -146,4 +151,4 @@ push:
 	git commit -m minishell
 	git push
 
-.PHONY:	all clean fclean re norm push
+.PHONY:	all clean fclean re debug norm push
