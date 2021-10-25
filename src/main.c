@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/22 18:22:42 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/25 14:17:16 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **envp)
 	t_data		*data;
 	char		*input;
 	pid_t		pid;
-		
+
 	if (ac != 1 || av[1])
 		exit(EXIT_FAILURE);
 	pid = ft_getpid();
