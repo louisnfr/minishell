@@ -20,10 +20,12 @@ void	syntax_error_char_msg(int nb, char token)
 	ft_putstr_fd("'\n", 2);
 }
 
-char	**syntax_error_str_msg(char *token)
+char	**syntax_error_str_msg(char *token, char **str)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd("'\n", 2);
+	if (str)
+		free_double_str(str);
 	return (NULL);
 }

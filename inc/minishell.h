@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 17:34:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/22 17:50:36 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		exec_exit(t_cmd *cmd_list, t_data *data);
 char		*prompt(t_data *data);
 void		display_error_message(char *cmd, char *errno_msg, int fd);
 void		syntax_error_char_msg(int nb, char token);
-char		**syntax_error_str_msg(char *token);
+char		**syntax_error_str_msg(char *token, char **str);
 /*
 ** shell/env
 */
@@ -166,7 +166,7 @@ void		fill_quotes_split(char **str, char **strs, int *i, int *j);
 ** parsing/checker
 */
 char		*check_input(char *input);
-void		*display_error_msg_simple_dot(void);
+void		*display_error_msg_simple_dot(char **str);
 int			check_delimiter(
 				char *str, char delimiter, int *i, int *words, t_data *data);
 int			check_error_delimiter(

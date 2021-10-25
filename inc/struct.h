@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 11:11:12 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/25 10:44:03 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_data
 	pid_t		pid;
 	int			i;
 	char		**envp;
+	pid_t		pipe_pid;
 }	t_data;
 
 #endif

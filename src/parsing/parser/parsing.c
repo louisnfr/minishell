@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/21 10:40:47 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/25 14:14:59 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,11 @@ void	handle_other_cmd(
 
 void	handle_start_redir(char **argv, t_cmd *cmd_list, t_data *data)
 {
-	int	fd;
+	int		fd;
+	char	*filename;
 
 	data->i++;
+	filename = ft_strdup(argv[data->i]);
 	if (argv[data->i] && is_file_name(argv[data->i]))
 		fd = open(argv[data->i], O_RDONLY);
 	if (!argv[++data->i])
@@ -110,7 +112,8 @@ void	handle_start_redir(char **argv, t_cmd *cmd_list, t_data *data)
 	cmd_list->redirection = LEFT_MARK;
 	cmd_list->input = fd;
 	if (cmd_list->input == -1)
-		display_error_msg_redir(cmd_list->error_output, argv[data->i - 1], strerror(errno));
+		display_error_msg_redir(cmd_list->error_output, filename, strerror(errno));
+	clean_free(&filename);
 }
 
 char	**get_argv(char *input, t_data *data)
@@ -122,10 +125,11 @@ char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	argv = split_input(input, data);
 	if (!argv)
+	{
+		clean_free(&input);
 		return (NULL);
+	}
 	argv = check_argv(argv);
-	if (!argv)
-		return (NULL);
 		
 /*	int i = -1;
 	while (argv[++i])

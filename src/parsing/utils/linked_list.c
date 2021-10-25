@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/21 15:33:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/22 13:01:48 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_list(t_cmd *cmd_list)
 	{
 		printf("Cmd : %s\n", tmp->command);
 		printf("Is_builtin : %d\n", tmp->is_builtin);
-		printf("INPUT : %d  |  OUTPUT : %d\n", tmp->input, tmp->output);
+		printf("INPUT : %d  |  OUTPUT : %d  |  ERROR : %d\n", tmp->input, tmp->output, tmp->error_output);
 		if (tmp->options)
 		{
 			i = -1;

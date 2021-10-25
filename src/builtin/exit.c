@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 15:18:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/10/22 17:40:12 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	int		exit_code;
 	t_bool	quit_exit;
-	
+
 	printf("exit\n");
 	quit_exit = FALSE;
 	exit_code = get_exit_code(cmd_list, data, &quit_exit);

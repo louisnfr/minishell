@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/21 13:12:38 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/25 14:15:22 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,152 @@ static int	handle_error(t_cmd **cmd_list)
 		(*cmd_list)->command, "command not found", (*cmd_list)->error_output);
 	return (127);
 }
+
+/*
+t_bool	fork_pipe(int *pipe_fd, t_data *data)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	if (pid == CHILD)
+	{
+		dup2(pipe_fd[0], STDIN_FILENO);
+		if (pipe_fd[1] > 0)
+			close(pipe_fd[1]);
+		if (pipe_fd[0] > 0)
+			close(pipe_fd[0]);
+		data->pipe_pid = -1;
+		return (1);
+	}
+	else
+	{
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		if (pipe_fd[1] > 0)
+			close(pipe_fd[1]);
+		if (pipe_fd[0] > 0)
+			close(pipe_fd[0]);
+		data->pipe_pid = pid;
+		return (2);
+	}
+	return (SUCCESS);
+}
+
+int	*create_pipe(t_cmd **cmd_list)
+{
+	int	*pipe_fd;
+
+	pipe_fd = (int *)ft_calloc(1, sizeof(int) * 2);
+	pipe(pipe_fd);
+	printf("CREATION pipe_fd[0] = %d | pipe_fd[1] = %d\n", pipe_fd[0], pipe_fd[1]);
+	(*cmd_list)->output = pipe_fd[1];	
+	(*cmd_list)->next->input = pipe_fd[0];	
+	return (pipe_fd);
+}
+
+int	pipes_recursion(t_cmd **cmd_list, int *pipe_fd, t_data *data)
+{
+	int		exit_code;
+	int		pipe;
+
+	exit_code = EXIT_SUCCESS;
+	update_path(cmd_list, data);
+	pipe = 0;
+	if ((*cmd_list) && (*cmd_list)->delimiter == PIPE)
+	{
+		printf(">>>>>>>>>>> CMD = %s\n", (*cmd_list)->command);
+		pipe = fork_pipe(pipe_fd, data);
+	}
+	if ((*cmd_list) && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE && data->pipe_pid == -1)
+	{
+		pipe_fd = create_pipe(cmd_list);
+		printf("*********** CMD = %s\n", (*cmd_list)->command);
+		pipes_recursion(&(*cmd_list)->next, pipe_fd, data);
+	}
+	if (data->pipe_pid == -1)
+	{		
+		printf("############# CMD = %s\n", (*cmd_list)->command);
+		if ((*cmd_list)->is_builtin)
+			exit_code = exec_builtin(*cmd_list, data);
+		else if ((*cmd_list)->path)
+		{
+			if (!exec_command_pipe(&exit_code, cmd_list, data))
+				return (FAIL);
+		}
+		else
+			exit_code = (handle_error(cmd_list));
+	}
+	return (exit_code);
+}
+
+int	exec_pipes(t_cmd **cmd_list, t_data *data)
+{
+	int	exit_code;
+	int	status;
+
+	exit_code = pipes_recursion(cmd_list, NULL, data);
+	close_fd(cmd_list);
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	if (!data->pipe_pid)
+		exit(exit_code);
+	*cmd_list = (*cmd_list)->next;
+	return (exit_code);
+}
+
+
+int	exec_pipes(t_cmd **cmd_list, t_data *data)
+{
+	int		exit_code;
+	t_cmd	*tmp;
+	pid_t	pid;
+	int		status;
+
+	exit_code = EXIT_SUCCESS;
+	update_path(cmd_list, data);
+	tmp = *cmd_list;
+	if (*cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
+	{
+		*cmd_list = (*cmd_list)->next;
+		pid = fork_pipe(&exit_code, &tmp, data);
+		printf("--> pid = %d\n", pid);
+		if (pid == CHILD)
+		{
+			printf("hey !\n");
+			exec_pipes(cmd_list, data);
+			if (tmp && !tmp->is_builtin && !tmp->path)
+				exit_code = (handle_error(&tmp));
+			else if (tmp && tmp->is_builtin)
+				exit_code = exec_builtin(tmp, data);
+			else if (tmp && tmp->path)
+			{
+				exec_command_pipe(&exit_code, &tmp, data);
+				close_fd(&tmp);
+			}
+			exit(exit_code);
+		}
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		return (exit_code);	
+	}
+	printf("****** COMMAND = %s\n", (*cmd_list)->command);
+	if (tmp && !tmp->is_builtin && !tmp->path)
+		exit_code = (handle_error(&tmp));
+	else if (tmp && tmp->is_builtin)
+		exit_code = exec_builtin(tmp, data);
+	else if (tmp && tmp->path)
+	{
+		if (!exec_command_pipe(&exit_code, &tmp, data))
+			return (FAIL);
+	}
+	close_fd(&tmp);
+	*cmd_list = (*cmd_list)->next;
+	return (exit_code);
+}
+*/
 
 int	exec_pipes(t_cmd **cmd_list, t_data *data)
 {

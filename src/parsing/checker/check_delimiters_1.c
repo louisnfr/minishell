@@ -49,10 +49,9 @@ int	check_error_delimiter(int j, char *str, int delimiter, t_data *data)
 int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 {
 	int		count;
-	int		j;
 	t_bool	is_beginning;
 	int		ret;
-	
+
 	count = 0;
 	if (!str || *i >= (int)ft_strlen(str) || !str[*i] || (str[*i] && str[*i] != delimiter))
 		return (1);
@@ -74,8 +73,7 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 		return (display_error_msg_delimiter(2, delimiter, data));
 	if (delimiter == '<' && count > 4)
 		return (display_error_msg_delimiter(3, delimiter, data));
-	j = *i;
-	ret = check_error_delimiter(j, str, delimiter, data);
+	ret = check_error_delimiter(*i, str, delimiter, data);
 	if (ret == 2)
 	{
 		(*words)--;

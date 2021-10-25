@@ -1,9 +1,11 @@
 #include "minishell.h"
 
-void	*display_error_msg_simple_dot(void)
+void	*display_error_msg_simple_dot(char **str)
 {
 	ft_putstr_fd("bash: .: filename argument required\n", 2);
 	ft_putstr_fd(".: usage: . filename [arguments]\n", 2);
+	if (str)
+		free_double_str(str);
 	return (NULL);
 }
 

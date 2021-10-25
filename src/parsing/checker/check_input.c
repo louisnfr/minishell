@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:32 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:23:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/22 11:52:38 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ char	*check_input(char *input)
 	new_str = NULL;
 	new_str = check_comment(input);
 	if (!check_unclosed_quotes(new_str))
+	{
+		clean_free(&new_str);
 		return (NULL);
+	}
 	return (new_str);
 }
