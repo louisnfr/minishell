@@ -11,7 +11,7 @@ t_data	*init_data(char **envp, pid_t pid)
 	data->export = create_env(envp);
 	data->i = 0;
 	data->pid = pid;
-	data->pipe_pid = -1;
+	data->is_parent = 1;
 	data->ret_value = 0;
 	data->envp = NULL;
 	data->tab_delimiters = ft_strdup("|&;<>");

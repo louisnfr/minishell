@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/25 14:15:22 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/25 18:06:51y efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,93 @@ static int	handle_error(t_cmd **cmd_list)
 	return (127);
 }
 
+
 /*
+static int	execute_command(int *exit_code, t_cmd **cmd_list, t_data *data)
+{
+	char	**cmd_array;
+	
+	if ((*cmd_list)->is_builtin)
+		*exit_code = exec_builtin(*cmd_list, data);
+	else if ((*cmd_list)->path)
+	{
+		cmd_array = fill_cmd_array(*cmd_list, data);
+		data->envp = env_to_char(data->env);
+		if (!(*cmd_list)->path)
+			return (error_exec_cmd("No such file or directory", 127, *cmd_list, data));
+		printf("--> cmd = %s | input = %d | output = %d\n", (*cmd_list)->command, (*cmd_list)->input, (*cmd_list)->output);
+		execve((*cmd_list)->path, cmd_array, data->envp);
+		return (error_exec_cmd(strerror(errno), get_error_code(), *cmd_list, data));
+	}
+	else
+		*exit_code = (handle_error(cmd_list));
+	close_fd(cmd_list);
+	return (*exit_code);
+}
+
+
+int	fork_pipe(t_cmd **cmd_list, t_data *data)
+{
+	pid_t	pid;
+	
+	pid = fork();
+	if (pid == CHILD)
+	{
+		if ((*cmd_list)->path)
+		{
+			dup2((*cmd_list)->input, STDIN_FILENO);
+			printf("@@@@@@@@@@@@@@@@@@@@\n");
+			dup2((*cmd_list)->output, STDOUT_FILENO);
+			printf("+++++++++++++++++++\n");
+			dup2((*cmd_list)->error_output, STDERR_FILENO);
+			close_all_fd(data);
+		}
+		data->is_parent = 0;
+		return (1);
+	}
+	else
+	{
+		return (2);
+	}
+}
+
+int	pipe_recursion(t_cmd **cmd_list, t_data *data)
+{
+	int		exit_code;
+	int		pipe;
+	
+	printf("BEGIN\n");
+	exit_code = EXIT_SUCCESS;
+	pipe = 0;
+//	if (*cmd_list && (*cmd_list)->delimiter == PIPE)
+	pipe = fork_pipe(cmd_list, data);
+	printf("---> is_parent = %d | pipe = %d\n", data->is_parent, pipe);
+	if (pipe != 2 && *cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
+		pipe = pipe_recursion(&(*cmd_list)->next, data);
+	if (pipe != 2)
+		exit_code = execute_command(&exit_code, cmd_list, data);
+	return (exit_code);
+}
+
+int	exec_pipes(t_cmd **cmd_list, t_data *data)
+{
+	int	status;
+	int	exit_code;
+
+	data->is_parent = 1;
+	update_path(cmd_list, data);
+	exit_code = pipe_recursion(cmd_list, data);
+	close_all_fd(data);
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	if (!data->is_parent)
+		exit(exit_code);
+	printf("\nDONE !\n");
+	*cmd_list = (*cmd_list)->next;
+	return (exit_code);
+}
+
 t_bool	fork_pipe(int *pipe_fd, t_data *data)
 {
 	pid_t	pid;
@@ -150,7 +236,6 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	*cmd_list = (*cmd_list)->next;
 	return (exit_code);
 }
-
 
 int	exec_pipes(t_cmd **cmd_list, t_data *data)
 {
