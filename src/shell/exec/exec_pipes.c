@@ -38,6 +38,8 @@ static int	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	char	**cmd_array;
 	int		exit_code;
 
+//	printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	printf(">>> PID = %d  |  CMD = %s\n", data->pipe_pid, (*cmd_list)->command);
 	exit_code = EXIT_FAILURE;
 	if ((*cmd_list)->is_builtin)
 		exit_code = exec_builtin(*cmd_list, data);
@@ -56,9 +58,7 @@ static int	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	}
 	else
 		exit_code = (handle_error(cmd_list));
-	close_fd(cmd_list);
-	clean_data(data);
-	exit(exit_code);
+	close_all_fd(data);
 	return (exit_code);
 }
 
@@ -66,22 +66,56 @@ int	create_fork(t_data *data)
 {
 	data->pipe_pid = fork();
 	if (data->pipe_pid == CHILD)
+	{
+		data->is_parent = 0;
 		return (0);
+	}
 	return (1);
 }
 
 int	pipe_recursion(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
-	int	pipe;
+	int			pipe;
+	static int	done;
 
 	pipe = create_fork(data);
-	printf("CMD = %s | pipe = %d\n", (*cmd_list)->command, pipe);
 	if (pipe == CHILD && *cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
+	{
+		done = FALSE;
 		pipe_recursion(exit_code, &(*cmd_list)->next, data);
-	if (pipe == CHILD)
+		if (done)
+			return (0);
+		done = TRUE;
+//		printf(">>> PIPE = %d  |  PID = %d  |  CMD = %s\n", pipe, data->pipe_pid, (*cmd_list)->command);
+		exec_cmd_in_pipe(cmd_list, data);
+	}
+	if (pipe == CHILD && data->pipe_pid == CHILD)
+		exec_cmd_in_pipe(cmd_list, data);
+	if (data->pipe_pid == CHILD && (*cmd_list)->path)
+		waitpid(data->pipe_pid, 0, 0);
+	return (*exit_code);
+}
+
+int	pipe_recursion(int *exit_code, t_cmd **cmd_list, t_data *data)
+{
+	int	pipe;
+	int ref;
+	
+	ref = 0;
+	pipe = create_fork(data);
+//	printf("<<< PIPE = %d  |  PID = %d  |  CMD  = %s\n", pipe, data->pipe_pid, (*cmd_list)->command);
+	if (pipe == CHILD && *cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
+	{
+		ref = 1;
+		pipe_recursion(exit_code, &(*cmd_list)->next, data);
+		exec_cmd_in_pipe(cmd_list, data);
+	}	
+	printf(">>> PIPE = %d  |  PID = %d  |  CMD = %s  |  ref = %d\n", pipe, data->pipe_pid, (*cmd_list)->command, ref);
+	if (pipe == CHILD && data->pipe_pid == CHILD)
 		exec_cmd_in_pipe(cmd_list, data);
 	return (*exit_code);
 }
+
 
 int	exec_pipes(t_cmd **cmd_list, t_data *data)
 {
@@ -91,16 +125,22 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	update_path(cmd_list, data);
 	exit_code = pipe_recursion(&exit_code, cmd_list, data);
 	close_all_fd(data);
-	printf("***************************** data->pipe_pid = %d\n", data->pipe_pid);
+	printf("******** pid = %d ****************\n", data->pipe_pid);
 	waitpid(data->pipe_pid, 0, 0);
-	wait(NULL);
-	printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  data->pipe_pid = %d\n", data->pipe_pid);
+	waitpid(-1, 0, 0);
+	if (!data->is_parent)
+	{
+		clean_data(data);
+		exit(exit_code);
+	}
+	printf("-------------------------\n");
 	while ((*cmd_list) && ((*cmd_list)->delimiter == PIPE
 			|| ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)))
 	{
 		close_fd(cmd_list);
 		*cmd_list = (*cmd_list)->next;
 	}
+	data->is_parent = 1;
 	return (exit_code);
 }
 */
