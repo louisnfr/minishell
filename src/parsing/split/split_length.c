@@ -79,7 +79,9 @@ int	split_count_words(char *str, t_data *data)
 			|| !check_delimiter(str, '&', &i, &words, data)
 			|| !check_delimiter(str, ';', &i, &words, data)
 			|| !check_delimiter(str, '>', &i, &words, data)
-			|| !check_delimiter(str, '<', &i, &words, data))
+			|| !check_delimiter(str, '<', &i, &words, data)
+			|| !check_delimiter(str, '(', &i, &words, data)
+			|| !check_delimiter(str, ')', &i, &words, data))
 			return (-1);
 	}
 	return (words);

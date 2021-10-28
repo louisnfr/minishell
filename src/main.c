@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 			init_cmd_list(data);
 			if (parse(input, data))
 			{
-			//	print_list(data->cmd_list);
+	//			print_list(data->cmd_list);
 				exec(data);
 			}
 			clear_hist(data->sh->history, data->sh->search);

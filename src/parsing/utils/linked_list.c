@@ -44,6 +44,8 @@ void	print_list(t_cmd *cmd_list)
 			printf("Delimiter = %d\n", tmp->delimiter);
 		if (tmp->redirection)
 			printf("Redirection = %d\n", tmp->redirection);
+		if (tmp->parenthese)
+			printf("Parenthese = %d\n", tmp->parenthese);
 		tmp = tmp->next;
 		printf("\n");
 	}
@@ -85,6 +87,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->is_builtin = FALSE;
 	cmd_list->delimiter = 0;
 	cmd_list->redirection = 0;
+	cmd_list->parenthese = OUT;
 	cmd_list->input = 0;
 	cmd_list->output = 1;
 	cmd_list->error_output = 2;

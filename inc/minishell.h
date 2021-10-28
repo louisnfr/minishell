@@ -131,6 +131,7 @@ t_bool	cmd_is_builtin(char *cmd);
 t_bool	is_delimiter(char *str);
 int		get_delimiter(char *str);
 t_bool	is_redirection(char *str);
+t_bool	is_parenthese(char *str);
 int		get_redirection(char *str);
 void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
 t_bool	is_file_name(char *file);

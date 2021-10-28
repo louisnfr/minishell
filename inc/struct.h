@@ -56,6 +56,7 @@ typedef struct s_cmd
 	int				redirection;
 	char			*heredoc;
 	char			*heredoc_delimiter;
+	int				parenthese;
 	struct s_cmd	*next;
 }			t_cmd;
 

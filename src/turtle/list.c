@@ -137,7 +137,8 @@ char	*insert_char(char *s, unsigned int cx, char c)
 
 void	delete_char(char *s, unsigned int cx)
 {
-	if (cx < 0 || cx > ft_strlen(s))
+//	if (cx < 0 || cx > ft_strlen(s)) Problem compilation ggc
+	if (cx > ft_strlen(s))
 		return ;
 	memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
 }

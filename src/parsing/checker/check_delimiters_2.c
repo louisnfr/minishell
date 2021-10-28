@@ -46,9 +46,6 @@ int	check_right_marks(char *str, int j)
 
 int	is_error_redir(char *str, int j)
 {
-	int	i;
-
-	i = 0;
 	if (j < 2)
 		return (FAIL);
 	if ((str[j - 2] && str[j - 2] == '2') && (str[j - 1] && str[j - 1] == '>')

@@ -139,6 +139,49 @@ char	**get_argv(char *input, t_data *data)
 	return (argv);
 }
 
+void	fill_parenthese(int parenthese, t_cmd *cmd_list)
+{
+	while (cmd_list->next)
+		cmd_list = cmd_list->next;
+	cmd_list->parenthese = parenthese;
+}
+
+void	handle_parentheses(char **argv, t_data *data)
+{
+	t_cmd	*cmd_list;
+	int		delimiter;
+
+	delimiter = 0;
+	cmd_list = data->cmd_list;
+	data->i++;
+	if (argv[data->i] && cmd_is_builtin(argv[data->i]))
+		handle_builtin_cmd(delimiter, argv, cmd_list, data);
+	else if (argv[data->i])
+		handle_other_cmd(delimiter, argv, cmd_list, data);	
+	fill_parenthese(OPEN, cmd_list);
+	while (argv[data->i])
+	{
+		if (argv[data->i] && is_delimiter(argv[data->i]))
+			delimiter = get_delimiter(argv[data->i++]);
+		else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
+		{
+			handle_builtin_cmd(delimiter, argv, cmd_list, data);
+			fill_parenthese(IN, cmd_list);
+		}
+		else if (argv[data->i])
+		{
+			handle_other_cmd(delimiter, argv, cmd_list, data);
+			fill_parenthese(IN, cmd_list);
+		}
+		if (argv[data->i] && str_is_equal(argv[data->i], ")"))
+		{
+			fill_parenthese(CLOSE, cmd_list);
+			break ;
+		}
+	}
+	data->i++;
+}
+
 t_bool	parse(char *input, t_data *data)
 {
 	char	**argv;
@@ -160,11 +203,15 @@ t_bool	parse(char *input, t_data *data)
 		handle_start_redir(argv, cmd_list, data);
 	while (argv[data->i])
 	{
-		if (is_delimiter(argv[data->i]))
+		if (argv[data->i] && is_delimiter(argv[data->i]))
 			delimiter = get_delimiter(argv[data->i++]);
-		else if (cmd_is_builtin(argv[data->i]))
+		else if (argv[data->i] && str_is_equal(argv[data->i], "("))
+		{
+			handle_parentheses(argv, data);
+		}
+		else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
-		else
+		else if (argv[data->i])
 			handle_other_cmd(delimiter, argv, cmd_list, data);
 	}
 	free_double_str(argv);

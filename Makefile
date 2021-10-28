@@ -85,7 +85,7 @@ SOURCES = \
 
 
 ### COMPILATION ###
-CC		= clang
+CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g3
 DEBUG_F	= -fsanitize=address
 RDL		= -lreadline

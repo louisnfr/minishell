@@ -80,6 +80,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	int		i;
 	int		k;
 
+	(void)cy;
 	input = NULL;
 	current = NULL;
 	i = 0;

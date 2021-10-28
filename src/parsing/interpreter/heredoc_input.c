@@ -27,6 +27,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 	int		i;
 	int		k;
 
+	(void)cy;
 	(void)data;
 	input = NULL;
 	current = NULL;

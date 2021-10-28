@@ -79,11 +79,9 @@ char	*get_env_key(char *str, int *i)
 
 char	*get_env_value(char *str, int *i, t_data *data)
 {
-	int		k;
 	char	*env_key;
 	char	*env_value;
 
-	k = 0;
 	env_key = NULL;
 	env_value = NULL;
 	env_key = get_env_key(str, &(*i));

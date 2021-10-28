@@ -12,6 +12,34 @@
 
 #include "minishell.h"
 
+t_bool	check_unclosed_parentheses(char *input)
+{
+	int	i;
+	int	input_length;
+
+	i = -1;
+	input_length = ft_strlen(input);
+	while (input && ++i < input_length && input[i] && input[i] != '#')
+	{
+		if (input[i] && input[i] == ')')
+		{
+			ft_putstr_fd("bash: syntax error: unclosed parentheses `)'\n", 2);
+			return (FAIL);
+		}
+		if (input[i] && input[i] == '(')
+		{
+			i++;
+			while (input[i] && input[i] != ')')
+				i++;
+			if (input[i])
+				continue ;
+			ft_putstr_fd("bash: syntax error: unclosed parentheses `('\n", 2);
+			return (FAIL);
+		}
+	}
+	return (SUCCESS);
+}
+
 static t_bool	char_is_quote(char c)
 {
 	return (c == '\'' || c == '\"');
@@ -106,7 +134,7 @@ char	*check_input(char *input)
 		return (NULL);
 	new_str = NULL;
 	new_str = check_comment(input);
-	if (!check_unclosed_quotes(new_str))
+	if (!check_unclosed_quotes(new_str) || !check_unclosed_parentheses(new_str))
 	{
 		clean_free(&new_str);
 		return (NULL);

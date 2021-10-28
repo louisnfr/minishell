@@ -15,12 +15,13 @@
 int	is_charset_split(char c)
 {
 	return (c == ' ' || c == '&' || c == '|' || c == ';' || c == '<'
-		|| c == '>');
+		|| c == '>' || c == '(' || c == ')');
 }
 
 int	is_delimiter_split(char c)
 {
-	return (c == '&' || c == '|' || c == ';'|| c == '<' || c == '>');
+	return (c == '&' || c == '|' || c == ';'|| c == '<' || c == '>'
+		|| c == '(' || c == ')');
 }
 
 void	fill_quotes_split(char **str, char **strs, int *i, int *j)

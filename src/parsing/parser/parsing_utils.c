@@ -33,6 +33,12 @@ t_bool	is_delimiter(char *str)
 		|| str_is_equal(str, "||"));
 }
 
+t_bool	is_parenthese(char *str)
+{
+	return (str_is_equal(str, "(")
+		|| str_is_equal(str, ")"));
+}
+
 int	get_redirection(char *str)
 {
 	if (str_is_equal(str, "<"))

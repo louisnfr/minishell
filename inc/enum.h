@@ -32,6 +32,14 @@ typedef enum s_boolean
 	SUCCESS = 1,
 }	t_boolean;
 
+typedef enum parenthese
+{
+	OUT		= 0,
+	IN		= 1,
+	OPEN	= 2,
+	CLOSE	= 3,
+} 	t_parenthese;
+
 typedef enum s_delimiter
 {
 	PIPE				= 1,
@@ -45,6 +53,8 @@ typedef enum s_delimiter
 	ERROR				= 9,
 	DOUBLE_ERROR		= 10,
 	ERROR_AND_STDOUT	= 11,
+	L_PARENTHESE		= 12,
+	R_PARENTHESE		= 13,
 }	t_delimiter;
 
 #endif

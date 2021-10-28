@@ -64,7 +64,8 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words, t_data *data)
 	}
 	if ((delimiter == '|' && count == 3 && !is_beginning)
 		|| (delimiter == '&' && (count == 1 || count == 3) && !is_beginning) ||
-		(delimiter == '>' && count == 3) || (delimiter == '<' && count == 3))
+		(delimiter == '>' && count == 3) || (delimiter == '<' && count == 3) ||
+		((delimiter == '(' || delimiter == ')') && count > 1))
 		return (display_error_msg_delimiter(1, delimiter, data));
 	if ((delimiter == '|' && count == 3) || (delimiter == '&' && count == 3)
 		|| (delimiter == '|' && count > 3) || (delimiter == '&' && count > 3)
