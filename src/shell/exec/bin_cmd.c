@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_command.c                                     :+:      :+:    :+:   */
+/*   bin_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/22 17:36:27 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/03 18:05:07 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,17 @@ void	update_path(t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->command, (*cmd_list)->path, data->all_paths);
 }
 
-t_bool	exec_command(pid_t pid, t_cmd *cmd_list, t_data *data)
+t_bool	exec_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 
 	update_path(&cmd_list, data);
 	if (cmd_list->input == -1 || cmd_list->output == -1)
 		return (FAIL);
-	pid = fork();
-	if (pid < 0)
+	*pid = fork();
+	if (*pid < 0)
 		return (FAIL);
-	if (pid == CHILD)
+	if (*pid == CHILD)
 	{
 		dup2(cmd_list->input, STDIN_FILENO);
 		dup2(cmd_list->output, STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enum.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 12:57:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:55:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ typedef enum s_boolean
 
 typedef enum parenthese
 {
-	OUT		= 0,
-	IN		= 1,
-	OPEN	= 2,
-	CLOSE	= 3,
+	OUT			= 0,
+	IN			= 1,
+	FIRST		= 2,
 } 	t_parenthese;
 
 typedef enum s_delimiter

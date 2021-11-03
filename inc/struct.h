@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/26 22:19:30 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/03 22:16:45 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_cmd
 	int				input;
 	int				output;
 	int				error_output;
+	int				**pipe_fd;
+	int				nb_of_pipes;
 	char			*command;
 	char			**options;
 	char			**args;
@@ -74,7 +76,6 @@ typedef struct s_data
 	int			i;
 	char		**envp;
 	pid_t		pipe_pid;
-	t_bool		is_parent;
 }	t_data;
 
 #endif

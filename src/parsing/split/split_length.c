@@ -6,36 +6,11 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 12:17:06 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/22 11:40:33 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/02 10:19:43 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-static void	count_normal_words(char *str, int *i)
-{
-	if (str[*i] && str[*i] == '\'')
-	{
-		(*i)++;
-		while (str[*i] && str[*i] != '\'')
-			(*i)++;
-		(*i)++;
-	}
-	if (str[*i] && str[*i] == '\"')
-	{
-		(*i)++;
-		while (str[*i] && str[*i] != '\"')
-			(*i)++;
-		(*i)++;
-	}
-	else
-	{
-		while (str[*i] && !is_charset_split(str[*i]))
-			(*i)++;
-	}
-}
-*/
 
 static void	count_normal_words(char *str, int *i)
 {

@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/10/25 14:17:42 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/11/03 16:48:44 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,16 +40,17 @@ SOURCES = \
 		parsing/split/split_utils.c \
 		\
 		parsing/parser/parsing.c \
-		parsing/parser/parsing_utils.c \
-		parsing/parser/parse_commands.c \
-		parsing/parser/parse_redirections.c \
+		parsing/parser/utils.c \
+		parsing/parser/commands.c \
+		parsing/parser/redirections.c \
 		parsing/parser/pipe_fd.c \
+		parsing/parser/parentheses.c \
 		\
-		parsing/interpreter/heredoc.c \
-		parsing/interpreter/heredoc_input.c \
-		parsing/interpreter/heredoc_env_var.c \
-		parsing/interpreter/heredoc_special_value.c \
-		parsing/interpreter/heredoc_split.c \
+		parsing/heredoc/heredoc.c \
+		parsing/heredoc/input.c \
+		parsing/heredoc/env_var.c \
+		parsing/heredoc/special_value.c \
+		parsing/heredoc/split.c \
 		\
 		parsing/checker/check_input.c \
 		parsing/checker/check_argv.c \
@@ -64,10 +65,12 @@ SOURCES = \
 		shell/env/env.c \
 		shell/env/list.c \
 		shell/exec/exec.c \
-		shell/exec/exec_command.c \
-		shell/exec/exec_builtin.c \
-		shell/exec/exec_pipes.c \
-		shell/exec/exec_pipes_utils.c \
+		shell/exec/bin_cmd.c \
+		shell/exec/builtin_cmd.c \
+		shell/exec/pipes.c \
+		shell/exec/pipes_utils.c \
+		shell/exec/close_fd.c \
+		shell/exec/parentheses.c \
 		shell/exec/fill_wildcard.c \
 		shell/display.c \
 		shell/error_msg.c \
@@ -120,7 +123,7 @@ $(NAME): $(OBJ)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
-	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/interpreter obj/parsing/utils
+	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc obj/parsing/utils
 	@mkdir -p obj/shell/env obj/shell/exec obj/exit
 	@$(CC) $(CFLAGS) -I$(INCLUDE) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"

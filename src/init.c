@@ -13,7 +13,6 @@ t_data	*init_data(char **envp, pid_t pid)
 	data->pid = pid;
 	data->pipe_pid = -1;
 	data->ret_value = 0;
-	data->is_parent = 1;
 	data->envp = NULL;
 	data->tab_delimiters = ft_strdup("|&;<>");
 	update_env(data);

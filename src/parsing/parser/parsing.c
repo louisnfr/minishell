@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/25 14:14:59 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/02 12:47:44 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	handle_builtin_cmd(
 	parse_redirections(argv, cmd_list, data);
 }
 
-void	handle_other_cmd(
+void	handle_bin_cmd(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	char	*command;
@@ -106,7 +106,7 @@ void	handle_start_redir(char **argv, t_cmd *cmd_list, t_data *data)
 	if (cmd_is_builtin(argv[data->i]))
 		handle_builtin_cmd(0, argv, cmd_list, data);
 	else
-		handle_other_cmd(0, argv, cmd_list, data);
+		handle_bin_cmd(0, argv, cmd_list, data);
 	while (cmd_list->next)
 		cmd_list = cmd_list->next;
 	cmd_list->redirection = LEFT_MARK;
@@ -130,56 +130,13 @@ char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	}
 	argv = check_argv(argv);
-		
+
 /*	int i = -1;
 	while (argv[++i])
 		printf("argv[%d] = %s\n", i, argv[i]);
 */
 	clean_free(&input);
 	return (argv);
-}
-
-void	fill_parenthese(int parenthese, t_cmd *cmd_list)
-{
-	while (cmd_list->next)
-		cmd_list = cmd_list->next;
-	cmd_list->parenthese = parenthese;
-}
-
-void	handle_parentheses(char **argv, t_data *data)
-{
-	t_cmd	*cmd_list;
-	int		delimiter;
-
-	delimiter = 0;
-	cmd_list = data->cmd_list;
-	data->i++;
-	if (argv[data->i] && cmd_is_builtin(argv[data->i]))
-		handle_builtin_cmd(delimiter, argv, cmd_list, data);
-	else if (argv[data->i])
-		handle_other_cmd(delimiter, argv, cmd_list, data);	
-	fill_parenthese(OPEN, cmd_list);
-	while (argv[data->i])
-	{
-		if (argv[data->i] && is_delimiter(argv[data->i]))
-			delimiter = get_delimiter(argv[data->i++]);
-		else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
-		{
-			handle_builtin_cmd(delimiter, argv, cmd_list, data);
-			fill_parenthese(IN, cmd_list);
-		}
-		else if (argv[data->i])
-		{
-			handle_other_cmd(delimiter, argv, cmd_list, data);
-			fill_parenthese(IN, cmd_list);
-		}
-		if (argv[data->i] && str_is_equal(argv[data->i], ")"))
-		{
-			fill_parenthese(CLOSE, cmd_list);
-			break ;
-		}
-	}
-	data->i++;
 }
 
 t_bool	parse(char *input, t_data *data)
@@ -206,13 +163,11 @@ t_bool	parse(char *input, t_data *data)
 		if (argv[data->i] && is_delimiter(argv[data->i]))
 			delimiter = get_delimiter(argv[data->i++]);
 		else if (argv[data->i] && str_is_equal(argv[data->i], "("))
-		{
-			handle_parentheses(argv, data);
-		}
+			handle_parentheses(delimiter, argv, data);
 		else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
 		else if (argv[data->i])
-			handle_other_cmd(delimiter, argv, cmd_list, data);
+			handle_bin_cmd(delimiter, argv, cmd_list, data);
 	}
 	free_double_str(argv);
 	parse_pipes(cmd_list);

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/22 13:01:48 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/03 20:47:44 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ void	print_list(t_cmd *cmd_list)
 		printf("Cmd : %s\n", tmp->command);
 		printf("Is_builtin : %d\n", tmp->is_builtin);
 		printf("INPUT : %d  |  OUTPUT : %d  |  ERROR : %d\n", tmp->input, tmp->output, tmp->error_output);
+		if (tmp->pipe_fd)
+		{
+			i = -1;
+			while (++i < tmp->nb_of_pipes)
+				printf("[%d][%d]\n", tmp->pipe_fd[i][0], tmp->pipe_fd[i][1]);
+			printf("nb_of_pipes : %d\n", tmp->nb_of_pipes);
+		}
 		if (tmp->options)
 		{
 			i = -1;
@@ -44,8 +51,8 @@ void	print_list(t_cmd *cmd_list)
 			printf("Delimiter = %d\n", tmp->delimiter);
 		if (tmp->redirection)
 			printf("Redirection = %d\n", tmp->redirection);
-		if (tmp->parenthese)
-			printf("Parenthese = %d\n", tmp->parenthese);
+//		if (tmp->parenthese)
+		printf("Parenthese = %d\n", tmp->parenthese);
 		tmp = tmp->next;
 		printf("\n");
 	}
@@ -91,6 +98,8 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->input = 0;
 	cmd_list->output = 1;
 	cmd_list->error_output = 2;
+	cmd_list->pipe_fd = NULL;
+	cmd_list->nb_of_pipes = 0;
 	cmd_list->heredoc = NULL;
 	cmd_list->heredoc_delimiter = NULL;
 	cmd_list->next = NULL;

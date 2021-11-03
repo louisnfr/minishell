@@ -28,9 +28,11 @@ int	check_error_delimiter(int j, char *str, int delimiter, t_data *data)
 {
 	int		ret;
 
+	if (delimiter == '(' || delimiter == ')')
+		return (1);
 	while (str[j] && ft_isspace(str[j]))
 		j++;
-	if (j && str[j] && str[j] == delimiter)
+	if (j && str[j] && str[j] == delimiter && delimiter != '(' && delimiter != ')')
 	{
 		if (str[j + 1] == delimiter)
 			return (display_error_msg_delimiter(2, str[j], data));

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/22 17:50:36 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/03 22:45:59 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		print_env(t_env *g_env, t_cmd *cmd_list);
 */
 int			exec(t_data *data);
 t_bool		exec_builtin(t_cmd *cmd_list, t_data *data);
-t_bool		exec_command(pid_t pid, t_cmd *cmd_list, t_data *data);
+t_bool		exec_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
 t_bool		error_exec_cmd(
 				char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);
 char		**fill_cmd_array(t_cmd *cmd_list, t_data *data);
@@ -99,6 +99,17 @@ t_bool		count_wildcard_arg(int *i, char *wildcard_arg);
 t_bool		fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg);
 int			matching_name(char *filename, char *wildcard);
 void		update_path(t_cmd **cmd_list, t_data *data);
+t_bool		handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data);
+int			exec_parentheses(int exit_code, t_cmd **cmd_list, t_data *data);
+void		handle_error_msg_exec(char *command, int fd_error);
+void		check_exit_code(int exit_code, t_cmd **cmd_list);
+t_bool		is_first_pipe(t_cmd *cmd_list);
+t_bool		is_last_pipe(t_cmd *cmd_list);
+int			handle_error_cmd_pipe(t_cmd **cmd_list);
+void		close_pipe(t_cmd **cmd);
+void		close_other_pipes(t_cmd **cmd);
+void		close_all_pipes(t_cmd **cmd);
+t_bool		create_fork(int i, pid_t *pid);
 /*
 ** libft
 */
@@ -138,6 +149,11 @@ t_bool	is_file_name(char *file);
 void	display_error_msg_redir(int fd, char *filename, char *errno_msg);
 void	parse_pipes(t_cmd *cmd_list);
 void	parse_special_value(t_cmd *cmd_list, t_data *data);
+void	handle_parentheses(int delimiter, char **argv, t_data *data);
+void	handle_bin_cmd(
+	int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
+void	handle_builtin_cmd(
+	int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 /*
 ** parsing/lexer
 */

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/22 18:39:19 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/03 18:05:34 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	{
 		if ((exit_code && (*cmd_list)->delimiter == AND)
 			|| (!exit_code && (*cmd_list)->delimiter == OR))
-			*cmd_list = (*cmd_list)->next;
+		{
+			if (*cmd_list && (*cmd_list)->parenthese == FIRST)
+			{
+				while (*cmd_list && (*cmd_list)->parenthese)
+					*cmd_list = (*cmd_list)->next;
+			}
+			else
+				*cmd_list = (*cmd_list)->next;
+		}
 	}
 }
 
@@ -30,7 +38,7 @@ t_bool	handle_execution(
 
 	pid = 0;
 	status = 0;
-	if ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
+	if (*cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
 		*exit_code = exec_pipes(cmd_list, data);
 	else if (*cmd_list && (*cmd_list)->is_builtin)
 	{
@@ -39,7 +47,7 @@ t_bool	handle_execution(
 	}
 	else if (*cmd_list && (*cmd_list)->path)
 	{
-		if (exec_command(pid, *cmd_list, data))
+		if (exec_command(&pid, *cmd_list, data))
 		{
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))
@@ -74,35 +82,16 @@ int	exec(t_data *data)
 	exit_code = EXIT_FAILURE;
 	while (cmd_list)
 	{
-		if (!handle_execution(&exit_code, &cmd_list, data))
+		if (cmd_list && cmd_list->parenthese)
+			exit_code = exec_parentheses(exit_code, &cmd_list, data);
+		else if (!handle_execution(&exit_code, &cmd_list, data))
 		{
 			exit_code = 127;
 			handle_error_msg_exec(cmd_list->command, cmd_list->error_output);
 			cmd_list = cmd_list->next;
+			check_exit_code(exit_code, &cmd_list);
 		}
 		data->ret_value = exit_code;
 	}
 	return (exit_code);
 }
-
-/*
-int	exec(t_data *data)
-{
-	int		exit_code;
-	t_cmd	*cmd_list;
-
-	cmd_list = data->cmd_list->next;
-	exit_code = EXIT_FAILURE;
-	while (cmd_list)
-	{
-		if (!handle_execution(&exit_code, &cmd_list, data))
-		{
-			exit_code = 127;
-			handle_error_msg_exec(cmd_list->command, cmd_list->error_output);
-			cmd_list = cmd_list->next;
-		}
-		data->ret_value = exit_code;
-	}
-	return (exit_code);
-}
-*/
