@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 12:17:06 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/02 10:19:43 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:49:54 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 16:31:36 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,20 @@ static void	count_normal_words(char *str, int *i)
 	}
 }
 
-int	split_count_words(char *str, t_data *data)
+t_bool	check_all_delimiters(char *str, int *i, int *words)
+{
+	if (!check_delimiter(str, '|', i, words)
+		|| !check_delimiter(str, ';', i, words)
+		|| !check_delimiter(str, '&', i, words)
+		|| !check_delimiter(str, '>', i, words)
+		|| !check_delimiter(str, '<', i, words)
+		|| !check_delimiter(str, '(', i, words)
+		|| !check_delimiter(str, ')', i, words))
+		return (FAIL);
+	return (SUCCESS);
+}
+
+int	split_count_words(char *str)
 {
 	int	words;
 	int	i;
@@ -50,13 +63,7 @@ int	split_count_words(char *str, t_data *data)
 			count_normal_words(str, &i);
 			words++;
 		}
-		if (!check_delimiter(str, '|', &i, &words, data)
-			|| !check_delimiter(str, '&', &i, &words, data)
-			|| !check_delimiter(str, ';', &i, &words, data)
-			|| !check_delimiter(str, '>', &i, &words, data)
-			|| !check_delimiter(str, '<', &i, &words, data)
-			|| !check_delimiter(str, '(', &i, &words, data)
-			|| !check_delimiter(str, ')', &i, &words, data))
+		if (!check_all_delimiters(str, &i, &words))
 			return (-1);
 	}
 	return (words);

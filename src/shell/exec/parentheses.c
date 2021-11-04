@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parentheses.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:36:42 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static t_bool	is_first_cmd(t_cmd **cmd_list, t_data *data)
@@ -30,7 +42,8 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 		if (!handle_execution(&exit_code, cmd_list, data))
 		{
 			exit_code = 127;
-			handle_error_msg_exec((*cmd_list)->command, (*cmd_list)->error_output);
+			handle_error_msg_exec(
+				(*cmd_list)->command, (*cmd_list)->error_output);
 			*cmd_list = (*cmd_list)->next;
 			check_exit_code(exit_code, cmd_list);
 		}
@@ -46,7 +59,8 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 	int	pid;
 	int	status;
 
-	if (!is_first_cmd(cmd_list, data) && !can_exec_parenthese(last_exit_code, cmd_list))
+	if (!is_first_cmd(cmd_list, data)
+		&& !can_exec_parenthese(last_exit_code, cmd_list))
 		return (SUCCESS);
 	pid = fork();
 	if (pid == CHILD)

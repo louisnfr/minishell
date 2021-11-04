@@ -5,58 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 17:39:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/03 20:47:44 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:51:08 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:57:05 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_list(t_cmd *cmd_list)
-{
-	t_cmd	*tmp;
-	int		i;
-
-	tmp = cmd_list;
-	printf("\n");
-	while (tmp)
-	{
-		printf("Cmd : %s\n", tmp->command);
-		printf("Is_builtin : %d\n", tmp->is_builtin);
-		printf("INPUT : %d  |  OUTPUT : %d  |  ERROR : %d\n", tmp->input, tmp->output, tmp->error_output);
-		if (tmp->pipe_fd)
-		{
-			i = -1;
-			while (++i < tmp->nb_of_pipes)
-				printf("[%d][%d]\n", tmp->pipe_fd[i][0], tmp->pipe_fd[i][1]);
-			printf("nb_of_pipes : %d\n", tmp->nb_of_pipes);
-		}
-		if (tmp->options)
-		{
-			i = -1;
-			while (tmp->options[++i])
-				printf("Option[%d] : %s\t", i, tmp->options[i]);
-			printf("\n");
-		}
-		if (tmp->args)
-		{
-			i = -1;
-			while (tmp->args[++i])
-				printf("Arg[%d] : %s\t", i, tmp->args[i]);
-			printf("\n");
-		}
-		if (tmp->path)
-			printf("Path : %s\n", tmp->path);
-		if (tmp->delimiter)
-			printf("Delimiter = %d\n", tmp->delimiter);
-		if (tmp->redirection)
-			printf("Redirection = %d\n", tmp->redirection);
-//		if (tmp->parenthese)
-		printf("Parenthese = %d\n", tmp->parenthese);
-		tmp = tmp->next;
-		printf("\n");
-	}
-}
 
 t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
 {

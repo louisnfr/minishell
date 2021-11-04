@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 17:39:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/19 11:58:52 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:50:10 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 15:03:10 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_charset_split(char c)
 
 int	is_delimiter_split(char c)
 {
-	return (c == '&' || c == '|' || c == ';'|| c == '<' || c == '>'
+	return (c == '&' || c == '|' || c == ';' || c == '<' || c == '>'
 		|| c == '(' || c == ')');
 }
 

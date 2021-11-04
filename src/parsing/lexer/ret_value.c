@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ret_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 10:16:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:25:09 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:47:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

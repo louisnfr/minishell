@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 15:16:33 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/03 22:45:44 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:35:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ t_bool	is_first_pipe(t_cmd *cmd_list)
 {
 	return (cmd_list && cmd_list->delimiter != PIPE && cmd_list->next
 		&& cmd_list->next->delimiter == PIPE);
+}
+
+void	close_cmd_pipes_fd(t_cmd **cmd_list)
+{
+	close_all_pipes(cmd_list);
+	*cmd_list = (*cmd_list)->next;
+	while ((*cmd_list) && (*cmd_list)->delimiter == PIPE)
+	{
+		close_all_pipes(cmd_list);
+		*cmd_list = (*cmd_list)->next;
+	}
 }
 
 t_bool	create_fork(int i, pid_t *pid)

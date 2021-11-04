@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 14:36:04 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:36:07 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	handle_wildcard_character(
@@ -53,8 +65,6 @@ int	matching_name(char *filename, char *wildcard)
 
 	i = 0;
 	j = 0;
-	if (!wildcard || !filename)
-		return (0);
 	if (filename[0] && filename[0] == '.' && wildcard[0] && wildcard[0] != '.')
 		return (0);
 	while (j < (int)ft_strlen(wildcard))
@@ -89,14 +99,14 @@ t_bool	count_wildcard_arg(int *i, char *wildcard_arg)
 	entity = readdir(directory);
 	while (entity != NULL)
 	{
-		if (matching_name(entity->d_name, wildcard_arg))
+		if (wildcard_arg && matching_name(entity->d_name, wildcard_arg))
 			(*i)++;
 		entity = readdir(directory);
 	}
 	closedir(directory);
 	if (*i == i_ref)
 	{
-		(*i)++;	
+		(*i)++;
 		return (FAIL);
 	}
 	return (SUCCESS);

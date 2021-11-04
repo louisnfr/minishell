@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/03 16:48:44 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/11/04 16:33:30 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,26 +52,30 @@ SOURCES = \
 		parsing/heredoc/special_value.c \
 		parsing/heredoc/split.c \
 		\
-		parsing/checker/check_input.c \
-		parsing/checker/check_argv.c \
-		parsing/checker/check_delimiters_1.c \
-		parsing/checker/check_delimiters_2.c \
+		parsing/checker/input.c \
+		parsing/checker/argv.c \
+		parsing/checker/delimiters_1.c \
+		parsing/checker/delimiters_2.c \
 		parsing/checker/error_msg.c \
+		parsing/checker/unclosed_char.c \
 		\
 		parsing/utils/get_paths.c \
-		parsing/utils/libft.c \
+		parsing/utils/libft_1.c \
+		parsing/utils/libft_2.c \
 		parsing/utils/linked_list.c \
+		parsing/utils/print_list.c \
 		\
 		shell/env/env.c \
 		shell/env/list.c \
 		shell/exec/exec.c \
 		shell/exec/bin_cmd.c \
+		shell/exec/cmd_array.c \
 		shell/exec/builtin_cmd.c \
 		shell/exec/pipes.c \
 		shell/exec/pipes_utils.c \
 		shell/exec/close_fd.c \
 		shell/exec/parentheses.c \
-		shell/exec/fill_wildcard.c \
+		shell/exec/wildcard.c \
 		shell/display.c \
 		shell/error_msg.c \
 		\

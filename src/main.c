@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 13:36:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/03 13:23:22 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 15:07:50 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 			init_cmd_list(data);
 			if (parse(input, data))
 			{
-		//		print_list(data->cmd_list);
+	//			print_list(data->cmd_list);
 				exec(data);
 			}
 			clear_hist(data->sh->history, data->sh->search);

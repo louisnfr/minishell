@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 17:40:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/02 12:47:44 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 17:10:44 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_bool	is_option_echo(char **argv, t_data *data)
 {
 	int	j;
 	int	ret;
-	
+
 	ret = FAIL;
 	if (!argv)
 		return (FAIL);
@@ -29,12 +29,11 @@ t_bool	is_option_echo(char **argv, t_data *data)
 			while (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
 				j++;
 			if (argv[data->i][j])
-				break;
+				break ;
 			ret = SUCCESS;
 		}
 		else
 			break ;
-		
 	}
 	data->i--;
 	return (ret);
@@ -120,10 +119,11 @@ char	**get_argv(char *input, t_data *data)
 {
 	char	**argv;
 
+	(void)data;
 	input = check_input(input);
 	if (!input)
 		return (NULL);
-	argv = split_input(input, data);
+	argv = split_input(input);
 	if (!argv)
 	{
 		clean_free(&input);

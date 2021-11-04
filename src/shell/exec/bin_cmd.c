@@ -3,87 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 15:17:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/03 18:05:07 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:32:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**malloc_cmd_array(char **cmd_array, t_cmd *cmd_list)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (cmd_list->options && cmd_list->options[i])
-		i++;
-	j = 0;
-	while (cmd_list->args && cmd_list->args[j])
-	{
-		if (ft_strchr(cmd_list->args[j], '*'))
-			count_wildcard_arg(&i, cmd_list->args[j]);
-		else
-			i++;
-		j++;
-	}
-	cmd_array = (char **)malloc(sizeof(char *) * (i + 2));
-	if (!cmd_array)
-		return (NULL);
-	return (cmd_array);
-}
-
-void	fill_args(char **cmd_array, int *i, t_cmd *cmd_list, t_data *data)
-{
-	int		j;
-	char	*ret_value;
-
-	j = 0;
-	ret_value = ft_itoa(data->ret_value);
-	while (cmd_list->args && cmd_list->args[j])
-	{
-		if (ft_strchr(cmd_list->args[j], '*'))
-			fill_wildcard_arg(&(*cmd_array), i, cmd_list->args[j]);
-		else
-		{
-			cmd_array[*i + 1] = ft_strdup(cmd_list->args[j]);
-			(*i)++;
-		}
-		j++;
-	}
-	clean_free(&ret_value);
-}
-
-char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
-{
-	char	**cmd_array;
-	int		i;
-
-	if (!cmd_list || !cmd_list->command)
-		return (NULL);
-	cmd_array = NULL;
-	cmd_array = malloc_cmd_array(cmd_array, cmd_list);
-	if (!cmd_array)
-		return (NULL);
-	parse_special_value(cmd_list, data);
-	cmd_array[0] = ft_strdup(cmd_list->command);
-	i = 0;
-	while (cmd_list->options && cmd_list->options[i])
-	{
-		cmd_array[i + 1] = ft_strdup(cmd_list->options[i]);
-		i++;
-	}
-	fill_args(&(*cmd_array), &i, cmd_list, data);
-	cmd_array[++i] = NULL;
-	return (cmd_array);
-}
-
 int	get_error_code(void)
 {
-//	printf("errno = %d\n", errno);
 	if (errno == 2)
 		return (127);
 	if (errno == 13)
@@ -91,7 +21,8 @@ int	get_error_code(void)
 	return (1);
 }
 
-t_bool	error_exec_cmd(char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data)
+t_bool	error_bin_cmd(
+	char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data)
 {
 	display_error_message(
 		cmd_list->command, error_msg, cmd_list->error_output);
@@ -106,10 +37,10 @@ void	update_path(t_cmd **cmd_list, t_data *data)
 	free_double_str(data->all_paths);
 	data->all_paths = get_paths(data);
 	(*cmd_list)->path = find_cmd_path(
-		(*cmd_list)->command, (*cmd_list)->path, data->all_paths);
+			(*cmd_list)->command, (*cmd_list)->path, data->all_paths);
 }
 
-t_bool	exec_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
+t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 
@@ -128,9 +59,11 @@ t_bool	exec_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		cmd_array = fill_cmd_array(cmd_list, data);
 		data->envp = env_to_char(data->env);
 		if (!cmd_list->path)
-			return (error_exec_cmd("No such file or directory", 127, cmd_list, data));
+			return (error_bin_cmd(
+					"No such file or directory", 127, cmd_list, data));
 		execve(cmd_list->path, cmd_array, data->envp);
-		return (error_exec_cmd(strerror(errno), get_error_code(), cmd_list, data));
+		return (
+			error_bin_cmd(strerror(errno), get_error_code(), cmd_list, data));
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/03 22:45:59 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/04 16:32:54 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void		print_env(t_env *g_env, t_cmd *cmd_list);
 */
 int			exec(t_data *data);
 t_bool		exec_builtin(t_cmd *cmd_list, t_data *data);
-t_bool		exec_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
-t_bool		error_exec_cmd(
+t_bool		exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
+t_bool		error_bin_cmd(
 				char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);
 char		**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int			exec_pipes(t_cmd **cmd_list, t_data *data);
@@ -134,26 +134,28 @@ void		free_cmd_list(t_cmd *cmd_list);
 /*
 ** parsing/parser
 */
-t_bool	parse(char *input, t_data *data);
-char	*find_cmd_path(char *command, char *path, char **all_paths);
-char	**find_cmd_options(char **argv, t_data *data);
-char	**find_cmd_args(char **argv, t_data *data);
-t_bool	cmd_is_builtin(char *cmd);
-t_bool	is_delimiter(char *str);
-int		get_delimiter(char *str);
-t_bool	is_redirection(char *str);
-t_bool	is_parenthese(char *str);
-int		get_redirection(char *str);
-void	parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
-t_bool	is_file_name(char *file);
-void	display_error_msg_redir(int fd, char *filename, char *errno_msg);
-void	parse_pipes(t_cmd *cmd_list);
-void	parse_special_value(t_cmd *cmd_list, t_data *data);
-void	handle_parentheses(int delimiter, char **argv, t_data *data);
-void	handle_bin_cmd(
-	int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
-void	handle_builtin_cmd(
-	int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
+t_bool		parse(char *input, t_data *data);
+char		*find_cmd_path(char *command, char *path, char **all_paths);
+char		**find_cmd_options(char **argv, t_data *data);
+char		**find_cmd_args(char **argv, t_data *data);
+t_bool		cmd_is_builtin(char *cmd);
+t_bool		is_delimiter(char *str);
+int			get_delimiter(char *str);
+t_bool		is_redirection(char *str);
+t_bool		is_parenthese(char *str);
+int			get_redirection(char *str);
+void		parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
+t_bool		is_file_name(char *file);
+void		display_error_msg_redir(int fd, char *filename, char *errno_msg);
+void		parse_pipes(t_cmd *cmd_list);
+void		parse_special_value(t_cmd *cmd_list, t_data *data);
+void		handle_parentheses(int delimiter, char **argv, t_data *data);
+void		handle_bin_cmd(
+				int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
+void		handle_builtin_cmd(
+				int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
+void		free_fd_array(int size, int **fd_array);
+void		close_cmd_pipes_fd(t_cmd **cmd_list);
 /*
 ** parsing/lexer
 */
@@ -162,18 +164,21 @@ char		*parse_env_variable(char *input, t_data *data);
 int			is_charset_env(char c);
 char		*get_env_value(char *str, int *i, t_data *data);
 char		*get_env_key(char *str, int *i);
-int			get_length_env_value(int *double_quotes, char *env_key, t_data *data);
+int			get_length_env_value(
+				int *double_quotes, char *env_key, t_data *data);
 int			get_length_new_input(char *str, t_data *data);
 char		*transform_pid_value(char *str, char *value);
 char		*transform_ret_value(char *str, char *value);
-void		handle_env_variable(int *double_quotes, int *i, int *length, char *str, t_data *data);
+void		handle_env_variable(
+				int *double_quotes, int *i, int *length, char *str, t_data *data);
 char		*get_env_value(char *str, int *i, t_data *data);
-void		fill_env_value(int *double_quotes, char *new_str, int *j, char *value);
+void		fill_env_value(
+				int *double_quotes, char *new_str, int *j, char *value);
 /*
 ** parsing/split
 */
-char		**split_input(char *str, t_data *data);
-int			split_count_words(char *str, t_data *data);
+char		**split_input(char *str);
+int			split_count_words(char *str);
 int			is_charset_split(char c);
 int			is_delimiter_split(char c);
 int			handle_delimiters(int i, char **str, char **strs);
@@ -185,22 +190,25 @@ void		fill_quotes_split(char **str, char **strs, int *i, int *j);
 char		*check_input(char *input);
 void		*display_error_msg_simple_dot(char **str);
 int			check_delimiter(
-				char *str, char delimiter, int *i, int *words, t_data *data);
+				char *str, char delimiter, int *i, int *words);
 int			check_error_delimiter(
-				int j, char *str, int delimiter, t_data *data);
+				int j, char *str, int delimiter);
 int			check_multiple_delimiters(
-				char *str, int j, t_data *data);
-int			display_error_msg_delimiter(int count, char delimiter, t_data *data);
+				char *str, int j);
+int			display_error_msg_delimiter(int count, char delimiter);
 t_bool		check_beginning(char *str, int *i);
 t_bool		check_error_redir(char *str, int *i);
 int			is_error_redir(char *str, int j);
 int			check_right_marks(char *str, int j);
 int			check_left_marks(char *str, int j);
 char		**check_argv(char **argv);
+t_bool		check_unclosed_quotes(char *input);
+t_bool		check_unclosed_parentheses(char *input);
 /*
 ** parsing/heredoc
 */
-char		*heredoc_shell(t_data *data, t_config *sh, t_history *hist, char *delimiter);
+char		*heredoc_shell(
+				t_data *data, t_config *sh, t_history *hist, char *delimiter);
 t_bool		read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes);
 char		*heredoc_env_variable(char *input, t_data *data);
 char		*heredoc_special_value(char *str, char *value, char character);

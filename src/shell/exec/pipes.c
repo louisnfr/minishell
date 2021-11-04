@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pipes.c                                       :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 15:16:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/25 18:06:51y efrancon         ###   ########.fr       */
+/*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:37:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static t_bool	exec_cmd_bin_in_pipe(t_cmd **cmd_list, t_data *data)
 	cmd_array = fill_cmd_array(*cmd_list, data);
 	data->envp = env_to_char(data->env);
 	if (!(*cmd_list)->path)
-		return (error_exec_cmd(
+		return (error_bin_cmd(
 				"No such file or directory", 127, *cmd_list, data));
 	execve((*cmd_list)->path, cmd_array, data->envp);
-	return (error_exec_cmd(strerror(errno), get_error_code(), *cmd_list, data));
+	return (error_bin_cmd(strerror(errno), get_error_code(), *cmd_list, data));
 }
 
 static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
@@ -72,21 +72,19 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	i = 0;
 	nb_of_cmd = (*cmd_list)->nb_of_pipes + 1;
 	pid = (pid_t *)ft_calloc(1, sizeof(pid_t) * nb_of_cmd);
+	if (!pid)
+		return (-1);
 	exit_code = EXIT_SUCCESS;
 	if ((*cmd_list)->path)
 		update_path(cmd_list, data);
 	recursive_piping(i, pid, cmd_list, data);
-	while ((*cmd_list) && ((*cmd_list)->delimiter == PIPE
-			|| ((*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)))
-	{
-		close_all_pipes(cmd_list);
-		*cmd_list = (*cmd_list)->next;
-	}
+	close_cmd_pipes_fd(cmd_list);
 	i = -1;
 	while (++i < nb_of_cmd)
 		waitpid(pid[i], &exit_code, 0);
 	if (WIFEXITED(exit_code))
 		exit_code = WEXITSTATUS(exit_code);
 	data->pipe_pid = -1;
+	free(pid);
 	return (exit_code);
 }

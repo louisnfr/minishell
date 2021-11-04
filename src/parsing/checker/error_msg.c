@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 14:40:33 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 15:34:52 by EugenieFran      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	*display_error_msg_simple_dot(char **str)
@@ -9,11 +21,10 @@ void	*display_error_msg_simple_dot(char **str)
 	return (NULL);
 }
 
-int	display_error_msg_delimiter(int count, char delimiter, t_data *data)
+int	display_error_msg_delimiter(int count, char delimiter)
 {
 	int	i;
 
-	(void)data;
 	if (count == -1)
 		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 	else if (count)

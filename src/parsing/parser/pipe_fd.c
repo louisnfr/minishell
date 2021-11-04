@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/12 15:20:50 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/02 19:59:51 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:48:41 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:48:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,36 @@ int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd)
 	return (fd_array);
 }
 
+void	free_fd_array(int size, int **fd_array)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+		free(fd_array[i++]);
+	free(fd_array);
+}
+
+t_bool	copy_fd_array(int **fd_array, int nb_of_pipes, t_cmd **cmd)
+{
+	int	i;
+
+	(*cmd)->pipe_fd = (int **)ft_calloc(1, sizeof(int *) * nb_of_pipes);
+	if (!(*cmd)->pipe_fd)
+		return (FAIL);
+	i = -1;
+	while (++i < nb_of_pipes)
+	{
+		(*cmd)->pipe_fd[i] = (int *)ft_calloc(1, sizeof(int) * 2);
+		if (!(*cmd)->pipe_fd[i])
+			return (FAIL);
+		(*cmd)->pipe_fd[i][0] = fd_array[i][0];
+		(*cmd)->pipe_fd[i][1] = fd_array[i][1];
+	}
+	(*cmd)->nb_of_pipes = nb_of_pipes;
+	return (SUCCESS);
+}
+
 void	fill_fd_array(t_cmd **cmd)
 {
 	int	i;
@@ -68,24 +98,28 @@ void	fill_fd_array(t_cmd **cmd)
 	fd_array = create_fd_array(&nb_of_pipes, *cmd);
 	if (!fd_array)
 		return ;
-	(*cmd)->pipe_fd = fd_array;
-	(*cmd)->nb_of_pipes = nb_of_pipes;
+//	(*cmd)->pipe_fd = fd_array;
+//	(*cmd)->nb_of_pipes = nb_of_pipes;
+	copy_fd_array(fd_array, nb_of_pipes, cmd);
 	(*cmd)->output = fd_array[0][1];
 	if ((*cmd)->next)
 		*cmd = (*cmd)->next;
 	while ((*cmd)->next && (*cmd)->next->delimiter == PIPE)
 	{
-		(*cmd)->pipe_fd = fd_array;
-		(*cmd)->nb_of_pipes = nb_of_pipes;
+//		(*cmd)->pipe_fd = fd_array;
+//		(*cmd)->nb_of_pipes = nb_of_pipes;
+		copy_fd_array(fd_array, nb_of_pipes, cmd);
 		(*cmd)->input = fd_array[i][0];
 //		free(fd_array[i]);
 		(*cmd)->output = fd_array[i + 1][1];
 		*cmd = (*cmd)->next;
 		i++;
 	}
-	(*cmd)->pipe_fd = fd_array;
-	(*cmd)->nb_of_pipes = nb_of_pipes;
+//	(*cmd)->pipe_fd = fd_array;
+//	(*cmd)->nb_of_pipes = nb_of_pipes;
+	copy_fd_array(fd_array, nb_of_pipes, cmd);
 	(*cmd)->input = fd_array[i][0];
+	free_fd_array(nb_of_pipes, fd_array);
 //	free(fd_array[i]);
 //	free(fd_array);
 }

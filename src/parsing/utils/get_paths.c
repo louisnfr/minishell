@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 17:39:42 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/21 11:21:51 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:51:56 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	*find_cmd_path(char *command, char *path, char **all_paths)
 	clean_free(&path);
 	if (command && command[0] && command[0] == '/')
 		return (ft_strdup(command));
-	if (command && command[0] && command[0] == '.' && command[1] && command[1] == '/')
+	if (command && command[0] && command[0] == '.'
+		&& command[1] && command[1] == '/')
 		return (get_path_executable(command));
 	if (command && (str_is_equal(command, ".") || str_is_equal(command, "..")))
 		return (NULL);

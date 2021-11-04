@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/29 11:28:50 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/03 18:05:34 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:35:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,24 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	}
 }
 
+void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
+{
+	int		status;
+	pid_t	pid;
+
+	status = 0;
+	if (exec_bin_command(&pid, *cmd_list, data))
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			*exit_code = WEXITSTATUS(status);
+		close_fd(cmd_list);
+	}
+}
+
 t_bool	handle_execution(
 	int *exit_code, t_cmd **cmd_list, t_data *data)
 {
-	pid_t	pid;
-	int		status;
-
-	pid = 0;
-	status = 0;
 	if (*cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
 		*exit_code = exec_pipes(cmd_list, data);
 	else if (*cmd_list && (*cmd_list)->is_builtin)
@@ -47,13 +57,7 @@ t_bool	handle_execution(
 	}
 	else if (*cmd_list && (*cmd_list)->path)
 	{
-		if (exec_command(&pid, *cmd_list, data))
-		{
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-				*exit_code = WEXITSTATUS(status);
-			close_fd(cmd_list);
-		}
+		handle_bin_command(exit_code, cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
 	}
 	else

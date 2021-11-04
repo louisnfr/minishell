@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 10:16:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 13:24:56 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:46:56 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

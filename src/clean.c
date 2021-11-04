@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/04 14:31:50 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	remove_from_list(t_cmd *cmd_list)
@@ -21,30 +33,11 @@ void	remove_from_list(t_cmd *cmd_list)
 		clean_free(&cmd_list->heredoc);
 		clean_free(&cmd_list->heredoc_delimiter);
 	}
+	if (cmd_list->pipe_fd)
+		free_fd_array(cmd_list->nb_of_pipes, cmd_list->pipe_fd);
 	free(cmd_list);
 	cmd_list = NULL;
 }
-
-/*
-void	clean_cmd_list(t_cmd **cmd_list)
-{
-	t_cmd	*tmp;
-
-	if (!(*cmd_list) || !cmd_list)
-		return ;
-	tmp = *cmd_list;
-	tmp = (*cmd_list)->next;
-	remove_from_list(cmd_list);
-	(*cmd_list) = tmp;
-	while ((*cmd_list))
-	{
-		tmp = (*cmd_list)->next;
-		remove_from_list(cmd_list);
-		(*cmd_list) = tmp;
-	}
-	(*cmd_list) = NULL;
-}
-*/
 
 void	clean_cmd_list(t_cmd **cmd_list)
 {
