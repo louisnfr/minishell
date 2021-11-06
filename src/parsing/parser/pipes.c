@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_fd.c                                          :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 14:48:41 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:48:44 by efrancon         ###   ########.fr       */
+/*   Created: 2021/11/05 14:59:53 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/05 14:59:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,6 @@ int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd)
 	return (fd_array);
 }
 
-void	free_fd_array(int size, int **fd_array)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-		free(fd_array[i++]);
-	free(fd_array);
-}
-
 t_bool	copy_fd_array(int **fd_array, int nb_of_pipes, t_cmd **cmd)
 {
 	int	i;
@@ -98,30 +88,21 @@ void	fill_fd_array(t_cmd **cmd)
 	fd_array = create_fd_array(&nb_of_pipes, *cmd);
 	if (!fd_array)
 		return ;
-//	(*cmd)->pipe_fd = fd_array;
-//	(*cmd)->nb_of_pipes = nb_of_pipes;
 	copy_fd_array(fd_array, nb_of_pipes, cmd);
 	(*cmd)->output = fd_array[0][1];
 	if ((*cmd)->next)
 		*cmd = (*cmd)->next;
 	while ((*cmd)->next && (*cmd)->next->delimiter == PIPE)
 	{
-//		(*cmd)->pipe_fd = fd_array;
-//		(*cmd)->nb_of_pipes = nb_of_pipes;
 		copy_fd_array(fd_array, nb_of_pipes, cmd);
 		(*cmd)->input = fd_array[i][0];
-//		free(fd_array[i]);
 		(*cmd)->output = fd_array[i + 1][1];
 		*cmd = (*cmd)->next;
 		i++;
 	}
-//	(*cmd)->pipe_fd = fd_array;
-//	(*cmd)->nb_of_pipes = nb_of_pipes;
 	copy_fd_array(fd_array, nb_of_pipes, cmd);
 	(*cmd)->input = fd_array[i][0];
 	free_fd_array(nb_of_pipes, fd_array);
-//	free(fd_array[i]);
-//	free(fd_array);
 }
 
 void	parse_pipes(t_cmd *cmd_list)
@@ -138,17 +119,4 @@ void	parse_pipes(t_cmd *cmd_list)
 		else
 			break ;
 	}
-/*	printf("CMD = %s\n", cmd_list->command);
-	if (cmd_list && cmd_list->next && cmd_list->next->input > 2)
-			cmd_list->pipe_out = &cmd_list->next->input;
-	}
-	while (cmd_list && cmd_list->next)
-	{
-		if (cmd_list && cmd_list->next && cmd_list->output > 2)
-			cmd_list->next->pipe_in = &cmd_list->output;
-		if (cmd_list && cmd_list->next && cmd_list->input > 2)
-			cmd_list->pipe_out = &cmd_list->next->input;
-		cmd_list = cmd_list->next;
-	}
-*/
 }

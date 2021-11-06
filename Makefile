@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/04 16:33:30 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/11/06 13:09:15 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,16 +34,20 @@ SOURCES = \
 		parsing/lexer/env_var_utils.c \
 		parsing/lexer/pid_value.c \
 		parsing/lexer/ret_value.c \
+		parsing/lexer/utils.c \
 		\
 		parsing/split/split.c \
 		parsing/split/split_length.c \
 		parsing/split/split_utils.c \
 		\
 		parsing/parser/parsing.c \
+		parsing/parser/bin_cmd.c \
+		parsing/parser/builtin_cmd.c \
+		parsing/parser/heredoc.c \
 		parsing/parser/utils.c \
-		parsing/parser/commands.c \
+		parsing/parser/fill_cmd.c \
 		parsing/parser/redirections.c \
-		parsing/parser/pipe_fd.c \
+		parsing/parser/pipes.c \
 		parsing/parser/parentheses.c \
 		\
 		parsing/heredoc/heredoc.c \

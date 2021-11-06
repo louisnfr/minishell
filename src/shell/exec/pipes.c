@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:37:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 13:16:59 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 		waitpid(pid[i], &exit_code, 0);
 	if (WIFEXITED(exit_code))
 		exit_code = WEXITSTATUS(exit_code);
-	data->pipe_pid = -1;
 	free(pid);
 	return (exit_code);
 }

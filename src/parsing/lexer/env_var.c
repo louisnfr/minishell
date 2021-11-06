@@ -6,91 +6,90 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 17:44:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 15:13:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_special_cases(int *double_quotes, char *new_str, char *str, int *i, int *j)
+int	handle_special_cases(
+	t_var *var, int *double_quotes, char *new_str, char *str)
 {
 	int	count;
 
 	count = 0;
-	if (*double_quotes != -1 && str[*i] && str[*i] == '\'')
+	if (*double_quotes != -1 && str[var->i] && str[var->i] == '\'')
 	{
-		new_str[(*j)++] = str[(*i)++];
-		while (str[*i] && str[*i] != '\'')
-			new_str[(*j)++] = str[(*i)++];
+		new_str[var->j++] = str[var->i++];
+		while (str[var->i] && str[var->i] != '\'')
+			new_str[var->j++] = str[var->i++];
 	}
-	if (str[*i] && str[*i + 1] && str[*i] == '$' && str[*i + 1] == '$')
+	if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+		&& str[var->i + 1] == '$')
 	{
-		while (str[*i] && count++ < 2)
-			new_str[(*j)++] = str[(*i)++];
+		while (str[var->i] && count++ < 2)
+			new_str[var->j++] = str[var->i++];
 		return (1);
 	}
 	return (0);
 }
 
-void	fill_env_value(int *double_quotes, char *new_str, int *j, char *value)
+void	fill_env_value(
+	int *double_quotes, char *new_str, t_var *var, char *value)
 {
 	int	k;
-	int	value_length;
-	
+
 	if (!value)
 		return ;
 	k = 0;
-	value_length = ft_strlen(value);
 	if (*double_quotes == -1)
 	{
-		while (k < value_length && value[k])
-			new_str[(*j)++] = value[k++];
+		while (value && value[k])
+			new_str[var->j++] = value[k++];
 	}
 	else
 	{
-		while (k < value_length && value[k])
+		while (value && k < (int)ft_strlen(value) && value[k])
 		{
 			if (value[k] && ft_isspace(value[k]))
 			{
-				new_str[(*j)++] = value[k++];
+				new_str[var->j++] = value[k++];
 				while (value[k] && ft_isspace(value[k]))
 					k++;
 			}
 			else
-				new_str[(*j)++] = value[k++];	
+				new_str[var->j++] = value[k++];
 		}
 	}
 }
 
 static int	fill_new_input(char *new_str, char *str, t_data *data)
 {
-	int	i;
-	int	j;
-	int	double_quotes;
-	int	str_length;
+	t_var	*var;
+	int		double_quotes;
 
-	i = 0;
-	j = 0;
+	var = init_var();
+	if (!var || !str || !str[var->i])
+		return (FAIL);
 	double_quotes = 1;
-	str_length = ft_strlen(str);
-	if (!str || !str[i])
-		return (0);
-	while (str[i] && str[i + 1] && i < str_length)
+	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
-		if (str[i] && str[i] == '\"')
+		if (str[var->i] && str[var->i] == '\"')
 			double_quotes *= -1;
-		if (handle_special_cases(&double_quotes, new_str, str, &i, &j))
+		if (handle_special_cases(var, &double_quotes, new_str, str))
 			continue ;
-		if (str[i] && str[i + 1] && str[i] == '$'
-			&& !is_charset_env(str[i + 1]))
-			fill_env_value(&double_quotes, new_str, &j, get_env_value(str, &i, data));
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+			&& !is_charset_env(str[var->i + 1]))
+			fill_env_value(
+				&double_quotes, new_str, var, get_env_val(str, &var->i, data));
 		else
-			new_str[j++] = str[i++];
+			new_str[var->j++] = str[var->i++];
 	}
-	if (str[i] && i < str_length)
-		new_str[j++] = str[i];
-	new_str[j] = '\0';
-	return (1);
+	if (var->i < (int)ft_strlen(str) && str[var->i])
+		new_str[var->j++] = str[var->i];
+	new_str[var->j] = '\0';
+	free_var(var);
+	return (SUCCESS);
 }
 
 char	*parse_env_variable(char *input, t_data *data)

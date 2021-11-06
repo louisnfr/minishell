@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:48:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/05 15:36:25 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	**find_cmd_args(char **argv, t_data *data)
 	args = NULL;
 	if (!argv[++j])
 		return (args);
-	while (argv[j] && !is_delimiter(argv[j]) && !is_redirection(argv[j]) &&
-		!is_parenthese(argv[j++]))
+	while (argv[j] && !is_delimiter(argv[j]) && !is_redirection(argv[j])
+		&& !is_parenthese(argv[j++]))
 		k++;
 	if (k)
 	{

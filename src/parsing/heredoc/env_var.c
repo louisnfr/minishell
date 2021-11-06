@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_env_var.c                                  :+:      :+:    :+:   */
+/*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 17:47:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 15:39:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	heredoc_double_dollars(int *i, int *length, char *str)
+static int	heredoc_double_dollars(t_var *var, char *str)
 {
-	if (str[*i] && str[*i + 1] && str[*i] == '$' && str[*i + 1] == '$')
+	if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+		&& str[var->i + 1] == '$')
 	{
-		(*i) += 2;
-		if (str[*i])
-			(*length) += 2;
+		var->i += 2;
+		if (str[var->i])
+			var->j += 2;
 		else
-			(*length)++;
+			var->j++;
 		return (1);
 	}
 	return (0);
@@ -28,38 +29,39 @@ static int	heredoc_double_dollars(int *i, int *length, char *str)
 
 static int	heredoc_length_new_input(char *str, t_data *data)
 {
-	int		i;
+	t_var	*var;
+	int		double_quotes;
 	int		length;
-	
-	i = 0;
-	length = 0;
-	if (!str || !str[i])
+
+	var = init_var();
+	if (!var || !str || !str[var->i])
 		return (0);
-	while (str && str[i] && str[i + 1])
+	double_quotes = -1;
+	while (str && str[var->i] && str[var->i + 1])
 	{
-		if (heredoc_double_dollars(&i, &length, str))
+		if (heredoc_double_dollars(var, str))
 			continue ;
-		if (str[i] && str[i + 1] && str[i] == '$'
-			&& !is_charset_env(str[i + 1]))
-			handle_env_variable((void *)-1, &i, &length, str, data);
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+			&& !is_charset_env(str[var->i + 1]))
+			handle_env_variable(&double_quotes, var, str, data);
 		else
-		{
-			i++;
-			length++;
-		}
+			increment_i_j(var);
 	}
-	return (++length);
+	length = var->j++;
+	free_var(var);
+	return (length);
 }
 
-static int	heredoc_handle_special_case(char *new_str, char *str, int *i, int *j)
+static int	heredoc_special_case(t_var *var, char *new_str, char *str)
 {
 	int	count;
 
 	count = 0;
-	if (str[*i] && str[*i + 1] && str[*i] == '$' && str[*i + 1] == '$')
+	if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+		&& str[var->i + 1] == '$')
 	{
-		while (str[*i] && count++ < 2)
-			new_str[(*j)++] = str[(*i)++];
+		while (str[var->i] && count++ < 2)
+			new_str[var->j++] = str[var->i++];
 		return (1);
 	}
 	return (0);
@@ -67,28 +69,30 @@ static int	heredoc_handle_special_case(char *new_str, char *str, int *i, int *j)
 
 static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
-	int	i;
-	int	j;
-	int	str_length;
+	t_var	*var;
+	int		str_length;
+	int		double_quotes;
 
-	i = 0;
-	j = 0;
-	if (!str || !str[i])
-		return (0);
+	var = init_var();
+	if (!var || !str || !str[var->i])
+		return (FAIL);
+	double_quotes = -1;
 	str_length = ft_strlen(str);
-	while (i < str_length && str[i] && str[i + 1])
+	while (var->i < str_length && str[var->i] && str[var->i + 1])
 	{
-		if (heredoc_handle_special_case(new_str, str, &i, &j))
+		if (heredoc_special_case(var, new_str, str))
 			continue ;
-		if (str[i] && str[i + 1] && str[i] == '$'
-			&& !is_charset_env(str[i + 1]))
-			fill_env_value((void *)-1, new_str, &j, get_env_value(str, &i, data));
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+			&& !is_charset_env(str[var->i + 1]))
+			fill_env_value(
+				&double_quotes, new_str, var, get_env_val(str, &var->i, data));
 		else
-			new_str[j++] = str[i++];
+			new_str[var->j++] = str[var->i++];
 	}
-	if (i < str_length && str[i])
-		new_str[j++] = str[i];
-	new_str[j] = '\0';
+	if (var->i < str_length && str[var->i])
+		new_str[var->j++] = str[var->i];
+	new_str[var->j] = '\0';
+	free_var(var);
 	return (1);
 }
 

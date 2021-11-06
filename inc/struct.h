@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/03 22:16:45 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/06 14:13:32 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef struct s_config
 	t_bool				init_termios;
 }	t_config;
 
+typedef struct s_var
+{
+	int		i;
+	int		j;
+}	t_var;
+
 typedef struct s_cmd
 {
 	int				input;
@@ -56,9 +62,9 @@ typedef struct s_cmd
 	t_bool			is_builtin;
 	int				delimiter;
 	int				redirection;
+	int				parenthese;
 	char			*heredoc;
 	char			*heredoc_delimiter;
-	int				parenthese;
 	struct s_cmd	*next;
 }			t_cmd;
 
@@ -75,7 +81,6 @@ typedef struct s_data
 	pid_t		pid;
 	int			i;
 	char		**envp;
-	pid_t		pipe_pid;
 }	t_data;
 
 #endif

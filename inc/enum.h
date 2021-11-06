@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/02 11:55:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/05 16:46:34 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,19 @@ typedef enum s_boolean
 	SUCCESS = 1,
 }	t_boolean;
 
-typedef enum parenthese
+typedef enum s_parenthese
 {
 	OUT			= 0,
 	IN			= 1,
 	FIRST		= 2,
-} 	t_parenthese;
+}	t_parenthese;
+
+typedef enum s_flag
+{
+	WRITE_TRUNC		= 1,
+	WRITE_APPEND	= 2,
+	READ			= 3,
+}	t_flag;
 
 typedef enum s_delimiter
 {

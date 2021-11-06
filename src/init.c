@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:32:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 13:17:10 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_data	*init_data(char **envp, pid_t pid)
 	data->export = create_env(envp);
 	data->i = 0;
 	data->pid = pid;
-	data->pipe_pid = -1;
 	data->ret_value = 0;
 	data->envp = NULL;
 	data->tab_delimiters = ft_strdup("|&;<>");

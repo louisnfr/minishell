@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 17:57:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 11:01:03 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,11 @@ int	is_charset_env(char c)
 		|| c == '\'' || c == '\"');
 }
 
-int	get_length_env_value(int *double_quotes, char *env_key, t_data *data)
+static int	count_length(char *env_value, int value_length)
 {
-	char	*env_value;
-	int		length;
 	int		i;
-	int		value_length;
-	
-	env_value = NULL;
-	env_value = get_env(env_key, data->env);
-	if (!env_value)
-		return (0);
-	value_length = ft_strlen(env_value);
-	if (*double_quotes == -1)
-		return (value_length);
+	int		length;
+
 	i = 0;
 	length = 0;
 	while (i < value_length && env_value[i])
@@ -49,6 +40,23 @@ int	get_length_env_value(int *double_quotes, char *env_key, t_data *data)
 			length++;
 		}
 	}
+	return (length);
+}
+
+int	get_length_env_value(int *double_quotes, char *env_key, t_data *data)
+{
+	char	*env_value;
+	int		value_length;
+	int		length;
+
+	env_value = NULL;
+	env_value = get_env(env_key, data->env);
+	if (!env_value)
+		return (0);
+	value_length = ft_strlen(env_value);
+	if (*double_quotes == -1)
+		return (value_length);
+	length = count_length(env_value, value_length);
 	return (length);
 }
 
@@ -77,7 +85,7 @@ char	*get_env_key(char *str, int *i)
 	return (env_var);
 }
 
-char	*get_env_value(char *str, int *i, t_data *data)
+char	*get_env_val(char *str, int *i, t_data *data)
 {
 	char	*env_key;
 	char	*env_value;

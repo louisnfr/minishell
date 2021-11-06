@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 17:09:58 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/06 11:37:01 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	length_quotes(int *length, int input_len, char *input)
 	}
 	else if (input[*length] && input[*length] == '\'')
 	{
-		length++;
+		(*length)++;
 		while (*length < input_len && input[*length] && input[*length] != '\'')
 			(*length)++;
 	}		

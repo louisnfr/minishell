@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/04 16:32:54 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/06 15:40:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ void		free_cmd_list(t_cmd *cmd_list);
 ** parsing/parser
 */
 t_bool		parse(char *input, t_data *data);
+void		handle_bin_cmd(
+				int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
+void		handle_builtin_cmd(
+				int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 char		*find_cmd_path(char *command, char *path, char **all_paths);
 char		**find_cmd_options(char **argv, t_data *data);
 char		**find_cmd_args(char **argv, t_data *data);
@@ -145,8 +149,7 @@ t_bool		is_redirection(char *str);
 t_bool		is_parenthese(char *str);
 int			get_redirection(char *str);
 void		parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
-t_bool		is_file_name(char *file);
-void		display_error_msg_redir(int fd, char *filename, char *errno_msg);
+void		display_error_redir(int fd, char *filename, char *errno_msg);
 void		parse_pipes(t_cmd *cmd_list);
 void		parse_special_value(t_cmd *cmd_list, t_data *data);
 void		handle_parentheses(int delimiter, char **argv, t_data *data);
@@ -156,13 +159,15 @@ void		handle_builtin_cmd(
 				int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 void		free_fd_array(int size, int **fd_array);
 void		close_cmd_pipes_fd(t_cmd **cmd_list);
+void		parse_redirections_heredoc(
+				char **argv, t_cmd *cmd_list, t_data *data);
 /*
 ** parsing/lexer
 */
 char		*upgrade_input(char *input, t_data *data);
 char		*parse_env_variable(char *input, t_data *data);
 int			is_charset_env(char c);
-char		*get_env_value(char *str, int *i, t_data *data);
+char		*get_env_val(char *str, int *i, t_data *data);
 char		*get_env_key(char *str, int *i);
 int			get_length_env_value(
 				int *double_quotes, char *env_key, t_data *data);
@@ -170,10 +175,15 @@ int			get_length_new_input(char *str, t_data *data);
 char		*transform_pid_value(char *str, char *value);
 char		*transform_ret_value(char *str, char *value);
 void		handle_env_variable(
-				int *double_quotes, int *i, int *length, char *str, t_data *data);
-char		*get_env_value(char *str, int *i, t_data *data);
+				int *double_quotes, t_var *var, char *str, t_data *data);
 void		fill_env_value(
-				int *double_quotes, char *new_str, int *j, char *value);
+				int *double_quotes, char *new_str, t_var *var, char *value);
+void		fill_with_value(t_var *var, char *new_str, char *value);
+t_var		*init_var(void);
+void		free_var(t_var *var);
+int			setup_variables(int *i, int *count, int *double_quotes, char *str);
+void		increment_var(int *i, int *length);
+void		increment_i_j(t_var *var);
 /*
 ** parsing/split
 */
@@ -209,7 +219,7 @@ t_bool		check_unclosed_parentheses(char *input);
 */
 char		*heredoc_shell(
 				t_data *data, t_config *sh, t_history *hist, char *delimiter);
-t_bool		read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes);
+t_bool		read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data);
 char		*heredoc_env_variable(char *input, t_data *data);
 char		*heredoc_special_value(char *str, char *value, char character);
 t_bool		handle_heredoc_quotes(int *i, char **str, char **strs);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/21 15:01:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/06 10:50:16 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,38 @@ char	*parse_heredoc_line(char *line, t_data *data)
 	return (new_line);
 }
 
-t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes)
+t_bool	open_heredoc(int *fd, t_cmd *cmd_list)
+{
+	*fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (*fd == -1)
+	{
+		display_error_message(
+			cmd_list->heredoc, strerror(errno), cmd_list->error_output);
+		return (FAIL);
+	}
+	return (SUCCESS);
+}
+
+void	write_line(int fd, t_bool quotes, char **line, t_data *data)
+{
+	if (!quotes)
+		*line = parse_heredoc_line(*line, data);
+	write(fd, *line, ft_strlen(*line));
+	write(fd, "\n", 1);
+}
+
+t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
 {
 	char	*line;
 	int		fd;
 
-	fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		display_error_message(cmd_list->heredoc, strerror(errno), cmd_list->error_output);
+	if (!open_heredoc(&fd, cmd_list))
 		return (FAIL);
-	}
 	line = NULL;
 	while (1)
 	{
-		line = heredoc_shell(data, data->sh, data->sh->history, cmd_list->heredoc_delimiter);
+		line = heredoc_shell(
+				data, data->sh, data->sh->history, cmd_list->heredoc_delimiter);
 		if (!line)
 		{
 			if (close(fd) == -1)
@@ -59,17 +76,15 @@ t_bool	read_heredoc(t_cmd *cmd_list, t_data *data, t_bool quotes)
 		}
 		if (line && str_is_equal(line, cmd_list->heredoc_delimiter))
 			break ;
-		if (!quotes)
-			line = parse_heredoc_line(line, data);
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		write_line(fd, quotes, &line, data);
 		clean_free(&line);
 	}
 	clean_free(&line);
 	return (SUCCESS);
 }
 
-char	*heredoc_shell(t_data *data, t_config *sh, t_history *hist, char *delimiter)
+char	*heredoc_shell(
+	t_data *data, t_config *sh, t_history *hist, char *delimiter)
 {
 	char	*line;
 

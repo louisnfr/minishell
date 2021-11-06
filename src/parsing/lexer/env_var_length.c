@@ -6,80 +6,83 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/20 17:33:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 15:42:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_env_variable(int *double_quotes, int *i, int *length, char *str, t_data *data)
+void	handle_env_variable(
+	int *double_quotes, t_var *var, char *str, t_data *data)
 {
 	char	*env_key;
 
 	env_key = NULL;
-	env_key = get_env_key(str, &(*i));
-	(*length) += get_length_env_value(double_quotes, env_key, data);
+	env_key = get_env_key(str, &var->i);
+	var->j += get_length_env_value(double_quotes, env_key, data);
 	free(env_key);
 	env_key = NULL;
-	if (!str[*i])
-		(*length)--;
+	if (!str[var->i])
+		var->j--;
 }
 
-int	handle_simple_quotes_and_double_dollars(int *double_quotes, int *i, int *length, char *str)
+static int	handle_special_cases(
+	int *double_quotes, t_var *var, char *str)
 {
-	if (*double_quotes != -1 && str[*i] && str[*i] == '\'')
+	if (*double_quotes != -1 && str[var->i] && str[var->i] == '\'')
 	{
-		(*i)++;
-		(*length)++;
-		while (str[*i] && str[*i] != '\'')
+		var->i++;
+		var->j++;
+		while (str[var->i] && str[var->i] != '\'')
 		{
-			(*i)++;
-			(*length)++;
+			var->i++;
+			var->j++;
 		}	
-		if (!str[*i + 1])
-			(*length)--;
+		if (!str[var->i + 1])
+			var->j--;
 	}
-	if (str[*i] && str[*i + 1] && str[*i] == '$' && str[*i + 1] == '$')
+	if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+		&& str[var->i + 1] == '$')
 	{
-		(*i) += 2;
-		if (str[*i])
-			(*length) += 2;
+		var->i += 2;
+		if (str[var->i])
+			var->j += 2;
 		else
-			(*length)++;
+			var->j++;
 		return (1);
 	}
 	return (0);
 }
 
+void	increment_i_j(t_var *var)
+{
+	var->i++;
+	var->j++;
+}
+
 int	get_length_new_input(char *str, t_data *data)
 {
-	int		i;
-	int		length;
+	t_var	*var;
 	int		double_quotes;
-	int		str_length;
+	int		length;
 
-	i = 0;
-	length = 0;
+	var = init_var();
+	if (!var || !str || !str[var->i])
+		return (FAIL);
 	double_quotes = 1;
-	str_length = ft_strlen(str);
-	if (!str || !str[i])
-		return (0);
-	while (str[i] && str[i + 1] && i < str_length)
+	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
-		if (str[i] && str[i] == '\"')
+		if (str[var->i] && str[var->i] == '\"')
 			double_quotes *= -1;
-		if (handle_simple_quotes_and_double_dollars(&double_quotes, &i, &length, str))
+		if (handle_special_cases(&double_quotes, var, str))
 			continue ;
-		if (str[i] && str[i + 1] && str[i] == '$'
-			&& !is_charset_env(str[i + 1]))
-			handle_env_variable(&double_quotes, &i, &length, str, data);
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+			&& !is_charset_env(str[var->i + 1]))
+			handle_env_variable(&double_quotes, var, str, data);
 		else
-		{
-			i++;
-			length++;
-		}
+			increment_i_j(var);
 	}
-//	if (str[i] && i < str_length)
-//		length++;
-	return (++length);
+	length = var->j++;
+	free_var(var);
+	return (length);
 }

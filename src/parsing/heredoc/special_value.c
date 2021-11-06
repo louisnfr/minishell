@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:45:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:45:48 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/05 15:20:41 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

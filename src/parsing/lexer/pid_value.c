@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:46:56 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 15:02:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,11 @@ static int	get_length(char *str, int value_length, char character)
 	int	length;
 	int	count;
 	int	double_quotes;
-	int	str_length;
 
-	i = 0;
-	count = 0;
-	double_quotes = 1;
-	str_length = ft_strlen(str);
 	if (!str)
 		return (0);
-	length = ft_strlen(str);
-	while (str[i] && str[i + 1] && i < str_length)
+	length = setup_variables(&i, &count, &double_quotes, str);
+	while (i < (int)ft_strlen(str) && str[i] && str[i + 1])
 	{
 		if (str[i] && str[i] == '\"')
 			double_quotes *= -1;
@@ -54,48 +49,40 @@ static int	get_length(char *str, int value_length, char character)
 	return (length);
 }
 
-static void	fill_simple_quotes(int *double_quotes, char *new_str, char *str, int *i, int *j)
+static void	fill_simple_quotes(t_var *var, char *str, char *new_str)
 {
-	if (*double_quotes != -1 && str[*i] && str[*i] == '\'')
-	{
-		new_str[(*j)++] = str[(*i)++];
-		while (str[*i] && str[*i] != '\'')
-			new_str[(*j)++] = str[(*i)++];
-	}
+	new_str[var->j++] = str[var->i++];
+	while (str[var->i] && str[var->i] != '\'')
+		new_str[var->j++] = str[var->i++];
 }
 
 static void	fill_new_str(char *str, char *new_str, char *value, char character)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	double_quotes;
-	int	str_length;
+	int		double_quotes;
+	int		str_length;
+	t_var	*var;
 
-	i = 0;
-	j = 0;
+	var = init_var();
+	if (!var)
+		return ;
 	double_quotes = 1;
 	str_length = ft_strlen(str);
-	if (!str)
-		return ;
-	while (str[i] && str[i + 1] && i < str_length)
+	while (str && var->i < str_length && str[var->i] && str[var->i + 1])
 	{
-		if (str[i] && str[i] == '\"')
+		if (str[var->i] && str[var->i] == '\"')
 			double_quotes *= -1;
-		fill_simple_quotes(&double_quotes, new_str, str, &i, &j);
-		if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == character)
-		{
-			k = 0;
-			while (value && value[k])
-				new_str[j++] = value[k++];
-			i += 2;
-		}
+		if (double_quotes != -1 && str[var->i] && str[var->i] == '\'')
+			fill_simple_quotes(var, str, new_str);
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+			&& str[var->i + 1] == character)
+			fill_with_value(var, new_str, value);
 		else
-			new_str[j++] = str[i++];
+			new_str[var->j++] = str[var->i++];
 	}
-	if (str[i] && i < str_length)
-		new_str[j++] = str[i];
-	new_str[j] = '\0';
+	if (str && str[var->i] && var->i < str_length)
+		new_str[var->j++] = str[var->i];
+	new_str[var->j] = '\0';
+	free_var(var);
 }
 
 char	*transform_pid_value(char *str, char *value)

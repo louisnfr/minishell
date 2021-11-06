@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:40:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/14 16:54:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/05 14:25:31 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@ t_bool	is_delimiter(char *str)
 		|| str_is_equal(str, ";")
 		|| str_is_equal(str, "|")
 		|| str_is_equal(str, "||"));
-}
-
-t_bool	is_parenthese(char *str)
-{
-	return (str_is_equal(str, "(")
-		|| str_is_equal(str, ")"));
 }
 
 int	get_redirection(char *str)
@@ -69,25 +63,12 @@ t_bool	is_redirection(char *str)
 		|| str_is_equal(str, "2>&1"));
 }
 
-t_bool	cmd_is_builtin(char *cmd)
+void	free_fd_array(int size, int **fd_array)
 {
-	int		i;
-	char	*builtins[9];
+	int	i;
 
-	builtins[0] = "cd";
-	builtins[1] = "echo";
-	builtins[2] = "env";
-	builtins[3] = "exit";
-	builtins[4] = "export";
-	builtins[5] = "pwd";
-	builtins[6] = "unset";
-	builtins[7] = "history";
-	builtins[8] = NULL;
-	i = -1;
-	while (builtins[++i])
-	{
-		if (str_is_equal(cmd, builtins[i]))
-			return (TRUE);
-	}
-	return (FALSE);
+	i = 0;
+	while (i < size)
+		free(fd_array[i++]);
+	free(fd_array);
 }

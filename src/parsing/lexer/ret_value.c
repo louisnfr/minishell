@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:47:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/06 15:02:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static void	get_length_quotes(int *length, int *count, int *i, char *str)
 {
 	if (str[*i] && str[*i] == '\"')
 	{
-		(*i)++;
-		(*length)--;
+		increment_var(i, length);
 		while (str[*i] && str[*i] != '\"')
 		{
 			if (str[*i] && str[*i + 1] && str[*i] == '$' && str[*i + 1] == '?')
@@ -28,17 +27,14 @@ static void	get_length_quotes(int *length, int *count, int *i, char *str)
 			else
 				(*i)++;
 		}
-		(*i)++;
-		(*length)--;
+		increment_var(i, length);
 	}
 	if (str[*i] && str[*i] == '\'')
 	{
-		(*i)++;
-		(*length)--;
+		increment_var(i, length);
 		while (str[*i] && str[*i] != '\'')
 			(*i)++;
-		(*i)++;
-		(*length)--;
+		increment_var(i, length);
 	}
 }
 
@@ -47,15 +43,13 @@ static int	get_length(char *str, int value_length)
 	int	i;
 	int	length;
 	int	count;
-	int	str_length;
 
-	i = 0;
-	count = 0;
-	str_length = ft_strlen(str);
 	if (!str)
 		return (0);
+	i = 0;
+	count = 0;
 	length = ft_strlen(str);
-	while (i < str_length && str[i] && str[i + 1])
+	while (i < (int)ft_strlen(str) && str[i] && str[i + 1])
 	{
 		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
 			get_length_quotes(&length, &count, &i, str);
@@ -72,65 +66,53 @@ static int	get_length(char *str, int value_length)
 	return (length);
 }
 
-static void	fill_quotes(int *i, int *j, char *str, char *new_str, char *value)
+static void	fill_quotes(t_var *var, char *str, char *new_str, char *value)
 {
-	int	k;
-
-	if (str[*i] && str[*i] == '\"')
+	if (str[var->i] && str[var->i] == '\"')
 	{
-		(*i)++;
-		while (str[*i] && str[*i] != '\"')
+		var->i++;
+		while (str[var->i] && str[var->i] != '\"')
 		{
-			if (str[*i] && str[*i + 1] && str[*i] == '$' && str[*i + 1] == '?')
-			{
-				k = 0;
-				while (value && value[k])
-					new_str[(*j)++] = value[k++];
-				*i += 2;
-			}
+			if (str[var->i] && str[var->i + 1]
+				&& str[var->i] == '$' && str[var->i + 1] == '?')
+				fill_with_value(var, new_str, value);
 			else
-				new_str[(*j)++] = str[(*i)++];
+				new_str[var->j++] = str[var->i++];
 		}
-		(*i)++;
+		var->i++;
 	}
-	if (str[*i] && str[*i] == '\'')
+	if (str[var->i] && str[var->i] == '\'')
 	{
-		(*i)++;
-		while (str[*i] && str[*i] != '\'')
-			new_str[(*j)++] = str[(*i)++];
-		(*i)++;
+		var->i++;
+		while (str[var->i] && str[var->i] != '\'')
+			new_str[var->j++] = str[var->i++];
+		var->i++;
 	}
 }
 
 void	fill_new_str(char *str, char *new_str, char *value)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	str_length;
+	int		str_length;
+	t_var	*var;
 
-	i = 0;
-	j = 0;
-	str_length = ft_strlen(str);
-	if (!str)
+	var = init_var();
+	if (!var)
 		return ;
-	while (i < str_length && str[i] && str[i + 1])
+	str_length = ft_strlen(str);
+	while (str && var->i < str_length && str[var->i] && str[var->i + 1])
 	{
-		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
-			fill_quotes(&i, &j, str, new_str, value);	
-		else if (str[i] && str[i + 1] && str[i] == '$' && str[i + 1] == '?')
-		{
-			k = 0;
-			while (value && value[k])
-				new_str[j++] = value[k++];
-			i += 2;
-		}
+		if (str[var->i] && (str[var->i] == '\'' || str[var->i] == '\"'))
+			fill_quotes(var, str, new_str, value);
+		else if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
+			&& str[var->i + 1] == '?')
+			fill_with_value(var, new_str, value);
 		else
-			new_str[j++] = str[i++];
+			new_str[var->j++] = str[var->i++];
 	}
-	if (i < str_length && str[i])
-		new_str[j++] = str[i];
-	new_str[j] = '\0';
+	if (str && var->i < str_length && str[var->i])
+		new_str[var->j++] = str[var->i];
+	new_str[var->j] = '\0';
+	free_var(var);
 }
 
 char	*transform_ret_value(char *str, char *value)
