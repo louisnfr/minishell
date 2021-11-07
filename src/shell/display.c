@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 15:25:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/07 10:41:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ char	*prompt(t_data *data)
 	usr = get_env("USER", data->env);
 	cwd = getcwd(NULL, 0);
 	if (ft_strnstr(cwd, get_env("HOME", data->env),
-		ft_strlen(get_env("HOME", data->env))))
+			ft_strlen(get_env("HOME", data->env))))
 	{
-		tmp = ft_substr(cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
+		tmp = ft_substr(
+				cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
 		clean_free(&cwd);
 		cwd = ft_strjoin("~", tmp);
 		clean_free(&tmp);

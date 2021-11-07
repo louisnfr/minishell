@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:31:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/07 09:27:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	clean_data(t_data *data)
 	free_double_str(data->all_paths);
 	free_double_str(data->envp);
 	clean_cmd_list(&data->cmd_list);
-	free_cmd_list(data->cmd_list);
 	free_env(data->env);
 	free_env(data->export);
 	clean_free(&data->tab_delimiters);

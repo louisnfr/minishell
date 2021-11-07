@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/06 15:43:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/07 10:15:56 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,31 @@ t_bool	str_is_digit(char *str)
 	return (SUCCESS);
 }
 
-int	get_exit_code(t_cmd *cmd_list, t_data *data, t_bool *quit_exit)
+int	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 {
-	int	exit_code;
-
-	exit_code = 0;
+	*quit_exit = FALSE;
 	if (cmd_list->args && cmd_list->args[0])
 	{
 		if (str_is_digit(cmd_list->args[0]))
 		{
 			if (!cmd_list->args[1])
-				exit_code = ft_atoi(cmd_list->args[0]);
+				return (ft_atoi(cmd_list->args[0]));
 			else
 			{
 				printf("bash: exit: too many arguments\n");
 				data->ret_value = 1;
 				*quit_exit = TRUE;
+				return (1);
 			}
 		}
 		else
 		{
 			printf("bash: exit: %s: numeric argument required\n",
 				cmd_list->args[0]);
-			exit_code = 2;
+			return (2);
 		}
 	}
-	else
-		exit_code = data->ret_value;
-	return (exit_code);
+	return (data->ret_value);
 }
 
 void	exec_exit(t_cmd *cmd_list, t_data *data)
@@ -68,14 +65,13 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 	t_bool	quit_exit;
 
 	printf("exit\n");
-	quit_exit = FALSE;
-	exit_code = get_exit_code(cmd_list, data, &quit_exit);
+	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
 		return ;
 	disable_raw_mode(data->sh);
 	free_history(data->sh->history);
 	free(data->sh);
 	clean_data(data);
-	atexit(fonction);
+//	atexit(fonction);
 	exit(exit_code);
 }

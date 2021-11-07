@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:35:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/07 10:39:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,24 @@
 
 void	check_exit_code(int exit_code, t_cmd **cmd_list)
 {
-	if (*cmd_list)
+	if (!*cmd_list)
+		return ;
+	if ((exit_code && (*cmd_list)->delimiter == AND)
+		|| (!exit_code && (*cmd_list)->delimiter == OR))
 	{
-		if ((exit_code && (*cmd_list)->delimiter == AND)
-			|| (!exit_code && (*cmd_list)->delimiter == OR))
+		if (*cmd_list && (*cmd_list)->parenthese == FIRST)
 		{
-			if (*cmd_list && (*cmd_list)->parenthese == FIRST)
-			{
-				while (*cmd_list && (*cmd_list)->parenthese)
-					*cmd_list = (*cmd_list)->next;
-			}
-			else
+			while (*cmd_list && (*cmd_list)->parenthese)
 				*cmd_list = (*cmd_list)->next;
 		}
+		else if (*cmd_list && (*cmd_list)->nb_of_pipes)
+		{
+			*cmd_list = (*cmd_list)->next;
+			while (*cmd_list && (*cmd_list)->delimiter == PIPE)
+				*cmd_list = (*cmd_list)->next;
+		}
+		else
+			*cmd_list = (*cmd_list)->next;
 	}
 }
 
@@ -69,12 +74,19 @@ t_bool	handle_execution(
 	return (SUCCESS);
 }
 
-void	handle_error_msg_exec(char *command, int fd_error)
+void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
 {
-	if (ft_strchr(command, '/'))
-		display_error_message(command, "No such file or directory", fd_error);
+	if (command && command[0] != '\0')
+	{
+		*exit_code = 127;
+		if (ft_strchr(command, '/'))
+			display_error_message(
+				command, "No such file or directory", fd_error);
+		else
+			display_error_message(command, "command not found", fd_error);
+	}
 	else
-		display_error_message(command, "command not found", fd_error);
+		*exit_code = 0;
 }
 
 int	exec(t_data *data)
@@ -90,8 +102,8 @@ int	exec(t_data *data)
 			exit_code = exec_parentheses(exit_code, &cmd_list, data);
 		else if (!handle_execution(&exit_code, &cmd_list, data))
 		{
-			exit_code = 127;
-			handle_error_msg_exec(cmd_list->command, cmd_list->error_output);
+			handle_error_msg_exec(
+				&exit_code, cmd_list->command, cmd_list->error_output);
 			cmd_list = cmd_list->next;
 			check_exit_code(exit_code, &cmd_list);
 		}

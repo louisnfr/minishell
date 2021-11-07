@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 16:16:13 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/07 09:56:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
 	}
 	return (EXIT_SUCCESS);
 }
+
 void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 {
 	if (!get_env("PWD", data->env))

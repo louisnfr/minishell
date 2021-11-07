@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/22 19:52:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/07 09:55:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	int	i;
 	int	eol;
 
-//	print_list(data->cmd_list);
 	(void)data;
 	if (!cmd_list->args)
 	{

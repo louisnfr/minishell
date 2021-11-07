@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/06 15:40:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/07 10:35:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@
 /*
 ** init
 */
-pid_t		ft_getpid(void);
 t_bool		init_cmd_list(t_data *data);
-t_data		*init_data(char **envp, pid_t pid);
+t_data		*init_data(char **envp);
 /*
 ** clean
 */
@@ -101,7 +100,7 @@ int			matching_name(char *filename, char *wildcard);
 void		update_path(t_cmd **cmd_list, t_data *data);
 t_bool		handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data);
 int			exec_parentheses(int exit_code, t_cmd **cmd_list, t_data *data);
-void		handle_error_msg_exec(char *command, int fd_error);
+void		handle_error_msg_exec(int *exit_code, char *command, int fd_error);
 void		check_exit_code(int exit_code, t_cmd **cmd_list);
 t_bool		is_first_pipe(t_cmd *cmd_list);
 t_bool		is_last_pipe(t_cmd *cmd_list);
@@ -129,7 +128,6 @@ void		clean_cmd_list(t_cmd **cmd_list);
 t_bool		create_new_cmd(
 				char *cmd, char **options, char *path, t_cmd **cmd_list);
 void		print_list(t_cmd *cmd_list);
-void		free_cmd_list(t_cmd *cmd_list);
 
 /*
 ** parsing/parser
