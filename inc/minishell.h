@@ -139,6 +139,7 @@ void		handle_builtin_cmd(
 				int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 char		*find_cmd_path(char *command, char *path, char **all_paths);
 char		**find_cmd_options(char **argv, t_data *data);
+char		**find_cmd_options_end(char **argv, t_data *data);
 char		**find_cmd_args(char **argv, t_data *data);
 t_bool		cmd_is_builtin(char *cmd);
 t_bool		is_delimiter(char *str);

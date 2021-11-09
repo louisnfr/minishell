@@ -33,4 +33,10 @@ void	handle_bin_cmd(
 		cmd_list->delimiter = delimiter;
 	data->i++;
 	parse_redirections(argv, cmd_list, data);
+	if (argv[data->i] && argv[data->i][0] == '-')
+	{
+		options = find_cmd_options_end(argv, data);
+		if (options)
+			cmd_list->options = options;
+	}
 }

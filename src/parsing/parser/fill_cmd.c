@@ -18,8 +18,8 @@ char	**find_cmd_options(char **argv, t_data *data)
 	int		k;
 	char	**options;
 
-	j = data->i;
 	k = 0;
+	j = data->i;
 	options = NULL;
 	if (!argv[++j])
 		return (options);
@@ -31,6 +31,30 @@ char	**find_cmd_options(char **argv, t_data *data)
 		j = 0;
 		while (k--)
 			options[j++] = ft_strdup(argv[++data->i]);
+		options[j] = NULL;
+	}
+	return (options);
+}
+
+char	**find_cmd_options_end(char **argv, t_data *data)
+{
+	int		j;
+	int		k;
+	char	**options;
+
+	k = 0;
+	j = data->i;
+	options = NULL;
+	if (!argv[j])
+		return (options);
+	while (argv[j] && argv[j++][0] == '-')
+		k++;
+	if (k)
+	{
+		options = (char **)ft_calloc(1, sizeof(char *) * (k + 1));
+		j = 0;
+		while (k--)
+			options[j++] = ft_strdup(argv[data->i++]);
 		options[j] = NULL;
 	}
 	return (options);
