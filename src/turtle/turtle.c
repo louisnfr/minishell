@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 17:39:23 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/09 23:03:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			{
 				free(current);
 				current = NULL;
+				clear_prompt(cx, 1);
 				cx = 0;
 				cx_max = 0;
 			}
@@ -138,12 +139,10 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				strcpy(input, find_cmd_history(hist, sh->search));
+				clear_prompt(cx, 1);
 				cx = 0;
 				cx_max = 0;
 			}
-			write(1, "\x1b[2K", 4);
-			write(1, "\x1b[999D", 6);
-			write(1, data->prpt, ft_strlen(data->prpt));
 		}
 		else if (c == DELETE)
 		{
@@ -155,7 +154,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 					cx++;
 					delete_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
-					clear_prompt(data);
+					clear_prompt(cx, (int)ft_strlen(current));
 					write(1, current, ft_strlen(current));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -170,7 +169,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					strcpy(input, find_cmd_history(hist, sh->search));
-					clear_prompt(data);
+					clear_prompt(cx, (int)ft_strlen(input));
 					write(1, input, ft_strlen(input));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -187,7 +186,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				{
 					delete_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
-					clear_prompt(data);
+					clear_prompt(cx, (int)ft_strlen(current));
 					write(1, current, ft_strlen(current));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -200,7 +199,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					strcpy(input, find_cmd_history(hist, sh->search));
-					clear_prompt(data);
+					clear_prompt(cx, (int)ft_strlen(input));
 					write(1, input, ft_strlen(input));
 					write(1, "\x1b[u", 3);
 					write(1, "\x1b[1D", 4);
@@ -235,7 +234,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 					free(input);
 				input = malloc(sizeof(char) * (ft_strlen(prev_cmd) + 1));
 				strcpy(input, prev_cmd);
-				clear_prompt(data);
+				clear_prompt(cx, (int)ft_strlen(prev_cmd));
 				write(1, input, ft_strlen(input));
 				cx = ft_strlen(input);
 				cx_max = ft_strlen(input);
@@ -246,7 +245,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			if (sh->search == sh->h_num)
 				continue ;
 			next_cmd = find_cmd_history(hist, sh->search + 1);
-			clear_prompt(data);
+			clear_prompt(cx, (int)ft_strlen(next_cmd));
 			if (next_cmd)
 			{
 				if (input)
@@ -277,7 +276,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			{
 				current = insert_char(current, cx, a);
 				write(1, "\x1b[s", 3);
-				clear_prompt(data);
+				clear_prompt(cx, (int)ft_strlen(current));
 				write(1, current, ft_strlen(current));
 				write(1, "\x1b[u", 3);
 				write(1, "\x1b[1C", 4);
@@ -290,7 +289,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				strcpy(input, find_cmd_history(hist, sh->search));
-				clear_prompt(data);
+				clear_prompt(cx, (int)ft_strlen(input));
 				write(1, input, ft_strlen(input));
 				write(1, "\x1b[u", 3);
 				write(1, "\x1b[1C", 4);

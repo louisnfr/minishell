@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/07 10:35:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/09 22:52:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ void		clear_hist(t_history *hist, int search);
 /*** utils ***/
 
 int			ctrl_key(int k);
-void		clear_prompt(t_data *data);
+void		clear_prompt(int cx, int len);
 char		*ft_strjoin(char *s1, char *s2);
 
 /*** exit ***/
