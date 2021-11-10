@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/06 13:09:15 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/11/11 00:32:32 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,9 +98,9 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) #$(DEBUG_F)
 DEBUG_F	= -fsanitize=address
-RDL		= -lreadline
+LIBS	= -lft -lncurses -lreadline
 
 ### INCLUDES ###
 INCLUDE		= inc
@@ -127,14 +127,14 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "$(YELLOW)libft..$(NOC)"
 	@make -sC $(LIBFT_PATH)
-	@$(CC) $(CFLAGS) $(RDL) -L $(LIBFT_PATH) -o $@ $^ -lft
+	@$(CC) $(CFLAGS) -L $(LIBFT_PATH) -o $@ $^ $(LIBS)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc obj/parsing/utils
 	@mkdir -p obj/shell/env obj/shell/exec obj/exit
-	@$(CC) $(CFLAGS) -I$(INCLUDE) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
 clean:
