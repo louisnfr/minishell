@@ -71,6 +71,9 @@ void	clean_data(t_data *data)
 	free_env(data->export);
 	clean_free(&data->tab_delimiters);
 	clean_free(&data->prpt);
+	disable_raw_mode(data->sh);
+	free_history(data->sh->history);
+	free(data->sh);
 	free(data);
 	data = NULL;
 }

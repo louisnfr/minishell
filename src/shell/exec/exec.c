@@ -27,7 +27,7 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 		else if (*cmd_list && (*cmd_list)->nb_of_pipes)
 		{
 			*cmd_list = (*cmd_list)->next;
-			while (*cmd_list && (*cmd_list)->delimiter == PIPE)
+			while (*cmd_list && ((*cmd_list)->delimiter == PIPE || (*cmd_list)->delimiter == OR))
 				*cmd_list = (*cmd_list)->next;
 		}
 		else

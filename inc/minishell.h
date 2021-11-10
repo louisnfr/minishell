@@ -183,6 +183,7 @@ void		free_var(t_var *var);
 int			setup_variables(int *i, int *count, int *double_quotes, char *str);
 void		increment_var(int *i, int *length);
 void		increment_i_j(t_var *var);
+char	    *handle_equal_sign(char *input, t_data *data);
 /*
 ** parsing/split
 */

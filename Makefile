@@ -35,6 +35,7 @@ SOURCES = \
 		parsing/lexer/pid_value.c \
 		parsing/lexer/ret_value.c \
 		parsing/lexer/utils.c \
+		parsing/lexer/equal_sign.c \
 		\
 		parsing/split/split.c \
 		parsing/split/split_length.c \
@@ -96,8 +97,8 @@ SOURCES = \
 
 
 ### COMPILATION ###
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g3
+CC		= clang
+CFLAGS	= -Wall -Wextra -Werror -g3 #-fsanitize=address
 DEBUG_F	= -fsanitize=address
 RDL		= -lreadline
 

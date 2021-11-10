@@ -68,9 +68,6 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
 		return ;
-	disable_raw_mode(data->sh);
-	free_history(data->sh->history);
-	free(data->sh);
 	clean_data(data);
 //	atexit(fonction);
 	exit(exit_code);

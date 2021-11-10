@@ -49,6 +49,9 @@ t_bool	create_fork(int i, pid_t *pid)
 	if (pid[i] < 0)
 		return (-1);
 	if (pid[i] == CHILD)
+	{
+		free(pid);
 		return (1);
+	}
 	return (0);
 }

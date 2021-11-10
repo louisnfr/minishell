@@ -98,11 +98,19 @@ char	*parse_env_variable(char *input, t_data *data)
 	int		new_length;
 
 	new_input = NULL;
-	new_length = get_length_new_input(input, data);
-	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
-	if (!new_input)
-		return (NULL);
-	fill_new_input(new_input, input, data);
+	if (!ft_strchr(input, '='))
+	{
+		new_length = get_length_new_input(input, data);
+		new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 2));
+		if (!new_input)
+		{
+			clean_free(&input);
+			return (NULL);
+		}
+		fill_new_input(new_input, input, data);
+	}
+	else
+		new_input = handle_equal_sign(input, data);
 	clean_free(&input);
 	return (new_input);
 }

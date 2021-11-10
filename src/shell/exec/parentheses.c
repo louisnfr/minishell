@@ -58,6 +58,7 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 	int	pid;
 	int	status;
 
+	status = 0;
 	if (!is_first_cmd(cmd_list, data)
 		&& !can_exec_parenthese(last_exit_code, cmd_list))
 		return (SUCCESS);

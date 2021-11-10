@@ -10,18 +10,18 @@ RESET="\033[0m"
 
 
 printf "Compilation :\n"
-make
+make re
 
 printf "\n${GREEN}..................... START TEST ......................${RESET}\n\n"
 
-function execute_test
+function execute_test()
 {
 	echo -en "${BLUE}[TEST CASE]  $1 : ${RESET}"
 
-	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>&-)
-	MY_EXIT_STATUS=$(echo $?)
+	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null)
+	MY_EXIT_STATUS=$?
 
-	REF_BASH=$(echo $@ "; exit" | bash --posix 2>&-)
+	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null)
 	REF_EXIT_STATUS=$?
 
 	if [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]
@@ -36,12 +36,12 @@ function execute_test
         echo -e "\t${ORANGE}Your result\t\t:\t$MY_RESULT${RESET}"
         echo -e "\t${YELLOW}Expected result\t\t:\t$REF_BASH${RESET}"
 	fi
-#	if [ "$MY_EXIT_STATUS" != "$REF_EXIT_STATUS" ]
-#	then
+	if [ "$MY_EXIT_STATUS" != "$REF_EXIT_STATUS" ]
+	then
 		printf "\n"
         echo -e "\t${ORANGE}Your exit_status\t:\t$MY_EXIT_STATUS${RESET}"
         echo -e "\t${YELLOW}Expected exit_status\t:\t$REF_EXIT_STATUS${RESET}"
-#    fi   		
+    fi   		
 
 	printf "\n\n"
 }
