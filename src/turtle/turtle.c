@@ -6,61 +6,64 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/09 23:03:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:21:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	shell_read_key(t_config *sh)
+int	read_arrow_key(char c)
+{
+	if (c == 'A')
+		return (ARROW_UP);
+	if (c == 'B')
+		return (ARROW_DOWN);
+	if (c == 'C')
+		return (ARROW_RIGHT);
+	if (c == 'D')
+		return (ARROW_LEFT);
+	return ('\x1b');
+}
+
+int	read_escape_seq(void)
 {
 	char	seq[3];
-	int		nread;
+
+	if ((read(STDIN_FILENO, &seq[0], 1) != 1)
+		|| (read(STDIN_FILENO, &seq[1], 1) != 1))
+		return ('\x1b');
+	if (seq[0] == '[')
+	{
+		if (ft_isdigit(seq[1]))
+		{
+			if (read(STDIN_FILENO, &seq[2], 1) != 1)
+				return ('\x1b');
+			if (seq[2] == '~')
+			{
+				if (seq[1] == '3')
+					return (DELETE);
+			}
+		}
+		return (read_arrow_key(seq[1]));
+	}
+	return ('\x1b');
+}
+
+int	shell_read_key(t_config *sh)
+{
+	int		ret;
 	char	c;
 
 	while (1)
 	{
-		nread = read(STDIN_FILENO, &c, 1);
-		if (nread == -1 && errno != EAGAIN)
+		ret = read(STDIN_FILENO, &c, 1);
+		if (ret == -1 && errno != EAGAIN)
 			exit_error("read", sh);
-		if (nread == 1)
+		if (ret == 1)
 			break ;
 	}
 	if (c == '\x1b')
-	{
-		if (read(STDIN_FILENO, &seq[0], 1) != 1)
-			return ('\x1b');
-		if (read(STDIN_FILENO, &seq[1], 1) != 1)
-			return ('\x1b');
-		if (seq[0] == '[')
-		{
-			if (seq[1] >= '0' && seq[1] <= '9')
-			{
-				if (read(STDIN_FILENO, &seq[2], 1) != 1)
-					return ('\x1b');
-				if (seq[2] == '~')
-				{
-					switch (seq[1])
-					{
-						case '3':
-							return (DELETE);
-					}
-				}
-			}
-			switch (seq[1])
-			{
-				case 'A':
-					return (ARROW_UP);
-				case 'B':
-					return (ARROW_DOWN);
-				case 'C':
-					return (ARROW_RIGHT);
-				case 'D':
-					return (ARROW_LEFT);
-			}
-		}
-		return ('\x1b');
-	}
+		return (read_escape_seq());
 	else
 		return (c);
 }
@@ -79,6 +82,8 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	int		c;
 	int		i;
 	int		k;
+	DIR		*directory;
+	struct	dirent	*entity;
 
 	(void)cy;
 	input = NULL;
@@ -90,7 +95,6 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	cx_min = 0;
 	cx_max = cx;
 	sh->search = sh->h_num;
-	// printf("%d %d\n", sh->h_num, sh->search);
 	while (c != 13)
 	{
 		c = shell_read_key(sh);
@@ -206,6 +210,28 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				}
 				cx_max--;
 				cx--;
+			}
+		}
+		else if (c == TAB)
+		{
+			if (current)
+			{
+				directory = opendir(".");
+				entity = readdir(directory);
+				while (entity != NULL)
+				{
+					if (ft_strnstr(entity->d_name, current, (int)ft_strlen(current)))
+						break ;
+					entity = readdir(directory);
+				}
+				// printf("found: %s\n", entity->d_name);
+				current = realloc(current, (int)ft_strlen(entity->d_name));
+				strcpy(current, entity->d_name);
+				clear_prompt(cx, 1);
+				write(1, current, (int)ft_strlen(current));
+				cx = ft_strlen(current);
+				cx_max = ft_strlen(current);
+				closedir(directory);
 			}
 		}
 		else if (c == ARROW_LEFT)
