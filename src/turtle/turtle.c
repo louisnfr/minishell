@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:02:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 01:33:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,15 @@ int	read_key(t_config *sh)
 		return (c);
 }
 
+void	del_cmd_history(char *input, t_history *history, int search)
+{
+	int	i;
+
+	i = ft_strlen(input);
+	while (i)
+		del_char_history(history, i--, search);
+}
+
 char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 {
 	char	*input;
@@ -75,7 +84,6 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	char	*prev_cmd;
 	char	*next_cmd;
 	int		c;
-	int		k;
 	DIR		*directory;
 	struct	dirent	*entity;
 
@@ -129,9 +137,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			}
 			else
 			{
-				k = ft_strlen(input);
-				while (k)
-					del_char_history(sh->history, k--, sh->search);
+				del_cmd_history(input, sh->history, sh->search);
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				strcpy(input, find_cmd_history(hist, sh->search));
