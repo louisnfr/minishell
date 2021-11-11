@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 00:39:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 17:08:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,8 +240,9 @@ void		enable_raw_mode(t_config *sh);
 void		enable_heredoc_raw_mode(t_config *sh);
 void		init_shell(t_config *sh);
 
-/*** turtle ***/
+/*** shell ***/
 
+void	setup_prompt(char **input, t_data *data);
 int			read_key(t_config *sh);
 char		*heredoc_process_keypress(
 				t_data *data, t_config *sh, t_history *hist, char *delimiter);

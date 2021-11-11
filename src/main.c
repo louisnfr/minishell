@@ -6,23 +6,11 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 01:32:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 17:07:26 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	setup_prompt(char **input, t_data *data)
-{
-	*input = NULL;
-	clean_free(&data->prpt);
-	data->prpt = prompt(data);
-	write(1, data->prpt, ft_strlen(data->prpt));
-	enable_raw_mode(data->sh);
-	*input = shell_process_keypress(data, data->sh, data->sh->history);
-	disable_raw_mode(data->sh);
-	write(1, "\n", 1);
-}
 
 int	main(int ac, char **av, char **envp)
 {
