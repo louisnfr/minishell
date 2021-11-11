@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/11 16:58:59 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/11 17:05:27 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,18 +85,16 @@ SOURCES = \
 		\
 		shell/display.c \
 		shell/error_msg.c \
+		shell/exit.c \
+		shell/init.c \
+		shell/list.c \
+		shell/unused.c \
+		shell/raw.c \
+		shell/shell.c \
 		\
-		exit/free.c \
-		exit/error.c \
-		\
-		turtle/exit.c \
-		turtle/init.c \
-		turtle/list.c \
-		turtle/unused.c \
-		turtle/raw.c \
-		turtle/turtle.c \
-		turtle/utils.c
-
+		utils/free.c \
+		utils/error.c \
+		utils/utils.c
 
 ### COMPILATION ###
 CC		= clang
@@ -133,9 +131,9 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
+	@mkdir -p obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc obj/parsing/utils
-	@mkdir -p obj/env obj/exec obj/exit obj/shell
+	@mkdir -p obj/env obj/exec obj/utils obj/shell
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
