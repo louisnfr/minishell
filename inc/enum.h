@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/10 15:39:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 22:02:08 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum s_key
 	ARROW_DOWN,
 	ARROW_RIGHT,
 	DELETE,
-	TAB = 9,
+	TAB_KEY = 9,
 }	t_key;
 
 typedef enum s_boolean

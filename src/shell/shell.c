@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 22:02:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			if (!process_ctrl_key(data, sh, hist, c))
 				return (NULL);
 		}
-		else if (c == TAB)
+		else if (c == TAB_KEY)
 			process_tab_key(sh);
 		else if (c == DELETE)
 			process_del_key(sh, hist);
