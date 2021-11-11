@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:04 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:36:07 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	matching_name(char *filename, char *wildcard)
 	j = 0;
 	if (filename[0] && filename[0] == '.' && wildcard[0] && wildcard[0] != '.')
 		return (0);
-	while (j < (int)ft_strlen(wildcard))
+	while (j < ft_strlen(wildcard))
 	{
 		if (wildcard[j] && wildcard[j] == '*')
 		{

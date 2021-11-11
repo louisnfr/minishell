@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 15:02:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	get_length(char *str, int value_length, char character)
 	if (!str)
 		return (0);
 	length = setup_variables(&i, &count, &double_quotes, str);
-	while (i < (int)ft_strlen(str) && str[i] && str[i + 1])
+	while (i < ft_strlen(str) && str[i] && str[i + 1])
 	{
 		if (str[i] && str[i] == '\"')
 			double_quotes *= -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_length.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 15:42:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	handle_special_cases(
 		{
 			var->i++;
 			var->j++;
-		}	
+		}
 		if (!str[var->i + 1])
 			var->j--;
 	}
@@ -70,7 +70,7 @@ int	get_length_new_input(char *str, t_data *data)
 	if (!var || !str || !str[var->i])
 		return (FAIL);
 	double_quotes = 1;
-	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
+	while (var->i < ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
 			double_quotes *= -1;

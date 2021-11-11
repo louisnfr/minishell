@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiters_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 17:12:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	check_delimiter(char *str, char delimiter, int *i, int *words)
 	int		ret;
 
 	count = 0;
-	if (!str || *i >= (int)ft_strlen(str) || !str[*i]
+	if (!str || *i >= ft_strlen(str) || !str[*i]
 		|| (str[*i] && str[*i] != delimiter))
 		return (SUCCESS);
 	(*words)++;

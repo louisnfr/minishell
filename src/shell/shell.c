@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   turtle.c                                           :+:      :+:    :+:   */
+/*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 16:50:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ void	process_arrow_key(t_config *sh, t_history *hist, int c)
 				free(sh->input);
 			sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
 			strcpy(sh->input, sh->prev_cmd);
-			clear_prompt(sh->cx, (int)ft_strlen(sh->prev_cmd));
+			clear_prompt(sh->cx, ft_strlen(sh->prev_cmd));
 			write(1, sh->input, ft_strlen(sh->input));
 			sh->cx = ft_strlen(sh->input);
 			sh->cx_max = ft_strlen(sh->input);
@@ -182,7 +182,7 @@ void	process_arrow_key(t_config *sh, t_history *hist, int c)
 		if (sh->search == sh->h_num)
 			return ;
 		sh->next_cmd = find_cmd_history(hist, sh->search + 1);
-		clear_prompt(sh->cx, (int)ft_strlen(sh->next_cmd));
+		clear_prompt(sh->cx, ft_strlen(sh->next_cmd));
 		if (sh->next_cmd)
 		{
 			if (sh->input)
@@ -216,7 +216,7 @@ void	process_del_key(t_config *sh, t_history *hist)
 			sh->cx++;
 			delete_char(sh->current, sh->cx - 1);
 			write(1, "\x1b[s", 3);
-			clear_prompt(sh->cx, (int)ft_strlen(sh->current));
+			clear_prompt(sh->cx, ft_strlen(sh->current));
 			write(1, sh->current, ft_strlen(sh->current));
 			write(1, "\x1b[u", 3);
 			write(1, "\x1b[1D", 4);
@@ -231,7 +231,7 @@ void	process_del_key(t_config *sh, t_history *hist)
 					* (ft_strlen(find_cmd_history(hist,
 								sh->search)) + 1));
 			strcpy(sh->input, find_cmd_history(hist, sh->search));
-			clear_prompt(sh->cx, (int)ft_strlen(sh->input));
+			clear_prompt(sh->cx, ft_strlen(sh->input));
 			write(1, sh->input, ft_strlen(sh->input));
 			write(1, "\x1b[u", 3);
 			write(1, "\x1b[1D", 4);
@@ -249,7 +249,7 @@ void	process_backspace_key(t_config *sh, t_history *hist)
 		{
 			delete_char(sh->current, sh->cx - 1);
 			write(1, "\x1b[s", 3);
-			clear_prompt(sh->cx, (int)ft_strlen(sh->current));
+			clear_prompt(sh->cx, ft_strlen(sh->current));
 			write(1, sh->current, ft_strlen(sh->current));
 			write(1, "\x1b[u", 3);
 			write(1, "\x1b[1D", 4);
@@ -262,7 +262,7 @@ void	process_backspace_key(t_config *sh, t_history *hist)
 					* (ft_strlen(find_cmd_history(hist,
 								sh->search)) + 1));
 			strcpy(sh->input, find_cmd_history(hist, sh->search));
-			clear_prompt(sh->cx, (int)ft_strlen(sh->input));
+			clear_prompt(sh->cx, ft_strlen(sh->input));
 			write(1, sh->input, ft_strlen(sh->input));
 			write(1, "\x1b[u", 3);
 			write(1, "\x1b[1D", 4);
@@ -283,15 +283,15 @@ void	process_tab_key(t_config *sh)
 		entity = readdir(directory);
 		while (entity != NULL)
 		{
-			if (ft_strnstr(entity->d_name, sh->current, (int)ft_strlen(sh->current)))
+			if (ft_strnstr(entity->d_name, sh->current, ft_strlen(sh->current)))
 				break ;
 			entity = readdir(directory);
 		}
 		// printf("found: %s\n", entity->d_name);
-		sh->current = realloc(sh->current, (int)ft_strlen(entity->d_name));
+		sh->current = realloc(sh->current, ft_strlen(entity->d_name));
 		strcpy(sh->current, entity->d_name);
 		clear_prompt(sh->cx, 1);
-		write(1, sh->current, (int)ft_strlen(sh->current));
+		write(1, sh->current, ft_strlen(sh->current));
 		sh->cx = ft_strlen(sh->current);
 		sh->cx_max = ft_strlen(sh->current);
 		closedir(directory);
@@ -305,7 +305,7 @@ void	update_input(t_config *sh, t_history *hist, int c)
 	{
 		sh->current = insert_char(sh->current, sh->cx, (char)c);
 		write(1, "\x1b[s", 3);
-		clear_prompt(sh->cx, (int)ft_strlen(sh->current));
+		clear_prompt(sh->cx, ft_strlen(sh->current));
 		write(1, sh->current, ft_strlen(sh->current));
 		write(1, "\x1b[u", 3);
 		write(1, "\x1b[1C", 4);
@@ -318,7 +318,7 @@ void	update_input(t_config *sh, t_history *hist, int c)
 		sh->input = realloc(sh->input, sizeof(char)
 				* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 		strcpy(sh->input, find_cmd_history(hist, sh->search));
-		clear_prompt(sh->cx, (int)ft_strlen(sh->input));
+		clear_prompt(sh->cx, ft_strlen(sh->input));
 		write(1, sh->input, ft_strlen(sh->input));
 		write(1, "\x1b[u", 3);
 		write(1, "\x1b[1C", 4);

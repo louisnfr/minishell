@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:42:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 17:46:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	print_history(t_history *hist)
 }
 
 void	insert_char_history(
-	t_history *hist, unsigned int cx, char c, int search)
+	t_history *hist, int cx, char c, int search)
 {
 	while (hist)
 	{
@@ -93,7 +93,7 @@ void	insert_char_history(
 	hist->new = insert_char(hist->new, cx, c);
 }
 
-void	del_char_history(t_history *hist, unsigned int cx, int search)
+void	del_char_history(t_history *hist, int cx, int search)
 {
 	while (hist)
 	{
@@ -118,7 +118,7 @@ void	clear_hist(t_history *hist, int search)
 	}
 }
 
-char	*insert_char(char *s, unsigned int cx, char c)
+char	*insert_char(char *s, int cx, char c)
 {
 	if (s)
 	{
@@ -135,7 +135,7 @@ char	*insert_char(char *s, unsigned int cx, char c)
 	return (s);
 }
 
-void	delete_char(char *s, unsigned int cx)
+void	delete_char(char *s, int cx)
 {
 	if (cx > ft_strlen(s))
 		return ;

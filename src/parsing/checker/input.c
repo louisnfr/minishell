@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 11:37:01 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	length_quotes(int *length, int input_len, char *input)
 		(*length)++;
 		while (*length < input_len && input[*length] && input[*length] != '\'')
 			(*length)++;
-	}		
+	}
 }
 
 static int	get_length(char *input, int length)
@@ -62,7 +62,7 @@ char	*check_comment(char *input)
 	new_input = NULL;
 	length = 0;
 	length = get_length(input, length);
-	if (length == (int)ft_strlen(input))
+	if (length == ft_strlen(input))
 		return (input);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_input)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 15:13:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	fill_env_value(
 	}
 	else
 	{
-		while (value && k < (int)ft_strlen(value) && value[k])
+		while (value && k < ft_strlen(value) && value[k])
 		{
 			if (value[k] && ft_isspace(value[k]))
 			{
@@ -72,7 +72,7 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	if (!var || !str || !str[var->i])
 		return (FAIL);
 	double_quotes = 1;
-	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
+	while (var->i < ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
 			double_quotes *= -1;
@@ -85,7 +85,7 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 		else
 			new_str[var->j++] = str[var->i++];
 	}
-	if (var->i < (int)ft_strlen(str) && str[var->i])
+	if (var->i < ft_strlen(str) && str[var->i])
 		new_str[var->j++] = str[var->i];
 	new_str[var->j] = '\0';
 	free_var(var);
