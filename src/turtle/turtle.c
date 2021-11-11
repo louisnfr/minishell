@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:48:50 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 01:58:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	init_shell_values(t_config *sh)
 	sh->search = sh->h_num;
 }
 
-t_bool	handle_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
+t_bool	process_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
 {
 	if (c == ctrl_key('d'))
 		{
@@ -143,6 +143,69 @@ t_bool	handle_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
 		return (SUCCESS);
 }
 
+void	process_arrow_key(t_config *sh, t_history *hist, int c)
+{
+	if (c == ARROW_LEFT)
+		{
+			if (sh->cx > sh->cx_min)
+			{
+				write(1, "\x1b[1D", 4);
+				sh->cx--;
+			}
+		}
+		else if (c == ARROW_RIGHT)
+		{
+			if (sh->cx < sh->cx_max)
+			{
+				write(1, "\x1b[1C", 4);
+				sh->cx++;
+			}
+		}
+		else if (c == ARROW_UP)
+		{
+			sh->prev_cmd = find_cmd_history(hist, sh->search - 1);
+			if (sh->prev_cmd)
+			{
+				sh->search--;
+				if (sh->input)
+					free(sh->input);
+				sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
+				strcpy(sh->input, sh->prev_cmd);
+				clear_prompt(sh->cx, (int)ft_strlen(sh->prev_cmd));
+				write(1, sh->input, ft_strlen(sh->input));
+				sh->cx = ft_strlen(sh->input);
+				sh->cx_max = ft_strlen(sh->input);
+			}
+		}
+		else if (c == ARROW_DOWN)
+		{
+			if (sh->search == sh->h_num)
+				return ;
+			sh->next_cmd = find_cmd_history(hist, sh->search + 1);
+			clear_prompt(sh->cx, (int)ft_strlen(sh->next_cmd));
+			if (sh->next_cmd)
+			{
+				if (sh->input)
+					free(sh->input);
+				sh->input = malloc(sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
+				strcpy(sh->input, sh->next_cmd);
+				write(1, sh->input, ft_strlen(sh->input));
+				sh->cx = ft_strlen(sh->input);
+				sh->cx_max = ft_strlen(sh->input);
+			}
+			else if (!sh->next_cmd)
+			{
+				free(sh->input);
+				sh->input = NULL;
+				if (sh->current)
+					write(1, sh->current, ft_strlen(sh->current));
+				sh->cx = ft_strlen(sh->current);
+				sh->cx_max = ft_strlen(sh->current);
+			}
+			sh->search++;
+		}
+}
+
 char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 {
 	struct	dirent	*entity;
@@ -157,7 +220,7 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 		if (c == ctrl_key('c') || c == ctrl_key('d')
 			|| c == ctrl_key('u') || c == ctrl_key('l'))
 		{
-			if (!handle_ctrl_key(data, sh, hist, c))
+			if (!process_ctrl_key(data, sh, hist, c))
 				return (NULL);
 		}
 		else if (c == DELETE)
@@ -246,67 +309,8 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 				closedir(directory);
 			}
 		}
-		// else if (c >= 1000 && c <= 1003)
-		// 	process_arrow_key(c, *cx,)
-		else if (c == ARROW_LEFT)
-		{
-			if (sh->cx > sh->cx_min)
-			{
-				write(1, "\x1b[1D", 4);
-				sh->cx--;
-			}
-		}
-		else if (c == ARROW_RIGHT)
-		{
-			if (sh->cx < sh->cx_max)
-			{
-				write(1, "\x1b[1C", 4);
-				sh->cx++;
-			}
-		}
-		else if (c == ARROW_UP)
-		{
-			sh->prev_cmd = find_cmd_history(hist, sh->search - 1);
-			if (sh->prev_cmd)
-			{
-				sh->search--;
-				if (sh->input)
-					free(sh->input);
-				sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
-				strcpy(sh->input, sh->prev_cmd);
-				clear_prompt(sh->cx, (int)ft_strlen(sh->prev_cmd));
-				write(1, sh->input, ft_strlen(sh->input));
-				sh->cx = ft_strlen(sh->input);
-				sh->cx_max = ft_strlen(sh->input);
-			}
-		}
-		else if (c == ARROW_DOWN)
-		{
-			if (sh->search == sh->h_num)
-				continue ;
-			sh->next_cmd = find_cmd_history(hist, sh->search + 1);
-			clear_prompt(sh->cx, (int)ft_strlen(sh->next_cmd));
-			if (sh->next_cmd)
-			{
-				if (sh->input)
-					free(sh->input);
-				sh->input = malloc(sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
-				strcpy(sh->input, sh->next_cmd);
-				write(1, sh->input, ft_strlen(sh->input));
-				sh->cx = ft_strlen(sh->input);
-				sh->cx_max = ft_strlen(sh->input);
-			}
-			else if (!sh->next_cmd)
-			{
-				free(sh->input);
-				sh->input = NULL;
-				if (sh->current)
-					write(1, sh->current, ft_strlen(sh->current));
-				sh->cx = ft_strlen(sh->current);
-				sh->cx_max = ft_strlen(sh->current);
-			}
-			sh->search++;
-		}
+		else if (c >= ARROW_UP && c <= ARROW_RIGHT)
+			process_arrow_key(sh, hist, c);
 		else if (ft_isprint(c))
 		{
 			sh->cx_max++;
