@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:13:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:51:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*find_cmd_history(t_history *hist, int h_num)
 	{
 		if (hist->num == h_num)
 		{
-			if (strcmp(hist->cmd, hist->new))
+			if (ft_strcmp(hist->cmd, hist->new))
 				return (hist->new);
 			return (hist->cmd);
 		}
@@ -75,7 +75,8 @@ void	clear_hist(t_history *hist, int search)
 		{
 			free(hist->new);
 			hist->new = malloc(sizeof(char) * (ft_strlen(hist->cmd) + 1));
-			ft_strcpy(hist->new, hist->cmd);
+			if (hist->new)
+				ft_strcpy(hist->new, hist->cmd);
 		}
 		hist = hist->next;
 	}

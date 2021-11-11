@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/11 20:59:43 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/11 21:34:52 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,6 @@ SOURCES = \
 		shell/display.c \
 		shell/error_msg.c \
 		shell/exit.c \
-		shell/unused.c \
 		shell/shell.c \
 		\
 		utils/free.c \

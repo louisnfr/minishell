@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:45:42 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:52:23 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*insert_char(char *s, int cx, char c)
 	else
 	{
 		s = malloc(sizeof(char) * 2);
+		if (!s)
+			return (NULL);
 		s[0] = c;
 		s[1] = 0;
 	}
