@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:33:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 01:42:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ char	*insert_char(char *s, unsigned int cx, char c)
 
 void	delete_char(char *s, unsigned int cx)
 {
-//	if (cx < 0 || cx > ft_strlen(s)) Problem compilation ggc
 	if (cx > ft_strlen(s))
 		return ;
 	memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);

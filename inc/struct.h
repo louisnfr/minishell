@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 00:58:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 01:37:22 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,14 @@ typedef struct s_env
 
 typedef struct s_config
 {
-	char				**envp;
-	struct s_history	*history;
 	struct termios		orig_termios;
 	t_bool				init_termios;
+	char				**envp;
+	struct s_history	*history;
+	char				*input;
+	char				*current;
+	char				*prev_cmd;
+	char				*next_cmd;
 	int					h_num;
 	int					search;
 	int					cx;
