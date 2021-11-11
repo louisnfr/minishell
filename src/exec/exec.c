@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/07 10:39:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/11 22:41:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 		else if (*cmd_list && (*cmd_list)->nb_of_pipes)
 		{
 			*cmd_list = (*cmd_list)->next;
-			while (*cmd_list && ((*cmd_list)->delimiter == PIPE || (*cmd_list)->delimiter == OR))
+			while (*cmd_list && ((*cmd_list)->delimiter == PIPE
+					|| (*cmd_list)->delimiter == OR))
 				*cmd_list = (*cmd_list)->next;
 		}
 		else

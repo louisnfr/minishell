@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/15 15:56:26 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 22:40:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,24 @@ void	print_export(t_cmd *cmd_list, t_data *data)
 	}
 }
 
-t_bool	exec_export(t_cmd *cmd_list, t_data *data)
+void	add_var_env(t_data *data, t_cmd *cmd_list, int i)
 {
 	char	**var;
+
+	var = ft_split_on_first(cmd_list->args[i], '=');
+	if (!already_exists(var[0], data->env))
+		add_var(&data->env, new_var(var[0], var[1], 1));
+	else
+		set_env(var[0], var[1], data->env);
+	if (!already_exists(var[0], data->export))
+		add_var(&data->export, new_var(var[0], var[1], 1));
+	else
+		set_env(var[0], var[1], data->export);
+	free_split(var);
+}
+
+t_bool	exec_export(t_cmd *cmd_list, t_data *data)
+{
 	int		ret;
 	int		i;
 
@@ -69,24 +84,14 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 	{
 		if (ft_isdigit(cmd_list->args[i][0]) || cmd_list->args[i][0] == '=')
 			ret = export_error(cmd_list, i);
-		else if (!ft_strnstr(cmd_list->args[i], "=", ft_strlen(cmd_list->args[i])))
+		else if (!ft_strnstr(cmd_list->args[i], "=",
+				ft_strlen(cmd_list->args[i])))
 		{
 			if (!already_exists(cmd_list->args[i], data->export))
 				add_var(&data->export, new_var(cmd_list->args[i], "\0", 0));
 		}
 		else
-		{
-			var = ft_split_on_first(cmd_list->args[i], '=');
-			if (!already_exists(var[0], data->env))
-				add_var(&data->env, new_var(var[0], var[1], 1));
-			else
-				set_env(var[0], var[1], data->env);
-			if (!already_exists(var[0], data->export))
-				add_var(&data->export, new_var(var[0], var[1], 1));
-			else
-				set_env(var[0], var[1], data->export);
-			free_split(var);
-		}
+			add_var_env(data, cmd_list, i);
 	}
 	return (ret);
 }

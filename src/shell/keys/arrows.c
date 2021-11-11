@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:26:09 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:53:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 22:43:50 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	process_arrow_key(t_config *sh, t_history *hist, int c)
 	else if (c == ARROW_UP)
 		process_arrow_up(sh, hist);
 	else if (c == ARROW_DOWN)
+	{
+		if (sh->search == sh->h_num)
+			return ;
 		process_arrow_down(sh, hist);
+	}
 }
 
 void	move_cursor_left(t_config *sh)
@@ -63,8 +67,6 @@ void	process_arrow_up(t_config *sh, t_history *hist)
 
 void	process_arrow_down(t_config *sh, t_history *hist)
 {
-	if (sh->search == sh->h_num)
-		return ;
 	sh->next_cmd = find_cmd_history(hist, sh->search + 1);
 	clear_prompt(sh->cx, ft_strlen(sh->next_cmd));
 	if (sh->next_cmd)
