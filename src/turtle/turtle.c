@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:58:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 02:00:45 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,122 +93,122 @@ void	init_shell_values(t_config *sh)
 t_bool	process_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
 {
 	if (c == ctrl_key('d'))
-		{
-			if (sh->search == sh->h_num && (!sh->current || !ft_strlen(sh->current)))
-				exit_free(sh, hist);
-			else if (sh->search != sh->h_num && (!sh->input || !ft_strlen(sh->input)))
-				exit_free(sh, hist);
-		}
-		else if (c == ctrl_key('c'))
+	{
+		if (sh->search == sh->h_num && (!sh->current || !ft_strlen(sh->current)))
+			exit_free(sh, hist);
+		else if (sh->search != sh->h_num && (!sh->input || !ft_strlen(sh->input)))
+			exit_free(sh, hist);
+	}
+	else if (c == ctrl_key('c'))
+	{
+		free(sh->current);
+		free(sh->input);
+		write(1, "^C", 2);
+		return (FAIL);
+	}
+	else if (c == ctrl_key('l'))
+	{
+		write(1, "\x1b[s", 3);
+		write(1, "\x1b[2J", 4);
+		write(1, "\x1b[H", 3);
+		write(1, data->prpt, ft_strlen(data->prpt));
+		if (sh->current && sh->search == sh->h_num)
+			write(1, sh->current, ft_strlen(sh->current));
+		else
+			write(1, sh->input, ft_strlen(sh->input));
+		write(1, "\x1b[u", 3);
+		write(1, "\x1b[999A", 6);
+	}
+	else if (c == ctrl_key('u'))
+	{
+		if (sh->search == sh->h_num)
 		{
 			free(sh->current);
-			free(sh->input);
-			write(1, "^C", 2);
-			return (FAIL);
+			sh->current = NULL;
+			clear_prompt(sh->cx, 1);
+			sh->cx = 0;
+			sh->cx_max = 0;
 		}
-		else if (c == ctrl_key('l'))
+		else
 		{
-			write(1, "\x1b[s", 3);
-			write(1, "\x1b[2J", 4);
-			write(1, "\x1b[H", 3);
-			write(1, data->prpt, ft_strlen(data->prpt));
-			if (sh->current && sh->search == sh->h_num)
-				write(1, sh->current, ft_strlen(sh->current));
-			else
-				write(1, sh->input, ft_strlen(sh->input));
-			write(1, "\x1b[u", 3);
-			write(1, "\x1b[999A", 6);
+			del_cmd_history(sh->input, sh->history, sh->search);
+			sh->input = realloc(sh->input, sizeof(char)
+					* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
+			strcpy(sh->input, find_cmd_history(hist, sh->search));
+			clear_prompt(sh->cx, 1);
+			sh->cx = 0;
+			sh->cx_max = 0;
 		}
-		else if (c == ctrl_key('u'))
-		{
-			if (sh->search == sh->h_num)
-			{
-				free(sh->current);
-				sh->current = NULL;
-				clear_prompt(sh->cx, 1);
-				sh->cx = 0;
-				sh->cx_max = 0;
-			}
-			else
-			{
-				del_cmd_history(sh->input, sh->history, sh->search);
-				sh->input = realloc(sh->input, sizeof(char)
-						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
-				strcpy(sh->input, find_cmd_history(hist, sh->search));
-				clear_prompt(sh->cx, 1);
-				sh->cx = 0;
-				sh->cx_max = 0;
-			}
-		}
-		return (SUCCESS);
+	}
+	return (SUCCESS);
 }
 
 void	process_arrow_key(t_config *sh, t_history *hist, int c)
 {
 	if (c == ARROW_LEFT)
+	{
+		if (sh->cx > sh->cx_min)
 		{
-			if (sh->cx > sh->cx_min)
-			{
-				write(1, "\x1b[1D", 4);
-				sh->cx--;
-			}
+			write(1, "\x1b[1D", 4);
+			sh->cx--;
 		}
-		else if (c == ARROW_RIGHT)
+	}
+	else if (c == ARROW_RIGHT)
+	{
+		if (sh->cx < sh->cx_max)
 		{
-			if (sh->cx < sh->cx_max)
-			{
-				write(1, "\x1b[1C", 4);
-				sh->cx++;
-			}
+			write(1, "\x1b[1C", 4);
+			sh->cx++;
 		}
-		else if (c == ARROW_UP)
+	}
+	else if (c == ARROW_UP)
+	{
+		sh->prev_cmd = find_cmd_history(hist, sh->search - 1);
+		if (sh->prev_cmd)
 		{
-			sh->prev_cmd = find_cmd_history(hist, sh->search - 1);
-			if (sh->prev_cmd)
-			{
-				sh->search--;
-				if (sh->input)
-					free(sh->input);
-				sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
-				strcpy(sh->input, sh->prev_cmd);
-				clear_prompt(sh->cx, (int)ft_strlen(sh->prev_cmd));
-				write(1, sh->input, ft_strlen(sh->input));
-				sh->cx = ft_strlen(sh->input);
-				sh->cx_max = ft_strlen(sh->input);
-			}
-		}
-		else if (c == ARROW_DOWN)
-		{
-			if (sh->search == sh->h_num)
-				return ;
-			sh->next_cmd = find_cmd_history(hist, sh->search + 1);
-			clear_prompt(sh->cx, (int)ft_strlen(sh->next_cmd));
-			if (sh->next_cmd)
-			{
-				if (sh->input)
-					free(sh->input);
-				sh->input = malloc(sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
-				strcpy(sh->input, sh->next_cmd);
-				write(1, sh->input, ft_strlen(sh->input));
-				sh->cx = ft_strlen(sh->input);
-				sh->cx_max = ft_strlen(sh->input);
-			}
-			else if (!sh->next_cmd)
-			{
+			sh->search--;
+			if (sh->input)
 				free(sh->input);
-				sh->input = NULL;
-				if (sh->current)
-					write(1, sh->current, ft_strlen(sh->current));
-				sh->cx = ft_strlen(sh->current);
-				sh->cx_max = ft_strlen(sh->current);
-			}
-			sh->search++;
+			sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
+			strcpy(sh->input, sh->prev_cmd);
+			clear_prompt(sh->cx, (int)ft_strlen(sh->prev_cmd));
+			write(1, sh->input, ft_strlen(sh->input));
+			sh->cx = ft_strlen(sh->input);
+			sh->cx_max = ft_strlen(sh->input);
 		}
+	}
+	else if (c == ARROW_DOWN)
+	{
+		if (sh->search == sh->h_num)
+			return ;
+		sh->next_cmd = find_cmd_history(hist, sh->search + 1);
+		clear_prompt(sh->cx, (int)ft_strlen(sh->next_cmd));
+		if (sh->next_cmd)
+		{
+			if (sh->input)
+				free(sh->input);
+			sh->input = malloc(sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
+			strcpy(sh->input, sh->next_cmd);
+			write(1, sh->input, ft_strlen(sh->input));
+			sh->cx = ft_strlen(sh->input);
+			sh->cx_max = ft_strlen(sh->input);
+		}
+		else if (!sh->next_cmd)
+		{
+			free(sh->input);
+			sh->input = NULL;
+			if (sh->current)
+				write(1, sh->current, ft_strlen(sh->current));
+			sh->cx = ft_strlen(sh->current);
+			sh->cx_max = ft_strlen(sh->current);
+		}
+		sh->search++;
+	}
 }
 
 char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 {
-	struct	dirent	*entity;
+	struct dirent	*entity;
 	DIR				*directory;
 	int				c;
 
