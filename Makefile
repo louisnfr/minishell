@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/11 17:38:15 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/11 18:23:36 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,6 @@ NAME	= minishell
 ### SOURCE FILES ###
 SOURCES = \
 		main.c \
-		init.c \
-		clean.c \
 		\
 		builtin/echo.c \
 		builtin/cd.c \
@@ -92,7 +90,9 @@ SOURCES = \
 		\
 		utils/free.c \
 		utils/error.c \
-		utils/utils.c
+		utils/utils.c \
+		utils/init.c \
+		utils/clean.c
 
 ### COMPILATION ###
 CC		= clang
