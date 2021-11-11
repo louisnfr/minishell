@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:46:31 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:13:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_history	*new_cmd(char *cmd, int num)
 	ncmd->new = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!ncmd->cmd || !ncmd->new)
 		return (NULL);
-	strcpy(ncmd->cmd, cmd);
-	strcpy(ncmd->new, cmd);
+	ft_strcpy(ncmd->cmd, cmd);
+	ft_strcpy(ncmd->new, cmd);
 	ncmd->next = NULL;
 	ncmd->previous = NULL;
 	return (ncmd);
@@ -75,7 +75,7 @@ void	clear_hist(t_history *hist, int search)
 		{
 			free(hist->new);
 			hist->new = malloc(sizeof(char) * (ft_strlen(hist->cmd) + 1));
-			strcpy(hist->new, hist->cmd);
+			ft_strcpy(hist->new, hist->cmd);
 		}
 		hist = hist->next;
 	}

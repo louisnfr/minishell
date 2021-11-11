@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:23:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/25 01:19:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:01:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	exit_error(const char *s, t_config *sh)
 {
 	if (errno == 0)
-		write(2, s, strlen(s));
+		write(2, s, ft_strlen(s));
 	else
 		perror(s);
 	if (sh->init_termios)

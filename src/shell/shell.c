@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:36:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:26:30 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	update_input(t_config *sh, t_history *hist, int c)
 		insert_char_history(sh->history, sh->cx, (char)c, sh->search);
 		sh->input = realloc(sh->input, sizeof(char)
 				* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
-		strcpy(sh->input, find_cmd_history(hist, sh->search));
+		ft_strcpy(sh->input, find_cmd_history(hist, sh->search));
 		clear_prompt(sh->cx, ft_strlen(sh->input));
 		write(1, sh->input, ft_strlen(sh->input));
 		write(1, "\x1b[u", 3);

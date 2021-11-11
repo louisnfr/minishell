@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:23:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:26:30 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	process_ctrl_u(t_config *sh, t_history *hist)
 		erase_cmd_history(sh->input, sh->history, sh->search);
 		sh->input = realloc(sh->input, sizeof(char)
 				* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
-		strcpy(sh->input, find_cmd_history(hist, sh->search));
+		ft_strcpy(sh->input, find_cmd_history(hist, sh->search));
 		clear_prompt(sh->cx, 1);
 		sh->cx = 0;
 		sh->cx_max = 0;

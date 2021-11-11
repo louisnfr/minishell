@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:10:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:26:30 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 					erase_char_history(sh->history, k--, sh->search);
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
-				strcpy(input, find_cmd_history(hist, sh->search));
+				ft_strcpy(input, find_cmd_history(hist, sh->search));
 				cx = 0;
 				cx_max = 0;
 			}
@@ -124,7 +124,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 					input = realloc(input, sizeof(char)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
-					strcpy(input, find_cmd_history(hist, sh->search));
+					ft_strcpy(input, find_cmd_history(hist, sh->search));
 					write(STDOUT_FILENO, "\x1b[2K", 4);
 					write(STDOUT_FILENO, "\x1b[999D", 6);
 					write(1, "> ", 2);
@@ -158,7 +158,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 					input = realloc(input, sizeof(char)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
-					strcpy(input, find_cmd_history(hist, sh->search));
+					ft_strcpy(input, find_cmd_history(hist, sh->search));
 					write(STDOUT_FILENO, "\x1b[2K", 4);
 					write(STDOUT_FILENO, "\x1b[999D", 6);
 					write(1, "> ", 2);
@@ -195,7 +195,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				if (input)
 					free(input);
 				input = malloc(sizeof(char) * (ft_strlen(prev_cmd) + 1));
-				strcpy(input, prev_cmd);
+				ft_strcpy(input, prev_cmd);
 				write(STDOUT_FILENO, "\x1b[2K", 4);
 				write(STDOUT_FILENO, "\x1b[999D", 6);
 				write(1, "> ", 2);
@@ -218,7 +218,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				if (input)
 					free(input);
 				input = malloc(sizeof(char) * (ft_strlen(next_cmd) + 1));
-				strcpy(input, next_cmd);
+				ft_strcpy(input, next_cmd);
 				write(1, input, ft_strlen(input));
 				cx = ft_strlen(input);
 				cx_max = ft_strlen(input);
@@ -258,7 +258,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				insert_char_history(sh->history, cx, a, sh->search);
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
-				strcpy(input, find_cmd_history(hist, sh->search));
+				ft_strcpy(input, find_cmd_history(hist, sh->search));
 				write(STDOUT_FILENO, "\x1b[2K", 4);
 				write(STDOUT_FILENO, "\x1b[999D", 6);
 				write(1, "> ", 2);

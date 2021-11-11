@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 19:42:10 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:40:29 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:15:10 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	erase_char(char *s, int cx)
 {
 	if (cx > ft_strlen(s))
 		return ;
-	memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
+	ft_memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
 }
