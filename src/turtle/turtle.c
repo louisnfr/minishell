@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 16:39:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 16:50:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,32 @@ void	process_backspace_key(t_config *sh, t_history *hist)
 	}
 }
 
+void	process_tab_key(t_config *sh)
+{
+	struct dirent	*entity;
+	DIR				*directory;
+
+	if (sh->current)
+	{
+		directory = opendir(".");
+		entity = readdir(directory);
+		while (entity != NULL)
+		{
+			if (ft_strnstr(entity->d_name, sh->current, (int)ft_strlen(sh->current)))
+				break ;
+			entity = readdir(directory);
+		}
+		// printf("found: %s\n", entity->d_name);
+		sh->current = realloc(sh->current, (int)ft_strlen(entity->d_name));
+		strcpy(sh->current, entity->d_name);
+		clear_prompt(sh->cx, 1);
+		write(1, sh->current, (int)ft_strlen(sh->current));
+		sh->cx = ft_strlen(sh->current);
+		sh->cx_max = ft_strlen(sh->current);
+		closedir(directory);
+	}
+}
+
 void	update_input(t_config *sh, t_history *hist, int c)
 {
 	sh->cx_max++;
@@ -308,7 +334,6 @@ char	*send_cmd(t_config *sh)
 	return (sh->input);
 }
 
-
 char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 {
 	int	c;
@@ -324,6 +349,8 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 			if (!process_ctrl_key(data, sh, hist, c))
 				return (NULL);
 		}
+		else if (c == TAB)
+			process_tab_key(sh);
 		else if (c == DELETE)
 			process_del_key(sh, hist);
 		else if (c == BACKSPACE)
@@ -335,37 +362,3 @@ char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
 	}
 	return (send_cmd(sh));
 }
-
-
-
-
-
-/*		TAB HANDLING
-
-struct dirent	*entity;
-DIR				*directory;
-
-else if (c == TAB)
-		{
-			if (sh->current)
-			{
-				directory = opendir(".");
-				entity = readdir(directory);
-				while (entity != NULL)
-				{
-					if (ft_strnstr(entity->d_name, sh->current, (int)ft_strlen(sh->current)))
-						break ;
-					entity = readdir(directory);
-				}
-				// printf("found: %s\n", entity->d_name);
-				sh->current = realloc(sh->current, (int)ft_strlen(entity->d_name));
-				strcpy(sh->current, entity->d_name);
-				clear_prompt(sh->cx, 1);
-				write(1, sh->current, (int)ft_strlen(sh->current));
-				sh->cx = ft_strlen(sh->current);
-				sh->cx_max = ft_strlen(sh->current);
-				closedir(directory);
-			}
-		}
-
-*/

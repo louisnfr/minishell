@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/11 00:32:32 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/11 16:58:59 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,17 +70,19 @@ SOURCES = \
 		parsing/utils/linked_list.c \
 		parsing/utils/print_list.c \
 		\
-		shell/env/env.c \
-		shell/env/list.c \
-		shell/exec/exec.c \
-		shell/exec/bin_cmd.c \
-		shell/exec/cmd_array.c \
-		shell/exec/builtin_cmd.c \
-		shell/exec/pipes.c \
-		shell/exec/pipes_utils.c \
-		shell/exec/close_fd.c \
-		shell/exec/parentheses.c \
-		shell/exec/wildcard.c \
+		env/env.c \
+		env/list.c \
+		\
+		exec/exec.c \
+		exec/bin_cmd.c \
+		exec/cmd_array.c \
+		exec/builtin_cmd.c \
+		exec/pipes.c \
+		exec/pipes_utils.c \
+		exec/close_fd.c \
+		exec/parentheses.c \
+		exec/wildcard.c \
+		\
 		shell/display.c \
 		shell/error_msg.c \
 		\
@@ -90,7 +92,7 @@ SOURCES = \
 		turtle/exit.c \
 		turtle/init.c \
 		turtle/list.c \
-		turtle/main.c \
+		turtle/unused.c \
 		turtle/raw.c \
 		turtle/turtle.c \
 		turtle/utils.c
@@ -133,7 +135,7 @@ $(NAME): $(OBJ)
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/turtle obj/builtin obj/parsing obj/parsing/parser obj/parsing/lexer
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc obj/parsing/utils
-	@mkdir -p obj/shell/env obj/shell/exec obj/exit
+	@mkdir -p obj/env obj/exec obj/exit obj/shell
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 
