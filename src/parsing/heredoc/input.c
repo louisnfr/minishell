@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_input.c                                    :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/21 14:41:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:40:24 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 	// printf("%d %d\n", sh->h_num, sh->search);
 	while (c != 13)
 	{
-		c = shell_read_key(sh);
+		c = read_key(sh);
 		if (c == ctrl_key('d') && ft_strlen(current) == 0)
 		{
 			if ((sh->search == sh->h_num && (!current || !ft_strlen(current)))

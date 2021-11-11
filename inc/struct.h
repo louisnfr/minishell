@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/06 14:13:32 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/11 00:58:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ typedef struct s_config
 {
 	char				**envp;
 	struct s_history	*history;
-	int					cx;
-	int					cy;
-	int					h_num;
-	int					search;
 	struct termios		orig_termios;
 	t_bool				init_termios;
+	int					h_num;
+	int					search;
+	int					cx;
+	int					cy;
+	int					cx_min;
+	int					cx_max;
 }	t_config;
 
 typedef struct s_var

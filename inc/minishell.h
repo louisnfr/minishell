@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/09 22:52:13 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:39:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ void		init_shell(t_config *sh);
 
 /*** turtle ***/
 
-int			shell_read_key(t_config *sh);
+int			read_key(t_config *sh);
 char		*heredoc_process_keypress(
 				t_data *data, t_config *sh, t_history *hist, char *delimiter);
 char		*shell_process_keypress(
