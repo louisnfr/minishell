@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
+/*   insert_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:45:03 by lraffin          ###   ########.fr       */
+/*   Created: 2021/11/11 20:45:42 by lraffin           #+#    #+#             */
+/*   Updated: 2021/11/11 20:46:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_history(t_history *hist)
+char	*insert_char(char *s, int cx, char c)
 {
-	int	i;
-
-	i = 1;
-	hist = getlast(hist);
-	while (hist)
+	if (s)
 	{
-		printf("%5d  %s\n", i, hist->cmd);
-		hist = hist->previous;
-		i++;
+		s = realloc(s, sizeof(char) * (ft_strlen(s) + 2));
+		memmove(&s[cx + 1], &s[cx], ft_strlen(s) - cx + 1);
+		s[cx] = c;
 	}
+	else
+	{
+		s = malloc(sizeof(char) * 2);
+		s[0] = c;
+		s[1] = 0;
+	}
+	return (s);
 }
 
-t_bool	exec_history(t_cmd *cmd_list, t_data *data)
+void	insert_char_history(t_history *hist, int cx, char c, int search)
 {
-	(void)cmd_list;
-	print_history(data->sh->history);
-	return (EXIT_SUCCESS);
+	while (hist)
+	{
+		if (hist->num == search)
+			break ;
+		hist = hist->next;
+	}
+	hist->new = insert_char(hist->new, cx, c);
 }

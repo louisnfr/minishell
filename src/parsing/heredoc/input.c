@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 00:40:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 20:10:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 			{
 				k = ft_strlen(input);
 				while (k)
-					del_char_history(sh->history, k--, sh->search);
+					erase_char_history(sh->history, k--, sh->search);
 				input = realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				strcpy(input, find_cmd_history(hist, sh->search));
@@ -106,7 +106,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				{
 					write(1, "\x1b[1C", 4);
 					cx++;
-					delete_char(current, cx - 1);
+					erase_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
 					write(STDOUT_FILENO, "\x1b[2K", 4);
 					write(STDOUT_FILENO, "\x1b[999D", 6);
@@ -120,7 +120,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 					write(1, "\x1b[1C", 4);
 					cx++;
 					write(1, "\x1b[s", 3);
-					del_char_history(sh->history, cx, sh->search);
+					erase_char_history(sh->history, cx, sh->search);
 					input = realloc(input, sizeof(char)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
@@ -142,7 +142,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 			{
 				if (sh->search == sh->h_num)
 				{
-					delete_char(current, cx - 1);
+					erase_char(current, cx - 1);
 					write(1, "\x1b[s", 3);
 					write(STDOUT_FILENO, "\x1b[2K", 4);
 					write(STDOUT_FILENO, "\x1b[999D", 6);
@@ -154,7 +154,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				else
 				{
 					write(1, "\x1b[s", 3);
-					del_char_history(sh->history, cx, sh->search);
+					erase_char_history(sh->history, cx, sh->search);
 					input = realloc(input, sizeof(char)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));

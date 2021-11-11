@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 17:46:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 20:46:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,43 +67,6 @@ char	*find_cmd_history(t_history *hist, int h_num)
 	return (NULL);
 }
 
-void	print_history(t_history *hist)
-{
-	int	i;
-
-	i = 1;
-	hist = getlast(hist);
-	while (hist)
-	{
-		printf("%5d  %s\n", i, hist->cmd);
-		hist = hist->previous;
-		i++;
-	}
-}
-
-void	insert_char_history(
-	t_history *hist, int cx, char c, int search)
-{
-	while (hist)
-	{
-		if (hist->num == search)
-			break ;
-		hist = hist->next;
-	}
-	hist->new = insert_char(hist->new, cx, c);
-}
-
-void	del_char_history(t_history *hist, int cx, int search)
-{
-	while (hist)
-	{
-		if (hist->num == search)
-			break ;
-		hist = hist->next;
-	}
-	delete_char(hist->new, cx - 1);
-}
-
 void	clear_hist(t_history *hist, int search)
 {
 	while (hist)
@@ -116,28 +79,4 @@ void	clear_hist(t_history *hist, int search)
 		}
 		hist = hist->next;
 	}
-}
-
-char	*insert_char(char *s, int cx, char c)
-{
-	if (s)
-	{
-		s = realloc(s, sizeof(char) * (ft_strlen(s) + 2));
-		memmove(&s[cx + 1], &s[cx], ft_strlen(s) - cx + 1);
-		s[cx] = c;
-	}
-	else
-	{
-		s = malloc(sizeof(char) * 2);
-		s[0] = c;
-		s[1] = 0;
-	}
-	return (s);
-}
-
-void	delete_char(char *s, int cx)
-{
-	if (cx > ft_strlen(s))
-		return ;
-	memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
 }

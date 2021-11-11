@@ -1,45 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   erase_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/03 09:09:59 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:19:25 by lraffin          ###   ########.fr       */
+/*   Created: 2021/11/11 19:42:10 by lraffin           #+#    #+#             */
+/*   Updated: 2021/11/11 20:40:29 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_shell(t_config *sh)
+void	erase_cmd_history(char *input, t_history *history, int search)
 {
-	sh->cx = 0;
-	sh->cy = 0;
+	int	i;
+
+	i = ft_strlen(input);
+	while (i)
+		erase_char_history(history, i--, search);
 }
 
-t_config	*init_config(char **envp)
+void	erase_char_history(t_history *hist, int cx, int search)
 {
-	t_config	*sh;
-
-	sh = malloc(sizeof(t_config));
-	if (!sh)
-		return (NULL);
-	sh->history = NULL;
-	sh->h_num = 1;
-	sh->envp = envp;
-	sh->init_termios = FALSE;
-	init_shell(sh);
-	return (sh);
+	while (hist)
+	{
+		if (hist->num == search)
+			break ;
+		hist = hist->next;
+	}
+	erase_char(hist->new, cx - 1);
 }
 
-t_history	*init_history(void)
+void	erase_char(char *s, int cx)
 {
-	t_history	*history;
-
-	history = malloc(sizeof(t_history));
-	if (!history)
-		return (NULL);
-	history = NULL;
-	return (history);
+	if (cx > ft_strlen(s))
+		return ;
+	memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
 }
