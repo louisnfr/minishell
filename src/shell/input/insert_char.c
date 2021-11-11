@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:45:42 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:26:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*insert_char(char *s, int cx, char c)
 {
 	if (s)
 	{
-		s = realloc(s, sizeof(char) * (ft_strlen(s) + 2));
+		s = ft_realloc(s, sizeof(char) * (ft_strlen(s) + 2));
 		ft_memmove(&s[cx + 1], &s[cx], ft_strlen(s) - cx + 1);
 		s[cx] = c;
 	}

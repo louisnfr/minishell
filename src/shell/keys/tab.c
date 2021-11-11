@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:26:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	process_tab_key(t_config *sh)
 				break ;
 			entity = readdir(directory);
 		}
-		sh->current = realloc(sh->current, ft_strlen(entity->d_name));
+		sh->current = ft_realloc(sh->current, ft_strlen(entity->d_name));
 		ft_strcpy(sh->current, entity->d_name);
 		clear_prompt(sh->cx, 1);
 		write(1, sh->current, ft_strlen(sh->current));

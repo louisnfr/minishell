@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:26:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				k = ft_strlen(input);
 				while (k)
 					erase_char_history(sh->history, k--, sh->search);
-				input = realloc(input, sizeof(char)
+				input = ft_realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				ft_strcpy(input, find_cmd_history(hist, sh->search));
 				cx = 0;
@@ -121,7 +121,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 					cx++;
 					write(1, "\x1b[s", 3);
 					erase_char_history(sh->history, cx, sh->search);
-					input = realloc(input, sizeof(char)
+					input = ft_realloc(input, sizeof(char)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					ft_strcpy(input, find_cmd_history(hist, sh->search));
@@ -155,7 +155,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 				{
 					write(1, "\x1b[s", 3);
 					erase_char_history(sh->history, cx, sh->search);
-					input = realloc(input, sizeof(char)
+					input = ft_realloc(input, sizeof(char)
 							* (ft_strlen(find_cmd_history(hist,
 										sh->search)) + 1));
 					ft_strcpy(input, find_cmd_history(hist, sh->search));
@@ -256,7 +256,7 @@ char	*heredoc_process_keypress(t_data *data, t_config *sh, t_history *hist, char
 			{
 				write(1, "\x1b[s", 3);
 				insert_char_history(sh->history, cx, a, sh->search);
-				input = realloc(input, sizeof(char)
+				input = ft_realloc(input, sizeof(char)
 						* (ft_strlen(find_cmd_history(hist, sh->search)) + 1));
 				ft_strcpy(input, find_cmd_history(hist, sh->search));
 				write(STDOUT_FILENO, "\x1b[2K", 4);
