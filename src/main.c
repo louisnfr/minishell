@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/12 17:34:23 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/12 17:48:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
 	char		*input;
+	
 	if (ac != 1 || av[1])
 		exit(EXIT_FAILURE);
 	data = init_data(envp);
