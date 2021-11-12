@@ -8,7 +8,7 @@ echo -n test tout
 echo -n -n -n test tout
 echo
 echo echo
-eCho 
+eCho
 eChO
 eCHO
 ECHO
@@ -73,11 +73,6 @@ echo $PWD/file
 echo "$PWD/file"
 echo "text" "text$USER" ... "$USER"
 echo $PWD
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
 
 
 ##########################  CD TESTS  #########################
@@ -86,33 +81,33 @@ cd .. ; pwd
 cd /Users ; pwd
 cd ; pwd
 mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
-cd 
-cd .. 
-cd . 
-cd /Users 
-cd // 
-cd '//' 
-cd ////// 
-cd ./././ 
+cd
+cd ..
+cd .
+cd /Users
+cd //
+cd '//'
+cd //////
+cd ./././
 cd /
-cd '/////' 2>/dev/null 
-cd '/etc' 
-cd '/var' 
-cd "$PWD/file_tests" 
-cd "doesntexist" 
-cd "doesntexist" 2>/dev/null 
+cd '/////' 2>/dev/null
+cd '/etc'
+cd '/var'
+cd "$PWD/file_tests"
+cd "doesntexist"
+cd "doesntexist" 2>/dev/null
 cd ../../..
-cd "wtf" 2>/dev/null 
-cd .. 
+cd "wtf" 2>/dev/null
+cd ..
 cd ..
 cd ?
 cd +
 cd _
 cd woof
 cd bark bark
-cd '/' 
-cd $PWD/file_tests 
-cd $OLDPWD/something 
+cd '/'
+cd $PWD/file_tests
+cd $OLDPWD/something
 
 
 ##########################  PIPE TESTS  #########################
@@ -136,7 +131,7 @@ ifconfig | grep ":"
 ifconfig | grep nothing
 whoami | grep $USER
 whoami | grep $USER > tmp/file
-whoami | cat -e | cat -e > tmp/file 
+whoami | cat -e | cat -e > tmp/file
 cat Makefile | grep "FLAGS"
 cat Makefile | cat -e | cat -e
 cat Makefile | grep "FLAGS" | grep "FLAGS" | cat -e
@@ -146,10 +141,10 @@ echo test | cat -e | cat -e | cat -e
 whereis ls | cat -e | cat -e > test
 echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
 ls -la | grep "."
-whereis grep > tmp/file 
+whereis grep > tmp/file
 whereis grep > tmp/file
 ls -la > tmp/file
-ls -la > tmp/file 
+ls -la > tmp/file
 © 2021 GitHub, Inc.
 Terms
 Privacy
@@ -221,7 +216,7 @@ env | grep "_="
 export | grep "SHLVL"
 export | grep "OLDPWD"
 export | grep "PWD"
-export $? 
+export $?
 export TEST
 export TEST=
 export TEST=123
@@ -285,11 +280,11 @@ unset
 export TEST=100
 unset doesntexist
 unset PWD
-unset PWD 
-unset OLDPWD 
-unset PATH 
-unset PATH 
-unset PATH 
+unset PWD
+unset OLDPWD
+unset PATH
+unset PATH
+unset PATH
 unset TES\\\\T
 unset TES;T
 unset TES.T
@@ -410,7 +405,7 @@ echo test > a ; echo test > b ; echo lala >> a >> b >> a ; cat a b
 #########################  MULTI $?  #########################
 
 export a ; echo $?
-export % ; echo $? 
+export % ; echo $?
 echo "test" > a && run_test 'cat a ; echo $?' && rm a
 cat a ; echo $?
 pwd ; echo $?
@@ -461,7 +456,7 @@ echo | |
 | | |
 hello world
 ||||||||
-            
+
 cat wouaf wouaf
 >
 >>>>>>>>
@@ -471,7 +466,7 @@ cat wouaf wouaf
 ~
 <<
 /Users
- 
+
 .
 ..
 /
@@ -542,27 +537,27 @@ exit 9223372036854775807
 exit 9223372036854775808
 exit -4
 exit wrong
-exit wrong_command 
+exit wrong_command
 exit something
-exit 1 
-exit -1 
-exit 42 
-exit 0 
-exit --000 
-exit +++++++000 
-exit ++++3193912939 
-exit ---31232103012 
-exit "something" 
-exit q 
-exit help 
-exit export 
-exit echo 
-exit cd .. 
-exit 0 0 
-exit something somethingv2 
-exit 42 42 42 42 42 
-exit echo something 
-exit exit 
+exit 1
+exit -1
+exit 42
+exit 0
+exit --000
+exit +++++++000
+exit ++++3193912939
+exit ---31232103012
+exit "something"
+exit q
+exit help
+exit export
+exit echo
+exit cd ..
+exit 0 0
+exit something somethingv2
+exit 42 42 42 42 42
+exit echo something
+exit exit
 
 ##########################  CMD ERROR  ##########################
 
