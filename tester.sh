@@ -10,7 +10,7 @@ RESET="\033[0m"
 
 
 printf "Compilation :\n"
-make re
+make
 
 printf "\n${GREEN}..................... START TEST ......................${RESET}\n\n"
 
@@ -41,7 +41,7 @@ function execute_test()
 		printf "\n"
         echo -e "\t${ORANGE}Your exit_status\t:\t$MY_EXIT_STATUS${RESET}"
         echo -e "\t${YELLOW}Expected exit_status\t:\t$REF_EXIT_STATUS${RESET}"
-    fi   		
+    fi
 
 	printf "\n\n"
 }
@@ -49,8 +49,12 @@ function execute_test()
 
 execute_test 'pwd'
 execute_test 'pwd; ls -z'
-execute_test 'ls||pwd'
-
+execute_test 'ls||pwd; pwd'
+execute_test 'cd /Users; pwd'
+execute_test 'cd //; pwd'
+execute_test 'cd '//'; pwd'
+execute_test 'cd //////; pwd'
+execute_test 'cd ./././; pwd'
+execute_test 'echo $USER$12USER$USER=4$USER12'
 
 printf "${GREEN}...................... END TEST ......................${RESET}\n\n"
-
