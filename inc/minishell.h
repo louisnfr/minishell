@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 22:32:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/12 17:03:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ t_bool		cd_error_msg(char *s, t_cmd *cmd_list);
 /*** raw ***/
 
 void		disable_raw_mode(t_config *sh);
-void		enable_raw_mode(t_config *sh);
+t_bool		enable_raw_mode(t_config *sh);
 void		enable_heredoc_raw_mode(t_config *sh);
 void		init_shell(t_config *sh);
 

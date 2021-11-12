@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:36:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/12 17:32:57 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	clean_data(t_data *data)
 	free_env(data->export);
 	clean_free(&data->tab_delimiters);
 	clean_free(&data->prpt);
-	disable_raw_mode(data->sh);
+	// disable_raw_mode(data->sh);
 	free_history(data->sh->history);
 	free(data->sh);
 	free(data);

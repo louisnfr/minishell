@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 17:07:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/12 17:21:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 void	setup_prompt(char **input, t_data *data)
 {
 	*input = NULL;
-	clean_free(&data->prpt);
-	data->prpt = prompt(data);
-	write(1, data->prpt, ft_strlen(data->prpt));
-	enable_raw_mode(data->sh);
-	*input = shell_process_keypress(data, data->sh, data->sh->history);
-	disable_raw_mode(data->sh);
-	write(1, "\n", 1);
+	if (enable_raw_mode(data->sh))
+	{
+		clean_free(&data->prpt);
+		data->prpt = prompt(data);
+		write(1, data->prpt, ft_strlen(data->prpt));
+		*input = shell_process_keypress(data, data->sh, data->sh->history);
+		disable_raw_mode(data->sh);
+		write(1, "\n", 1);
+	}
+	else
+		*input = readline("minishell> ");
 }
 
 char	*prompt(t_data *data)
