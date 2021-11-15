@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 18:45:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:40:40 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,6 @@ void		close_other_pipes(t_cmd **cmd);
 void		close_all_pipes(t_cmd **cmd);
 t_bool		create_fork(int i, pid_t *pid);
 /*
-** libft
-*/
-int			ft_str_isdigit(char *s);
-int			ft_isspace(int c);
-int			str_is_equal(const char *s1, const char *s2);
-void		clean_free(char **str);
-char		*ft_strjoin_and_free(char *s1, char *s2);
-void		free_double_str(char **str);
-char		**ft_split_on_first(const char *s, char c);
-/*
 ** parsing/utils
 */
 char		**get_paths(t_data *data);
@@ -128,7 +118,6 @@ void		clean_cmd_list(t_cmd **cmd_list);
 t_bool		create_new_cmd(
 				char *cmd, char **options, char *path, t_cmd **cmd_list);
 void		print_list(t_cmd *cmd_list);
-
 /*
 ** parsing/parser
 */
@@ -217,6 +206,13 @@ t_bool		check_unclosed_parentheses(char *input);
 /*
 ** parsing/heredoc
 */
+t_bool		process_ctrl_key_hd(
+				t_data *data, t_config *sh, char *delimiter, int c);
+char		*heredoc_process_keypress(
+				t_data *data, t_config *sh, t_history *hist, char *delimiter);
+t_bool		process_ctrl_d_heredoc(
+				t_data *data, t_config *sh, char *delimiter);
+void		process_ctrl_l_heredoc(t_config *sh, t_data *data);
 char		*heredoc_shell(
 				t_data *data, t_config *sh, t_history *hist, char *delimiter);
 t_bool		read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data);
@@ -231,7 +227,12 @@ void		free_split(char **args);
 t_bool		cd_error(t_cmd *cmd_list);
 t_bool		cd_error_msg(char *s, t_cmd *cmd_list);
 
-/*** TURTLE FUNCTIONS ***/
+/*** SHELL FUNCTIONS ***/
+
+/*** shell ***/
+
+void	update_input(t_config *sh, t_history *hist, int c);
+char	*send_cmd(t_config *sh);
 
 /*** raw ***/
 
@@ -240,7 +241,11 @@ t_bool		enable_raw_mode(t_config *sh);
 void		enable_heredoc_raw_mode(t_config *sh);
 void		init_shell(t_config *sh);
 
-/*** shell ***/
+
+/*** insert_char ***/
+
+void		insert_char_history(t_history *hist, int cx, char c, int search);
+char		*insert_char(char *current, int cx, char c);
 
 /*** erase_char ***/
 
@@ -302,9 +307,6 @@ t_history	*new_cmd(char *cmd, int num);
 t_history	*getlast(t_history *hist);
 void		add_cmd(t_history **hist, t_history *new);
 
-/*** insert_char ***/
-void		insert_char_history(t_history *hist, int cx, char c, int search);
-char		*insert_char(char *current, int cx, char c);
 
 char		*find_cmd_history(t_history *hist, int h_num);
 void		print_history(t_history *hist);

@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/15 18:55:09 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/15 19:27:48 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SOURCES = \
 		parsing/parser/parentheses.c \
 		\
 		parsing/heredoc/heredoc.c \
+		parsing/heredoc/ctrl_keys_heredoc.c \
 		parsing/heredoc/input.c \
 		parsing/heredoc/env_var.c \
 		parsing/heredoc/special_value.c \
