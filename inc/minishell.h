@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 19:51:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:56:28 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ char		*heredoc_process_keypress(
 t_bool		process_ctrl_d_heredoc(
 				t_data *data, t_config *sh, char *delimiter);
 void		process_ctrl_l_heredoc(t_config *sh);
+t_bool		process_ctrl_c_heredoc(t_config *sh);
 char		*heredoc_shell(
 				t_data *data, t_config *sh, t_history *hist, char *delimiter);
 t_bool		read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data);

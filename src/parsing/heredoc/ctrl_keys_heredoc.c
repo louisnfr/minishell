@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 19:18:26 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 19:50:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:56:05 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_bool	process_ctrl_key_hd(t_data *data, t_config *sh, char *delimiter, int c)
 	if (c == ctrl_key('d'))
 		return (!process_ctrl_d_heredoc(data, sh, delimiter));
 	else if (c == ctrl_key('c'))
-		return (process_ctrl_c(sh));
+		return (process_ctrl_c_heredoc(sh));
 	else if (c == ctrl_key('l'))
 		process_ctrl_l_heredoc(sh);
 	else if (c == ctrl_key('u'))
@@ -52,4 +52,12 @@ void	process_ctrl_l_heredoc(t_config *sh)
 		write(1, sh->input, ft_strlen(sh->input));
 	write(1, "\x1b[u", 3);
 	write(1, "\x1b[999A", 6);
+}
+
+t_bool	process_ctrl_c_heredoc(t_config *sh)
+{
+	free(sh->current);
+	free(sh->input);
+	write(1, "^C", 2);
+	return (FAIL);
 }
