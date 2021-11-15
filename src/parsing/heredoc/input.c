@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 19:44:45 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:46:55 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*heredoc_process_keypress(
 	int	c;
 
 	c = 0;
-	(void)delimiter;
 	init_shell_values(sh);
 	while (c != 13)
 	{

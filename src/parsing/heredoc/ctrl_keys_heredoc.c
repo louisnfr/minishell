@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 19:18:26 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 19:41:37 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:47:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_bool	process_ctrl_d_heredoc(t_data *data, t_config *sh, char *delimiter)
 		|| (sh->search != sh->h_num && (!sh->input || !ft_strlen(sh->input))))
 	{
 		write(1, "warning: here-document delimited by end-of-file wanted `",
-				56);
+			56);
 		write(1, delimiter, ft_strlen(delimiter));
 		write(1, "')", 2);
 		return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 19:40:40 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:47:58 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,12 +227,10 @@ void		free_split(char **args);
 t_bool		cd_error(t_cmd *cmd_list);
 t_bool		cd_error_msg(char *s, t_cmd *cmd_list);
 
-/*** SHELL FUNCTIONS ***/
-
 /*** shell ***/
 
-void	update_input(t_config *sh, t_history *hist, int c);
-char	*send_cmd(t_config *sh);
+void		update_input(t_config *sh, t_history *hist, int c);
+char		*send_cmd(t_config *sh);
 
 /*** raw ***/
 
@@ -240,7 +238,6 @@ void		disable_raw_mode(t_config *sh);
 t_bool		enable_raw_mode(t_config *sh);
 void		enable_heredoc_raw_mode(t_config *sh);
 void		init_shell(t_config *sh);
-
 
 /*** insert_char ***/
 
@@ -306,7 +303,6 @@ t_history	*init_history(void);
 t_history	*new_cmd(char *cmd, int num);
 t_history	*getlast(t_history *hist);
 void		add_cmd(t_history **hist, t_history *new);
-
 
 char		*find_cmd_history(t_history *hist, int h_num);
 void		print_history(t_history *hist);
