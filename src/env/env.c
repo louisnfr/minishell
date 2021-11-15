@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/20 13:26:56 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/15 18:54:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,65 +27,6 @@ t_env	*create_env(char **envp)
 		free_split(var);
 	}
 	return (g_env);
-}
-
-void	update_env(t_data *data)
-{
-	char	*tmp;
-	int		i;
-
-	tmp = get_env("SHLVL", data->env);
-	i = (ft_atoi(tmp) + 1);
-	tmp = ft_itoa(i);
-	set_env("SHLVL", tmp, data->env);
-	free(tmp);
-}
-
-char	*get_env(char *key, t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-void	set_env(char *key, char *new_value, t_env *env)
-{
-	t_env	*head;
-
-	head = env;
-	while (env)
-	{
-		if (!ft_strcmp(env->key, key))
-			break ;
-		env = env->next;
-	}
-	env->is_value = 1;
-	free(env->value);
-	env->value = ft_calloc(1, sizeof(char) + (ft_strlen(new_value) + 1));
-	if (!env->value)
-		return ;
-	ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
-	env = head;
-}
-
-int	get_env_size(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	while (env)
-	{
-		env = env->next;
-		i++;
-	}
-	return (i);
 }
 
 char	**env_to_char(t_env *env)
