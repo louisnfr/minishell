@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/12 17:03:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 18:39:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,7 @@ void		process_arrow_down(t_config *sh, t_history *hist);
 /*** ctrl_keys ***/
 
 t_bool		process_ctrl_key(t_data *data, t_config *sh, t_history *hst, int c);
-void		process_ctrl_d(t_config *sh, t_history *hist);
+void		process_ctrl_d(t_data * data, t_config *sh);
 t_bool		process_ctrl_c(t_config *sh);
 void		process_ctrl_l(t_config *sh, t_data *data);
 void		process_ctrl_u(t_config *sh, t_history *hist);

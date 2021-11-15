@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/12 15:56:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 18:29:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	exec_exit(t_cmd *cmd_list, t_data *data)
 	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
 		return ;
-	free(data->sh->current);
-	// free(data->sh->input);
 	clean_data(data);
 //	atexit(fonction);
 	exit(exit_code);

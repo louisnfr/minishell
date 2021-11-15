@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 18:39:49 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_bool	process_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
 {
 	if (c == ctrl_key('d'))
-		process_ctrl_d(sh, hist);
+		process_ctrl_d(data, sh);
 	else if (c == ctrl_key('c'))
 		return (process_ctrl_c(sh));
 	else if (c == ctrl_key('l'))
@@ -25,12 +25,25 @@ t_bool	process_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
 	return (SUCCESS);
 }
 
-void	process_ctrl_d(t_config *sh, t_history *hist)
+void	process_ctrl_d(t_data *data, t_config *sh)
 {
+	int	ret;
+
+	ret = data->ret_value;
 	if (sh->search == sh->h_num && (!sh->current || !ft_strlen(sh->current)))
-		exit_free(sh, hist);
+	{
+		disable_raw_mode(sh);
+		printf("exit\n");
+		clean_data(data);
+		exit(ret);
+	}
 	else if (sh->search != sh->h_num && (!sh->input || !ft_strlen(sh->input)))
-		exit_free(sh, hist);
+	{
+		disable_raw_mode(sh);
+		printf("exit\n");
+		clean_data(data);
+		exit(ret);
+	}
 }
 
 t_bool	process_ctrl_c(t_config *sh)
