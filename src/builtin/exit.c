@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 18:29:06 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 02:50:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	fonction(void)
 	system("leaks minishell");
 }
 
-t_bool	str_is_digit(char *str)
+t_bool	exit_str_is_digit(char *str)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ int	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 	*quit_exit = FALSE;
 	if (cmd_list->args && cmd_list->args[0])
 	{
-		if (str_is_digit(cmd_list->args[0]))
+		if (exit_str_is_digit(cmd_list->args[0]))
 		{
 			if (!cmd_list->args[1])
 				return (ft_atoi(cmd_list->args[0]));
