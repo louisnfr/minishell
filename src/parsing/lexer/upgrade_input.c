@@ -41,14 +41,16 @@ char	*handle_home_var(char *str, t_data *data)
 {
 	char	*new_str;
 	char	*home;
+	int		total_length;
 
 	new_str = NULL;
 	home = NULL;
 	if (str_is_equal(str, "~") || (!ft_strncmp("~/", str, 2)
-		&& !ft_strncmp(str, "~/", 2)))
+			&& !ft_strncmp(str, "~/", 2)))
 	{
-		home =  get_env("HOME", data->env);
-		new_str = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(str) + ft_strlen(home)));
+		home = get_env("HOME", data->env);
+		total_length = ft_strlen(str) + ft_strlen(home);
+		new_str = (char *)ft_calloc(1, sizeof(char) * total_length);
 		if (!new_str)
 			return (exit_error_void(NULL, "malloc()", data));
 		new_str = transform_home_var(str, new_str, home);
