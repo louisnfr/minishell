@@ -74,9 +74,15 @@ void	clean_data(t_data *data)
 	free_env(data->export);
 	clean_free(&data->prpt);
 	// if (data->sh->current)
+	// {
 	// 	free(data->sh->current);
-	if (data->sh->input)
-		free(data->sh->input);
+	// 	data->sh->current = NULL;
+	// }
+	// if (data->sh->input)
+	// {
+	// 	free(data->sh->input);
+	// 	data->sh->input = NULL;
+	// }
 	free_history(data->sh->history);
 	free(data->sh);
 	free(data);

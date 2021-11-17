@@ -52,7 +52,6 @@ echo "$USER$USER$USER"
 echo '$USER'"$USER"'$USER'
 echo '"$USER"''$USER'"""$USER"
 echo " $USER  "'$PWD'
-echo " $USER  \$ "'$PWD'
 echo $USER=4
 echo $USER=thallard
 echo $USER
@@ -79,7 +78,6 @@ echo $TEST$TEST$TEST
 echo $TEST$TEST=lol$TEST""lol
 echo    $TEST lol $TEST
 echo test "" test "" test
-echo "\$TEST"
 echo "$=TEST"
 echo "$"
 echo "$?TEST"
@@ -102,3 +100,4 @@ echo $1 "" $9 "" $4 "" $7
 echo $?TEST$?
 echo "$PWD"
 echo "$LALA"
+echo $HOHO

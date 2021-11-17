@@ -565,3 +565,23 @@ gdagadgag
 ls -Z
 cd gdhahahad
 ls -la | wtf
+
+
+##########################  CMD BONUS  ##########################
+
+ls *
+ls *.*
+ls .*
+cat M*le
+cat M*ee
+cat Make*file
+cp [A-Z]* dir2
+cd files && cat ex*.txt
+(cd ../.. && pwd) ; pwd
+ls -z || (cd ../../..&&pwd)
+
+
+# PROBLEMES AVEC TESTER :
+
+cat /dev/random | head -c 100 | wc -c
+find / | grep cores

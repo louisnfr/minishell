@@ -58,6 +58,8 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 	int	pid;
 	int	status;
 
+	exit_code = 0;
+
 	status = 0;
 	if (!is_first_cmd(cmd_list, data)
 		&& !can_exec_parenthese(last_exit_code, cmd_list))
@@ -67,9 +69,11 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 		return (exit_error_bool("fork()", data));
 	if (pid == CHILD)
 		exec_cmd_parenthese(cmd_list, data);
-	close_all_pipes(cmd_list, data);
 	while (*cmd_list && (*cmd_list)->parenthese)
+	{
+		close_fd(cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
+	}
 	waitpid(pid, &exit_code, 0);
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);

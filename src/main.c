@@ -32,8 +32,10 @@ int	main(int ac, char **av, char **envp)
 			data->sh->h_num++;
 			init_cmd_list(data);
 			if (parse(input, data))
+			{
+				// print_list(data->cmd_list);
 				exec(data);
-			// print_list(data->cmd_list);
+			}
 			clear_hist(data->sh->history, data->sh->search);
 			clean_cmd_list(&data->cmd_list, data);
 		}

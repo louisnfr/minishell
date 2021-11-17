@@ -43,7 +43,7 @@ int	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 				return (ft_atoi(cmd_list->args[0]));
 			else
 			{
-				printf("bash: exit: too many arguments\n");
+				ft_putstr_fd("bash: exit: too many arguments\n", 2);
 				data->ret_value = 1;
 				*quit_exit = TRUE;
 				return (1);
@@ -51,8 +51,9 @@ int	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 		}
 		else
 		{
-			printf("bash: exit: %s: numeric argument required\n",
-				cmd_list->args[0]);
+			ft_putstr_fd("bash: exit: ", 2);
+			ft_putstr_fd(cmd_list->args[0], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
 			return (2);
 		}
 	}

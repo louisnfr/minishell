@@ -128,6 +128,7 @@ t_bool	fill_wildcard_arg(
 	{
 		if (matching_name(entity->d_name, wildcard_arg))
 		{
+			printf("entity->d_name = %s\n", entity->d_name);
 			cmd_array[*i + 1] = safe_strdup(entity->d_name, data);
 			(*i)++;
 		}

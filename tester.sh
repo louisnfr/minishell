@@ -24,13 +24,13 @@ printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"
 
 function execute_test()
 {
-	SEP=".................................................................................................."
+	SEP="..................................................................................."
 
-	REF_BASH=$(echo $@ "; exit" | bash --posix 2>&-)
-	REF_EXIT_STATUS=$?
-
-	MY_RESULT=`echo $@ "; exit" | ./minishell 2>&-`
+	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null | sed '/^minishell/d')
 	MY_EXIT_STATUS=$?
+
+	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null  | sed '/^minishell/d')
+	REF_EXIT_STATUS=$?
 
 	if [ "$MY_RESULT" == "$REF_BASH" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]
 	then
@@ -113,6 +113,4 @@ printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
 OK=" ✔ $total_right/$total_sum"
 ERROR="  ✘ $total_false/$total_sum"
 RESULT=`echo -e "${BLUE}TOTAL :  ${RESET}${GREEN}$OK${RESET}${RED}$ERROR${RESET}"`
-#printf "\nTOTAL : $total_right/$total_sum $total_false/$total_sum\n"
 printf "%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 28)) "$RESULT"
-

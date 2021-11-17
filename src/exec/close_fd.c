@@ -22,7 +22,7 @@ void	close_all_pipes(t_cmd **cmd, t_data *data)
 		safe_close_fd((*cmd)->pipe_fd[i][0], data);
 		(*cmd)->pipe_fd[i][0] = 0;
 		safe_close_fd((*cmd)->pipe_fd[i][1], data);
-		(*cmd)->pipe_fd[i][1] = 0;
+		(*cmd)->pipe_fd[i][1] = 1;
 	}
 }
 
@@ -41,7 +41,7 @@ void	close_other_pipes(t_cmd **cmd, t_data *data)
 		if ((*cmd)->output != (*cmd)->pipe_fd[i][1])
 		{
 			safe_close_fd((*cmd)->pipe_fd[i][1], data);
-			(*cmd)->pipe_fd[i][1] = 0;
+			(*cmd)->pipe_fd[i][1] = 1;
 		}
 	}
 }
@@ -61,9 +61,30 @@ void	close_pipe(t_cmd **cmd, t_data *data)
 		if ((*cmd)->output == (*cmd)->pipe_fd[i][1])
 		{
 			safe_close_fd((*cmd)->pipe_fd[i][1], data);
-			(*cmd)->pipe_fd[i][1] = 0;
+			(*cmd)->pipe_fd[i][1] = 1;
 		}
 	}	
+}
+
+void	close_fd(t_cmd **cmd_list, t_data *data)
+{
+	if (!cmd_list || !*cmd_list)
+		return ;
+	if ((*cmd_list)->input > 2)
+	{
+		safe_close_fd((*cmd_list)->input, data);
+		(*cmd_list)->input = 0;
+	}
+	if ((*cmd_list)->output > 2)
+	{
+		safe_close_fd((*cmd_list)->output, data);
+		(*cmd_list)->input = 1;
+	}
+	if ((*cmd_list)->error_output > 2)
+	{
+		safe_close_fd((*cmd_list)->error_output, data);
+		(*cmd_list)->input = 2;
+	}
 }
 
 void	close_all_fd(t_data *data)
@@ -73,21 +94,7 @@ void	close_all_fd(t_data *data)
 	cmd = data->cmd_list->next;
 	while (cmd)
 	{
-		safe_close_fd(cmd->input, data);
-		safe_close_fd(cmd->output, data);
-		safe_close_fd(cmd->error_output, data);
+		close_fd(&cmd, data);
 		cmd = cmd->next;
 	}
-}
-
-void	close_fd(t_cmd **cmd_list, t_data *data)
-{
-	if (!cmd_list || !*cmd_list)
-		return ;
-	if ((*cmd_list)->input > 2)
-		safe_close_fd((*cmd_list)->input, data);
-	if ((*cmd_list)->output > 2)
-		safe_close_fd((*cmd_list)->output, data);
-	if ((*cmd_list)->error_output > 2)
-		safe_close_fd((*cmd_list)->error_output, data);
 }
