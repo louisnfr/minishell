@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 02:50:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 12:10:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,17 @@ int	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 	return (data->ret_value);
 }
 
-void	exec_exit(t_cmd *cmd_list, t_data *data)
+t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	int		exit_code;
 	t_bool	quit_exit;
 
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 2);
 	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
-		return ;
+		return (FAIL);
 	clean_data(data);
-//	atexit(fonction);
+	// atexit(fonction);
 	exit(exit_code);
+	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/05 16:53:26 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/16 13:25:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_start_redir(char **argv, t_cmd *cmd_list, t_data *data)
 	char	*filename;
 
 	data->i++;
-	filename = ft_strdup(argv[data->i]);
+	filename = safe_strdup(argv[data->i], data);
 	if (argv[data->i])
 		fd = open(argv[data->i], O_RDONLY);
 	if (!argv[++data->i])
@@ -42,16 +42,16 @@ char	**get_argv(char *input, t_data *data)
 	char	**argv;
 
 	(void)data;
-	input = check_input(input);
+	input = check_input(input, data);
 	if (!input)
 		return (NULL);
-	argv = split_input(input);
+	argv = split_input(input, data);
 	if (!argv)
 	{
 		clean_free(&input);
 		return (NULL);
 	}
-	argv = check_argv(argv);
+	argv = check_argv(argv, data);
 	clean_free(&input);
 	return (argv);
 }
@@ -93,6 +93,6 @@ t_bool	parse(char *input, t_data *data)
 		handle_start_redir(argv, cmd_list, data);
 	parse_argv(argv, cmd_list, data);
 	free_double_str(argv);
-	parse_pipes(cmd_list);
+	parse_pipes(cmd_list, data);
 	return (SUCCESS);
 }

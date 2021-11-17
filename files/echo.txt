@@ -1,0 +1,104 @@
+echo test tout
+echo test      tout
+echo -n test tout
+echo -n -n -n test tout
+echo
+echo echo
+eCho
+eChO
+eCHO
+ECHO
+echo rhobebou
+echo stop barking
+echo "bonjour"
+echo bonjour
+echo 'bonjour'
+echo -n bonjour
+echo -nn bonjour
+echo -n -n -n bonjour
+echo -n -n -n bonjour
+echo "-n" bonjour
+echo -n"-n" bonjour
+echo "-nnnn" bonjour
+echo "-n -n -n"-n bonjour
+echo "-n '-n'" bonjour
+echo ~
+echo "~"
+echo '~'
+echo ~123
+echo 123~
+echo ~/123
+echo ~/123/456
+echo $USER
+echo "$USER"
+echo "'$USER'"
+echo " '$USER' "
+echo text"$USER"
+echo text"'$USER'" ' $USER '
+echo "text"   "$USER"    "$USER"
+echo '              $USER          '
+echo               text "$USER"            "$USER"text
+echo ''''''''''$USER''''''''''
+echo """"""""$USER""""""""
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''
+echo $USER '' $USER $USER '' $USER '' $USER -n $USER
+echo "$USER""$USER""$USER"
+echo text"$USER"test
+echo '$USER' "$USER" "text \' text"
+echo '$USER'
+echo $USER " "
+echo "$USER""Users/$USER/file""'$USER'"'$USER'
+echo "$USER$USER$USER"
+echo '$USER'"$USER"'$USER'
+echo '"$USER"''$USER'"""$USER"
+echo " $USER  "'$PWD'
+echo " $USER  \$ "'$PWD'
+echo $USER=4
+echo $USER=thallard
+echo $USER
+echo $?
+echo $USER213
+echo $USER$12USER$USER=4$USER12
+echo $USER $123456789USER $USER123456789
+echo $USER $9999USER $8888USER $7777USER
+echo $USER $USER9999 $USER8888 $USER7777
+echo $USER $USER9999 $USER8888 $USER7777 "$USER"
+echo "$USER=12$USER"
+echo "$9USER" "'$USER=12$SOMETHING'"
+echo $PWD/file
+echo "$PWD/file"
+echo "text" "text$USER" ... "$USER"
+echo $PWD
+echo $TEST
+echo "$TEST"
+"echo '$TEST'"
+echo "$TEST$TEST$TEST"
+echo "$TEST$TEST=lol$TEST"
+echo "   $TEST lol $TEST"
+echo $TEST$TEST$TEST
+echo $TEST$TEST=lol$TEST""lol
+echo    $TEST lol $TEST
+echo test "" test "" test
+echo "\$TEST"
+echo "$=TEST"
+echo "$"
+echo "$?TEST"
+echo $TEST $TEST
+echo "$1TEST"
+echo "$T1TEST"
+export test=lala ; echo $test ; export $test=10 ; echo $lala
+export test=lala ; export $test=a10 ; export $lala=test ; unset $lala ; export' 'grep -v _=
+export a b c ; unset a c ; export' 'grep -v _=
+export test=echo val=lala ; $test $lala ; export' 'grep -v _=
+echo $TEST$TEST=lala
+echo $TEST=lala$TEST
+echo $TEST$TEST=lala$TEST
+echo $TEST$TEST=$TEST=$TEST=$TEST=$TEST=$TEST
+echo $1TEST
+echo $10000TEST
+echo $99TEST
+echo $=TEST
+echo $1 "" $9 "" $4 "" $7
+echo $?TEST$?
+echo "$PWD"
+echo "$LALA"

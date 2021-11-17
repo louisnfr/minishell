@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 18:54:51 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:15:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*create_env(char **envp)
+t_env	*create_env(char **envp, t_data *data)
 {
 	t_env	*g_env;
 	char	**var;
@@ -22,14 +22,14 @@ t_env	*create_env(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		var = ft_split_on_first(envp[i], '=');
+		var = safe_split_on_first(envp[i], '=', data);
 		add_var(&g_env, new_var(var[0], var[1], 1));
 		free_split(var);
 	}
 	return (g_env);
 }
 
-char	**env_to_char(t_env *env)
+char	**env_to_char(t_env *env, t_data *data)
 {
 	char	**envp;
 	t_env	*tmp;
@@ -37,7 +37,7 @@ char	**env_to_char(t_env *env)
 
 	envp = ft_calloc(1, sizeof(char *) * (get_env_size(env) + 1));
 	if (!envp)
-		return (NULL);
+		return ((char **)exit_error_void(NULL, "malloc()", data));
 	tmp = env;
 	i = 0;
 	while (tmp)
@@ -45,10 +45,10 @@ char	**env_to_char(t_env *env)
 		envp[i] = ft_calloc(1, sizeof(char)
 				* (ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2));
 		if (!envp[i])
-			return (NULL);
-		envp[i] = ft_strjoin_and_free(envp[i], tmp->key);
-		envp[i] = ft_strjoin_and_free(envp[i], "=");
-		envp[i] = ft_strjoin_and_free(envp[i], tmp->value);
+			return ((char **)exit_error_void(NULL, "malloc()", data));
+		envp[i] = safe_strjoin_and_free(envp[i], tmp->key, data);
+		envp[i] = safe_strjoin_and_free(envp[i], "=", data);
+		envp[i] = safe_strjoin_and_free(envp[i], tmp->value, data);
 		i++;
 		tmp = tmp->next;
 	}

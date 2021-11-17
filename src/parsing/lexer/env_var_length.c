@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_length.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 12:14:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	handle_env_variable(
-	int *double_quotes, t_var *var, char *str, t_data *data)
+	int double_quotes, t_var *var, char *str, t_data *data)
 {
 	char	*env_key;
 
 	env_key = NULL;
-	env_key = get_env_key(str, &var->i);
+	env_key = get_env_key(str, &var->i, data);
 	var->j += get_length_env_value(double_quotes, env_key, data);
 	free(env_key);
 	env_key = NULL;
@@ -27,9 +27,9 @@ void	handle_env_variable(
 }
 
 static int	handle_special_cases(
-	int *double_quotes, t_var *var, char *str)
+	int double_quotes, t_var *var, char *str)
 {
-	if (*double_quotes != -1 && str[var->i] && str[var->i] == '\'')
+	if (double_quotes != -1 && str[var->i] && str[var->i] == '\'')
 	{
 		var->i++;
 		var->j++;
@@ -60,29 +60,42 @@ void	increment_i_j(t_var *var)
 	var->j++;
 }
 
+static void	dollar_case(t_var *var, char *str, t_data *data)
+{
+	if (ft_isdigit(str[var->i + 1]))
+		var->i += 2;
+	else if (str[var->i + 1] == '=')
+	{
+		var->i += 2;
+		var->j += 2;
+	}
+	else if (!is_charset_env(str[var->i + 1]))
+		handle_env_variable(data->double_quotes, var, str, data);
+	else
+		increment_i_j(var);
+}
+
 int	get_length_new_input(char *str, t_data *data)
 {
 	t_var	*var;
-	int		double_quotes;
 	int		length;
 
-	var = init_var();
+	var = init_var(data);
 	if (!var || !str || !str[var->i])
 		return (FAIL);
-	double_quotes = 1;
-	while (var->i < ft_strlen(str) && str[var->i] && str[var->i + 1])
+	data->double_quotes = 1;
+	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
-			double_quotes *= -1;
-		if (handle_special_cases(&double_quotes, var, str))
+			data->double_quotes *= -1;
+		if (handle_special_cases(data->double_quotes, var, str))
 			continue ;
-		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
-			&& !is_charset_env(str[var->i + 1]))
-			handle_env_variable(&double_quotes, var, str, data);
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$')
+			dollar_case(var, str, data);
 		else
 			increment_i_j(var);
 	}
-	length = var->j++;
+	length = ++var->j;
 	free_var(var);
 	return (length);
 }

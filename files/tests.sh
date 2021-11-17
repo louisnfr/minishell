@@ -148,16 +148,16 @@ ls -la > tmp/file
 © 2021 GitHub, Inc.
 Terms
 Privacy
-run_test export a | echo lala ; export' 'grep -v _=
-run_test export | echo lala
-run_test unset PWD | echo lala ; export' 'grep -v _=
-run_test cd .. | echo lala ; export' 'grep -v _=
-run_test echo test | echo lala
-run_test pwd | echo lala
-run_test env | echo lala
-run_test cat bible.txt | grep testifieth
-run_test find / | grep cores
-run_test echo test | cat | cat | cat | cat | cat | grep test
+export a | echo lala ; export' 'grep -v _=
+export | echo lala
+unset PWD | echo lala ; export' 'grep -v _=
+cd .. | echo lala ; export' 'grep -v _=
+echo test | echo lala
+pwd | echo lala
+env | echo lala
+cat bible.txt | grep testifieth
+find / | grep cores
+echo test | cat | cat | cat | cat | cat | grep test
 
 
 #######################  ENV EXPANSIONS  #######################

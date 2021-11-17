@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:33:00 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/09 22:05:43 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 15:20:45 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	fill_wildcard_arg_builtin(char **new_args, int *i, char *wildcard_arg)
+t_bool	fill_wildcard_arg_builtin(
+	char **new_args, int *i, char *wildcard_arg, t_data *data)
 {
 	DIR				*directory;
 	struct dirent	*entity;
@@ -27,7 +28,7 @@ t_bool	fill_wildcard_arg_builtin(char **new_args, int *i, char *wildcard_arg)
 	{
 		if (matching_name(entity->d_name, wildcard_arg))
 		{
-			new_args[*i] = ft_strdup(entity->d_name);
+			new_args[*i] = safe_strdup(entity->d_name, data);
 			(*i)++;
 		}
 		entity = readdir(directory);
@@ -35,13 +36,13 @@ t_bool	fill_wildcard_arg_builtin(char **new_args, int *i, char *wildcard_arg)
 	closedir(directory);
 	if (*i == i_ref)
 	{
-		new_args[*i] = ft_strdup(wildcard_arg);
+		new_args[*i] = safe_strdup(wildcard_arg, data);
 		(*i)++;
 	}
 	return (SUCCESS);
 }
 
-t_bool	fill_new_args(int new_length, t_cmd *cmd_list)
+t_bool	fill_new_args(int new_length, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
 	int		j;
@@ -49,13 +50,14 @@ t_bool	fill_new_args(int new_length, t_cmd *cmd_list)
 
 	new_args = (char **)ft_calloc(1, sizeof(char *) * (new_length + 1));
 	if (!new_length)
-		return (FAIL);
+		return (exit_error_bool("malloc()", data));
 	i = -1;
 	j = 0;
 	while (cmd_list->args[++i])
 	{
 		if (ft_strchr(cmd_list->args[i], '*'))
-			fill_wildcard_arg_builtin(&(*new_args), &j, cmd_list->args[i]);
+			fill_wildcard_arg_builtin(
+				&(*new_args), &j, cmd_list->args[i], data);
 		else
 			new_args[j++] = cmd_list->args[i];
 	}
@@ -65,7 +67,7 @@ t_bool	fill_new_args(int new_length, t_cmd *cmd_list)
 	return (SUCCESS);
 }
 
-t_bool	parse_wildcard_args(t_cmd *cmd_list)
+t_bool	parse_wildcard_args(t_cmd *cmd_list, t_data *data)
 {
 	int		i;
 	int		new_length;
@@ -85,10 +87,30 @@ t_bool	parse_wildcard_args(t_cmd *cmd_list)
 	}
 	if (ret == 0)
 		return (SUCCESS);
-	fill_new_args(new_length, cmd_list);
+	fill_new_args(new_length, cmd_list, data);
 	return (SUCCESS);
 }
 
+t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
+{
+	int	i;
+
+	parse_special_value(cmd_list, data);
+	parse_wildcard_args(cmd_list, data);
+	if (cmd_list->input == -1 || cmd_list->output == -1)
+		return (EXIT_FAILURE);
+	t_op (*builtins[]) = {exec_echo, exec_cd, exec_pwd, exec_env, exec_history,
+	exec_export, exec_unset, exec_exit};
+	i = -1;
+	while (data->builtins[++i])
+	{
+		if (str_is_equal(cmd_list->command, data->builtins[i]))
+			break ;
+	}
+	return (builtins[i](cmd_list, data));
+}
+
+/*
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 {
 	parse_special_value(cmd_list, data);
@@ -113,3 +135,4 @@ t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 		exec_exit(cmd_list, data);
 	return (EXIT_FAILURE);
 }
+*/

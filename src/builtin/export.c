@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 03:17:42 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:27:56 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ void	add_var_env(t_data *data, t_cmd *cmd_list, int i)
 {
 	char	**var;
 
-	var = ft_split_on_first(cmd_list->args[i], '=');
+	var = safe_split_on_first(cmd_list->args[i], '=', data);
 	if (!already_exists(var[0], data->env))
 		add_var(&data->env, new_var(var[0], var[1], 1));
 	else
-		set_env(var[0], var[1], data->env);
+		set_env(var[0], var[1], data->env, data);
 	if (!already_exists(var[0], data->export))
 		add_var(&data->export, new_var(var[0], var[1], 1));
 	else
-		set_env(var[0], var[1], data->export);
+		set_env(var[0], var[1], data->export, data);
 	free_split(var);
 }
 

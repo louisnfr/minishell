@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ret_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 13:03:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	get_length(char *str, int value_length)
 	i = 0;
 	count = 0;
 	length = ft_strlen(str);
-	while (i < ft_strlen(str) && str[i] && str[i + 1])
+	while (i < (int)ft_strlen(str) && str[i] && str[i + 1])
 	{
 		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
 			get_length_quotes(&length, &count, &i, str);
@@ -90,14 +90,12 @@ static void	fill_quotes(t_var *var, char *str, char *new_str, char *value)
 	}
 }
 
-void	fill_new_str(char *str, char *new_str, char *value)
+void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
 {
 	int		str_length;
 	t_var	*var;
 
-	var = init_var();
-	if (!var)
-		return ;
+	var = init_var(data);
 	str_length = ft_strlen(str);
 	while (str && var->i < str_length && str[var->i] && str[var->i + 1])
 	{
@@ -115,7 +113,7 @@ void	fill_new_str(char *str, char *new_str, char *value)
 	free_var(var);
 }
 
-char	*transform_ret_value(char *str, char *value)
+char	*transform_ret_value(char *str, char *value, t_data *data)
 {
 	char	*new_str;
 	int		length;
@@ -124,8 +122,8 @@ char	*transform_ret_value(char *str, char *value)
 	length = get_length(str, ft_strlen(value));
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
-		return (NULL);
-	fill_new_str(&(*str), &(*new_str), value);
+		return ((char *)exit_error_void(NULL, "malloc()", data));
+	fill_new_str(&(*str), &(*new_str), value, data);
 	clean_free(&str);
 	return (new_str);
 }

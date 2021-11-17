@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 19:14:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:12:52 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ char	*parse_heredoc_line(char *line, t_data *data)
 	new_line = heredoc_env_variable(line, data);
 	if (!ft_strchr(new_line, '$'))
 		return (new_line);
-	pid_value = ft_itoa(data->pid);
-	new_line = heredoc_special_value(new_line, pid_value, '$');
+	pid_value = safe_itoa(data->pid, data);
+	new_line = heredoc_special_value(new_line, pid_value, '$', data);
 	clean_free(&pid_value);
 	if (!ft_strchr(new_line, '?'))
 		return (new_line);
-	ret_value = ft_itoa(data->ret_value);
-	new_line = heredoc_special_value(new_line, ret_value, '?');
+	ret_value = safe_itoa(data->ret_value, data);
+	new_line = heredoc_special_value(new_line, ret_value, '?', data);
 	clean_free(&ret_value);
 	return (new_line);
 }
@@ -69,8 +69,7 @@ t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
 				data, data->sh, data->sh->history, cmd_list->heredoc_delimiter);
 		if (!line)
 		{
-			if (close(fd) == -1)
-				return (FAIL);
+			safe_close_fd(fd, data);
 			fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			break ;
 		}

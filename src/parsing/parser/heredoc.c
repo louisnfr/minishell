@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 10:39:40 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/15 18:44:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,17 @@ void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 	t_bool	quotes;
 
 	quotes = 0;
-	cmd_list->heredoc = ft_strjoin(get_env("HOME", data->env), "/heredoc");
+	cmd_list->heredoc = safe_strjoin(
+			get_env("HOME", data->env), "/heredoc", data);
 	if (!argv[*j])
 		return ;
 	cmd_list->heredoc_delimiter = parse_heredoc_delimiter(
-			ft_strdup(argv[*j]), &quotes);
+			safe_strdup(argv[*j], data), &quotes);
+	if (!cmd_list->heredoc_delimiter)
+		exit_error_bool("malloc()", data);
 	read_heredoc(quotes, cmd_list, data);
 	cmd_list->input = open(cmd_list->heredoc, O_RDONLY);
-	unlink(cmd_list->heredoc);
+	safe_unlink(cmd_list->heredoc, data);
 }
 
 void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)

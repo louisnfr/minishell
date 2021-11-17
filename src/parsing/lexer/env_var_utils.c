@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 11:01:03 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/15 13:12:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	is_charset_env(char c)
 {
-	return (c == ' ' || c == '$' || c == '?' || c == '#'
-		|| c == '\'' || c == '\"');
+	return ((c >= 32 && c <= 47) || (c >= 58 && c <= 64)
+		|| (c >= 91 && c <= 94) || c == 96 || (c >= 123 && c <= 126));
 }
 
 static int	count_length(char *env_value, int value_length)
@@ -43,7 +43,7 @@ static int	count_length(char *env_value, int value_length)
 	return (length);
 }
 
-int	get_length_env_value(int *double_quotes, char *env_key, t_data *data)
+int	get_length_env_value(int double_quotes, char *env_key, t_data *data)
 {
 	char	*env_value;
 	int		value_length;
@@ -54,13 +54,13 @@ int	get_length_env_value(int *double_quotes, char *env_key, t_data *data)
 	if (!env_value)
 		return (0);
 	value_length = ft_strlen(env_value);
-	if (*double_quotes == -1)
+	if (double_quotes == -1)
 		return (value_length);
 	length = count_length(env_value, value_length);
 	return (length);
 }
 
-char	*get_env_key(char *str, int *i)
+char	*get_env_key(char *str, int *i, t_data *data)
 {
 	char	*env_var;
 	int		var_length;
@@ -76,7 +76,7 @@ char	*get_env_key(char *str, int *i)
 		env_var = NULL;
 		env_var = (char *)ft_calloc(1, sizeof(char) * (var_length + 1));
 		if (!env_var)
-			return (NULL);
+			return ((char *)exit_error_void(NULL, "malloc()", data));
 		var_length = 0;
 		while (str && str[++(*i)] && !is_charset_env(str[*i]))
 			env_var[var_length++] = str[*i];
@@ -92,7 +92,7 @@ char	*get_env_val(char *str, int *i, t_data *data)
 
 	env_key = NULL;
 	env_value = NULL;
-	env_key = get_env_key(str, &(*i));
+	env_key = get_env_key(str, &(*i), data);
 	env_value = get_env(env_key, data->env);
 	clean_free(&env_key);
 	return (env_value);

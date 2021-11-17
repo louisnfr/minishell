@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 12:16:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	handle_special_cases(
-	t_var *var, int *double_quotes, char *new_str, char *str)
+	int double_quotes, t_var *var, char *new_str, char *str)
 {
 	int	count;
 
 	count = 0;
-	if (*double_quotes != -1 && str[var->i] && str[var->i] == '\'')
+	if (double_quotes != -1 && str[var->i] && str[var->i] == '\'')
 	{
 		new_str[var->j++] = str[var->i++];
 		while (str[var->i] && str[var->i] != '\'')
@@ -35,21 +35,21 @@ int	handle_special_cases(
 }
 
 void	fill_env_value(
-	int *double_quotes, char *new_str, t_var *var, char *value)
+	int double_quotes, char *new_str, t_var *var, char *value)
 {
 	int	k;
 
 	if (!value)
 		return ;
 	k = 0;
-	if (*double_quotes == -1)
+	if (double_quotes == -1)
 	{
 		while (value && value[k])
 			new_str[var->j++] = value[k++];
 	}
 	else
 	{
-		while (value && k < ft_strlen(value) && value[k])
+		while (value && k < (int)ft_strlen(value) && value[k])
 		{
 			if (value[k] && ft_isspace(value[k]))
 			{
@@ -63,29 +63,42 @@ void	fill_env_value(
 	}
 }
 
+static void	fill_dollar_case(t_var *var, char *new_str, char *str, t_data *data)
+{
+	if (ft_isdigit(str[var->i + 1]))
+		var->i += 2;
+	else if (str[var->i + 1] == '=')
+	{
+		new_str[var->j++] = str[var->i++];
+		new_str[var->j++] = str[var->i++];
+	}
+	else if (!is_charset_env(str[var->i + 1]))
+		fill_env_value(data->double_quotes, new_str, var, get_env_val(
+				str, &var->i, data));
+	else
+		new_str[var->j++] = str[var->i++];
+}
+
 static int	fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
-	int		double_quotes;
 
-	var = init_var();
+	var = init_var(data);
 	if (!var || !str || !str[var->i])
 		return (FAIL);
-	double_quotes = 1;
-	while (var->i < ft_strlen(str) && str[var->i] && str[var->i + 1])
+	data->double_quotes = 1;
+	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
-			double_quotes *= -1;
-		if (handle_special_cases(var, &double_quotes, new_str, str))
+			data->double_quotes *= -1;
+		if (handle_special_cases(data->double_quotes, var, new_str, str))
 			continue ;
-		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
-			&& !is_charset_env(str[var->i + 1]))
-			fill_env_value(
-				&double_quotes, new_str, var, get_env_val(str, &var->i, data));
+		if (str[var->i] && str[var->i + 1] && str[var->i] == '$')
+			fill_dollar_case(var, new_str, str, data);
 		else
 			new_str[var->j++] = str[var->i++];
 	}
-	if (var->i < ft_strlen(str) && str[var->i])
+	if (var->i < (int)ft_strlen(str) && str[var->i])
 		new_str[var->j++] = str[var->i];
 	new_str[var->j] = '\0';
 	free_var(var);
@@ -98,19 +111,14 @@ char	*parse_env_variable(char *input, t_data *data)
 	int		new_length;
 
 	new_input = NULL;
-	if (!ft_strchr(input, '='))
+	new_length = get_length_new_input(input, data);
+	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
+	if (!new_input)
 	{
-		new_length = get_length_new_input(input, data);
-		new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 2));
-		if (!new_input)
-		{
-			clean_free(&input);
-			return (NULL);
-		}
-		fill_new_input(new_input, input, data);
+		clean_free(&input);
+		return ((char *)exit_error_void(NULL, "malloc()", data));
 	}
-	else
-		new_input = handle_equal_sign(input, data);
+	fill_new_input(new_input, input, data);
 	clean_free(&input);
 	return (new_input);
 }

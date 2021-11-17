@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:45:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 17:22:06 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/15 14:13:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_length(char **str, char charset)
+static int	get_length(char **str, char charset, t_data *data)
 {
 	int		j;
 	char	*tmp;
 
 	j = 1;
-	tmp = ft_strdup(*str);
+	tmp = safe_strdup(*str, data);
 	while (tmp[j] && tmp[j] != charset)
 		j++;
 	clean_free(&tmp);
@@ -45,7 +45,7 @@ static void	fill_strs(char charset, int *i, char **str, char **strs)
 	strs[*i][j] = '\0';
 }
 
-t_bool	handle_heredoc_quotes(int *i, char **str, char **strs)
+t_bool	handle_heredoc_quotes(int *i, char **str, char **strs, t_data *data)
 {
 	int		length;
 	char	charset;
@@ -55,10 +55,10 @@ t_bool	handle_heredoc_quotes(int *i, char **str, char **strs)
 	if (!(**str) || (**str && **str != '\'' && **str != '\"'))
 		return (SUCCESS);
 	charset = **str;
-	length = get_length(str, charset);
+	length = get_length(str, charset, data);
 	strs[++(*i)] = (char *)ft_calloc(1, sizeof(char) * (length + 2));
 	if (!strs[*i])
-		return (FAIL);
+		return (exit_error_bool("malloc()", data));
 	fill_strs(charset, i, str, strs);
 	return (SUCCESS);
 }

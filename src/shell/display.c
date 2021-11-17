@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/12 17:21:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:22:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ char	*prompt(t_data *data)
 	{
 		tmp = ft_substr(
 				cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
+		if (!tmp)
+			return ((char *)exit_error_void(NULL, "malloc()", data));
 		clean_free(&cwd);
-		cwd = ft_strjoin("~", tmp);
+		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
 	}
-	usr = ft_strjoin("\e[92;1m", usr);
-	usr = ft_strjoin_and_free(usr, "\e[0m:");
-	usr = ft_strjoin_and_free(usr, "\e[34;1m");
-	usr = ft_strjoin_and_free(usr, cwd);
+	usr = safe_strjoin("\e[92;1m", usr, data);
+	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
+	usr = safe_strjoin_and_free(usr, "\e[34;1m", data);
+	usr = safe_strjoin_and_free(usr, cwd, data);
 	clean_free(&cwd);
-	cwd = ft_strjoin_and_free(usr, "\e[0m$ ");
+	cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
 	return (cwd);
 }

@@ -3,68 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   split_length.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 16:31:36 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/16 13:23:42 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	count_normal_words(char *str, int *i)
+static void	count_normal_words(char *str, t_data *data)
 {
 	char	quote;
 	int		str_length;
 
 	str_length = ft_strlen(str);
-	while (*i < str_length && str[*i] && !is_charset_split(str[*i]))
+	while (data->i < str_length && str[data->i]
+		&& !is_charset_split(str[data->i]))
 	{
-		if (str[*i] && (str[*i] == '\'' || str[*i] == '\"'))
+		if (str[data->i] && (str[data->i] == '\'' || str[data->i] == '\"'))
 		{
-			quote = (*i)++;
-			while (str[*i] && str[*i] != quote)
-				(*i)++;
-			(*i)++;
+			quote = str[data->i++];
+			while (str[data->i] && str[data->i] != quote)
+				data->i++;
+			data->i++;
 		}
 		else
-			(*i)++;
+			data->i++;
 	}
 }
 
-t_bool	check_all_delimiters(char *str, int *i, int *words)
+t_bool	check_all_delimiters(char *str, int *words, t_data *data)
 {
-	if (!check_delimiter(str, '|', i, words)
-		|| !check_delimiter(str, ';', i, words)
-		|| !check_delimiter(str, '&', i, words)
-		|| !check_delimiter(str, '>', i, words)
-		|| !check_delimiter(str, '<', i, words)
-		|| !check_delimiter(str, '(', i, words)
-		|| !check_delimiter(str, ')', i, words))
+	if (!check_delimiter(str, '|', words, data)
+		|| !check_delimiter(str, ';', words, data)
+		|| !check_delimiter(str, '&', words, data)
+		|| !check_delimiter(str, '>', words, data)
+		|| !check_delimiter(str, '<', words, data)
+		|| !check_delimiter(str, '(', words, data)
+		|| !check_delimiter(str, ')', words, data))
 		return (FAIL);
 	return (SUCCESS);
 }
 
-int	split_count_words(char *str)
+int	split_count_words(char *str, t_data *data)
 {
 	int	words;
-	int	i;
 	int	str_length;
 
-	i = 0;
+	data->i = 0;
 	words = 0;
 	str_length = ft_strlen(str);
-	while (str && i < str_length && str[i])
+	while (str && data->i < str_length && str[data->i])
 	{
-		while (str[i] && ft_isspace(str[i]))
-			i++;
-		if (str[i] && !is_charset_split(str[i]))
+		while (str[data->i] && ft_isspace(str[data->i]))
+			data->i++;
+		if (str[data->i] && !is_charset_split(str[data->i]))
 		{
-			count_normal_words(str, &i);
+			count_normal_words(str, data);
 			words++;
 		}
-		if (!check_all_delimiters(str, &i, &words))
+		if (!check_all_delimiters(str, &words, data))
 			return (-1);
 	}
+	data->i = 0;
 	return (words);
 }

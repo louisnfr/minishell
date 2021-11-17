@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 22:41:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/16 12:34:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			*exit_code = WEXITSTATUS(status);
-		close_fd(cmd_list);
+		close_fd(cmd_list, data);
 	}
 }
 

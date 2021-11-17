@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/07 10:36:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:04:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 			check_exit_code(exit_code, cmd_list);
 		}
 	}
-	close_all_fd(data);
+	close_fd(cmd_list, data);
 	clean_data(data);
 	exit(exit_code);
 }
@@ -63,13 +63,16 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 		&& !can_exec_parenthese(last_exit_code, cmd_list))
 		return (SUCCESS);
 	pid = fork();
+	if (pid < 0)
+		return (exit_error_bool("fork()", data));
 	if (pid == CHILD)
 		exec_cmd_parenthese(cmd_list, data);
+	close_all_pipes(cmd_list, data);
+	while (*cmd_list && (*cmd_list)->parenthese)
+		*cmd_list = (*cmd_list)->next;
 	waitpid(pid, &exit_code, 0);
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);
-	while (*cmd_list && (*cmd_list)->parenthese)
-		*cmd_list = (*cmd_list)->next;
 	check_exit_code(exit_code, cmd_list);
 	return (exit_code);
 }

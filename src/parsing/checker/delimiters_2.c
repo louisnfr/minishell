@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_delimiters_2.c                               :+:      :+:    :+:   */
+/*   delimiters_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:40:24 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:35:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ t_bool	check_error_redir(char *str, int *i)
 	return (FALSE);
 }
 
-t_bool	check_beginning(char *str, int *i)
+t_bool	check_beginning(char *str, int i)
 {
 	int	j;
 
 	j = 0;
 	while (str[j] && ft_isspace(str[j]))
 		j++;
-	if (j == *i)
+	if (j == i)
 		return (TRUE);
 	return (FALSE);
 }

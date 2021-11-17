@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 13:19:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_length(char *input, int length)
 	return (length);
 }
 
-char	*check_comment(char *input)
+char	*check_comment(char *input, t_data *data)
 {
 	int		i;
 	int		length;
@@ -66,7 +66,7 @@ char	*check_comment(char *input)
 		return (input);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_input)
-		return (NULL);
+		return ((char *)exit_error_void(NULL, "malloc()", data));
 	i = -1;
 	while (++i < length)
 		new_input[i] = input[i];
@@ -75,14 +75,14 @@ char	*check_comment(char *input)
 	return (new_input);
 }
 
-char	*check_input(char *input)
+char	*check_input(char *input, t_data *data)
 {
 	char	*new_str;
 
 	if (!input)
 		return (NULL);
 	new_str = NULL;
-	new_str = check_comment(input);
+	new_str = check_comment(input, data);
 	if (!check_unclosed_quotes(new_str) || !check_unclosed_parentheses(new_str))
 	{
 		clean_free(&new_str);

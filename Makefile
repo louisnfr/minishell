@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/15 19:27:48 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/17 13:06:33 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SOURCES = \
 		parsing/lexer/pid_value.c \
 		parsing/lexer/ret_value.c \
 		parsing/lexer/utils.c \
-		parsing/lexer/equal_sign.c \
 		\
 		parsing/split/split.c \
 		parsing/split/split_length.c \
@@ -103,7 +102,10 @@ SOURCES = \
 		utils/error.c \
 		utils/utils.c \
 		utils/init.c \
-		utils/clean.c
+		utils/clean.c \
+		utils/exit_error.c \
+		utils/secured_functions_1.c \
+		utils/secured_functions_2.c
 
 ### COMPILATION ###
 CC		= clang

@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 18:43:36 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 14:17:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	remove_from_list(t_cmd *cmd_list)
+void	remove_from_list(t_cmd *cmd_list, t_data *data)
 {
+	(void)data;
 	if (!cmd_list)
 		return ;
 	cmd_list->is_builtin = 0;
@@ -29,7 +30,6 @@ void	remove_from_list(t_cmd *cmd_list)
 	clean_free(&cmd_list->path);
 	if (cmd_list->heredoc)
 	{
-		unlink(cmd_list->heredoc);
 		clean_free(&cmd_list->heredoc);
 		clean_free(&cmd_list->heredoc_delimiter);
 	}
@@ -39,7 +39,7 @@ void	remove_from_list(t_cmd *cmd_list)
 	cmd_list = NULL;
 }
 
-void	clean_cmd_list(t_cmd **cmd_list)
+void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 {
 	t_cmd	*tmp;
 
@@ -47,12 +47,12 @@ void	clean_cmd_list(t_cmd **cmd_list)
 		return ;
 	tmp = *cmd_list;
 	*cmd_list = (*cmd_list)->next;
-	remove_from_list(tmp);
+	remove_from_list(tmp, data);
 	tmp = *cmd_list;
 	while (tmp)
 	{
 		*cmd_list = (*cmd_list)->next;
-		remove_from_list(tmp);
+		remove_from_list(tmp, data);
 		tmp = *cmd_list;
 	}
 	free(*cmd_list);
@@ -61,18 +61,20 @@ void	clean_cmd_list(t_cmd **cmd_list)
 
 void	clean_data(t_data *data)
 {
+	if (!data)
+		return ;
 	data->i = 0;
 	data->pid = 0;
 	data->ret_value = 0;
+	clean_cmd_list(&data->cmd_list, data);
 	free_double_str(data->all_paths);
 	free_double_str(data->envp);
-	clean_cmd_list(&data->cmd_list);
+	free_double_str(data->builtins);
 	free_env(data->env);
 	free_env(data->export);
-	clean_free(&data->tab_delimiters);
 	clean_free(&data->prpt);
-	if (data->sh->current)
-		free(data->sh->current);
+	// if (data->sh->current)
+	// 	free(data->sh->current);
 	if (data->sh->input)
 		free(data->sh->input);
 	free_history(data->sh->history);

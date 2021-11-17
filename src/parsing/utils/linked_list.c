@@ -3,40 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:08 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:57:05 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/15 15:48:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	create_new_cmd(char *cmd, char **options, char *path, t_cmd **cmd_list)
+void	create_new_cmd(t_cmd **cmd_list, t_data *data)
 {
 	t_cmd	*new_cmd;
 
 	new_cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!new_cmd)
-		return (FAIL);
+		exit_error_void(NULL, "malloc()", data);
 	setup_cmd_list(new_cmd);
-	if (cmd)
-	{
-		new_cmd->command = ft_strdup(cmd);
-		clean_free(&cmd);
-	}
-	new_cmd->options = options;
-	if (path)
-	{
-		new_cmd->path = ft_strdup(path);
-		clean_free(&path);
-	}
 	new_cmd->next = NULL;
 	while ((*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;
 	(*cmd_list)->next = new_cmd;
 	(*cmd_list) = (*cmd_list)->next;
-	return (SUCCESS);
 }
 
 void	setup_cmd_list(t_cmd *cmd_list)

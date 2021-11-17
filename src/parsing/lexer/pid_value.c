@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 11:44:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	get_length(char *str, int value_length, char character)
 	if (!str)
 		return (0);
 	length = setup_variables(&i, &count, &double_quotes, str);
-	while (i < ft_strlen(str) && str[i] && str[i + 1])
+	while (i < (int)ft_strlen(str) && str[i] && str[i + 1])
 	{
 		if (str[i] && str[i] == '\"')
 			double_quotes *= -1;
@@ -56,18 +56,18 @@ static void	fill_simple_quotes(t_var *var, char *str, char *new_str)
 		new_str[var->j++] = str[var->i++];
 }
 
-static void	fill_new_str(char *str, char *new_str, char *value, char character)
+static t_bool	fill_new_str(
+	char *str, char *new_str, char *value, char character)
 {
 	int		double_quotes;
-	int		str_length;
 	t_var	*var;
 
-	var = init_var();
+	var = init_var(NULL);
 	if (!var)
-		return ;
+		return (FAIL);
 	double_quotes = 1;
-	str_length = ft_strlen(str);
-	while (str && var->i < str_length && str[var->i] && str[var->i + 1])
+	while (str && var->i < (int)ft_strlen(str)
+		&& str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
 			double_quotes *= -1;
@@ -79,13 +79,14 @@ static void	fill_new_str(char *str, char *new_str, char *value, char character)
 		else
 			new_str[var->j++] = str[var->i++];
 	}
-	if (str && str[var->i] && var->i < str_length)
+	if (str && str[var->i] && var->i < (int)ft_strlen(str))
 		new_str[var->j++] = str[var->i];
 	new_str[var->j] = '\0';
 	free_var(var);
+	return (SUCCESS);
 }
 
-char	*transform_pid_value(char *str, char *value)
+char	*transform_pid_value(char *str, char *value, t_data *data)
 {
 	char	*new_str;
 	int		length;
@@ -94,8 +95,9 @@ char	*transform_pid_value(char *str, char *value)
 	length = get_length(str, ft_strlen(value), '$');
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
-		return (NULL);
-	fill_new_str(&(*str), &(*new_str), value, '$');
+		return ((char *)exit_error_void(NULL, "malloc()", data));
+	if (!fill_new_str(&(*str), &(*new_str), value, '$'))
+		return ((char *)exit_error_void(NULL, "malloc()", data));
 	clean_free(&str);
 	return (new_str);
 }

@@ -1,0 +1,35 @@
+gdagadgag
+ls -Z
+cd gdhahahad
+ls -la | wtf
+export a ; echo $?
+export % ; echo $?
+echo "test" > a && run_test 'cat a ; echo $?' && rm a
+cat a ; echo $?
+pwd ; echo $?
+export a | echo $?
+echo lala ; echo $?
+echo lala | echo $?
+pwd ; echo $?
+pwd | echo $?
+cd / ; echo $?
+ cd / | echo $?
+cd ~/ ; echo $?
+ cd ~/ | echo $?
+cd /error ; echo $?
+cd ~/error ; echo $?
+export a ; unset a ; echo $?
+export a | unset a | echo $?
+unset a ; echo $?
+unset a | echo $?
+echo $? ; echo $? ; echo $?
+echo $? | echo $? | echo $?
+cd error ; echo $?
+cd error error ; echo $?
+./error ; echo $?
+<error ; echo $?
+cat <error ; echo $?
+cat < ; echo $?
+echo test > ; echo $?
+echo test >> ; echo $?
+echo testing multi ; echo "test 1 ; | and 2" ; cat tests/lorem.txt | grep Lorem

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:36:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:23:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	fill_args(char **cmd_array, int *i, t_cmd *cmd_list, t_data *data)
 	char	*ret_value;
 
 	j = 0;
-	ret_value = ft_itoa(data->ret_value);
+	ret_value = safe_itoa(data->ret_value, data);
 	while (cmd_list->args && cmd_list->args[j])
 	{
 		if (ft_strchr(cmd_list->args[j], '*'))
-			fill_wildcard_arg(&(*cmd_array), i, cmd_list->args[j]);
+			fill_wildcard_arg(&(*cmd_array), i, cmd_list->args[j], data);
 		else
 		{
-			cmd_array[*i + 1] = ft_strdup(cmd_list->args[j]);
+			cmd_array[*i + 1] = safe_strdup(cmd_list->args[j], data);
 			(*i)++;
 		}
 		j++;
@@ -69,11 +69,11 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 	if (!cmd_array)
 		return (NULL);
 	parse_special_value(cmd_list, data);
-	cmd_array[0] = ft_strdup(cmd_list->command);
+	cmd_array[0] = safe_strdup(cmd_list->command, data);
 	i = 0;
 	while (cmd_list->options && cmd_list->options[i])
 	{
-		cmd_array[i + 1] = ft_strdup(cmd_list->options[i]);
+		cmd_array[i + 1] = safe_strdup(cmd_list->options[i], data);
 		i++;
 	}
 	fill_args(&(*cmd_array), &i, cmd_list, data);

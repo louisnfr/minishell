@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:52:38 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/05 14:52:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:48:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,15 @@
 void	handle_bin_cmd(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
-	char	*command;
-	char	*path;
-	char	**options;
-	char	**args;
-
-	path = NULL;
-	options = NULL;
-	args = NULL;
-	path = find_cmd_path(argv[data->i], NULL, data->all_paths);
-	command = ft_strdup(argv[data->i]);
-	options = find_cmd_options(argv, data);
-	create_new_cmd(command, options, path, &cmd_list);
-	args = find_cmd_args(argv, data);
-	cmd_list->args = args;
+	create_new_cmd(&cmd_list, data);
+	cmd_list->path = find_cmd_path(argv[data->i], NULL, data->all_paths, data);
+	cmd_list->command = safe_strdup(argv[data->i], data);
+	cmd_list->options = find_cmd_options(argv, data);
+	cmd_list->args = find_cmd_args(argv, data);
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;
 	parse_redirections(argv, cmd_list, data);
 	if (argv[data->i] && argv[data->i][0] == '-')
-	{
-		options = find_cmd_options_end(argv, data);
-		if (options)
-			cmd_list->options = options;
-	}
+		cmd_list->options = find_cmd_options_end(argv, data);
 }

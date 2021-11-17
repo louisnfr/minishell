@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:59:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/05 14:59:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:32:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_nb_of_pipes(t_cmd *cmd)
 	return (nb_of_pipes);
 }
 
-int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd)
+int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd, t_data *data)
 {
 	int		i;
 	int		**fd_array;
@@ -45,15 +45,15 @@ int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd)
 	*nb_of_pipes = get_nb_of_pipes(cmd);
 	fd_array = (int **)ft_calloc(1, sizeof(int *) * *nb_of_pipes);
 	if (!fd_array)
-		return (NULL);
+		return ((int **)exit_error_void(NULL, "malloc()", data));
 	i = -1;
 	while (++i < *nb_of_pipes)
 	{
 		fd_array[i] = (int *)ft_calloc(1, sizeof(int) * 2);
 		if (!fd_array[i])
-			return (NULL);
+			return ((int **)exit_error_void(NULL, "malloc()", data));
 		if (pipe(fd_array[i]) == -1)
-			return (NULL);
+			return ((int **)exit_error_void(NULL, "pipe()", data));
 	}
 	return (fd_array);
 }
@@ -78,17 +78,16 @@ t_bool	copy_fd_array(int **fd_array, int nb_of_pipes, t_cmd **cmd)
 	return (SUCCESS);
 }
 
-void	fill_fd_array(t_cmd **cmd)
+void	fill_fd_array(t_cmd **cmd, t_data *data)
 {
 	int	i;
 	int	**fd_array;
 	int	nb_of_pipes;
 
 	i = 0;
-	fd_array = create_fd_array(&nb_of_pipes, *cmd);
-	if (!fd_array)
-		return ;
-	copy_fd_array(fd_array, nb_of_pipes, cmd);
+	fd_array = create_fd_array(&nb_of_pipes, *cmd, data);
+	if (!copy_fd_array(fd_array, nb_of_pipes, cmd))
+		exit_error_void(NULL, "malloc()", data);
 	(*cmd)->output = fd_array[0][1];
 	if ((*cmd)->next)
 		*cmd = (*cmd)->next;
@@ -105,7 +104,7 @@ void	fill_fd_array(t_cmd **cmd)
 	free_fd_array(nb_of_pipes, fd_array);
 }
 
-void	parse_pipes(t_cmd *cmd_list)
+void	parse_pipes(t_cmd *cmd_list, t_data *data)
 {
 	t_cmd	*cmd;
 
@@ -113,7 +112,7 @@ void	parse_pipes(t_cmd *cmd_list)
 	while (cmd->next)
 	{
 		if (cmd->next->delimiter == PIPE)
-			fill_fd_array(&cmd);
+			fill_fd_array(&cmd, data);
 		if (cmd && cmd->next)
 			cmd = cmd->next;
 		else

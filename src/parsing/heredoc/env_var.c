@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/06 15:39:23 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 13:19:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,18 @@ static int	heredoc_double_dollars(t_var *var, char *str)
 static int	heredoc_length_new_input(char *str, t_data *data)
 {
 	t_var	*var;
-	int		double_quotes;
 	int		length;
 
-	var = init_var();
+	var = init_var(data);
 	if (!var || !str || !str[var->i])
 		return (0);
-	double_quotes = -1;
 	while (str && str[var->i] && str[var->i + 1])
 	{
 		if (heredoc_double_dollars(var, str))
 			continue ;
 		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
 			&& !is_charset_env(str[var->i + 1]))
-			handle_env_variable(&double_quotes, var, str, data);
+			handle_env_variable(-1, var, str, data);
 		else
 			increment_i_j(var);
 	}
@@ -71,12 +69,10 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
 	int		str_length;
-	int		double_quotes;
 
-	var = init_var();
+	var = init_var(data);
 	if (!var || !str || !str[var->i])
 		return (FAIL);
-	double_quotes = -1;
 	str_length = ft_strlen(str);
 	while (var->i < str_length && str[var->i] && str[var->i + 1])
 	{
@@ -85,7 +81,7 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
 			&& !is_charset_env(str[var->i + 1]))
 			fill_env_value(
-				&double_quotes, new_str, var, get_env_val(str, &var->i, data));
+				-1, new_str, var, get_env_val(str, &var->i, data));
 		else
 			new_str[var->j++] = str[var->i++];
 	}
@@ -105,7 +101,7 @@ char	*heredoc_env_variable(char *input, t_data *data)
 	new_length = heredoc_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
-		return (NULL);
+		return ((char *)exit_error_void(NULL, "malloc()", data));
 	heredoc_fill_new_input(new_input, input, data);
 	clean_free(&input);
 	return (new_input);

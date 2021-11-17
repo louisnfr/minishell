@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/07 09:56:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:10:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 		add_var(&data->env, new_var("OLDPWD", oldpwd, 1));
 		add_var(&data->export, new_var("OLDPWD", oldpwd, 1));
 	}
-	set_env("OLDPWD", oldpwd, data->env);
-	set_env("PWD", pwd, data->env);
-	set_env("OLDPWD", oldpwd, data->export);
-	set_env("PWD", pwd, data->export);
+	set_env("OLDPWD", oldpwd, data->env, data);
+	set_env("PWD", pwd, data->env, data);
+	set_env("OLDPWD", oldpwd, data->export, data);
+	set_env("PWD", pwd, data->export, data);
 	free(pwd);
 	free(oldpwd);
 }
@@ -51,11 +51,12 @@ t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 	tmp = NULL;
 	if (cdpath[ft_strlen(cdpath) - 1] != '/')
 	{
-		tmp = ft_strjoin(get_env("CDPATH", data->env), "/");
-		tmp = ft_strjoin(tmp, cmd_list->args[0]);
+		tmp = safe_strjoin(get_env("CDPATH", data->env), "/", data);
+		tmp = safe_strjoin(tmp, cmd_list->args[0], data);
 	}
 	else
-		tmp = ft_strjoin(get_env("CDPATH", data->env), cmd_list->args[0]);
+		tmp = safe_strjoin(
+				get_env("CDPATH", data->env), cmd_list->args[0], data);
 	if (chdir(tmp) < 0)
 	{
 		if (chdir(cmd_list->args[0]) < 0)

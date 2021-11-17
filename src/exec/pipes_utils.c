@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 14:35:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/17 13:51:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,19 @@ t_bool	is_first_pipe(t_cmd *cmd_list)
 		&& cmd_list->next->delimiter == PIPE);
 }
 
-void	close_cmd_pipes_fd(t_cmd **cmd_list)
+void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data)
 {
-	close_all_pipes(cmd_list);
+	close_all_pipes(cmd_list, data);
 	*cmd_list = (*cmd_list)->next;
 	while ((*cmd_list) && (*cmd_list)->delimiter == PIPE)
-	{
-		close_all_pipes(cmd_list);
 		*cmd_list = (*cmd_list)->next;
-	}
 }
 
-t_bool	create_fork(int i, pid_t *pid)
+t_bool	create_fork(int i, pid_t *pid, t_data *data)
 {
 	pid[i] = fork();
 	if (pid[i] < 0)
-		return (-1);
+		return (exit_error_bool("fork()", data));
 	if (pid[i] == CHILD)
 	{
 		free(pid);

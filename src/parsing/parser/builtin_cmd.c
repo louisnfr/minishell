@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:52:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/05 14:52:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:47:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,21 @@ t_bool	is_option_echo(char **argv, t_data *data)
 void	handle_builtin_cmd(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
-	char	*command;
-	char	**options;
-	char	**args;
-
-	options = NULL;
-	args = NULL;
-	command = ft_strdup(argv[data->i]);
-	if (str_is_equal(command, "echo"))
+	create_new_cmd(&cmd_list, data);
+	cmd_list->command = safe_strdup(argv[data->i], data);
+	if (str_is_equal(cmd_list->command, "echo"))
 	{
 		if (is_option_echo(argv, data))
 		{
-			options = (char **)ft_calloc(1, sizeof(char *) * 2);
-			options[0] = ft_strdup("-n");
-			options[1] = NULL;
+			cmd_list->options = (char **)ft_calloc(1, sizeof(char *) * 2);
+			if (!cmd_list->options)
+				exit_error_bool("malloc()", data);
+			cmd_list->options[0] = safe_strdup("-n", data);
+			cmd_list->options[1] = NULL;
 		}
 	}
-	create_new_cmd(command, options, NULL, &cmd_list);
 	cmd_list->is_builtin = TRUE;
-	args = find_cmd_args(argv, data);
-	cmd_list->args = args;
+	cmd_list->args = find_cmd_args(argv, data);
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;

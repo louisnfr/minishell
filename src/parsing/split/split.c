@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:39 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 16:31:53 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/16 13:24:54 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_delimiters(int i, char **str, char **strs)
+int	handle_delimiters(int i, char **str, char **strs, t_data *data)
 {
 	int		j;
 	char	*tmp;
 
 	j = 0;
-	tmp = ft_strdup(*str);
+	tmp = safe_strdup(*str, data);
 	while (tmp && tmp[j] && is_charset_split(tmp[j]))
 		j++;
 	free(tmp);
 	tmp = NULL;
 	strs[i] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!strs[i])
-		return (0);
+		return (exit_error_bool("malloc()", data));
 	j = 0;
 	while (**str && is_delimiter_split(**str))
 	{
@@ -36,13 +36,13 @@ int	handle_delimiters(int i, char **str, char **strs)
 	return (1);
 }
 
-static int	get_count(char **str)
+static int	get_count(char **str, t_data *data)
 {
 	int		j;
 	char	*tmp;
 
 	j = 0;
-	tmp = ft_strdup(*str);
+	tmp = safe_strdup(*str, data);
 	while (tmp && tmp[j] && !is_charset_split(tmp[j]))
 	{
 		if (tmp[j] && (tmp[j] == '\'' || tmp[j] == '\"'))
@@ -54,13 +54,13 @@ static int	get_count(char **str)
 	return (j);
 }
 
-t_bool	fill_words(int i, char **str, char **strs)
+t_bool	fill_words(int i, char **str, char **strs, t_data *data)
 {
 	int	j;
 
-	strs[i] = (char *)ft_calloc(1, sizeof(char) * (get_count(str) + 1));
+	strs[i] = (char *)ft_calloc(1, sizeof(char) * (get_count(str, data) + 1));
 	if (!strs[i])
-		return (FAIL);
+		return (exit_error_bool("malloc()", data));
 	j = 0;
 	while (**str && !is_charset_split(**str))
 	{
@@ -76,7 +76,7 @@ t_bool	fill_words(int i, char **str, char **strs)
 	return (SUCCESS);
 }
 
-int	handle_split_input(int words, char *str, char **strs)
+int	handle_split_input(int words, char *str, char **strs, t_data *data)
 {
 	int	i;
 
@@ -87,33 +87,33 @@ int	handle_split_input(int words, char *str, char **strs)
 			str++;
 		if (*str && !is_charset_split(*str))
 		{
-			if (!fill_words(i, &str, &(*strs)))
+			if (!fill_words(i, &str, &(*strs), data))
 				return (FAIL);
 		}
 		else if (*str && is_charset_split(*str))
 		{
-			if (!handle_delimiters(i, &str, &(*strs)))
+			if (!handle_delimiters(i, &str, &(*strs), data))
 				return (FAIL);
 		}
 		if (strs[i] && str_is_equal(strs[i], "<<"))
-			handle_heredoc_quotes(&i, &str, &(*strs));
+			handle_heredoc_quotes(&i, &str, &(*strs), data);
 	}
 	strs[i] = NULL;
 	return (SUCCESS);
 }
 
-char	**split_input(char *str)
+char	**split_input(char *str, t_data *data)
 {
 	int		words;
 	char	**strs;
 
-	words = split_count_words(str);
+	words = split_count_words(str, data);
 	if (words == -1)
 		return (NULL);
 	strs = (char **)ft_calloc(1, sizeof(char *) * (words + 1));
 	if (!strs)
-		return (NULL);
-	if (!handle_split_input(words, str, strs))
+		return ((char **)exit_error_void(NULL, "malloc()", data));
+	if (!handle_split_input(words, str, strs, data))
 		return (NULL);
 	return (strs);
 }

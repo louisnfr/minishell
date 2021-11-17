@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 16:49:42 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/15 16:09:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	get_length(char **argv)
 	return (length);
 }
 
-static char	*fill_str(int *i, char **argv)
+static char	*fill_str(int *i, char **argv, t_data *data)
 {
 	char	*str;
 
@@ -47,28 +47,28 @@ static char	*fill_str(int *i, char **argv)
 		&& str_is_equal(argv[*i + 1], ">&")
 		&& str_is_equal(argv[*i + 2], "1"))
 	{
-		str = ft_strjoin(argv[*i], argv[*i + 1]);
-		str = ft_strjoin_and_free(str, argv[*i + 2]);
+		str = safe_strjoin(argv[*i], argv[*i + 1], data);
+		str = safe_strjoin_and_free(str, argv[*i + 2], data);
 		(*i) += 2;
 	}
 	else if (argv[*i] && argv[*i + 1] && str_is_equal(argv[*i], "2")
 		&& str_is_equal(argv[*i + 1], ">"))
 	{
-		str = ft_strjoin(argv[*i], argv[*i + 1]);
+		str = safe_strjoin(argv[*i], argv[*i + 1], data);
 		(*i)++;
 	}
 	else if (argv[*i] && argv[*i + 1] && str_is_equal(argv[*i], "2")
 		&& str_is_equal(argv[*i + 1], ">>"))
 	{
-		str = ft_strjoin(argv[*i], argv[*i + 1]);
+		str = safe_strjoin(argv[*i], argv[*i + 1], data);
 		(*i)++;
 	}
 	else
-		str = ft_strdup(argv[*i]);
+		str = safe_strdup(argv[*i], data);
 	return (str);
 }
 
-t_bool	fill_new_argv(int length, char **argv, char **new_argv)
+t_bool	fill_new_argv(int length, char **argv, char **new_argv, t_data *data)
 {
 	int	i;
 	int	j;
@@ -77,7 +77,7 @@ t_bool	fill_new_argv(int length, char **argv, char **new_argv)
 	j = -1;
 	while (++j < length && argv[i])
 	{
-		new_argv[j] = fill_str(&i, argv);
+		new_argv[j] = fill_str(&i, argv, data);
 		if (!new_argv[j])
 			return (FAIL);
 		i++;
@@ -86,48 +86,7 @@ t_bool	fill_new_argv(int length, char **argv, char **new_argv)
 	return (SUCCESS);
 }
 
-/*
-t_bool	fill_new_argv(int length, char **argv, char **new_argv)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = -1;
-	while (++j < length && argv[i])
-	{
-		if (argv[i] && argv[i + 1] && argv[i + 2] && str_is_equal(argv[i], "2")
-			&& str_is_equal(argv[i + 1], ">&")
-			&& str_is_equal(argv[i + 2], "1"))
-		{
-			new_argv[j] = ft_strjoin(argv[i], argv[i + 1]);
-			new_argv[j] = ft_strjoin_and_free(new_argv[j], argv[i + 2]);
-			i += 2;
-		}
-		else if (argv[i] && argv[i + 1] && str_is_equal(argv[i], "2")
-			&& str_is_equal(argv[i + 1], ">"))
-		{
-			new_argv[j] = ft_strjoin(argv[i], argv[i + 1]);
-			i++;
-		}
-		else if (argv[i] && argv[i + 1] && str_is_equal(argv[i], "2")
-			&& str_is_equal(argv[i + 1], ">>"))
-		{
-			new_argv[j] = ft_strjoin(argv[i], argv[i + 1]);
-			i++;
-		}
-		else
-			new_argv[j] = ft_strdup(argv[i]);
-		if (!new_argv[j])
-			return (FAIL);
-		i++;
-	}
-	new_argv[j] = NULL;
-	return (SUCCESS);
-}
-*/
-
-char	**handle_error_redirections(char **argv)
+char	**handle_error_redirections(char **argv, t_data *data)
 {
 	char	**new_argv;
 	int		length;
@@ -137,15 +96,15 @@ char	**handle_error_redirections(char **argv)
 		return (argv);
 	new_argv = NULL;
 	new_argv = (char **)ft_calloc(1, sizeof(char *) * (length + 1));
-	if (!argv)
-		return (NULL);
-	if (!fill_new_argv(length, argv, new_argv))
+	if (!new_argv)
+		return ((char **)exit_error_void(NULL, "malloc()", data));
+	if (!fill_new_argv(length, argv, new_argv, data))
 		return (NULL);
 	free_double_str(&(*argv));
 	return (new_argv);
 }
 
-char	**check_argv(char **argv)
+char	**check_argv(char **argv, t_data *data)
 {
 	int	i;
 
@@ -165,6 +124,6 @@ char	**check_argv(char **argv)
 		return (syntax_error_str_msg(argv[i], argv));
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))
 		return (syntax_error_str_msg("newline", argv));
-	argv = handle_error_redirections(&(*argv));
+	argv = handle_error_redirections(&(*argv), data);
 	return (argv);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:04 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 17:54:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/15 15:19:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ t_bool	count_wildcard_arg(int *i, char *wildcard_arg)
 	return (SUCCESS);
 }
 
-t_bool	fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg)
+t_bool	fill_wildcard_arg(
+	char **cmd_array, int *i, char *wildcard_arg, t_data *data)
 {
 	DIR				*directory;
 	struct dirent	*entity;
@@ -127,7 +128,7 @@ t_bool	fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg)
 	{
 		if (matching_name(entity->d_name, wildcard_arg))
 		{
-			cmd_array[*i + 1] = ft_strdup(entity->d_name);
+			cmd_array[*i + 1] = safe_strdup(entity->d_name, data);
 			(*i)++;
 		}
 		entity = readdir(directory);
@@ -135,7 +136,7 @@ t_bool	fill_wildcard_arg(char **cmd_array, int *i, char *wildcard_arg)
 	closedir(directory);
 	if (*i == i_ref)
 	{
-		cmd_array[*i + 1] = ft_strdup(wildcard_arg);
+		cmd_array[*i + 1] = safe_strdup(wildcard_arg, data);
 		(*i)++;
 	}
 	return (SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 18:54:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:17:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	update_env(t_data *data)
 	tmp = get_env("SHLVL", data->env);
 	i = (ft_atoi(tmp) + 1);
 	tmp = ft_itoa(i);
-	set_env("SHLVL", tmp, data->env);
+	set_env("SHLVL", tmp, data->env, data);
 	free(tmp);
 }
 
@@ -38,7 +38,7 @@ char	*get_env(char *key, t_env *env)
 	return (NULL);
 }
 
-void	set_env(char *key, char *new_value, t_env *env)
+void	set_env(char *key, char *new_value, t_env *env, t_data *data)
 {
 	t_env	*head;
 
@@ -53,7 +53,7 @@ void	set_env(char *key, char *new_value, t_env *env)
 	free(env->value);
 	env->value = ft_calloc(1, sizeof(char) + (ft_strlen(new_value) + 1));
 	if (!env->value)
-		return ;
+		exit_error_bool("malloc()", data);
 	ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
 	env = head;
 }

@@ -1,0 +1,74 @@
+ENV_SHOW="env | sort | grep -v SHLVL | grep -v _="
+EXPORT_SHOW="export | sort | grep -v SHLVL | grep -v _= | grep -v OLDPWD"
+export =
+export 1TEST= ; $ENV_SHOW
+export TEST ; $EXPORT_SHOW
+export ""="" ;  $ENV_SHOW
+export TES=T="" ; $ENV_SHOW
+export TE+S=T="" ; $ENV_SHOW
+export TEST=LOL ; echo $TEST ; $ENV_SHOW
+export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST
+export TEST=LOL; export TEST+=LOL ; echo $TEST ; $ENV_SHOW
+$ENV_SHOW
+$EXPORT_SHOW
+export TEST="ls       -l     - a" ; echo $TEST ; $LS ; $ENV_SHOW
+env | grep "_="
+export | grep "SHLVL"
+export | grep "OLDPWD"
+export | grep "PWD"
+export $?
+export TEST
+export TEST=
+export TEST=123
+export ___TEST=123
+export --TEST=123
+export ""=""
+export ''=''
+export "="="="
+export '='='='
+export TE\\\ST=100
+export TE-ST=100
+export -TEST=100
+export TEST-=100
+export _TEST=100
+export | grep "SHLVL"
+export TEST
+export ==========
+export 1TEST=
+export TEST
+export ""=""
+export TES=T=""
+export TE+S=T=""
+export TES\\\\T=123
+export TES.T=123
+export TES\\\$T=123
+export TES\\\\T
+export TES.T=123
+export TES+T=123
+export TES=T=123
+export TES}T=123
+export TES{T=123
+export TES-T=123
+export -TEST=123
+export _TEST=123
+export TES_T=123
+export TEST_=123
+export TE*ST=123
+export TES#T=123
+export TES@T=123
+export TES!T=123
+export TES$?T=123
+export =============123
+export +++++++=123
+export ________=123
+export export
+export echo
+export pwd
+export cd
+export export
+export unset
+export sudo
+export TES^T=123
+export TES!T=123
+export TES\~T=123
+export TEST+=100

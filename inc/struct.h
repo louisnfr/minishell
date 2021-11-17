@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 01:37:22 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 10:22:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,15 @@ typedef struct s_data
 	t_env		*env;
 	t_env		*export;
 	char		**all_paths;
-	char		*tab_delimiters;
 	char		*prpt;
 	int			ret_value;
 	pid_t		pid;
 	int			i;
+	int			double_quotes;
+	char		**builtins;
 	char		**envp;
 }	t_data;
+
+typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);
 
 #endif
