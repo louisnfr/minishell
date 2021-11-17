@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 02:42:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/17 03:17:42 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 	while (cmd_list->args && cmd_list->args[++i])
 	{
 		if (ft_isdigit(cmd_list->args[i][0])
-			|| !str_is_alnum(cmd_list->args[i]))
+			/*|| !str_is_alnum(cmd_list->args[i])*/)
 			ret = export_error(cmd_list, i);
 		else if (!ft_strnstr(cmd_list->args[i], "=",
 				ft_strlen(cmd_list->args[i])))
