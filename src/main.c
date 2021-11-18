@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/17 14:18:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:20:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int ac, char **av, char **envp)
 		if (input && ft_strlen(input) > 0)
 		{
 			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
-			data->sh->h_num++;
 			init_cmd_list(data);
 			if (parse(input, data))
 				exec(data);

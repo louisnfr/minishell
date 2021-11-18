@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/18 12:15:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:15:28 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ char		**syntax_error_str_msg(char *token, char **str);
 /*
 ** shell/env
 */
+void		create_update_env(char **envp, t_data *data);
+void		new_env(t_data *data);
 int			get_env_size(t_env *env);
 char		**env_to_char(t_env *env, t_data *data);
-t_env		*create_env(char **envp, t_data *data);
-void		update_env(t_data *data);
+t_env		*dup_env(char **envp, t_data *data);
+void		update_env(t_data *data, t_env *env);
 char		*get_env(char *key, t_env *env);
 void		set_env(char *key, char *new_value, t_env *env, t_data *data);
 t_env		*new_var(char *name, char *value, int is_value);

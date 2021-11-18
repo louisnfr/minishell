@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/18 14:23:55 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/18 18:19:07 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,7 +109,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) #$(DEBUG_F)
+CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) $(DEBUG_F)
 DEBUG_F	= -fsanitize=address
 LIBS	= -lft -lncurses -lreadline
 

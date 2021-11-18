@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 10:17:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 17:41:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_env(t_data *data)
+void	update_env(t_data *data, t_env *env)
 {
 	char	*tmp;
 	int		i;
 
-	tmp = get_env("SHLVL", data->env);
+	tmp = get_env("SHLVL", env);
 	i = (ft_atoi(tmp) + 1);
 	tmp = ft_itoa(i);
-	set_env("SHLVL", tmp, data->env, data);
+	set_env("SHLVL", tmp, env, data);
 	free(tmp);
 }
 
