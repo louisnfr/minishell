@@ -29,7 +29,7 @@ function execute_test()
 	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null | sed '/^minishell/d')
 	MY_EXIT_STATUS=$?
 
-	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null  | sed '/^minishell/d')
+	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null | sed '/^minishell/d')
 	REF_EXIT_STATUS=$?
 
 	if [ "$MY_RESULT" == "$REF_BASH" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]

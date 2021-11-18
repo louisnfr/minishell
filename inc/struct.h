@@ -88,6 +88,7 @@ typedef struct s_data
 	int			double_quotes;
 	char		**builtins;
 	char		**envp;
+	char		*last_cwd;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

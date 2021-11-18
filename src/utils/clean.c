@@ -70,6 +70,7 @@ void	clean_data(t_data *data)
 	free_double_str(data->all_paths);
 	free_double_str(data->envp);
 	free_double_str(data->builtins);
+	clean_free(&data->last_cwd);
 	free_env(data->env);
 	free_env(data->export);
 	clean_free(&data->prpt);

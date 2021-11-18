@@ -62,6 +62,7 @@ t_data	*init_data(char **envp)
 	data->ret_value = 0;
 	data->double_quotes = 1;
 	data->envp = NULL;
+	data->last_cwd = NULL;
 	update_env(data);
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);

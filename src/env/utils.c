@@ -54,7 +54,8 @@ void	set_env(char *key, char *new_value, t_env *env, t_data *data)
 	env->value = ft_calloc(1, sizeof(char) + (ft_strlen(new_value) + 1));
 	if (!env->value)
 		exit_error_bool("malloc()", data);
-	ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
+	if (new_value)
+		ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
 	env = head;
 }
 

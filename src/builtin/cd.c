@@ -14,7 +14,10 @@
 
 t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
 {
-	if (chdir(dir) < 0)
+	int	ret;
+
+	ret = chdir(dir);
+	if (ret < 0)
 	{
 		if (error_msg)
 			return (cd_error_msg(error_msg, cmd_list));
@@ -36,10 +39,16 @@ void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 		add_var(&data->env, new_var("OLDPWD", oldpwd, 1));
 		add_var(&data->export, new_var("OLDPWD", oldpwd, 1));
 	}
-	set_env("OLDPWD", oldpwd, data->env, data);
-	set_env("PWD", pwd, data->env, data);
-	set_env("OLDPWD", oldpwd, data->export, data);
-	set_env("PWD", pwd, data->export, data);
+	if (oldpwd)
+	{
+		set_env("OLDPWD", oldpwd, data->env, data);
+		set_env("OLDPWD", oldpwd, data->export, data);
+	}
+	if (pwd)
+	{
+		set_env("PWD", pwd, data->env, data);
+		set_env("PWD", pwd, data->export, data);
+	}
 	free(pwd);
 	free(oldpwd);
 }
@@ -83,6 +92,16 @@ t_bool	handle_dash(t_data *data, t_cmd *cmd_list)
 	return (ret);
 }
 
+int	error_oldpwd(char *oldpwd, char *command)
+{
+	ft_putstr_fd("chdir: error retrieving current directory: getcwd: cannot access parent directories: ", 2);
+	perror(oldpwd);
+	ft_putstr_fd("bash: cd: ", 2);
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd(": Stale file handle\n", 2);
+	return (1);
+}
+
 t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 {
 	char	*oldpwd;
@@ -100,7 +119,9 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 		ret = handle_dash(data, cmd_list);
 	else
 	{
-		if (ft_strlen(cdpath) > 0 && ft_strcmp(cmd_list->args[0], ".")
+		if (!oldpwd && (str_is_equal(cmd_list->args[0], ".") || str_is_equal(cmd_list->args[0], "..")))
+			ret = error_oldpwd(oldpwd, cmd_list->args[0]);
+		else if (ft_strlen(cdpath) > 0 && ft_strcmp(cmd_list->args[0], ".")
 			&& ft_strcmp(cmd_list->args[0], ".."))
 			ret = try_cdpath(cdpath, data, cmd_list);
 		else

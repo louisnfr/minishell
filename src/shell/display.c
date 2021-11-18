@@ -36,7 +36,14 @@ char	*prompt(t_data *data)
 
 	usr = get_env("USER", data->env);
 	cwd = getcwd(NULL, 0);
-	if (ft_strnstr(cwd, get_env("HOME", data->env),
+	if (!cwd)
+		cwd = safe_strdup(data->last_cwd, data);
+	else
+	{
+		clean_free(&data->last_cwd);
+		data->last_cwd = safe_strdup(cwd, data);
+	}
+	if (cwd && ft_strnstr(cwd, get_env("HOME", data->env),
 			ft_strlen(get_env("HOME", data->env))))
 	{
 		tmp = ft_substr(

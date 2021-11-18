@@ -16,13 +16,17 @@ t_bool	exec_pwd(t_cmd *cmd_list, t_data *data)
 {
 	char	*pwd;
 
-	(void)cmd_list;
 	(void)data;
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (FAIL);
+	{
+		ft_putstr_fd("pwd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+		perror(pwd);
+		return (EXIT_FAILURE);
+	}
 	ft_putstr_fd(pwd, cmd_list->output);
 	ft_putchar_fd('\n', cmd_list->output);
-	free(pwd);
+	clean_free(&pwd);
 	return (EXIT_SUCCESS);
 }
