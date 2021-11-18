@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 10:15:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:44:38 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*create_env(char **envp, t_data *data)
+t_env	*dup_env(char **envp, t_data *data)
 {
 	t_env	*g_env;
 	char	**var;
@@ -27,6 +27,25 @@ t_env	*create_env(char **envp, t_data *data)
 		free_split(var);
 	}
 	return (g_env);
+}
+
+void	create_update_env(char **envp, t_data *data)
+{
+	if (!envp[0])
+		new_env(data);
+	else
+	{
+		data->env = dup_env(envp, data);
+		data->export = dup_env(envp, data);
+		update_env(data, data->env);
+		update_env(data, data->export);
+	}
+}
+
+void	new_env(t_data *data)
+{
+	(void)data;
+	printf("check NEW\n");
 }
 
 char	**env_to_char(t_env *env, t_data *data)

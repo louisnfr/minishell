@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/17 10:22:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:14:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,12 @@ t_data	*init_data(char **envp)
 	data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!data)
 		return ((t_data *)exit_error_void(NULL, "malloc()", NULL));
-	data->env = create_env(envp, data);
-	data->export = create_env(envp, data);
+	create_update_env(envp, data);
 	data->i = 0;
 	data->pid = pid;
 	data->ret_value = 0;
 	data->double_quotes = 1;
 	data->envp = NULL;
-	update_env(data);
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);
 	if (!data->all_paths)
