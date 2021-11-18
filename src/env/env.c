@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/18 18:44:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/18 23:40:29 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	create_update_env(char **envp, t_data *data)
 void	new_env(t_data *data)
 {
 	(void)data;
-	printf("check NEW\n");
+	// add_var(&data->env, new_var("USER", "louisraffin", 1));
+	// printf("check\n");
 }
 
 char	**env_to_char(t_env *env, t_data *data)

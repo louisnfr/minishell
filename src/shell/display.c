@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 10:22:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:50:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ char	*prompt(t_data *data)
 		clean_free(&data->last_cwd);
 		data->last_cwd = safe_strdup(cwd, data);
 	}
-	if (cwd && ft_strnstr(cwd, get_env("HOME", data->env),
-			ft_strlen(get_env("HOME", data->env))))
+	printf("check1\n");
+	printf("STRNSTR: -%s-\n", ft_strnstr(cwd, get_env("HOME", data->env), ft_strlen(get_env("HOME", data->env))));
+	printf("check2\n");
+	if (ft_strnstr(cwd, get_env("HOME", data->env), ft_strlen(get_env("HOME", data->env))))
 	{
 		tmp = ft_substr(
 				cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
