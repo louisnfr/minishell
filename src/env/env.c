@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/18 23:40:29 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/19 00:31:37 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ void	create_update_env(char **envp, t_data *data)
 void	new_env(t_data *data)
 {
 	(void)data;
-	// add_var(&data->env, new_var("USER", "louisraffin", 1));
-	// printf("check\n");
+	add_var(&data->export, new_var("OLDPWD", "", 0));
+	add_var(&data->env, new_var("PWD", getcwd(NULL, 0), 1));
+	add_var(&data->export, new_var("PWD", getcwd(NULL, 0), 1));
+	add_var(&data->env, new_var("SHLVL", "1", 1));
+	add_var(&data->export, new_var("SHLVL", "1", 1));
 }
 
 char	**env_to_char(t_env *env, t_data *data)

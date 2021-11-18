@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/18 23:50:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/19 00:33:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ char	*prompt(t_data *data)
 		clean_free(&data->last_cwd);
 		data->last_cwd = safe_strdup(cwd, data);
 	}
-	printf("check1\n");
-	printf("STRNSTR: -%s-\n", ft_strnstr(cwd, get_env("HOME", data->env), ft_strlen(get_env("HOME", data->env))));
-	printf("check2\n");
-	if (ft_strnstr(cwd, get_env("HOME", data->env), ft_strlen(get_env("HOME", data->env))))
+	if (ft_strnstr(cwd, get_env("HOME", data->env),
+			ft_strlen(get_env("HOME", data->env))))
 	{
 		tmp = ft_substr(
 				cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
@@ -56,8 +54,11 @@ char	*prompt(t_data *data)
 		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
 	}
-	usr = safe_strjoin("\e[92;1m", usr, data);
-	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
+	if (usr)
+	{
+		usr = safe_strjoin("\e[92;1m", usr, data);
+		usr = safe_strjoin_and_free(usr, "\e[0m:", data);
+	}
 	usr = safe_strjoin_and_free(usr, "\e[34;1m", data);
 	usr = safe_strjoin_and_free(usr, cwd, data);
 	clean_free(&cwd);
