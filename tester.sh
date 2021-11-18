@@ -22,14 +22,30 @@ END="..............................  END TEST  ............................."
 COLS=$(tput cols)
 printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"
 
+define(){ IFS='\n' read -r -d '' ${1} || true; }
+
 function execute_test()
 {
 	SEP="..................................................................................."
 
-	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null | sed '/^minishell/d')
+#	COMMANDE MINISHELL SUR 1 LIGNE :
+#	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null | sed '/^minishell/d')
+#	COMMANDE MINISHELL MULTI-LIGNES :
+	MY_RESULT=$(./minishell 2>/dev/null << END_HEREDOC
+$@
+exit
+END_HEREDOC
+)
 	MY_EXIT_STATUS=$?
 
-	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null | sed '/^minishell/d')
+#	COMMANDE BASH SUR 1 LIGNE :
+#	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null | sed '/^minishell/d')
+#	COMMANDE BASH MULTI-LIGNES :
+	REF_BASH=$(bash --posix 2>/dev/null << END_HEREDOC
+$@
+exit
+END_HEREDOC
+)
 	REF_EXIT_STATUS=$?
 
 	if [ "$MY_RESULT" == "$REF_BASH" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]

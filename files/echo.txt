@@ -1,3 +1,7 @@
+|
+&
+echo $USEER
+echo $?
 echo test tout
 echo test      tout
 echo -n test tout
