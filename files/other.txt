@@ -27,9 +27,22 @@ echo $? | echo $? | echo $?
 cd error ; echo $?
 cd error error ; echo $?
 ./error ; echo $?
-<error ; echo $?
 cat <error ; echo $?
-cat < ; echo $?
-echo test > ; echo $?
-echo test >> ; echo $?
 echo testing multi ; echo "test 1 ; | and 2" ; cat tests/lorem.txt | grep Lorem
+cd random_cmd; echo $?
+cd random_cmd; cd $?
+touch test_file ; ./test_file ; rm test_file
+cat bla
+file_name
+not_cmd
+export test=a ; echo $test
+ls bonjour ; echo $?
+.
+..
+""
+$
+$LESS$VAR
+ctrl-\
+ctrl-C
+ctrl-D
+/bin/echo bonjour

@@ -72,3 +72,11 @@ export TES^T=123
 export TES!T=123
 export TES\~T=123
 export TEST+=100
+export var=a ; export $var=test ; echo $var $a
+export $var=test
+export var=test1 ; export var=test2 ; export
+export "" test=a
+export "" test=a ; env
+export "" && unset ""
+export "test=ici"=coucou ; echo $test
+export var="cat Makefile | grep >" ; echo $var

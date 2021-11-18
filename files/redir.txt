@@ -2,6 +2,11 @@ echo test > ls ; cat ls
 echo test > ls >> ls >> ls ; echo test >> ls; cat ls
 cat < ls
 cat < ls > ls
+<error ; echo $?
+whereis grep > tmp/file
+ls -la > tmp/file
+<a cat <b <c
+> test | echo blabla; rm test
 echo test > a ; cat < a
 echo lala >a ; cat <a
 echo test>a ; cat<a

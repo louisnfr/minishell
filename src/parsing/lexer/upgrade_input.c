@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 16:22:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 12:23:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,72 @@ char	*handle_home_var(char *str, t_data *data)
 	return (str);
 }
 
+void	delete_void_args(
+	int nb_of_args, int new_nb_of_args, t_cmd *cmd_list, t_data *data)
+{
+	int		i;
+	int		j;
+	char	**args;
+
+	if (nb_of_args == new_nb_of_args)
+		return ;
+	args = safe_double_strdup(cmd_list->args, nb_of_args, data);
+	free_double_str(cmd_list->args);
+	cmd_list->args = (char **)ft_calloc(
+			1, sizeof(char *) * (new_nb_of_args + 1));
+	if (!cmd_list->args)
+		exit_error_bool("malloc()", data);
+	j = 0;
+	i = -1;
+	while (++i < nb_of_args)
+	{
+		if (args[i])
+			cmd_list->args[j++] = safe_strdup(args[i], data);
+	}
+	cmd_list->args[j] = NULL;
+	free_double_str(args);
+}
+
+char	*transform_str(
+	char *str, char *pid_value, char *ret_value, t_data *data)
+{
+	str = handle_home_var(str, data);
+	str = parse_env_variable(str, data);
+	if (str)
+	{
+		str = transform_pid_value(str, pid_value, data);
+		str = transform_ret_value(str, ret_value, data);
+	}
+	return (str);
+}
+
+void	parse_special_value(t_cmd *cmd_list, t_data *data)
+{
+	int		i;
+	char	*pid_value;
+	char	*ret_value;
+	int		new_nb_of_args;
+
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
+	cmd_list->command = transform_str(
+			cmd_list->command, pid_value, ret_value, data);
+	i = 0;
+	new_nb_of_args = 0;
+	while (cmd_list->args && cmd_list->args[i])
+	{
+		cmd_list->args[i] = transform_str(
+				cmd_list->args[i], pid_value, ret_value, data);
+		if (cmd_list->args[i])
+			new_nb_of_args++;
+		i++;
+	}
+	clean_free(&pid_value);
+	clean_free(&ret_value);
+	delete_void_args(i, new_nb_of_args, cmd_list, data);
+}
+
+/*
 void	parse_special_value(t_cmd *cmd_list, t_data *data)
 {
 	int		i;
@@ -76,12 +142,17 @@ void	parse_special_value(t_cmd *cmd_list, t_data *data)
 	{
 		cmd_list->args[i] = handle_home_var(cmd_list->args[i], data);
 		cmd_list->args[i] = parse_env_variable(cmd_list->args[i], data);
-		cmd_list->args[i] = transform_pid_value(
-				cmd_list->args[i], pid_value, data);
-		cmd_list->args[i] = transform_ret_value(
-				cmd_list->args[i], ret_value, data);
+		if (cmd_list->args[i])
+		{
+			cmd_list->args[i] = transform_pid_value(
+					cmd_list->args[i], pid_value, data);
+			cmd_list->args[i] = transform_ret_value(
+					cmd_list->args[i], ret_value, data);
+		}
 		i++;
 	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);
+	delete_void_args(i, cmd_list);
 }
+*/

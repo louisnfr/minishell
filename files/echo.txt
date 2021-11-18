@@ -101,3 +101,15 @@ echo $?TEST$?
 echo "$PWD"
 echo "$LALA"
 echo $HOHO
+echo -n -n -nnnn -nnnnm ; echo a
+echo -n -nnn hello -n ; echo a
+export test="  foo  bar " ; echo $test
+export test="  foo  bar " ; echo ab$test
+export test="  foo  bar " ; echo "ab"$test
+export test="  foo  bar " ; echo ab"$test" | cat -e
+export test="  foo  bar " ; echo "$test"
+export test="  foo  bar " ; echo '$test'
+export test="  foo  bar " ; echo ""$test""
+export test="  foo  bar " ; echo """$test"""
+export var=at ; c$var Makefile
+export loop='bonjour$loop' ; echo $loop

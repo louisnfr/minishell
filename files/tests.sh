@@ -585,3 +585,19 @@ ls -z || (cd ../../..&&pwd)
 
 cat /dev/random | head -c 100 | wc -c
 find / | grep cores
+echo "\s" ; echo "\\s"
+echo "12\""
+echo "bip | bip ; coyotte > < \" "
+echo \>
+echo $USER$var\$USER$USER\$USERtest$USER
+echo bonjour \; ls
+export var=te"st ; echo $var
+cat < ; echo $?
+echo test > ; echo $?
+echo test >> ; echo $?
+| echo bonjour; |
+echo bonjour > > out
+echo bonjour > $test
+echo bonjour >>> test
+echo bonjour | |
+echo bonjour |;

@@ -1,7 +1,6 @@
 cd .. ; pwd
 cd /Users ; pwd
 cd ; pwd
-mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
 cd
 cd ..
 cd .
@@ -29,3 +28,15 @@ cd bark bark
 cd '/'
 cd $PWD/file_tests
 cd $OLDPWD/something
+cd ../../../../../.. ; pwd
+cd /home/ ; pwd
+cd $HOME/Desktop ; pwd
+unset $HOME; cd
+export HOME= ; cd
+cd too many arguments
+cd ./path_not_found
+cd -
+mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
+mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd ..
+cd home/..
+cd home/dir

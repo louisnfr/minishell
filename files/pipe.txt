@@ -26,13 +26,6 @@ echo test | cat -e | cat -e | cat -e
 whereis ls | cat -e | cat -e > test
 echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
 ls -la | grep "."
-whereis grep > tmp/file
-whereis grep > tmp/file
-ls -la > tmp/file
-ls -la > tmp/file
-© 2021 GitHub, Inc.
-Terms
-Privacy
 export a | echo lala ; export' 'grep -v _=
 export | echo lala
 unset PWD | echo lala ; export' 'grep -v _=
@@ -42,3 +35,8 @@ pwd | echo lala
 env | echo lala
 cat bible.txt | grep testifieth
 echo test | cat | cat | cat | cat | cat | grep test
+cat | cat | cat | ls
+cat Makefile | grep pr | head -n 5 | cd file_not_exit
+cat Makefile | grep pr | head -n 5 | hello
+ls | exit
+sleep 1 | exit

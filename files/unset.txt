@@ -36,3 +36,9 @@ unset sudo
 unset TES^T
 unset TES!T
 unset TES\~T
+unset PATH ; echo $PATH
+unset PATH ; ls
+unset "" test
+unset =
+unset PWD
+unset var

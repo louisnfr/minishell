@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/17 12:16:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/18 11:46:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,7 @@ char	*parse_env_variable(char *input, t_data *data)
 	}
 	fill_new_input(new_input, input, data);
 	clean_free(&input);
+	if (new_input && new_input[0] == '\0')
+		clean_free(&new_input);
 	return (new_input);
 }
