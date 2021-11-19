@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/18 18:20:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/19 16:53:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	main(int ac, char **av, char **envp)
 	t_data		*data;
 	char		*input;
 
-	if (ac != 1 || av[1])
-		exit(EXIT_FAILURE);
+	if (ac != 1 || av[1] || !envp[0])
+		return (EXIT_FAILURE);
 	data = init_data(envp);
 	if (!data)
 		return (EXIT_FAILURE);
@@ -35,6 +35,7 @@ int	main(int ac, char **av, char **envp)
 			// print_list(data->cmd_list);
 			clear_hist(data->sh->history, data->sh->search);
 			clean_cmd_list(&data->cmd_list, data);
+			data->sh->h_num += 1;
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 00:31:37 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/19 15:33:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,10 @@ t_env	*dup_env(char **envp, t_data *data)
 
 void	create_update_env(char **envp, t_data *data)
 {
-	if (!envp[0])
-		new_env(data);
-	else
-	{
 		data->env = dup_env(envp, data);
 		data->export = dup_env(envp, data);
 		update_env(data, data->env);
 		update_env(data, data->export);
-	}
-}
-
-void	new_env(t_data *data)
-{
-	(void)data;
-	add_var(&data->export, new_var("OLDPWD", "", 0));
-	add_var(&data->env, new_var("PWD", getcwd(NULL, 0), 1));
-	add_var(&data->export, new_var("PWD", getcwd(NULL, 0), 1));
-	add_var(&data->env, new_var("SHLVL", "1", 1));
-	add_var(&data->export, new_var("SHLVL", "1", 1));
 }
 
 char	**env_to_char(t_env *env, t_data *data)
