@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 00:22:02 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/19 15:33:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ char		**syntax_error_str_msg(char *token, char **str);
 /*
 ** shell/env
 */
-void		add_var_both(t_env **env, t_env **export, t_env *new_var);
 void		create_update_env(char **envp, t_data *data);
-void		new_env(t_data *data);
 int			get_env_size(t_env *env);
 char		**env_to_char(t_env *env, t_data *data);
 t_env		*dup_env(char **envp, t_data *data);
