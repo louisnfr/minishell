@@ -34,7 +34,7 @@ void	print_pipe_opt_args(t_cmd *tmp)
 	{
 		i = -1;
 		while (tmp->args[++i])
-			printf("Arg[%d] : %s\t", i, tmp->args[i]);
+			printf("Arg[%d] : |%s|\t", i, tmp->args[i]);
 		printf("\n");
 	}
 }

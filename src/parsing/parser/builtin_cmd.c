@@ -35,6 +35,47 @@ t_bool	cmd_is_builtin(char *cmd)
 	return (FALSE);
 }
 
+static int	handle_quotes(char *quote, char first_char)
+{
+	if (first_char == '\'' || first_char == '\"')
+	{
+		*quote = first_char;
+		return (2);
+	}
+	*quote = 0;
+	return (1);
+}
+
+t_bool	is_option_echo(char **argv, t_data *data)
+{
+	int		j;
+	int		ret;
+	char	quote;
+
+	ret = FAIL;
+	if (!argv)
+		return (FAIL);
+	while (argv[++data->i] && (argv[data->i][0] == '-' ||
+		argv[data->i][0] == '\'' || argv[data->i][0] == '\"'))
+	{
+		j = handle_quotes(&quote, argv[data->i][0]);
+		if (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
+		{
+			j++;
+			while (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
+				j++;
+			if (argv[data->i][j] && argv[data->i][j] != quote)
+				break ;
+			ret = SUCCESS;
+		}
+		else
+			break ;
+	}
+	data->i--;
+	return (ret);
+}
+
+/*
 t_bool	is_option_echo(char **argv, t_data *data)
 {
 	int	j;
@@ -43,7 +84,7 @@ t_bool	is_option_echo(char **argv, t_data *data)
 	ret = FAIL;
 	if (!argv)
 		return (FAIL);
-	while (argv[++data->i] && argv[data->i][0] == '-')
+	while (argv[++data->i] && (argv[data->i][0] == '-')
 	{
 		j = 1;
 		if (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
@@ -61,6 +102,8 @@ t_bool	is_option_echo(char **argv, t_data *data)
 	data->i--;
 	return (ret);
 }
+*/
+
 
 void	handle_builtin_cmd(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)

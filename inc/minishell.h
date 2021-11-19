@@ -178,12 +178,14 @@ char		*get_env_key(char *str, int *i, t_data *data);
 int			get_length_env_value(
 				int double_quotes, char *env_key, t_data *data);
 int			get_length_new_input(char *str, t_data *data);
+char		*transform_str(
+				char *str, char *pid_value, char *ret_value, t_data *data);
 char		*transform_pid_value(char *str, char *value, t_data *data);
 char		*transform_ret_value(char *str, char *value, t_data *data);
 void		handle_env_variable(
 				int double_quotes, t_var *var, char *str, t_data *data);
 void		fill_env_value(
-				int double_quotes, char *new_str, t_var *var, char *value);
+				char *new_str, t_var *var, char *str, t_data *data);
 void		fill_with_value(t_var *var, char *new_str, char *value);
 t_var		*init_var(t_data *data);
 void		free_var(t_var *var);

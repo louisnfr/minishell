@@ -80,8 +80,12 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 			continue ;
 		if (str[var->i] && str[var->i + 1] && str[var->i] == '$'
 			&& !is_charset_env(str[var->i + 1]))
+		{
+			data->double_quotes = -1;
 			fill_env_value(
-				-1, new_str, var, get_env_val(str, &var->i, data));
+				new_str, var, get_env_val(str, &var->i, data), data);
+			data->double_quotes = 1;
+		}
 		else
 			new_str[var->j++] = str[var->i++];
 	}

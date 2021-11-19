@@ -34,31 +34,59 @@ int	handle_special_cases(
 	return (0);
 }
 
+t_bool	is_ending(char *str, int i)
+{
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (!str[i])
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	put_space(char *str, int k, t_var *var, t_data *data)
+{
+	if (!k)
+	{
+		if (str[0] && str[0] == '$')
+			return (FALSE);
+		return (TRUE);
+	}
+	if (is_ending(data->env_value, k))
+	{
+		if (str[var->i])
+			return (TRUE);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
 void	fill_env_value(
-	int double_quotes, char *new_str, t_var *var, char *value)
+	char *new_str, t_var *var, char *str, t_data *data)
 {
 	int	k;
 
-	if (!value)
+	(void)str;
+	if (!data->env_value)
 		return ;
 	k = 0;
-	if (double_quotes == -1)
+	if (data->double_quotes == -1)
 	{
-		while (value && value[k])
-			new_str[var->j++] = value[k++];
+		while (data->env_value && data->env_value[k])
+			new_str[var->j++] = data->env_value[k++];
 	}
 	else
 	{
-		while (value && k < (int)ft_strlen(value) && value[k])
+		while (data->env_value && k < (int)ft_strlen(data->env_value) && data->env_value[k])
 		{
-			if (value[k] && ft_isspace(value[k]))
+			if (data->env_value[k] && ft_isspace(data->env_value[k]))
 			{
-				new_str[var->j++] = value[k++];
-				while (value[k] && ft_isspace(value[k]))
+				if (put_space(str, k, var, data))
+					new_str[var->j++] = data->env_value[k++];
+				while (data->env_value[k] && ft_isspace(data->env_value[k]))
 					k++;
 			}
 			else
-				new_str[var->j++] = value[k++];
+				new_str[var->j++] = data->env_value[k++];
 		}
 	}
 }
@@ -73,8 +101,11 @@ static void	fill_dollar_case(t_var *var, char *new_str, char *str, t_data *data)
 		new_str[var->j++] = str[var->i++];
 	}
 	else if (!is_charset_env(str[var->i + 1]))
-		fill_env_value(data->double_quotes, new_str, var, get_env_val(
-				str, &var->i, data));
+	{
+		data->env_value = get_env_val(str, &var->i, data);
+		fill_env_value(new_str, var, str, data);
+		data->env_value = NULL;
+	}
 	else
 		new_str[var->j++] = str[var->i++];
 }
@@ -87,10 +118,14 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	if (!var || !str || !str[var->i])
 		return (FAIL);
 	data->double_quotes = 1;
+	data->count_quotes = 0;
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
+		{
 			data->double_quotes *= -1;
+			data->count_quotes++;
+		}
 		if (handle_special_cases(data->double_quotes, var, new_str, str))
 			continue ;
 		if (str[var->i] && str[var->i + 1] && str[var->i] == '$')

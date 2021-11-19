@@ -51,9 +51,27 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 	}
 }
 
+void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
+{
+	char	*pid_value;
+	char	*ret_value;
+
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
+	if (ft_strchr((*cmd_list)->command, '$'))
+	{
+		(*cmd_list)->command = transform_str((*cmd_list)->command, pid_value, ret_value, data);
+		(*cmd_list)->path = find_cmd_path((*cmd_list)->command, NULL, data->all_paths, data);
+	}
+	clean_free(&pid_value);
+	clean_free(&ret_value);
+}
+
 t_bool	handle_execution(
 	int *exit_code, t_cmd **cmd_list, t_data *data)
 {
+	if (!(*cmd_list)->path)
+		recheck_cmd_path(cmd_list, data);
 	if (*cmd_list && (*cmd_list)->next && (*cmd_list)->next->delimiter == PIPE)
 		*exit_code = exec_pipes(cmd_list, data);
 	else if (*cmd_list && (*cmd_list)->is_builtin)

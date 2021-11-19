@@ -86,6 +86,8 @@ typedef struct s_data
 	pid_t		pid;
 	int			i;
 	int			double_quotes;
+	int			count_quotes;
+	char		*env_value;
 	char		**builtins;
 	char		**envp;
 	char		*last_cwd;

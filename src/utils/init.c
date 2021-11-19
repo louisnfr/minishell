@@ -60,8 +60,10 @@ t_data	*init_data(char **envp)
 	data->pid = pid;
 	data->ret_value = 0;
 	data->double_quotes = 1;
+	data->count_quotes = 0;
 	data->envp = NULL;
 	data->last_cwd = NULL;
+	data->env_value = NULL;
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);
 	if (!data->all_paths)
