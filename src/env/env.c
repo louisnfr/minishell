@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/20 16:48:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/22 12:06:36 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,34 @@ char	**env_to_char(t_env *env, t_data *data)
 	}
 	envp[i] = 0;
 	return (envp);
+}
+
+void	add_var_env(t_data *data, t_cmd *cmd_list, int i)
+{
+	char	**var;
+
+	var = safe_split_on_first(cmd_list->args[i], '=', data);
+	if (!already_exists(var[0], data->env))
+		add_var(&data->env, new_var(var[0], var[1], 1));
+	else
+		set_env(var[0], var[1], data->env, data);
+	if (!already_exists(var[0], data->export))
+		add_var(&data->export, new_var(var[0], var[1], 1));
+	else
+		set_env(var[0], var[1], data->export, data);
+	free_split(var);
+}
+
+t_env	*find_prev_var(char *key, t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp->next)
+	{
+		if (!ft_strcmp(tmp->next->key, key))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

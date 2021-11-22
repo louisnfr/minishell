@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 22:56:25 by lraffin           #+#    #+#             */
-/*   Updated: 2021/10/19 15:12:23 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/22 11:38:39 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,26 @@ void	print_env(t_env *g_env, t_cmd *cmd_list)
 		ft_putstr_fd(g_env->value, cmd_list->output);
 		ft_putchar_fd('\n', cmd_list->output);
 		g_env = g_env->next;
+	}
+}
+
+void	print_export(t_cmd *cmd_list, t_data *data)
+{
+	t_env	*tmp;
+
+	tmp = data->export;
+	while (tmp)
+	{
+		ft_putstr_fd("export ", cmd_list->output);
+		ft_putstr_fd(tmp->key, cmd_list->output);
+		if (tmp->is_value)
+		{
+			ft_putchar_fd('=', cmd_list->output);
+			ft_putchar_fd('"', cmd_list->output);
+			ft_putstr_fd(tmp->value, cmd_list->output);
+			ft_putchar_fd('"', cmd_list->output);
+		}
+		ft_putchar_fd('\n', cmd_list->output);
+		tmp = tmp->next;
 	}
 }

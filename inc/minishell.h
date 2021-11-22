@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 11:29:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/22 12:06:56 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ char		**syntax_error_str_msg(char *token, char **str);
 /*
 ** shell/env
 */
+t_env		*find_prev_var(char *key, t_env *env);
+void		add_var_env(t_data *data, t_cmd *cmd_list, int i);
 void		create_update_env(char **envp, t_data *data);
 int			get_env_size(t_env *env);
 char		**env_to_char(t_env *env, t_data *data);
@@ -97,6 +99,7 @@ t_env		*new_var(char *name, char *value, int is_value);
 t_env		*get_last(t_env *g_env);
 void		add_var(t_env **g_env, t_env *new_var);
 void		print_env(t_env *g_env, t_cmd *cmd_list);
+void		print_export(t_cmd *cmd_list, t_data *data);
 /*
 ** shell/exec
 */
@@ -248,6 +251,8 @@ void		free_env(t_env *g_env);
 void		free_split(char **args);
 t_bool		cd_error(t_cmd *cmd_list);
 t_bool		cd_error_msg(char *s, t_cmd *cmd_list);
+t_bool		check_export(char *s);
+int			export_error(t_cmd *cmd_list, int i);
 
 /*** shell ***/
 
@@ -334,7 +339,6 @@ void		clear_hist(t_history *hist, int search);
 
 int			ctrl_key(int k);
 void		clear_prompt(int cx, int len);
-// char		*ft_strjoin(char *s1, char *s2);
 t_bool		already_exists(char *var, t_env *env);
 
 /*** exit ***/

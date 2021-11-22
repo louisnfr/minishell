@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 11:34:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/22 12:08:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,9 @@ t_bool	check_export(char *s)
 		return (FAIL);
 	i = -1;
 	while (s[++i])
-		if (!ft_isalnum(s[i]) && s[i] != '_')
+		if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '=')
 			return (FAIL);
 	return (SUCCESS);
-}
-
-void	print_export(t_cmd *cmd_list, t_data *data)
-{
-	t_env	*tmp;
-
-	tmp = data->export;
-	while (tmp)
-	{
-		ft_putstr_fd("export ", cmd_list->output);
-		ft_putstr_fd(tmp->key, cmd_list->output);
-		if (tmp->is_value)
-		{
-			ft_putchar_fd('=', cmd_list->output);
-			ft_putchar_fd('"', cmd_list->output);
-			ft_putstr_fd(tmp->value, cmd_list->output);
-			ft_putchar_fd('"', cmd_list->output);
-		}
-		ft_putchar_fd('\n', cmd_list->output);
-		tmp = tmp->next;
-	}
-}
-
-void	add_var_env(t_data *data, t_cmd *cmd_list, int i)
-{
-	char	**var;
-
-	var = safe_split_on_first(cmd_list->args[i], '=', data);
-	if (!already_exists(var[0], data->env))
-		add_var(&data->env, new_var(var[0], var[1], 1));
-	else
-		set_env(var[0], var[1], data->env, data);
-	if (!already_exists(var[0], data->export))
-		add_var(&data->export, new_var(var[0], var[1], 1));
-	else
-		set_env(var[0], var[1], data->export, data);
-	free_split(var);
 }
 
 t_bool	exec_export(t_cmd *cmd_list, t_data *data)

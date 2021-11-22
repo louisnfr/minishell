@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 16:43:27 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/20 16:43:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:43:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,18 @@ int	get_ret(char *oldpwd, char *cdpath, t_cmd *cmd_list, t_data *data)
 	else
 		ret = ch_dir(cmd_list->args[0], NULL, cmd_list);
 	return (ret);
+}
+
+t_bool	cd_error(t_cmd *cmd_list)
+{
+	ft_putstr_fd("cd: ", cmd_list->error_output);
+	ft_putstr_fd(cmd_list->args[0], cmd_list->error_output);
+	ft_putstr_fd(": No such file or directory\n", cmd_list->error_output);
+	return (EXIT_FAILURE);
+}
+
+t_bool	cd_error_msg(char *s, t_cmd *cmd_list)
+{
+	ft_putstr_fd(s, cmd_list->error_output);
+	return (EXIT_FAILURE);
 }

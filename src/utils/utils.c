@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:03:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 11:28:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/22 11:40:08 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,4 @@ void	clear_prompt(int cx, int k)
 	while (++i < cx)
 		write(1, "\x1b[1D", 4);
 	write(1, "\x1b[0K", 4);
-}
-
-t_bool	already_exists(char *var, t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, var))
-			return (TRUE);
-		tmp = tmp->next;
-	}
-	return (FALSE);
 }
