@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 13:19:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/22 22:38:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ static int	heredoc_special_case(t_var *var, char *new_str, char *str)
 static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
-	int		str_length;
 
 	var = init_var(data);
 	if (!var || !str || !str[var->i])
 		return (FAIL);
-	str_length = ft_strlen(str);
-	while (var->i < str_length && str[var->i] && str[var->i + 1])
+	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (heredoc_special_case(var, new_str, str))
 			continue ;
@@ -89,7 +87,7 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 		else
 			new_str[var->j++] = str[var->i++];
 	}
-	if (var->i < str_length && str[var->i])
+	if (var->i < (int)ft_strlen(str) && str[var->i])
 		new_str[var->j++] = str[var->i];
 	new_str[var->j] = '\0';
 	free_var(var);

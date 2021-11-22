@@ -2,10 +2,7 @@ unset
 export TEST=100
 unset doesntexist
 unset PWD
-unset PWD
 unset OLDPWD
-unset PATH
-unset PATH
 unset PATH
 unset TES\\\\T
 unset TES;T
@@ -40,5 +37,4 @@ unset PATH ; echo $PATH
 unset PATH ; ls
 unset "" test
 unset =
-unset PWD
 unset var

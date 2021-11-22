@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/22 11:44:16 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/22 22:44:50 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SOURCES = \
 		\
 		parsing/lexer/upgrade_input.c \
 		parsing/lexer/env_var.c \
+		parsing/lexer/env_var_fill.c \
 		parsing/lexer/env_var_length.c \
 		parsing/lexer/env_var_utils.c \
 		parsing/lexer/pid_value.c \
@@ -45,6 +46,7 @@ SOURCES = \
 		parsing/parser/heredoc.c \
 		parsing/parser/utils.c \
 		parsing/parser/fill_cmd.c \
+		parsing/parser/start_redir.c \
 		parsing/parser/redirections.c \
 		parsing/parser/pipes.c \
 		parsing/parser/parentheses.c \
