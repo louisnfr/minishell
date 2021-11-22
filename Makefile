@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/20 16:30:56 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/22 11:44:16 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,6 @@ SOURCES = \
 		shell/shell.c \
 		\
 		utils/free.c \
-		utils/error.c \
 		utils/utils.c \
 		utils/init.c \
 		utils/clean.c \

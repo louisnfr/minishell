@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 15:33:04 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/22 11:40:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,18 @@ int	get_env_size(t_env *env)
 		i++;
 	}
 	return (i);
+}
+
+t_bool	already_exists(char *var, t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, var))
+			return (TRUE);
+		tmp = tmp->next;
+	}
+	return (FALSE);
 }
