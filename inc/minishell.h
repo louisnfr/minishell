@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/20 16:51:56 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:29:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,8 @@ void		clear_hist(t_history *hist, int search);
 
 int			ctrl_key(int k);
 void		clear_prompt(int cx, int len);
-char		*ft_strjoin(char *s1, char *s2);
+// char		*ft_strjoin(char *s1, char *s2);
+t_bool		already_exists(char *var, t_env *env);
 
 /*** exit ***/
 

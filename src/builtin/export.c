@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 10:27:56 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:34:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ int	export_error(t_cmd *cmd_list, int i)
 	return (EXIT_FAILURE);
 }
 
-t_bool	already_exists(char *var, t_env *env)
+t_bool	check_export(char *s)
 {
-	t_env	*tmp;
+	int	i;
 
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, var))
-			return (TRUE);
-		tmp = tmp->next;
-	}
-	return (FALSE);
+	if (ft_isdigit(s[0]) || s[0] == '=')
+		return (FAIL);
+	i = -1;
+	while (s[++i])
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+			return (FAIL);
+	return (SUCCESS);
 }
 
 void	print_export(t_cmd *cmd_list, t_data *data)
@@ -82,8 +81,7 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
-		if (ft_isdigit(cmd_list->args[i][0])
-			/*|| !str_is_alnum(cmd_list->args[i])*/)
+		if (!check_export(cmd_list->args[i]))
 			ret = export_error(cmd_list, i);
 		else if (!ft_strnstr(cmd_list->args[i], "=",
 				ft_strlen(cmd_list->args[i])))
