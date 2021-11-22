@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 18:13:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 16:51:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,19 @@ t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 			error_bin_cmd(strerror(errno), get_error_code(), cmd_list, data));
 	}
 	return (SUCCESS);
+}
+
+void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
+{
+	int		status;
+	pid_t	pid;
+
+	status = 0;
+	if (exec_bin_command(&pid, *cmd_list, data))
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			*exit_code = WEXITSTATUS(status);
+		close_fd(cmd_list, data);
+	}
 }

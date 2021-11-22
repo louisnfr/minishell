@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 15:36:44 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/20 16:57:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ void	setup_prompt(char **input, t_data *data)
 		*input = readline("minishell> ");
 }
 
-char	*prompt(t_data *data)
+char	*safe_getcwd(t_data *data)
 {
-	char	*usr;
 	char	*cwd;
-	char	*tmp;
 
-	usr = get_env("USER", data->env);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		cwd = safe_strdup(data->last_cwd, data);
@@ -43,6 +40,17 @@ char	*prompt(t_data *data)
 		clean_free(&data->last_cwd);
 		data->last_cwd = safe_strdup(cwd, data);
 	}
+	return (cwd);
+}
+
+char	*prompt(t_data *data)
+{
+	char	*usr;
+	char	*cwd;
+	char	*tmp;
+
+	usr = get_env("USER", data->env);
+	cwd = safe_getcwd(data);
 	if (ft_strnstr(cwd, get_env("HOME", data->env),
 			ft_strlen(get_env("HOME", data->env))))
 	{

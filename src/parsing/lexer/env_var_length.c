@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/17 12:14:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 13:57:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,21 @@ void	increment_i_j(t_var *var)
 
 static void	dollar_case(t_var *var, char *str, t_data *data)
 {
+	char	quote;
+
+	if (!str[var->i + 1])
+		return ;
 	if (ft_isdigit(str[var->i + 1]))
 		var->i += 2;
+	else if ((str[var->i + 1] == '\"' || str[var->i + 1] == '\'')
+		&& str[var->i + 2])
+	{
+		quote = str[var->i + 1];
+		var->i += 2;
+		while (str[var->i] && str[var->i] != quote)
+			increment_i_j(var);
+		var->i++;
+	}
 	else if (str[var->i + 1] == '=')
 	{
 		var->i += 2;

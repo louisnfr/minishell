@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:04 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 15:19:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 16:50:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ t_bool	fill_wildcard_arg(
 	{
 		if (matching_name(entity->d_name, wildcard_arg))
 		{
-			printf("entity->d_name = %s\n", entity->d_name);
 			cmd_array[*i + 1] = safe_strdup(entity->d_name, data);
 			(*i)++;
 		}

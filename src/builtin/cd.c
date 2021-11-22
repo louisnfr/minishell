@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 16:10:48 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 16:32:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,33 +53,6 @@ void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 	free(oldpwd);
 }
 
-t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	if (cdpath[ft_strlen(cdpath) - 1] != '/')
-	{
-		tmp = safe_strjoin(get_env("CDPATH", data->env), "/", data);
-		tmp = safe_strjoin(tmp, cmd_list->args[0], data);
-	}
-	else
-		tmp = safe_strjoin(
-				get_env("CDPATH", data->env), cmd_list->args[0], data);
-	if (chdir(tmp) < 0)
-	{
-		if (chdir(cmd_list->args[0]) < 0)
-			return (cd_error(cmd_list));
-	}
-	else
-	{
-		ft_putstr_fd(tmp, cmd_list->output);
-		ft_putstr_fd("\n", cmd_list->output);
-	}
-	free(tmp);
-	return (EXIT_SUCCESS);
-}
-
 t_bool	handle_dash(t_data *data, t_cmd *cmd_list)
 {
 	int	ret;
@@ -90,16 +63,6 @@ t_bool	handle_dash(t_data *data, t_cmd *cmd_list)
 	ft_putstr_fd("\n", cmd_list->output);
 	ret = ch_dir(get_env("OLDPWD", data->env), NULL, cmd_list);
 	return (ret);
-}
-
-int	error_oldpwd(char *oldpwd, char *command)
-{
-	ft_putstr_fd("chdir: error retrieving current directory: getcwd: cannot access parent directories: ", 2);
-	perror(oldpwd);
-	ft_putstr_fd("bash: cd: ", 2);
-	ft_putstr_fd(command, 2);
-	ft_putstr_fd(": Stale file handle\n", 2);
-	return (1);
 }
 
 t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
@@ -118,8 +81,33 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	else if (!ft_strcmp(cmd_list->args[0], "-"))
 		ret = handle_dash(data, cmd_list);
 	else
+		ret = get_ret(oldpwd, cdpath, cmd_list, data);
+	pwd = getcwd(NULL, 0);
+	if (ret == 0)
+		update_env_pwd(data, pwd, oldpwd);
+	return (ret);
+}
+
+/*
+t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
+{
+	char	*oldpwd;
+	char	*cdpath;
+	char	*pwd;
+	int		ret;
+
+	oldpwd = getcwd(NULL, 0);
+	cdpath = get_env("CDPATH", data->env);
+	if (cmd_list->args && cmd_list->args[1])
+		return (cd_error_msg("cd: too many arguments\n", cmd_list));
+	if (!cmd_list->args || !ft_strcmp(cmd_list->args[0], "--"))
+		ret = ch_dir(get_env("HOME", data->env), "cd: HOME not set\n", cmd_list);
+	else if (!ft_strcmp(cmd_list->args[0], "-"))
+		ret = handle_dash(data, cmd_list);
+	else
 	{
-		if (!oldpwd && (str_is_equal(cmd_list->args[0], ".") || str_is_equal(cmd_list->args[0], "..")))
+		if (!oldpwd && (str_is_equal(cmd_list->args[0], ".")
+				|| str_is_equal(cmd_list->args[0], "..")))
 			ret = error_oldpwd(oldpwd, cmd_list->args[0]);
 		else if (ft_strlen(cdpath) > 0 && ft_strcmp(cmd_list->args[0], ".")
 			&& ft_strcmp(cmd_list->args[0], ".."))
@@ -132,3 +120,4 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 		update_env_pwd(data, pwd, oldpwd);
 	return (ret);
 }
+*/

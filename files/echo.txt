@@ -81,7 +81,10 @@ echo $TEST$TEST=lol$TEST""lol
 echo    $TEST lol $TEST
 echo test "" test "" test
 echo "$=TEST"
+echo $
 echo "$"
+echo '$'
+echo "$" test
 echo "$?TEST"
 echo $TEST $TEST
 echo "$1TEST"
@@ -107,7 +110,6 @@ echo -n -n -nnnn -nnnnm ; echo a
 echo -n -nnn hello -n ; echo a
 export test="  foo  bar " ; echo $test
 export test="  foo  bar " ; echo ab$test
-
 export test="  foo  bar " ; echo ab""$test
 export test="  foo  bar " ; echo ""ab$test
 export test="  foo  bar " ; echo ab"$test" | cat -e
@@ -117,5 +119,6 @@ export test="  foo  bar " ; echo ""$test""
 export test="  foo  bar " ; echo """$test"""
 export test="  foo  bar " ; echo ab""$test.
 export test="  foo  bar " ; echo ab$""test.
+export test="  foo  bar " ; echo ab$"test test".
 export var=at ; c$var Makefile
 export loop='bonjour$loop' ; echo $loop

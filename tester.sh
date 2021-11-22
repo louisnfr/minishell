@@ -1,21 +1,33 @@
 #!/bin/bash
 
+#########################      COLORS CODE     ##########################
+
+EXPAND_BG="\033[K"
 RED="\033[38;5;203m"
+RED_B="\033[40;1;38;2;255;65;65m"
+RED_E="\033[48;5;203;1;38;5;16m"
 ORANGE="\033[38;5;215m"
 YELLOW="\033[38;5;229m"
 GREEN="\033[38;5;121m"
+GREEN_B="\033[40;1;38;5;83m"
 LIGHT_BLUE="\033[38;5;123m"
 BLUE="\033[1;38;5;33m"
+BLUE_B="\033[40;1;38;5;33m"
+WHITE_B="\033[40;1;37m"
 RESET="\033[0m"
 
-make
 
+#########################     INITIALISATION    ##########################
+
+make
 sum=0
 right=0
 false=0
 total_sum=0
 total_right=0
 total_false=0
+ERRORS_FILE="files/errors.txt"
+touch "$ERRORS_FILE"
 COLS=$(tput cols)
 TITLE=".............................  START TEST  ............................"
 END="..............................  END TEST  ............................."
@@ -23,31 +35,28 @@ COLS=$(tput cols)
 printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"
 
 
+###########################   TEST FUNCTION   ###########################
+
 function execute_test()
 {
 	SEP="..................................................................................."
 
-#	COMMANDE MINISHELL SUR 1 LIGNE :
-	MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null | sed '/^minishell/d')
-
-#	COMMANDE MINISHELL MULTI-LIGNES :
-# 	MY_RESULT=$(./minishell 2>/dev/null << END_HEREDOC
-# $@
-# exit
-# END_HEREDOC
-# | sed '/^minishell/d')
-
+	# MY_RESULT=$(echo $@ "; exit" | ./minishell 2>/dev/null | sed '/^minishell>/d')
+	MY_RESULT=$(./minishell 2>/dev/null << END_HEREDOC
+$@
+exit
+END_HEREDOC
+)
+	MY_RESULT=$(sed '/^minishell>/d' <<< "$MY_RESULT")
 	MY_EXIT_STATUS=$?
 
-#	COMMANDE BASH SUR 1 LIGNE :
-	REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null | sed '/^minishell/d')
-#	COMMANDE BASH MULTI-LIGNES :
-# 	REF_BASH=$(bash --posix 2>/dev/null << END_HEREDOC
-# $@
-# exit
-# END_HEREDOC
-# | sed '/^minishell/d')
-
+	# REF_BASH=$(echo $@ "; exit" | bash --posix 2>/dev/null | sed '/^minishell>/d')
+ 	REF_BASH=$(bash --posix 2>/dev/null << END_HEREDOC
+$@
+exit
+END_HEREDOC
+)
+	REF_BASH=$(sed '/^minishell>/d' <<< "$REF_BASH")
 	REF_EXIT_STATUS=$?
 
 	if [ "$MY_RESULT" == "$REF_BASH" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]
@@ -55,23 +64,21 @@ function execute_test()
 	   	echo -e "${GREEN}   ✔  $1${RESET}"
 		right=`expr $right + 1`
 	else
-		printf "\n${ORANGE}%*s${RESET}\n\n" $(((${#SEP} + $COLS) / 2)) "$SEP"
 		echo -e "${RED}   ✘  $1${RESET}"
 		false=`expr $false + 1`
 
+		echo -e "${RED_E} ➞ $1 : ${RESET}" >> "$ERRORS_FILE"
 		if [ "$MY_RESULT" != "$REF_BASH" ]
 		then
-			printf "\n"
-	        echo -e "     ${RED}Your result${RESET}\t   :   $MY_RESULT"
-	        echo -e "     ${ORANGE}Expected result${RESET}\t   :   $REF_BASH"
+	        echo -e "     ${RED}Your result${RESET}\t   :   $MY_RESULT" >> "$ERRORS_FILE"
+	        echo -e "     ${ORANGE}Expected result${RESET}\t   :   $REF_BASH" >> "$ERRORS_FILE"
 		fi
 		if [ "$MY_EXIT_STATUS" != "$REF_EXIT_STATUS" ]
 		then
-			printf "\n"
-	        echo -e "     ${RED}Your exit_status${RESET}\t   :  $MY_EXIT_STATUS"
-	        echo -e "     ${ORANGE}Expected exit_status${RESET}  :  $REF_EXIT_STATUS"
+	        echo -e "     ${RED}Your exit_status${RESET}\t   :  $MY_EXIT_STATUS" >> "$ERRORS_FILE"
+	        echo -e "     ${ORANGE}Expected exit_status${RESET}  :  $REF_EXIT_STATUS" >> "$ERRORS_FILE"
 		fi
-		printf "\n${ORANGE}%*s${RESET}\n\n" $(((${#SEP} + $COLS) / 2)) "$SEP"
+		echo "" >> "$ERRORS_FILE" 
 	fi
 }
 
@@ -102,6 +109,9 @@ function run_test()
 	printf "\n%*s\n" $(((${#RESULT} + $COLS) / 2 + 27)) "$RESULT"
 }
 
+
+#############################       MAIN      ############################
+
 if [ -n "$1" ]; then
 	for var in "$@"
 	do
@@ -116,7 +126,7 @@ if [ -n "$1" ]; then
 		fi
 	done
 else
-	ALL_FILES=$(find files -type f -name "ex*.txt" -print)
+	ALL_FILES=$(find files -type f -name "*.txt" -print)
 	for FILE in $ALL_FILES
 	do
 		run_test $FILE
@@ -128,7 +138,13 @@ fi
 
 printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
 
-OK=" ✔ $total_right/$total_sum"
-ERROR="  ✘ $total_false/$total_sum"
-RESULT=`echo -e "${BLUE}TOTAL :  ${RESET}${GREEN}$OK${RESET}${RED}$ERROR${RESET}"`
-printf "%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 28)) "$RESULT"
+PRINT_ERRORS=`echo -e "${RED}❌  SUMMARY ERRORS ❌${RESET}"`
+printf "\n%*s\n\n" $(((${#PRINT_ERRORS} + $COLS) / 2 + 10)) "$PRINT_ERRORS"
+cat "$ERRORS_FILE"
+rm "$ERRORS_FILE"
+
+OK="$total_right"
+ERROR="$total_false"
+#RESULT=`echo -e "${WHITE_B}   TOTAL :  ${RESET}${GREEN_B}$OK ${RESET}${RED_B}$ERROR   ${RESET}"`
+RESULT=`echo -e "${GREEN_B}  $OK passed,${RESET}${RED_B}  $ERROR failed,${RESET}${WHITE_B}  $total_sum total  ${RESET}"`
+printf "\n%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 29)) "$RESULT"

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:52:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 15:47:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 16:47:38 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_bool	is_option_echo(char **argv, t_data *data)
 	ret = FAIL;
 	if (!argv)
 		return (FAIL);
-	while (argv[++data->i] && (argv[data->i][0] == '-' ||
-		argv[data->i][0] == '\'' || argv[data->i][0] == '\"'))
+	while (argv[++data->i] && (argv[data->i][0] == '-'
+		|| argv[data->i][0] == '\'' || argv[data->i][0] == '\"'))
 	{
 		j = handle_quotes(&quote, argv[data->i][0]);
 		if (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
@@ -74,36 +74,6 @@ t_bool	is_option_echo(char **argv, t_data *data)
 	data->i--;
 	return (ret);
 }
-
-/*
-t_bool	is_option_echo(char **argv, t_data *data)
-{
-	int	j;
-	int	ret;
-
-	ret = FAIL;
-	if (!argv)
-		return (FAIL);
-	while (argv[++data->i] && (argv[data->i][0] == '-')
-	{
-		j = 1;
-		if (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
-		{
-			j++;
-			while (argv[data->i] && argv[data->i][j] && argv[data->i][j] == 'n')
-				j++;
-			if (argv[data->i][j])
-				break ;
-			ret = SUCCESS;
-		}
-		else
-			break ;
-	}
-	data->i--;
-	return (ret);
-}
-*/
-
 
 void	handle_builtin_cmd(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)

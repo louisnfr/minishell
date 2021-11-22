@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/18 18:19:07 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/20 16:30:56 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SOURCES = \
 		\
 		builtin/echo.c \
 		builtin/cd.c \
+		builtin/cd_utils.c \
 		builtin/pwd.c \
 		builtin/env.c \
 		builtin/history.c \

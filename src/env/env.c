@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 15:33:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/20 16:48:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ t_env	*dup_env(char **envp, t_data *data)
 
 void	create_update_env(char **envp, t_data *data)
 {
-		data->env = dup_env(envp, data);
-		data->export = dup_env(envp, data);
-		update_env(data, data->env);
-		update_env(data, data->export);
+	data->env = dup_env(envp, data);
+	data->export = dup_env(envp, data);
+	update_env(data, data->env);
+	update_env(data, data->export);
 }
 
 char	**env_to_char(t_env *env, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/18 11:46:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 13:57:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,21 @@ void	fill_env_value(
 
 static void	fill_dollar_case(t_var *var, char *new_str, char *str, t_data *data)
 {
+	char	quote;
+
+	if (!str[var->i + 1])
+		return ;
 	if (ft_isdigit(str[var->i + 1]))
 		var->i += 2;
+	else if ((str[var->i + 1] == '\"' || str[var->i + 1] == '\'')
+		&& str[var->i + 2])
+	{
+		quote = str[var->i + 1];
+		var->i += 2;
+		while (str[var->i] && str[var->i] != quote)
+			new_str[var->j++] = str[var->i++];
+		var->i++;
+	}
 	else if (str[var->i + 1] == '=')
 	{
 		new_str[var->j++] = str[var->i++];

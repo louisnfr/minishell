@@ -1,0 +1,7 @@
+ls
+pwd
+ls && pwd
+ls || pwd
+echo test      tout
+echo -n test tout
+echo -n -n -n test tout

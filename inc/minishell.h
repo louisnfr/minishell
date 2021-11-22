@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 15:33:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/20 16:51:56 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char		**safe_double_strdup(char **str, int size, t_data *data);
 */
 t_bool		exec_echo(t_cmd *cmd_list, t_data *data);
 t_bool		exec_cd(t_cmd *cmd_list, t_data *data);
+int			get_ret(char *oldpwd, char *cdpath, t_cmd *cmd_list, t_data *data);
+t_bool		ch_dir(char *dir, char *error_msg, t_cmd *cmd_list);
 t_bool		exec_pwd(t_cmd *cmd_list, t_data *data);
 t_bool		exec_env(t_cmd *cmd_list, t_data *data);
 t_bool		exec_history(t_cmd *cmd_list, t_data *data);
@@ -100,6 +102,7 @@ void		print_env(t_env *g_env, t_cmd *cmd_list);
 */
 int			exec(t_data *data);
 t_bool		exec_builtin(t_cmd *cmd_list, t_data *data);
+void		handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool		exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
 t_bool		error_bin_cmd(
 				char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/16 12:34:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/20 16:51:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,6 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	}
 }
 
-void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
-{
-	int		status;
-	pid_t	pid;
-
-	status = 0;
-	if (exec_bin_command(&pid, *cmd_list, data))
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			*exit_code = WEXITSTATUS(status);
-		close_fd(cmd_list, data);
-	}
-}
-
 void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 {
 	char	*pid_value;
@@ -60,8 +45,10 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 	ret_value = safe_itoa(data->ret_value, data);
 	if (ft_strchr((*cmd_list)->command, '$'))
 	{
-		(*cmd_list)->command = transform_str((*cmd_list)->command, pid_value, ret_value, data);
-		(*cmd_list)->path = find_cmd_path((*cmd_list)->command, NULL, data->all_paths, data);
+		(*cmd_list)->command = transform_str(
+				(*cmd_list)->command, pid_value, ret_value, data);
+		(*cmd_list)->path = find_cmd_path(
+				(*cmd_list)->command, NULL, data->all_paths, data);
 	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);
