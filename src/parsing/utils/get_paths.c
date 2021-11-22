@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+/*
 char	*get_path_executable(char *command, t_data *data)
 {
 	char	*path;
@@ -31,6 +32,29 @@ char	*get_path_executable(char *command, t_data *data)
 	path[j] = '\0';
 	return (path);
 }
+*/
+
+char	*get_path_executable(char *command, t_data *data)
+{
+	char	*path;
+	int		i;
+	int		j;
+
+	printf("command = %s\n", command);
+	path = NULL;
+	if (!command)
+		return (path);
+	path = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(command) - 1));
+	if (!path)
+		return ((char *)exit_error_void(NULL, "malloc()", data));
+	i = 2;
+	j = 0;
+	while (command[i])
+		path[j++] = command[i++];
+	path[j] = '\0';
+	printf("path = %s\n", path);
+	return (path);
+}
 
 char	*find_cmd_path(
 	char *command, char *path, char **all_paths, t_data *data)
@@ -42,9 +66,13 @@ char	*find_cmd_path(
 	clean_free(&path);
 	if (command && command[0] && command[0] == '/')
 		return (safe_strdup(command, data));
-	if (command && command[0] && command[0] == '.'
-		&& command[1] && command[1] == '/')
-		return (get_path_executable(command, data));
+	if (command && command[0] && command[0] == '.' && command[1])
+	{
+		if (command[1] == '/')
+			return (get_path_executable(command, data));
+		if (command[1] == '.' && command[2] && command[2] == '/')
+			return (safe_strdup(command, data));
+	}
 	if (command && (str_is_equal(command, ".") || str_is_equal(command, "..")))
 		return (NULL);
 	while (all_paths && all_paths[++i])

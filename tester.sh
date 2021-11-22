@@ -139,8 +139,13 @@ fi
 printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
 
 PRINT_ERRORS=`echo -e "${RED}❌  SUMMARY ERRORS ❌${RESET}"`
+NO_ERROR="----- No errors -----"
 printf "\n%*s\n\n" $(((${#PRINT_ERRORS} + $COLS) / 2 + 10)) "$PRINT_ERRORS"
-cat "$ERRORS_FILE"
+if [ -s "$ERRORS_FILE" ]; then
+	cat "$ERRORS_FILE"
+else
+	printf "\n%*s\n\n" $(((${#NO_ERROR} + $COLS) / 2)) "$NO_ERROR"
+fi
 rm "$ERRORS_FILE"
 
 OK="$total_right"

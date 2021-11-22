@@ -65,7 +65,6 @@ void	fill_env_value(
 {
 	int	k;
 
-	(void)str;
 	if (!data->env_value)
 		return ;
 	k = 0;
@@ -131,14 +130,10 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	if (!var || !str || !str[var->i])
 		return (FAIL);
 	data->double_quotes = 1;
-	data->count_quotes = 0;
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
 		if (str[var->i] && str[var->i] == '\"')
-		{
 			data->double_quotes *= -1;
-			data->count_quotes++;
-		}
 		if (handle_special_cases(data->double_quotes, var, new_str, str))
 			continue ;
 		if (str[var->i] && str[var->i + 1] && str[var->i] == '$')
@@ -147,7 +142,10 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 			new_str[var->j++] = str[var->i++];
 	}
 	if (var->i < (int)ft_strlen(str) && str[var->i])
+	{
+//		printf("str[%d] = %c | var->j = %d\n", var->i, str[var->i], var->j);
 		new_str[var->j++] = str[var->i];
+	}
 	new_str[var->j] = '\0';
 	free_var(var);
 	return (SUCCESS);
@@ -160,6 +158,7 @@ char	*parse_env_variable(char *input, t_data *data)
 
 	new_input = NULL;
 	new_length = get_length_new_input(input, data);
+//	printf("new_length = %d\n", new_length);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
 	{

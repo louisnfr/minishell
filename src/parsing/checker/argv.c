@@ -116,7 +116,7 @@ char	**check_argv(char **argv, t_data *data)
 	if (argv[i] && (is_delimiter(argv[i]) || str_is_equal(argv[i], "&")))
 		return (syntax_error_str_msg(argv[i], argv));
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<"))
-		&& !str_is_equal(argv[i], "<"))
+		&& !str_is_equal(argv[i], "<") && !str_is_equal(argv[i], ">"))
 		return (syntax_error_str_msg("newline", argv));
 	while (argv[i + 1])
 		i++;

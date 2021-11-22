@@ -2,8 +2,8 @@ echo $USEER
 echo $?
 echo test tout
 echo test      tout
-echo -n test tout
-echo -n -n -n test tout
+echo -n test tout; echo hello
+echo -n -n -n test tout; echo hello
 echo
 echo echo
 eCho
@@ -15,13 +15,13 @@ echo stop barking
 echo "bonjour"
 echo bonjour
 echo 'bonjour'
-echo -n bonjour
-echo -nn bonjour
-echo -n -n -n bonjour
-echo -n -n -n bonjour
-echo "-n" bonjour
+echo -n bonjour ; echo test
+echo -nn bonjour ; echo test
+echo -n -n -n bonjour ; echo test
+echo -n -n -n bonjour ; echo test
+echo "-n" bonjour ; echo bonjour
 echo -n"-n" bonjour
-echo "-nnnn" bonjour
+echo "-nnnn" bonjour ; echo test
 echo "-n -n -n"-n bonjour
 echo "-n '-n'" bonjour
 echo ~

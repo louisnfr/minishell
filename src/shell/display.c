@@ -37,7 +37,8 @@ char	*safe_getcwd(t_data *data)
 		cwd = safe_strdup(data->last_cwd, data);
 	else
 	{
-		clean_free(&data->last_cwd);
+		if (data->last_cwd)
+			clean_free(&data->last_cwd);
 		data->last_cwd = safe_strdup(cwd, data);
 	}
 	return (cwd);
