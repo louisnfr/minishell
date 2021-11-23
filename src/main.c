@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/22 22:08:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/23 14:31:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -23,6 +29,7 @@ int	main(int ac, char **av, char **envp)
 	if (!data)
 		return (EXIT_FAILURE);
 	data->sh = init_config(envp);
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		setup_prompt(&input, data);

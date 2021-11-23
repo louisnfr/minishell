@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/18 17:49:01 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/23 14:40:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	clean_data(t_data *data)
 	data->ret_value = 0;
 	clean_cmd_list(&data->cmd_list, data);
 	free_double_str(data->all_paths);
-	free_double_str(data->envp);
+	if (data->envp)
+		free_double_str(data->envp);
 	free_double_str(data->builtins);
 	clean_free(&data->last_cwd);
 	free_env(data->env);
