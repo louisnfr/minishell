@@ -6,7 +6,7 @@ cat < ls > ls
 whereis grep > tmp/file
 ls -la > tmp/file
 <a cat <b <c
-> test | echo blabla; rm test
+> test | echo blabla; ls; rm test
 echo test > a ; cat < a
 echo lala >a ; cat <a
 echo test>a ; cat<a
