@@ -93,14 +93,14 @@ t_bool	parse_wildcard_args(t_cmd *cmd_list, t_data *data)
 
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 {
-	int	i;
+	int		i;
 
+	t_op (*builtins[]) = {exec_echo, exec_cd, exec_pwd, exec_env, exec_history,
+	exec_export, exec_unset, exec_exit};
 	parse_special_value(cmd_list, data);
 	parse_wildcard_args(cmd_list, data);
 	if (cmd_list->input == -1 || cmd_list->output == -1)
 		return (EXIT_FAILURE);
-	t_op (*builtins[]) = {exec_echo, exec_cd, exec_pwd, exec_env, exec_history,
-	exec_export, exec_unset, exec_exit};
 	i = -1;
 	while (data->builtins[++i])
 	{

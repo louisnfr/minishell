@@ -67,7 +67,9 @@ typedef struct s_cmd
 	char			*path;
 	t_bool			is_builtin;
 	int				delimiter;
-	int				redirection;
+	int				*redirection;
+	char			**files;
+	t_bool			redir_error;
 	int				parenthese;
 	char			*heredoc;
 	char			*heredoc_delimiter;

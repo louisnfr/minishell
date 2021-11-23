@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:40:05 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/23 14:53:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char		**safe_double_strdup(char **str, int size, t_data *data);
 ** shell/exec
 */
 int			exec(t_data *data);
+void		open_files(t_cmd *cmd_list);
 void		handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool		exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
 t_bool		error_bin_cmd(

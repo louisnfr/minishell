@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/20 16:51:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/23 14:53:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	exec(t_data *data)
 	exit_code = EXIT_FAILURE;
 	while (cmd_list)
 	{
+		open_files(cmd_list);
 		if (cmd_list && cmd_list->parenthese)
 			exit_code = exec_parentheses(exit_code, &cmd_list, data);
 		else if (!handle_execution(&exit_code, &cmd_list, data))

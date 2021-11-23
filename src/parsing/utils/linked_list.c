@@ -35,7 +35,9 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->path = NULL;
 	cmd_list->is_builtin = FALSE;
 	cmd_list->delimiter = 0;
-	cmd_list->redirection = 0;
+	cmd_list->redirection = NULL;
+	cmd_list->redir_error = FALSE;
+	cmd_list->files = NULL;
 	cmd_list->parenthese = OUT;
 	cmd_list->input = 0;
 	cmd_list->output = 1;

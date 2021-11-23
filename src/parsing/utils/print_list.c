@@ -39,6 +39,19 @@ void	print_pipe_opt_args(t_cmd *tmp)
 	}
 }
 
+void	print_files(t_cmd *tmp)
+{
+	int	i;
+
+	if (tmp->files)
+	{
+		i = -1;
+		while (tmp->files[++i])
+			printf("Files[%d] : |%s|\t", i, tmp->files[i]);
+		printf("\n");
+	}
+}
+
 void	print_list(t_cmd *cmd_list)
 {
 	t_cmd	*tmp;
@@ -56,8 +69,7 @@ void	print_list(t_cmd *cmd_list)
 			printf("Path : %s\n", tmp->path);
 		if (tmp->delimiter)
 			printf("Delimiter = %d\n", tmp->delimiter);
-		if (tmp->redirection)
-			printf("Redirection = %d\n", tmp->redirection);
+		print_files(tmp);
 		printf("Parenthese = %d\n", tmp->parenthese);
 		tmp = tmp->next;
 		printf("\n");

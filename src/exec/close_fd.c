@@ -78,12 +78,13 @@ void	close_fd(t_cmd **cmd_list, t_data *data)
 	if ((*cmd_list)->output > 2)
 	{
 		safe_close_fd((*cmd_list)->output, data);
-		(*cmd_list)->input = 1;
+		(*cmd_list)->output = 1;
 	}
 	if ((*cmd_list)->error_output > 2)
 	{
-		safe_close_fd((*cmd_list)->error_output, data);
-		(*cmd_list)->input = 2;
+		if (!(*cmd_list)->redir_error)
+			safe_close_fd((*cmd_list)->error_output, data);
+		(*cmd_list)->error_output = 2;
 	}
 }
 
@@ -91,10 +92,13 @@ void	close_all_fd(t_data *data)
 {
 	t_cmd	*cmd;
 
-	cmd = data->cmd_list->next;
-	while (cmd)
+	if (data && data->cmd_list)
 	{
-		close_fd(&cmd, data);
-		cmd = cmd->next;
+		cmd = data->cmd_list->next;
+		while (cmd)
+		{
+			close_fd(&cmd, data);
+			cmd = cmd->next;
+		}
 	}
 }

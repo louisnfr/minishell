@@ -6,6 +6,7 @@ cat < ls > ls
 whereis grep > tmp/file
 ls -la > tmp/file
 <a cat <b <c
+> test echo hoho ; cat test ; rm test
 > test | echo blabla; ls; rm test
 echo test > a ; cat < a
 echo lala >a ; cat <a
@@ -86,4 +87,4 @@ echo test > a ; echo test2 > b ; >a >b <error; cat a b
 echo test > a ; echo test2 > b ; rm a ; rm b ; >a >b <error; cat a b
 echo test > a ; echo test2 > b ; >a <error b; cat a b
 echo test > a ; echo test2 > b ; rm a ; rm b ; >a <error >b ; cat a b
-ls && rm a ls lol test
+rm a ls lol test

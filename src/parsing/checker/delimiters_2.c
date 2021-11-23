@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:23 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 18:35:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/23 17:35:38 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	check_right_marks(char *str, int j)
 		i++;
 		count++;
 	}
+	// printf("j = %d | i = %d | count = %d\n", j, i, count);
 	if (count > 0 && count < 3)
 		return (-1);
 	if (count == 3)

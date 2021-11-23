@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/22 22:38:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:55:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	heredoc_length_new_input(char *str, t_data *data)
 		else
 			increment_i_j(var);
 	}
-	length = var->j++;
+	length = var->j + 1;
 	free_var(var);
 	return (length);
 }
@@ -80,8 +80,7 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 			&& !is_charset_env(str[var->i + 1]))
 		{
 			data->double_quotes = -1;
-			fill_env_value(
-				new_str, var, get_env_val(str, &var->i, data), data);
+			fill_env_value(new_str, var, str, data);
 			data->double_quotes = 1;
 		}
 		else
