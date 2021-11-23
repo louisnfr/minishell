@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/23 16:31:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/23 17:59:54 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
 		write_line(fd, quotes, &line, data);
 		clean_free(&line);
 	}
-	clean_free(&line);
+	// clean_free(&line);
 	return (SUCCESS);
 }
 

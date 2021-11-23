@@ -6,11 +6,17 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/23 17:54:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/23 17:59:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -23,6 +29,7 @@ int	main(int ac, char **av, char **envp)
 	if (!data)
 		return (EXIT_FAILURE);
 	data->sh = init_config(envp);
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		setup_prompt(&input, data);
