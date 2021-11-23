@@ -86,3 +86,4 @@ echo test > a ; echo test2 > b ; >a >b <error; cat a b
 echo test > a ; echo test2 > b ; rm a ; rm b ; >a >b <error; cat a b
 echo test > a ; echo test2 > b ; >a <error b; cat a b
 echo test > a ; echo test2 > b ; rm a ; rm b ; >a <error >b ; cat a b
+ls && rm a ls lol test

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:29:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/22 22:44:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ t_bool		is_delimiter(char *str);
 int			get_delimiter(char *str);
 t_bool		is_redirection(char *str);
 t_bool		is_parenthese(char *str);
+void		handle_start_right_redir(
+				int *delimiter, char **argv, t_cmd *cmd_list, t_data *data);
+void		handle_start_left_redir(
+				int *delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 int			get_redirection(char *str);
 void		parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
 void		display_error_redir(int fd, char *filename, char *errno_msg);
@@ -61,6 +65,8 @@ void		parse_redirections_heredoc(
 */
 char		*upgrade_input(char *input, t_data *data);
 char		*parse_env_variable(char *input, t_data *data);
+void		fill_env_value(
+				char *new_str, t_var *var, char *str, t_data *data);
 int			is_charset_env(char c);
 char		*get_env_val(char *str, int *i, t_data *data);
 char		*get_env_key(char *str, int *i, t_data *data);
