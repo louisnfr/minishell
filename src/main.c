@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 00:02:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 00:05:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 	if (!data)
 		return (EXIT_FAILURE);
 	data->sh = init_config(envp);
-	//init_signals(data);
+	init_signals(data);
 	while (1)
 	{
 		setup_prompt(&input, data);
