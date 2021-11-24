@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/23 14:53:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 15:09:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,6 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 		else
 			*cmd_list = (*cmd_list)->next;
 	}
-}
-
-void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
-{
-	char	*pid_value;
-	char	*ret_value;
-
-	pid_value = safe_itoa(data->pid, data);
-	ret_value = safe_itoa(data->ret_value, data);
-	if (ft_strchr((*cmd_list)->command, '$'))
-	{
-		(*cmd_list)->command = transform_str(
-				(*cmd_list)->command, pid_value, ret_value, data);
-		(*cmd_list)->path = find_cmd_path(
-				(*cmd_list)->command, NULL, data->all_paths, data);
-	}
-	clean_free(&pid_value);
-	clean_free(&ret_value);
 }
 
 t_bool	handle_execution(
@@ -95,16 +77,25 @@ void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
 		*exit_code = 0;
 }
 
+int	handle_no_command(int *exit_code, t_data *data)
+{
+	open_files(exit_code, data->cmd_list);
+	data->ret_value = *exit_code;
+	return (*exit_code);
+}
+
 int	exec(t_data *data)
 {
 	int		exit_code;
 	t_cmd	*cmd_list;
 
-	cmd_list = data->cmd_list->next;
 	exit_code = EXIT_FAILURE;
+	if (!data->cmd_list->next)
+		return (handle_no_command(&exit_code, data));
+	cmd_list = data->cmd_list->next;
 	while (cmd_list)
 	{
-		open_files(cmd_list);
+		open_files(&exit_code, cmd_list);
 		if (cmd_list && cmd_list->parenthese)
 			exit_code = exec_parentheses(exit_code, &cmd_list, data);
 		else if (!handle_execution(&exit_code, &cmd_list, data))

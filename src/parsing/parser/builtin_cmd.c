@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:52:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/20 16:47:38 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 10:24:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,7 @@ void	handle_builtin_cmd(
 	if (delimiter)
 		cmd_list->delimiter = delimiter;
 	data->i++;
-	parse_redirections(argv, cmd_list, data);
+	// parse_redirections(argv, cmd_list, data);
+	if (argv[data->i] && argv[data->i][0] == '-')
+		cmd_list->options = find_cmd_options_end(argv, data);
 }

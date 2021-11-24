@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 16:09:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 15:14:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ char	**check_argv(char **argv, t_data *data)
 	if (argv[i] && (is_delimiter(argv[i]) || str_is_equal(argv[i], "&")))
 		return (syntax_error_str_msg(argv[i], argv));
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<"))
-		&& !str_is_equal(argv[i], "<") && !str_is_equal(argv[i], ">"))
+		&& !str_is_equal(argv[i], "<") && !str_is_equal(argv[i], ">")
+		&& !str_is_equal(argv[i], ">>"))
 		return (syntax_error_str_msg("newline", argv));
 	while (argv[i + 1])
 		i++;

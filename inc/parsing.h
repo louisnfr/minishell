@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 22:44:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:05:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 ** parsing/utils
 */
 char		**get_paths(t_data *data);
+void		recheck_cmd_path(t_cmd **cmd_list, t_data *data);
 void		setup_cmd_list(t_cmd *cmd_list);
 void		clean_cmd_list(t_cmd **cmd_list, t_data *data);
 void		create_new_cmd(t_cmd **cmd_list, t_data *data);
@@ -47,7 +48,9 @@ void		handle_start_right_redir(
 void		handle_start_left_redir(
 				int *delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 int			get_redirection(char *str);
-void		parse_redirections(char **argv, t_cmd *cmd_list, t_data *data);
+void		parse_redirections(
+				t_redir *redir, char **argv, t_cmd **cmd_list, t_data *data);
+void		clean_redir(t_redir *redir);
 void		display_error_redir(int fd, char *filename, char *errno_msg);
 void		parse_pipes(t_cmd *cmd_list, t_data *data);
 void		parse_special_value(t_cmd *cmd_list, t_data *data);
@@ -60,6 +63,8 @@ void		free_fd_array(int size, int **fd_array);
 void		close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data);
 void		parse_redirections_heredoc(
 				char **argv, t_cmd *cmd_list, t_data *data);
+t_redir		*parse_start_redirection(char **argv, t_data *data);
+char		**find_cmd_args_end(char **argv, char **args, t_data *data);
 /*
 ** parsing/lexer
 */

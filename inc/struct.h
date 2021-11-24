@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/23 14:40:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/24 11:13:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ typedef struct s_var
 	int		i;
 	int		j;
 }	t_var;
+
+typedef struct s_redir
+{
+	char	**files;
+	int		*redirection;
+	int		count;
+}	t_redir;
 
 typedef struct s_cmd
 {

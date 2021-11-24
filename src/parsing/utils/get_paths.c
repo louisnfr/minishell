@@ -6,33 +6,29 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 16:08:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 15:08:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-char	*get_path_executable(char *command, t_data *data)
+void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 {
-	char	*path;
-	int		i;
-	int		j;
+	char	*pid_value;
+	char	*ret_value;
 
-	path = NULL;
-	if (!command)
-		return (path);
-	path = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(command) - 1));
-	if (!path)
-		return ((char *)exit_error_void(NULL, "malloc()", data));
-	i = 2;
-	j = 0;
-	while (command[i])
-		path[j++] = command[i++];
-	path[j] = '\0';
-	return (path);
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
+	if (ft_strchr((*cmd_list)->command, '$'))
+	{
+		(*cmd_list)->command = transform_str(
+				(*cmd_list)->command, pid_value, ret_value, data);
+		(*cmd_list)->path = find_cmd_path(
+				(*cmd_list)->command, NULL, data->all_paths, data);
+	}
+	clean_free(&pid_value);
+	clean_free(&ret_value);
 }
-*/
 
 char	*get_path_executable(char *command, t_data *data)
 {
