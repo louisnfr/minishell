@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/24 14:22:44 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/24 23:16:26 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,7 @@ SOURCES = \
 		shell/error_msg.c \
 		shell/exit.c \
 		shell/shell.c \
+		shell/signal.c \
 		\
 		utils/free.c \
 		utils/utils.c \

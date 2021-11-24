@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/15 18:39:49 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/24 23:26:38 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_bool	process_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
 	if (c == ctrl_key('d'))
 		process_ctrl_d(data, sh);
 	else if (c == ctrl_key('c'))
-		return (process_ctrl_c(sh));
+		return (process_ctrl_c(data, sh));
 	else if (c == ctrl_key('l'))
-		process_ctrl_l(sh, data);
+		process_ctrl_l(data, sh);
 	else if (c == ctrl_key('u'))
 		process_ctrl_u(sh, hist);
 	return (SUCCESS);
@@ -33,28 +33,29 @@ void	process_ctrl_d(t_data *data, t_config *sh)
 	if (sh->search == sh->h_num && (!sh->current || !ft_strlen(sh->current)))
 	{
 		disable_raw_mode(sh);
-		printf("exit\n");
+		write(2, "exit\n", 5);
 		clean_data(data);
 		exit(ret);
 	}
 	else if (sh->search != sh->h_num && (!sh->input || !ft_strlen(sh->input)))
 	{
 		disable_raw_mode(sh);
-		printf("exit\n");
+		write(2, "exit\n", 5);
 		clean_data(data);
 		exit(ret);
 	}
 }
 
-t_bool	process_ctrl_c(t_config *sh)
+t_bool	process_ctrl_c(t_data *data, t_config *sh)
 {
 	free(sh->current);
 	free(sh->input);
 	write(1, "^C", 2);
+	data->ret_value = 1;
 	return (FAIL);
 }
 
-void	process_ctrl_l(t_config *sh, t_data *data)
+void	process_ctrl_l(t_data *data, t_config *sh)
 {
 	write(1, "\x1b[s", 3);
 	write(1, "\x1b[2J", 4);

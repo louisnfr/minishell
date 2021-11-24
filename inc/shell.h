@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:24:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/24 23:24:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void		process_arrow_down(t_config *sh, t_history *hist);
 
 t_bool		process_ctrl_key(t_data *data, t_config *sh, t_history *hst, int c);
 void		process_ctrl_d(t_data *data, t_config *sh);
-t_bool		process_ctrl_c(t_config *sh);
-void		process_ctrl_l(t_config *sh, t_data *data);
+t_bool		process_ctrl_c(t_data *data, t_config *sh);
+void		process_ctrl_l(t_data *data, t_config *sh);
 void		process_ctrl_u(t_config *sh, t_history *hist);
 
 /*** lists ***/
@@ -90,5 +90,12 @@ void		clear_hist(t_history *hist, int search);
 
 int			ctrl_key(int k);
 void		clear_prompt(int cx, int len);
+
+/*** signal ***/
+
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
+void	init_signals(t_data *data);
+
 
 #endif
