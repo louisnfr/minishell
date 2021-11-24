@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/24 15:04:07 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:44:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char		**safe_double_strdup(char **str, int size, t_data *data);
 ** shell/exec
 */
 int			exec(t_data *data);
-void		open_files(int *exit_code, t_cmd *cmd_list);
+void		open_files(int *exit_code, t_cmd *cmd_list, t_data *data);
 void		handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool		exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
 t_bool		error_bin_cmd(

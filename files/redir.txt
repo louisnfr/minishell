@@ -1,5 +1,5 @@
 echo test > ls ; cat ls ; rm ls
-echo test > ls >> ls >> ls ; echo test >> ls; cat ls< b > a cat > hey >> p
+echo test > ls >> ls >> ls ; echo test >> ls; cat ls< b > a cat > hey >> p ; ls
 < z > y cat > hey >> p ; ls
 > pwd ; ls ; rm pwd
 < pwd
