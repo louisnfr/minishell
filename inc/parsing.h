@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/24 23:48:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 00:02:28 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		handle_start_left_redir(
 int			get_redirection(char *str);
 void		parse_redirections(
 				t_redir *redir, char **argv, t_cmd **cmd_list, t_data *data);
-void		clean_redir(t_redir *redir);
+void		clean_redir(t_redir **redir);
 void		display_error_redir(int fd, char *filename, char *errno_msg);
 void		parse_pipes(t_cmd *cmd_list, t_data *data);
 void		parse_special_value(t_cmd *cmd_list, t_data *data);

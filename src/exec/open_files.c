@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 15:36:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:44:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	open_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
 	return (fd);
 }
 
-void	open_files(int *exit_code, t_cmd *cmd_list)
+void	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
 	t_bool	error;
@@ -72,7 +72,10 @@ void	open_files(int *exit_code, t_cmd *cmd_list)
 		if (cmd_list->redir_error)
 			cmd_list->error_output = cmd_list->output;
 		if (error)
+		{
+			data->ret_value = EXIT_FAILURE;
 			return ;
+		}
 	}
 	*exit_code = EXIT_SUCCESS;
 }

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 15:09:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:44:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,22 @@ void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
 		*exit_code = 0;
 }
 
-int	handle_no_command(int *exit_code, t_data *data)
-{
-	open_files(exit_code, data->cmd_list);
-	data->ret_value = *exit_code;
-	return (*exit_code);
-}
-
 int	exec(t_data *data)
 {
 	int		exit_code;
 	t_cmd	*cmd_list;
 
 	exit_code = EXIT_FAILURE;
+	open_files(&exit_code, data->cmd_list, data);
 	if (!data->cmd_list->next)
-		return (handle_no_command(&exit_code, data));
+	{
+		data->ret_value = exit_code;
+		return (exit_code);
+	}
 	cmd_list = data->cmd_list->next;
 	while (cmd_list)
 	{
-		open_files(&exit_code, cmd_list);
+		open_files(&exit_code, cmd_list, data);
 		if (cmd_list && cmd_list->parenthese)
 			exit_code = exec_parentheses(exit_code, &cmd_list, data);
 		else if (!handle_execution(&exit_code, &cmd_list, data))
@@ -105,7 +102,7 @@ int	exec(t_data *data)
 			cmd_list = cmd_list->next;
 			check_exit_code(exit_code, &cmd_list);
 		}
-		data->ret_value = exit_code;
 	}
+	data->ret_value = exit_code;
 	return (exit_code);
 }

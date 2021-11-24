@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 18:04:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/24 23:25:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,33 @@ void	parse_argv(char **argv, t_cmd *cmd_list, t_data *data)
 	redir = NULL;
 	while (argv[data->i])
 	{
-		clean_redir(redir);
+		if (argv[data->i] && is_delimiter(argv[data->i]))
+			delimiter = get_delimiter(argv[data->i++]);
+		clean_redir(&redir);
 		if (argv[data->i] && is_redirection(argv[data->i]))
 			redir = parse_start_redirection(argv, data);
+		if (!argv[data->i] || (argv[data->i] && is_delimiter(argv[data->i])))
+		{
+			parse_redirections(redir, argv, &cmd_list, data);
+			continue ;
+		}
 		if (argv[data->i] && str_is_equal(argv[data->i], "("))
 			handle_parentheses(delimiter, argv, data);
 		else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
 		else if (argv[data->i])
 			handle_bin_cmd(delimiter, argv, cmd_list, data);
-		parse_redirections(redir, argv, &cmd_list, data);
-		if (argv[data->i] && is_delimiter(argv[data->i]))
-			delimiter = get_delimiter(argv[data->i++]);
-		else
+		while (argv[data->i] && !is_delimiter(argv[data->i]))
 		{
+			parse_redirections(redir, argv, &cmd_list, data);
+			clean_redir(&redir);
 			if (argv[data->i] && argv[data->i][0] == '-')
 				cmd_list->options = find_cmd_options_end(argv, data);
 			if (argv[data->i] && !is_delimiter(argv[data->i]))
 				cmd_list->args = find_cmd_args_end(argv, cmd_list->args, data);
 		}
 	}
-	clean_redir(redir);
+	clean_redir(&redir);
 }
 
 t_bool	parse(char *input, t_data *data)
