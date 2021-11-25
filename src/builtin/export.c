@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:08:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 03:07:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,48 @@ int	export_error(t_cmd *cmd_list, int i)
 	return (EXIT_FAILURE);
 }
 
-t_bool	check_export(char *s)
+t_bool	check_export(char *s, int *append)
 {
 	int	i;
 
 	if (ft_isdigit(s[0]) || s[0] == '=')
 		return (FAIL);
 	i = -1;
-	while (s[++i])
+	while (s[++i] != '=')
+	{
+		if (s[i] == '+' && s[i + 1] == '=')
+		{
+			*append = true;
+			continue ;
+		}
 		if (!ft_isalnum(s[i]) && s[i] != '_' && s[i] != '=')
 			return (FAIL);
+	}
 	return (SUCCESS);
+}
+
+void	export_var(t_data *data, t_cmd *cmd_list, int append, int i)
+{
+	if (append)
+		append_var_env(data, cmd_list, i);
+	else
+		add_var_env(data, cmd_list, i);
 }
 
 t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 {
+	int		append;
 	int		ret;
 	int		i;
 
+	append = false;
 	ret = EXIT_SUCCESS;
 	i = -1;
 	if (!cmd_list->args)
 		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
-		if (!check_export(cmd_list->args[i]))
+		if (!check_export(cmd_list->args[i], &append))
 			ret = export_error(cmd_list, i);
 		else if (!ft_strnstr(cmd_list->args[i], "=",
 				ft_strlen(cmd_list->args[i])))
@@ -53,7 +70,7 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 				add_var(&data->export, new_var(cmd_list->args[i], "\0", 0));
 		}
 		else
-			add_var_env(data, cmd_list, i);
+			export_var(data, cmd_list, append, i);
 	}
 	return (ret);
 }

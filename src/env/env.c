@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:06:36 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 03:16:42 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,29 @@ char	**env_to_char(t_env *env, t_data *data)
 	return (envp);
 }
 
+void	append_var_env(t_data *data, t_cmd *cmd_list, int i)
+{
+	char	**var;
+
+	var = safe_split_on_first(cmd_list->args[i], '=', data);
+	var[0] = ft_strtrim(var[0], "+");
+	if (!already_exists(var[0], data->env))
+		add_var(&data->env, new_var(var[0], var[1], 1));
+	else
+		append_env(var[0], var[1], data->env, data);
+	if (!already_exists(var[0], data->export))
+		add_var(&data->export, new_var(var[0], var[1], 1));
+	else
+		append_env(var[0], var[1], data->export, data);
+	free_split(var);
+}
+
 void	add_var_env(t_data *data, t_cmd *cmd_list, int i)
 {
 	char	**var;
 
 	var = safe_split_on_first(cmd_list->args[i], '=', data);
+	var[0] = ft_strtrim(var[0], "+");
 	if (!already_exists(var[0], data->env))
 		add_var(&data->env, new_var(var[0], var[1], 1));
 	else

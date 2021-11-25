@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:09:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:21:02 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 03:04:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bool		exec_history(t_cmd *cmd_list, t_data *data);
 
 t_bool		exec_export(t_cmd *cmd_list, t_data *data);
 t_bool		already_exists(char *var, t_env *env);
-t_bool		check_export(char *s);
+t_bool		check_export(char *s, int *append);
 int			export_error(t_cmd *cmd_list, int i);
 
 t_bool		exec_unset(t_cmd *cmd_list, t_data *data);

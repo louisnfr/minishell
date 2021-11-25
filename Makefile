@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/24 23:16:26 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/25 03:09:43 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SOURCES = \
 		env/env.c \
 		env/list.c \
 		env/utils.c \
+		env/print.c \
 		\
 		exec/exec.c \
 		exec/open_files.c \
