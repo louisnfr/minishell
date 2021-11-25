@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:33:00 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/23 14:35:26 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:31:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,16 @@ t_bool	parse_wildcard_args(t_cmd *cmd_list, t_data *data)
 t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 {
 	int		i;
+	t_op	*builtins[8];
 
-	t_op (*builtins[]) = {exec_echo, exec_cd, exec_pwd, exec_env, exec_history,
-	exec_export, exec_unset, exec_exit};
+	builtins[0] = exec_echo;
+	builtins[1] = exec_cd;
+	builtins[2] = exec_pwd;
+	builtins[3] = exec_env;
+	builtins[4] = exec_history;
+	builtins[5] = exec_export;
+	builtins[6] = exec_unset;
+	builtins[7] = exec_exit;
 	parse_special_value(cmd_list, data);
 	parse_wildcard_args(cmd_list, data);
 	if (cmd_list->input == -1 || cmd_list->output == -1)
