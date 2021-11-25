@@ -56,7 +56,7 @@ $@
 exit
 END_HEREDOC
 )
-	REF_BASH=$(sed '/^minishell>/d' <<< "$REF_BASH")
+	REF_BASH=$(sed '/^minishell>/d'<<< "$REF_BASH")
 	REF_EXIT_STATUS=$?
 
 	if [ "$MY_RESULT" == "$REF_BASH" ] && [ "$MY_EXIT_STATUS" == "$REF_EXIT_STATUS" ]

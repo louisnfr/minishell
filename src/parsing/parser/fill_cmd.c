@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 18:06:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:08:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,12 @@ char	**find_cmd_args_end(char **argv, char **args, t_data *data)
 		new_args = (char **)ft_calloc(1, sizeof(char *) * (nb_of_args + 1));
 		if (!new_args)
 			exit_error_void(NULL, "malloc()", data);
-		j = -1;
-		while (args && args[++j])
+		j = 0;
+		while (args && args[j])
+		{
 			new_args[j] = safe_strdup(args[j], data);
+			j++;
+		}
 		while (j < nb_of_args)
 			new_args[j++] = safe_strdup(argv[data->i++], data);
 		new_args[j] = NULL;

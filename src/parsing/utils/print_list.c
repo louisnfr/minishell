@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:57:51 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/04 15:02:08 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/25 20:04:59 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

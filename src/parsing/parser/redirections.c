@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 23:17:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:47:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void	parse_redirections(
 	char	**existing_files;
 	int		*existing_redir;
 
+	if (!redir && !argv[data->i])
+		return ;
 	redirection = 0;
 	existing_files = NULL;
 	existing_redir = NULL;
@@ -192,7 +194,8 @@ void	parse_redirections(
 		data->i++;
 		check_output_error(argv, *cmd_list, data);
 	}
-	(*cmd_list)->files[j] = NULL;
+	if ((*cmd_list)->files && j > 0)
+		(*cmd_list)->files[j] = NULL;
 	if (existing_files)
 		free_double_str(existing_files);
 	if (existing_redir)

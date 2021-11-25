@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/17 13:51:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 14:09:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	handle_error_cmd_pipe(t_cmd **cmd_list)
 {
+	if (!(*cmd_list)->command)
+		return (0);
 	ft_putstr_fd(NULL, (*cmd_list)->output);
 	display_error_message(
 		(*cmd_list)->command, "command not found", (*cmd_list)->error_output);

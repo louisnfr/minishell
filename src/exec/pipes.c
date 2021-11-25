@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 02:21:52 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 19:53:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ static t_bool	exec_cmd_bin_in_pipe(t_cmd **cmd_list, t_data *data)
 static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 {
 	int		exit_code;
+	t_bool	error_file;
 
 	exit_code = EXIT_FAILURE;
+	error_file = open_files(&exit_code, *cmd_list, data);
 	if ((*cmd_list)->is_builtin)
 		exit_code = exec_builtin(*cmd_list, data);
 	else if ((*cmd_list)->path)
@@ -48,7 +50,7 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 		parse_special_value(*cmd_list, data);
 		exit_code = (handle_error_cmd_pipe(cmd_list));
 	}
-	close_all_pipes(cmd_list, data);
+	close_all_fd(data);
 	clean_data(data);
 	exit(exit_code);
 }
