@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/24 23:26:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:18:55 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_bool	process_ctrl_c(t_data *data, t_config *sh)
 	free(sh->current);
 	free(sh->input);
 	write(1, "^C", 2);
-	data->ret_value = 1;
+	data->ret_value = 130;
 	return (FAIL);
 }
 

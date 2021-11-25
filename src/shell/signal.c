@@ -6,29 +6,38 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 01:48:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:16:45 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigint(int sig)
+void	handle_status(int status, int *exit_code)
 {
-	(void)sig;
-	//output 130
-	write(1, "\n", 1);
+	int	return_value;
+
+	return_value = 0;
+	if (WIFEXITED(status))
+		return_value = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		return_value = WTERMSIG(status) + 128;
+		if (return_value == 130)
+			ft_putstr("\n");
+		if (return_value == 131)
+			ft_putstr("Quit (core dumped)\n");
+	}
+	*exit_code = return_value;
 }
 
-void	handle_sigquit(int sig)
+void	handle_sig(int sig)
 {
 	(void)sig;
-	//output 131
-	write(1, "Quit: 3\n", 8);
 }
 
 void	init_signals(t_data *data)
 {
 	(void)data;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, handle_sig);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 23:44:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 02:08:43 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	}
 }
 
-t_bool	handle_execution(
-	int *exit_code, t_cmd **cmd_list, t_data *data)
+t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (!(*cmd_list)->path)
 		recheck_cmd_path(cmd_list, data);

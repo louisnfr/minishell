@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 00:09:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:13:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ void		clear_prompt(int cx, int len);
 
 /*** signal ***/
 
-void	handle_sigint(int sig);
-void	handle_sigquit(int sig);
+void	handle_sig(int sig);
 void	init_signals(t_data *data);
+void	handle_status(int status, int *exit_code);
 
 
 #endif
