@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 01:46:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 04:13:20 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,18 @@ char	*safe_getcwd(t_data *data)
 
 char	*get_ret_value(t_data *data)
 {
+	char	*value;
 	char	*ret;
 
 	ret = NULL;
+	value = ft_itoa(data->ret_value);
 	if (!data->ret_value)
 		ret = ft_strjoin_and_free(ret, " \e[0m(\e[32m");
 	else
 		ret = ft_strjoin_and_free(ret, " \e[0m(\e[31m");
-	ret = ft_strjoin_and_free(ret, ft_itoa(data->ret_value));
+	ret = ft_strjoin_and_free(ret, value);
 	ret = ft_strjoin_and_free(ret, "\e[0m)");
+	clean_free(&value);
 	return (ret);
 }
 
@@ -64,7 +67,9 @@ char	*prompt(t_data *data)
 	char	*usr;
 	char	*cwd;
 	char	*tmp;
+	char	*ret;
 
+	ret = get_ret_value(data);
 	usr = get_env("USER", data->env);
 	cwd = safe_getcwd(data);
 	if (ft_strnstr(cwd, get_env("HOME", data->env),
@@ -82,8 +87,9 @@ char	*prompt(t_data *data)
 	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
 	usr = safe_strjoin_and_free(usr, "\e[34m", data);
 	usr = safe_strjoin_and_free(usr, cwd, data);
-	usr = safe_strjoin_and_free(usr, get_ret_value(data), data);
 	clean_free(&cwd);
+	usr = safe_strjoin_and_free(usr, ret, data);
+	clean_free(&ret);
 	cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
 	return (cwd);
 }

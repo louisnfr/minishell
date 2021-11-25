@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 03:57:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 04:09:35 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,31 @@ char	*get_env(char *key, t_env *env)
 
 void	append_env(char *key, char *new_value, t_env *env, t_data *data)
 {
+	t_env	*head;
 	char	*var;
 	char	*dest;
 
+	head = env;
 	var = get_env(key, data->export);
 	dest = ft_calloc(ft_strlen(var) + ft_strlen(new_value) + 1, sizeof(char));
 	if (!dest)
 		exit_error_bool("malloc()", data);
 	ft_strcat(dest, var);
 	ft_strcat(dest, new_value);
-	set_env(key, dest, env, data);
+	while (env)
+	{
+		if (!ft_strcmp(env->key, key))
+			break ;
+		env = env->next;
+	}
+	env->is_value = 1;
+	free(env->value);
+	env->value = ft_calloc((ft_strlen(dest) + 1), sizeof(char));
+	if (!env->value)
+		exit_error_bool("malloc()", data);
+	ft_memcpy(env->value, dest, ft_strlen(dest) + 1);
+	free(dest);
+	env = head;
 }
 
 void	set_env(char *key, char *new_value, t_env *env, t_data *data)
