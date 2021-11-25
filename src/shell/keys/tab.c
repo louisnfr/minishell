@@ -6,11 +6,21 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 20:14:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void	get_current_word(t_config *sh)
+// {
+// 	char	*written;
+// 	int		i;
+
+// 	i = sh->cx;
+
+
+// }
 
 void	process_tab_key(t_config *sh)
 {
