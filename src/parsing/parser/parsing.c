@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/24 23:25:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:43:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	parse_argv(char **argv, t_cmd *cmd_list, t_data *data)
 			redir = parse_start_redirection(argv, data);
 		if (!argv[data->i] || (argv[data->i] && is_delimiter(argv[data->i])))
 		{
+			create_new_cmd(&cmd_list, data);
 			parse_redirections(redir, argv, &cmd_list, data);
 			continue ;
 		}
@@ -56,15 +57,21 @@ void	parse_argv(char **argv, t_cmd *cmd_list, t_data *data)
 			handle_builtin_cmd(delimiter, argv, cmd_list, data);
 		else if (argv[data->i])
 			handle_bin_cmd(delimiter, argv, cmd_list, data);
-		while (argv[data->i] && !is_delimiter(argv[data->i]))
+		if (argv[data->i] && !is_delimiter(argv[data->i]))
 		{
-			parse_redirections(redir, argv, &cmd_list, data);
-			clean_redir(&redir);
-			if (argv[data->i] && argv[data->i][0] == '-')
-				cmd_list->options = find_cmd_options_end(argv, data);
-			if (argv[data->i] && !is_delimiter(argv[data->i]))
-				cmd_list->args = find_cmd_args_end(argv, cmd_list->args, data);
+			while (argv[data->i] && !is_delimiter(argv[data->i]))
+			{
+				parse_redirections(redir, argv, &cmd_list, data);
+				clean_redir(&redir);
+				if (argv[data->i] && argv[data->i][0] == '-')
+					cmd_list->options = find_cmd_options_end(argv, data);
+				if (argv[data->i] && !is_delimiter(argv[data->i]))
+					cmd_list->args = find_cmd_args_end(
+							argv, cmd_list->args, data);
+			}
 		}
+		else
+			parse_redirections(redir, argv, &cmd_list, data);
 	}
 	clean_redir(&redir);
 }

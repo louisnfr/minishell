@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 02:08:43 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/25 18:01:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,26 @@ int	exec(t_data *data)
 {
 	int		exit_code;
 	t_cmd	*cmd_list;
+	t_bool	error_file;
 
+	error_file = FALSE;
 	exit_code = EXIT_FAILURE;
-	open_files(&exit_code, data->cmd_list, data);
+	error_file = open_files(&exit_code, data->cmd_list, data);
 	if (!data->cmd_list->next)
 	{
 		data->ret_value = exit_code;
 		return (exit_code);
-	}
+	}	
 	cmd_list = data->cmd_list->next;
 	while (cmd_list)
 	{
-		open_files(&exit_code, cmd_list, data);
+		error_file = open_files(&exit_code, cmd_list, data);
+		if (error_file)
+		{
+			data->ret_value = exit_code;
+			cmd_list = cmd_list->next;
+			continue ;
+		}
 		if (cmd_list && cmd_list->parenthese)
 			exit_code = exec_parentheses(exit_code, &cmd_list, data);
 		else if (!handle_execution(&exit_code, &cmd_list, data))
@@ -101,7 +109,7 @@ int	exec(t_data *data)
 			cmd_list = cmd_list->next;
 			check_exit_code(exit_code, &cmd_list);
 		}
+		data->ret_value = exit_code;
 	}
-	data->ret_value = exit_code;
 	return (exit_code);
 }

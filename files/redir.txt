@@ -35,12 +35,12 @@ echo test > ../a ; echo test2 > ../b ; >../a <error >../b ; cat ../a ../b
 echo test > ../a ; echo test2 > ../b ; rm ../a ; rm ../b ; >../a <error >../b ; cat ../a ../b
 cat <../error
 <error
-run_test 'echo test > test_files/a ; echo test2 > test_files/b ; >test_files/a >>test_files/b <error; cat test_files/a test_files/b
-run_test 'echo test > test_files/a ; echo test2 > test_files/b ; >>test_files/a >test_files/b <error; cat test_files/a test_files/b
-run_test 'echo test > test_files/a ; echo test2 > test_files/b ; >>test_files/a >>test_files/b <error; cat test_files/a test_files/b
-run_test 'echo test > test_files/a ; echo test2 > test_files/b ; >test_files/a <error >>test_files/b ; cat test_files/a test_files/b
-run_test 'echo test > test_files/a ; echo test2 > test_files/b ; >test_files/a <error >>test_files/b ; cat test_files/a test_files/b
-run_test 'echo test > test_files/a ; echo test2 > test_files/b ; <error >>test_files/a >>test_files/b ; cat test_files/a test_files/b
+echo test > test_files/a ; echo test2 > test_files/b ; >test_files/a >>test_files/b <error; cat test_files/a test_files/b
+echo test > test_files/a ; echo test2 > test_files/b ; >>test_files/a >test_files/b <error; cat test_files/a test_files/b
+echo test > test_files/a ; echo test2 > test_files/b ; >>test_files/a >>test_files/b <error; cat test_files/a test_files/b
+echo test > test_files/a ; echo test2 > test_files/b ; >test_files/a <error >>test_files/b ; cat test_files/a test_files/b
+echo test > test_files/a ; echo test2 > test_files/b ; >test_files/a <error >>test_files/b ; cat test_files/a test_files/b
+echo test > test_files/a ; echo test2 > test_files/b ; <error >>test_files/a >>test_files/b ; cat test_files/a test_files/b
 delete_file "test_files/a test_files/b"
 echo test > test_files/a ; echo lala > test_files/b ; >test_files/a >>test_files/b <error; cat test_files/a test_files/b
 delete_file "test_files/a test_files/b"
