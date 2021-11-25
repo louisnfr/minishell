@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/20 16:57:48 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 01:46:56 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	setup_prompt(char **input, t_data *data)
 {
 	*input = NULL;
-	if (enable_raw_mode(data->sh))
+	if (isatty(STDIN_FILENO))
 	{
+		enable_raw_mode(data->sh);
 		clean_free(&data->prpt);
 		data->prpt = prompt(data);
 		write(1, data->prpt, ft_strlen(data->prpt));
@@ -44,6 +45,20 @@ char	*safe_getcwd(t_data *data)
 	return (cwd);
 }
 
+char	*get_ret_value(t_data *data)
+{
+	char	*ret;
+
+	ret = NULL;
+	if (!data->ret_value)
+		ret = ft_strjoin_and_free(ret, " \e[0m(\e[32m");
+	else
+		ret = ft_strjoin_and_free(ret, " \e[0m(\e[31m");
+	ret = ft_strjoin_and_free(ret, ft_itoa(data->ret_value));
+	ret = ft_strjoin_and_free(ret, "\e[0m)");
+	return (ret);
+}
+
 char	*prompt(t_data *data)
 {
 	char	*usr;
@@ -63,10 +78,11 @@ char	*prompt(t_data *data)
 		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
 	}
-	usr = safe_strjoin("\e[92;1m", usr, data);
+	usr = safe_strjoin("\e[92m", usr, data);
 	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
-	usr = safe_strjoin_and_free(usr, "\e[34;1m", data);
+	usr = safe_strjoin_and_free(usr, "\e[34m", data);
 	usr = safe_strjoin_and_free(usr, cwd, data);
+	usr = safe_strjoin_and_free(usr, get_ret_value(data), data);
 	clean_free(&cwd);
 	cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
 	return (cwd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/20 16:44:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/25 01:38:10 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 	int		exit_code;
 	t_bool	quit_exit;
 
-	ft_putstr_fd("exit\n", 2);
+	if (isatty(STDIN_FILENO))
+		ft_putstr("exit\n");
 	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
 		return (FAIL);
