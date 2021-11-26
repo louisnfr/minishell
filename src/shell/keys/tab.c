@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/26 01:15:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:48:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void	process_tab_key(t_config *sh)
 	{
 		directory = opendir(".");
 		entity = readdir(directory);
-		closedir(directory);
 		while (entity != NULL)
 		{
 			if (ft_strnstr(entity->d_name, current, ft_strlen(current)))
 				break ;
 			entity = readdir(directory);
 		}
+		closedir(directory);
 		if (!entity)
 			return ;
 		edit_input(sh, entity->d_name);
@@ -86,4 +86,5 @@ void	process_tab_key(t_config *sh)
 		sh->cx = ft_strlen(sh->current);
 		sh->cx_max = ft_strlen(sh->current);
 	}
+	free(current);
 }
