@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 11:59:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 16:47:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	display_error_redir(int fd, char *filename, char *errno_msg)
 	ft_putchar_fd('\n', fd);
 }
 
-int	open_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
+int	open_a_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
 {
 	int	fd;
 
@@ -43,6 +43,27 @@ int	open_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
 	return (fd);
 }
 
+void	handle_opening(int i, int *error, t_cmd **cmd_list)
+{
+	if ((*cmd_list)->redirection[i] == RIGHT_MARK)
+		(*cmd_list)->output = open_a_file(
+				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
+	else if ((*cmd_list)->redirection[i] == DOUBLE_RIGHT_MARK)
+		(*cmd_list)->output = open_a_file(
+				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
+	else if ((*cmd_list)->redirection[i] == LEFT_MARK)
+		(*cmd_list)->input = open_a_file(
+				error, (*cmd_list)->files[i], READ, *cmd_list);
+	else if ((*cmd_list)->redirection[i] == ERROR)
+		(*cmd_list)->error_output = open_a_file(
+				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
+	else if ((*cmd_list)->redirection[i] == DOUBLE_ERROR)
+		(*cmd_list)->error_output = open_a_file(
+				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
+	if ((*cmd_list)->redir_error)
+		(*cmd_list)->error_output = (*cmd_list)->output;
+}
+
 t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
@@ -54,23 +75,7 @@ t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
 	while (cmd_list->files[++i])
 	{
 		error = FALSE;
-		if (cmd_list->redirection[i] == RIGHT_MARK)
-			cmd_list->output = open_file(
-					&error, cmd_list->files[i], WRITE_TRUNC, cmd_list);
-		else if (cmd_list->redirection[i] == DOUBLE_RIGHT_MARK)
-			cmd_list->output = open_file(
-					&error, cmd_list->files[i], WRITE_APPEND, cmd_list);
-		else if (cmd_list->redirection[i] == LEFT_MARK)
-			cmd_list->input = open_file(
-					&error, cmd_list->files[i], READ, cmd_list);
-		else if (cmd_list->redirection[i] == ERROR)
-			cmd_list->error_output = open_file(
-					&error, cmd_list->files[i], WRITE_TRUNC, cmd_list);
-		else if (cmd_list->redirection[i] == DOUBLE_ERROR)
-			cmd_list->error_output = open_file(
-					&error, cmd_list->files[i], WRITE_APPEND, cmd_list);
-		if (cmd_list->redir_error)
-			cmd_list->error_output = cmd_list->output;
+		handle_opening(i, &error, &cmd_list);
 		if (error)
 		{
 			data->ret_value = EXIT_FAILURE;

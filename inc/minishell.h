@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 11:56:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 17:09:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,15 @@ t_bool		handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data);
 int			exec_parentheses(int exit_code, t_cmd **cmd_list, t_data *data);
 void		handle_error_msg_exec(int *exit_code, char *command, int fd_error);
 void		check_exit_code(int exit_code, t_cmd **cmd_list);
-t_bool		is_first_pipe(t_cmd *cmd_list);
-t_bool		is_last_pipe(t_cmd *cmd_list);
 int			handle_error_cmd_pipe(t_cmd **cmd_list);
 void		close_pipe(t_cmd **cmd, t_data *data);
 void		close_other_pipes(t_cmd **cmd, t_data *data);
 void		close_all_pipes(t_cmd **cmd, t_data *data);
 t_bool		create_fork(int i, pid_t *pid, t_data *data);
+void		init_fd(int fd, t_data **data);
+void		handle_error_msg_exec(int *exit_code, char *command, int fd_error);
+t_bool		init_exec(int *exit_code,
+				int *error_file, t_cmd **cmd_list, t_data *data);
 
 /*** exit ***/
 

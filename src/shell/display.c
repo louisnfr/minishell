@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 04:13:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/26 17:29:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ char	*get_ret_value(t_data *data)
 	return (ret);
 }
 
+void	get_cwd(char *ret, char *usr, char **cwd, t_data *data)
+{
+	usr = safe_strjoin("\e[92m", usr, data);
+	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
+	usr = safe_strjoin_and_free(usr, "\e[34m", data);
+	usr = safe_strjoin_and_free(usr, *cwd, data);
+	clean_free(cwd);
+	usr = safe_strjoin_and_free(usr, ret, data);
+	clean_free(&ret);
+	*cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
+}
+
 char	*prompt(t_data *data)
 {
 	char	*usr;
@@ -83,13 +95,38 @@ char	*prompt(t_data *data)
 		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
 	}
-	usr = safe_strjoin("\e[92m", usr, data);
-	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
-	usr = safe_strjoin_and_free(usr, "\e[34m", data);
-	usr = safe_strjoin_and_free(usr, cwd, data);
-	clean_free(&cwd);
-	usr = safe_strjoin_and_free(usr, ret, data);
-	clean_free(&ret);
-	cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
+	get_cwd(ret, usr, &cwd, data);
 	return (cwd);
 }
+
+// char	*prompt(t_data *data)
+// {
+// 	char	*usr;
+// 	char	*cwd;
+// 	char	*tmp;
+// 	char	*ret;
+
+// 	ret = get_ret_value(data);
+// 	usr = get_env("USER", data->env);
+// 	cwd = safe_getcwd(data);
+// 	if (ft_strnstr(cwd, get_env("HOME", data->env),
+// 			ft_strlen(get_env("HOME", data->env))))
+// 	{
+// 		tmp = ft_substr(
+// 				cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
+// 		if (!tmp)
+// 			return ((char *)exit_error_void(NULL, "malloc()", data));
+// 		clean_free(&cwd);
+// 		cwd = safe_strjoin("~", tmp, data);
+// 		clean_free(&tmp);
+// 	}
+// 	usr = safe_strjoin("\e[92m", usr, data);
+// 	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
+// 	usr = safe_strjoin_and_free(usr, "\e[34m", data);
+// 	usr = safe_strjoin_and_free(usr, cwd, data);
+// 	clean_free(&cwd);
+// 	usr = safe_strjoin_and_free(usr, ret, data);
+// 	clean_free(&ret);
+// 	cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
+// 	return (cwd);
+// }

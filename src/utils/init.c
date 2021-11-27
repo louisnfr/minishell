@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/23 14:39:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:28:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_data	*init_data(char **envp)
 	data->envp = NULL;
 	data->last_cwd = NULL;
 	data->env_value = NULL;
+	data->redir = NULL;
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);
 	if (!data->all_paths)

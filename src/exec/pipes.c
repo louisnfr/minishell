@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 19:53:08 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 12:43:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,9 @@ static t_bool	exec_cmd_bin_in_pipe(t_cmd **cmd_list, t_data *data)
 	char	**cmd_array;
 
 	close_other_pipes(cmd_list, data);
-	if (!is_first_pipe(*cmd_list))
-		dup2((*cmd_list)->input, STDIN_FILENO);
-	if (!is_last_pipe(*cmd_list))
-	{
-		dup2((*cmd_list)->output, STDOUT_FILENO);
-		dup2((*cmd_list)->error_output, STDERR_FILENO);
-	}
+	dup2((*cmd_list)->input, STDIN_FILENO);
+	dup2((*cmd_list)->output, STDOUT_FILENO);
+	dup2((*cmd_list)->error_output, STDERR_FILENO);
 	close_pipe(cmd_list, data);
 	cmd_array = fill_cmd_array(*cmd_list, data);
 	data->envp = env_to_char(data->env, data);
@@ -41,14 +37,17 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 
 	exit_code = EXIT_FAILURE;
 	error_file = open_files(&exit_code, *cmd_list, data);
-	if ((*cmd_list)->is_builtin)
-		exit_code = exec_builtin(*cmd_list, data);
-	else if ((*cmd_list)->path)
-		exec_cmd_bin_in_pipe(cmd_list, data);
-	else
+	if (!error_file)
 	{
-		parse_special_value(*cmd_list, data);
-		exit_code = (handle_error_cmd_pipe(cmd_list));
+		if ((*cmd_list)->is_builtin)
+			exit_code = exec_builtin(*cmd_list, data);
+		else if ((*cmd_list)->path)
+			exec_cmd_bin_in_pipe(cmd_list, data);
+		else
+		{
+			parse_special_value(*cmd_list, data);
+			exit_code = (handle_error_cmd_pipe(cmd_list));
+		}
 	}
 	close_all_fd(data);
 	clean_data(data);

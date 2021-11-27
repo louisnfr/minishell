@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/17 14:04:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 18:11:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ static t_bool	can_exec_parenthese(int last_exit_code, t_cmd **cmd_list)
 
 static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 {
-	int	exit_code;
+	int		exit_code;
+	t_bool	error_file;
 
 	exit_code = EXIT_SUCCESS;
 	while (*cmd_list && (*cmd_list)->parenthese)
 	{
+		error_file = open_files(&exit_code, *cmd_list, data);
 		if (!handle_execution(&exit_code, cmd_list, data))
 		{
 			handle_error_msg_exec(

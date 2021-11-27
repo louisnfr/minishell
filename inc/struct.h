@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/24 11:13:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/27 14:27:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_data
 	t_cmd		*cmd_list;
 	t_env		*env;
 	t_env		*export;
+	t_redir		*redir;
 	char		**all_paths;
 	char		*prpt;
 	int			ret_value;

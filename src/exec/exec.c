@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 18:01:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 18:10:59 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,17 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	return (SUCCESS);
 }
 
-void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
+void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
-	if (command && command[0] != '\0')
+	if (*cmd_list && (*cmd_list)->parenthese)
+		*exit_code = exec_parentheses(*exit_code, cmd_list, data);
+	else if (!handle_execution(exit_code, cmd_list, data))
 	{
-		*exit_code = 127;
-		if (ft_strchr(command, '/'))
-			display_error_message(
-				command, "No such file or directory", fd_error);
-		else
-			display_error_message(command, "command not found", fd_error);
-	}
-	else
-		*exit_code = 0;
+		handle_error_msg_exec(
+			exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
+		*cmd_list = (*cmd_list)->next;
+		check_exit_code(*exit_code, cmd_list);
+	}	
 }
 
 int	exec(t_data *data)
@@ -82,33 +80,21 @@ int	exec(t_data *data)
 	t_cmd	*cmd_list;
 	t_bool	error_file;
 
-	error_file = FALSE;
-	exit_code = EXIT_FAILURE;
-	error_file = open_files(&exit_code, data->cmd_list, data);
-	if (!data->cmd_list->next)
-	{
-		data->ret_value = exit_code;
+	if (!init_exec(&exit_code, &error_file, &cmd_list, data))
 		return (exit_code);
-	}	
-	cmd_list = data->cmd_list->next;
 	while (cmd_list)
 	{
-		error_file = open_files(&exit_code, cmd_list, data);
+		if ((!cmd_list->next && !cmd_list->parenthese)
+			|| ((cmd_list->next && cmd_list->next->delimiter != PIPE)
+				&& !cmd_list->parenthese))
+			error_file = open_files(&exit_code, cmd_list, data);
 		if (error_file)
 		{
 			data->ret_value = exit_code;
 			cmd_list = cmd_list->next;
 			continue ;
 		}
-		if (cmd_list && cmd_list->parenthese)
-			exit_code = exec_parentheses(exit_code, &cmd_list, data);
-		else if (!handle_execution(&exit_code, &cmd_list, data))
-		{
-			handle_error_msg_exec(
-				&exit_code, cmd_list->command, cmd_list->error_output);
-			cmd_list = cmd_list->next;
-			check_exit_code(exit_code, &cmd_list);
-		}
+		exec_command(&exit_code, &cmd_list, data);
 		data->ret_value = exit_code;
 	}
 	return (exit_code);

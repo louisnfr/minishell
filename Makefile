@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/25 11:21:20 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/26 18:21:48 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,11 +45,14 @@ SOURCES = \
 		parsing/parser/builtin_cmd.c \
 		parsing/parser/heredoc.c \
 		parsing/parser/utils.c \
-		parsing/parser/fill_cmd.c \
-		parsing/parser/start_redir.c \
-		parsing/parser/redirections.c \
+		parsing/parser/fill_options.c \
+		parsing/parser/fill_args.c \
 		parsing/parser/pipes.c \
 		parsing/parser/parentheses.c \
+		\
+		parsing/redirection/parse.c \
+		parsing/redirection/files.c \
+		parsing/redirection/start_redir.c \
 		\
 		parsing/heredoc/heredoc.c \
 		parsing/heredoc/ctrl_keys_heredoc.c \
@@ -75,6 +78,7 @@ SOURCES = \
 		env/print.c \
 		\
 		exec/exec.c \
+		exec/utils.c \
 		exec/open_files.c \
 		exec/bin_cmd.c \
 		exec/cmd_array.c \
@@ -150,7 +154,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/builtin obj/env obj/exec obj/utils
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc
 	@mkdir -p obj/parsing/utils obj/parsing/parser obj/parsing/lexer
-	@mkdir -p obj/shell/init obj/shell/input obj/shell/keys
+	@mkdir -p obj/parsing/redirection obj/shell/init obj/shell/input obj/shell/keys
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
 

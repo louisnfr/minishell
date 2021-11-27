@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 00:02:28 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:25:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void		parse_redirections_heredoc(
 				char **argv, t_cmd *cmd_list, t_data *data);
 t_redir		*parse_start_redirection(char **argv, t_data *data);
 char		**find_cmd_args_end(char **argv, char **args, t_data *data);
+char		**copy_existing_files(
+				int **copy_redir, t_cmd *cmd_list, t_data *data);
+void		fill_existing_files_redir(
+				int *redir, char **files, t_cmd *cmd_list, t_data *data);
+int			malloc_files(
+				int length, t_redir *redir, t_cmd *cmd_list, t_data *data);
 /*
 ** parsing/lexer
 */

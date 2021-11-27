@@ -6,42 +6,11 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:19 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 19:50:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 16:40:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	close_all_pipes(t_cmd **cmd, t_data *data)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (++i < (*cmd)->nb_of_pipes)
-// 	{
-// 		safe_close_fd((*cmd)->pipe_fd[i][0], data);
-// 		(*cmd)->pipe_fd[i][0] = 0;
-// 		safe_close_fd((*cmd)->pipe_fd[i][1], data);
-// 		(*cmd)->pipe_fd[i][1] = 1;
-// 	}
-// }
-
-void	init_fd(int fd, t_data **data)
-{
-	t_cmd	*cmd;
-
-	cmd = (*data)->cmd_list->next;
-	while (cmd)
-	{
-		if (cmd->input == fd)
-			cmd->input = 0;
-		if (cmd->output == fd)
-			cmd->output = 1;
-		if (cmd->error_output == fd)
-			cmd->error_output = 2;
-		cmd = cmd->next;
-	}
-}
 
 void	close_all_pipes(t_cmd **cmd, t_data *data)
 {

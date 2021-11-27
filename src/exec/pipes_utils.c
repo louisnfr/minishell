@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 14:09:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 16:39:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ int	handle_error_cmd_pipe(t_cmd **cmd_list)
 	return (127);
 }
 
-t_bool	is_last_pipe(t_cmd *cmd_list)
+void	init_fd(int fd, t_data **data)
 {
-	return (cmd_list && cmd_list->delimiter == PIPE && (!cmd_list->next
-			|| (cmd_list->next && cmd_list->next->delimiter != PIPE)));
-}
+	t_cmd	*cmd;
 
-t_bool	is_first_pipe(t_cmd *cmd_list)
-{
-	return (cmd_list && cmd_list->delimiter != PIPE && cmd_list->next
-		&& cmd_list->next->delimiter == PIPE);
+	cmd = (*data)->cmd_list->next;
+	while (cmd)
+	{
+		if (cmd->input == fd)
+			cmd->input = 0;
+		if (cmd->output == fd)
+			cmd->output = 1;
+		if (cmd->error_output == fd)
+			cmd->error_output = 2;
+		cmd = cmd->next;
+	}
 }
 
 void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data)

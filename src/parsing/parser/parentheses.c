@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parentheses.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:13 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/05 14:38:28 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/11/26 19:45:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	note_parenthese(int parenthese, t_cmd *cmd_list)
 void	fill_parentheses(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
+	t_redir	*redir;
+
+	redir = NULL;
 	while (argv[data->i])
 	{
 		if (argv[data->i] && is_delimiter(argv[data->i]))
@@ -42,6 +45,7 @@ void	fill_parentheses(
 			handle_bin_cmd(delimiter, argv, cmd_list, data);
 			note_parenthese(IN, cmd_list);
 		}
+		parse_redirections(redir, argv, &cmd_list, data);
 		if (argv[data->i] && str_is_equal(argv[data->i], ")"))
 			break ;
 	}
@@ -50,7 +54,9 @@ void	fill_parentheses(
 void	handle_parentheses(int delimiter, char **argv, t_data *data)
 {
 	t_cmd	*cmd_list;
+	t_redir	*redir;
 
+	redir = NULL;
 	cmd_list = data->cmd_list;
 	data->i++;
 	if (argv[data->i] && cmd_is_builtin(argv[data->i]))
@@ -63,7 +69,10 @@ void	handle_parentheses(int delimiter, char **argv, t_data *data)
 		data->i++;
 		return ;
 	}
-	fill_parentheses(delimiter, argv, cmd_list, data);
-	note_parenthese(IN, cmd_list);
+	parse_redirections(redir, argv, &cmd_list, data);
+	if (argv[data->i] && !str_is_equal(argv[data->i], ")"))
+		fill_parentheses(delimiter, argv, cmd_list, data);
+	// else
 	data->i++;
+	note_parenthese(IN, cmd_list);
 }

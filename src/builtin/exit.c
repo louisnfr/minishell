@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 20:34:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/26 18:21:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ long long	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 	return (data->ret_value);
 }
 
+void	fonction(void)
+{
+	system("leaks minishell");
+}
+
 t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	long long	exit_code;
@@ -102,6 +107,7 @@ t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 	if (quit_exit)
 		return (FAIL);
 	clean_data(data);
+	// atexit(fonction);
 	exit(exit_code);
 	return (SUCCESS);
 }
