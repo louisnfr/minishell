@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/26 01:15:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:13:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ char	*get_current_word(t_config *sh)
 	int		i;
 
 	i = sh->cx - 1;
+	// printf("check: %d\n", i);
 	// printf("check -%c-\n", sh->current[sh->cx-1]);
-	while (i && !is_sep(sh->current[i - 1]))
+	while (i > 0 && !is_sep(sh->current[i - 1]))
 		i--;
 	substr = ft_substr(sh->current, i, sh->cx - i);
 	return (substr);
@@ -72,18 +73,19 @@ void	process_tab_key(t_config *sh)
 	{
 		directory = opendir(".");
 		entity = readdir(directory);
-		closedir(directory);
 		while (entity != NULL)
 		{
 			if (ft_strnstr(entity->d_name, current, ft_strlen(current)))
 				break ;
 			entity = readdir(directory);
 		}
+		closedir(directory);
 		if (!entity)
 			return ;
 		edit_input(sh, entity->d_name);
 		write(1, sh->current, ft_strlen(sh->current));
 		sh->cx = ft_strlen(sh->current);
 		sh->cx_max = ft_strlen(sh->current);
+		free(current);
 	}
 }
