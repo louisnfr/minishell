@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 18:11:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 12:08:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 	if (!is_first_cmd(cmd_list, data)
 		&& !can_exec_parenthese(last_exit_code, cmd_list))
 		return (SUCCESS);
+	check_redir_parentheses(*cmd_list, data);
 	pid = fork();
 	if (pid < 0)
 		return (exit_error_bool("fork()", data));

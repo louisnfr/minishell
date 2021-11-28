@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/22 22:27:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:54:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_special_cases(
+static int	handle_special_cases(
 	int double_quotes, t_var *var, char *new_str, char *str)
 {
 	int	count;

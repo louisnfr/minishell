@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/26 17:09:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:39:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,12 @@ char		**safe_double_strdup(char **str, int size, t_data *data);
 int			exec(t_data *data);
 t_bool		open_files(int *exit_code, t_cmd *cmd_list, t_data *data);
 void		handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
-t_bool		exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data);
 t_bool		error_bin_cmd(
 				char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);
 char		**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int			exec_pipes(t_cmd **cmd_list, t_data *data);
 void		close_all_fd(t_data *data);
 void		close_fd(t_cmd **cmd_list, t_data *data);
-void		exit_error_with_msg(char *error_msg, char *errno_msg, t_data *data);
 int			get_error_code(void);
 t_bool		count_wildcard_arg(int *i, char *wildcard_arg);
 t_bool		fill_wildcard_arg(
@@ -97,9 +95,9 @@ void		close_other_pipes(t_cmd **cmd, t_data *data);
 void		close_all_pipes(t_cmd **cmd, t_data *data);
 t_bool		create_fork(int i, pid_t *pid, t_data *data);
 void		init_fd(int fd, t_data **data);
-void		handle_error_msg_exec(int *exit_code, char *command, int fd_error);
 t_bool		init_exec(int *exit_code,
 				int *error_file, t_cmd **cmd_list, t_data *data);
+void		check_redir_parentheses(t_cmd *cmd_list, t_data *data);
 
 /*** exit ***/
 

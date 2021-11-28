@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:23:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:01:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/28 12:09:51 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_error(const char *s, t_config *sh)
 
 void	exit_free(t_config *sh, t_history *hist)
 {
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 2);
 	disable_raw_mode(sh);
 	free_history(hist);
 	free(sh);

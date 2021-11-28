@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 17:33:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:12:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	remove_from_list(t_cmd *cmd_list)
+static void	remove_from_list(t_cmd *cmd_list)
 {
 	if (!cmd_list)
 		return ;

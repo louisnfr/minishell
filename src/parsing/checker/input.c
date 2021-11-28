@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 13:19:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:58:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_length(char *input, int length)
 	return (length);
 }
 
-char	*check_comment(char *input, t_data *data)
+static char	*check_comment(char *input, t_data *data)
 {
 	int		i;
 	int		length;

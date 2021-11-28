@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:30:38 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 15:49:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:46:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_existing_files(t_cmd *cmd_list)
+static int	count_existing_files(t_cmd *cmd_list)
 {
 	int	i;
 
@@ -25,29 +25,29 @@ int	count_existing_files(t_cmd *cmd_list)
 	return (i);
 }
 
-int	fill_files(
-	int nb_existing_files, t_redir *redir, t_cmd *cmd_list, t_data *data)
+static int	fill_files(
+	int nb_existing_files, t_cmd *cmd_list, t_data *data)
 {
 	int	i;
 
 	i = -1;
-	while (redir->files[++i])
+	while (data->redir->files[++i])
 	{
-		cmd_list->redirection[i] = redir->redirection[i];
-		cmd_list->files[i] = safe_strdup(redir->files[i], data);
+		cmd_list->redirection[i] = data->redir->redirection[i];
+		cmd_list->files[i] = safe_strdup(data->redir->files[i], data);
 	}
-	return (redir->count + nb_existing_files);
+	return (data->redir->count + nb_existing_files);
 }
 
-int	malloc_files(int length, t_redir *redir, t_cmd *cmd_list, t_data *data)
+int	malloc_files(int length, t_cmd *cmd_list, t_data *data)
 {
 	int	nb_existing_files;
 
-	if (!length && !redir)
+	if (!length && !data->redir)
 		return (0);
 	nb_existing_files = 0;
-	if (redir && redir->count)
-		length += redir->count;
+	if (data->redir && data->redir->count)
+		length += data->redir->count;
 	if (cmd_list->files)
 	{
 		nb_existing_files = count_existing_files(cmd_list);
@@ -59,8 +59,8 @@ int	malloc_files(int length, t_redir *redir, t_cmd *cmd_list, t_data *data)
 	cmd_list->files = (char **)ft_calloc(1, sizeof(char *) * (length + 1));
 	if (!cmd_list->files)
 		exit_error_bool("malloc()", data);
-	if (redir)
-		return (fill_files(nb_existing_files, redir, cmd_list, data));
+	if (data->redir)
+		return (fill_files(nb_existing_files, cmd_list, data));
 	return (nb_existing_files);
 }
 

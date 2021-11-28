@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/26 18:21:48 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/28 12:32:19 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,10 @@ SOURCES = \
 		\
 		parsing/checker/input.c \
 		parsing/checker/argv.c \
+		parsing/checker/argv_utils.c \
 		parsing/checker/delimiters_1.c \
 		parsing/checker/delimiters_2.c \
+		parsing/checker/delimiters_3.c \
 		parsing/checker/error_msg.c \
 		parsing/checker/unclosed_char.c \
 		\
@@ -87,6 +89,7 @@ SOURCES = \
 		exec/pipes_utils.c \
 		exec/close_fd.c \
 		exec/parentheses.c \
+		exec/parentheses_redir.c \
 		exec/wildcard.c \
 		\
 		shell/init/init.c \

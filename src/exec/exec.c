@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 18:10:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:08:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	return (SUCCESS);
 }
 
-void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
+static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (*cmd_list && (*cmd_list)->parenthese)
 		*exit_code = exec_parentheses(*exit_code, cmd_list, data);

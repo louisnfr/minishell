@@ -6,28 +6,28 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:46:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 15:54:42 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:46:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_redir(t_redir **redir)
+void	clean_redir(t_data *data)
 {
-	if (redir && *redir)
+	if (data->redir)
 	{
-		free_double_str((*redir)->files);
-		if ((*redir)->redirection)
+		free_double_str(data->redir->files);
+		if (data->redir->redirection)
 		{
-			free((*redir)->redirection);
-			(*redir)->redirection = NULL;
+			free(data->redir->redirection);
+			data->redir->redirection = NULL;
 		}
-		free(*redir);
-		*redir = NULL;
+		free(data->redir);
+		data->redir = NULL;
 	}
 }
 
-t_redir	*malloc_redir(char **argv, t_data *data)
+static t_redir	*malloc_redir(char **argv, t_data *data)
 {
 	int		count;
 	int		i;

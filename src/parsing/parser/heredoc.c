@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 13:20:42 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:50:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
+static char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
 {
 	char	*new_delimiter;
 	int		i;
@@ -41,7 +41,7 @@ char	*parse_heredoc_delimiter(char *delimiter, t_bool *quotes)
 	return (new_delimiter);
 }
 
-void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
+static void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	t_bool	quotes;
 
@@ -59,7 +59,7 @@ void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 	safe_unlink(cmd_list->heredoc, data);
 }
 
-void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
+static void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 {
 	redir_heredoc(j, argv, cmd_list, data);
 	(*j)++;
@@ -70,7 +70,7 @@ void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 	}
 }
 
-void	parse_redirections_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
+void	parse_redirection_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
 {
 	int	j;
 	int	redirection;

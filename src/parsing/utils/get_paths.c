@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 13:55:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:47:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 	clean_free(&ret_value);
 }
 
-char	*get_path_executable(char *command, t_data *data)
+static char	*get_path_executable(char *command, t_data *data)
 {
 	char	*path;
 	int		i;

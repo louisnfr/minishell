@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 12:43:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:10:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	exit(exit_code);
 }
 
-void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
+static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 {
 	int		is_child;
 

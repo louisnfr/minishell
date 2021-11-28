@@ -6,31 +6,33 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:39 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/16 13:24:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:43:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_delimiters(int i, char **str, char **strs, t_data *data)
+static int	handle_delimiters(int i, char **str, char **strs, t_data *data)
 {
 	int		j;
-	char	*tmp;
 
-	j = 0;
-	tmp = safe_strdup(*str, data);
-	while (tmp && tmp[j] && is_charset_split(tmp[j]))
-		j++;
-	free(tmp);
-	tmp = NULL;
-	strs[i] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
-	if (!strs[i])
+	if (!malloc_strs(i, str, strs, data))
 		return (exit_error_bool("malloc()", data));
 	j = 0;
-	while (**str && is_delimiter_split(**str))
+	if (**str == '(' || **str == ')')
 	{
 		strs[i][j++] = **str;
 		(*str)++;
+	}
+	else
+	{
+		while (**str && is_delimiter_split(**str))
+		{
+			strs[i][j++] = **str;
+			(*str)++;
+			if (**str == '(' || **str == ')')
+				break ;
+		}
 	}
 	strs[i][j] = '\0';
 	return (1);
@@ -54,7 +56,7 @@ static int	get_count(char **str, t_data *data)
 	return (j);
 }
 
-t_bool	fill_words(int i, char **str, char **strs, t_data *data)
+static t_bool	fill_words(int i, char **str, char **strs, t_data *data)
 {
 	int	j;
 
@@ -76,7 +78,7 @@ t_bool	fill_words(int i, char **str, char **strs, t_data *data)
 	return (SUCCESS);
 }
 
-int	handle_split_input(int words, char *str, char **strs, t_data *data)
+static int	handle_split_input(int words, char *str, char **strs, t_data *data)
 {
 	int	i;
 

@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/27 14:28:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:12:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	ft_getpid(void)
+static pid_t	ft_getpid(void)
 {
 	pid_t	pid;
 
@@ -25,7 +25,7 @@ pid_t	ft_getpid(void)
 	return (pid - 1);
 }
 
-char	**setup_builtins(t_data *data)
+static char	**setup_builtins(t_data *data)
 {
 	char	**builtins;
 

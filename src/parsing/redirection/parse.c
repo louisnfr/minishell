@@ -6,14 +6,14 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 16:23:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:45:05 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_length_redir(
-	t_redir *redir, char **argv, t_cmd *cmd_list, t_data *data)
+static int	get_length_redir(
+	char **argv, t_cmd *cmd_list, t_data *data)
 {
 	int	redirection;
 	int	length;
@@ -34,10 +34,10 @@ int	get_length_redir(
 		if (argv[i] && str_is_equal(argv[i], "2>&1"))
 			i++;
 	}
-	return (malloc_files(length, redir, cmd_list, data));
+	return (malloc_files(length, cmd_list, data));
 }
 
-void	check_output_error(char **argv, t_cmd *cmd_list, t_data *data)
+static void	check_output_error(char **argv, t_cmd *cmd_list, t_data *data)
 {
 	if (argv[data->i] && str_is_equal(argv[data->i], "2>&1"))
 	{
@@ -46,7 +46,7 @@ void	check_output_error(char **argv, t_cmd *cmd_list, t_data *data)
 	}
 }
 
-void	get_filename(int k, char *str, t_cmd **cmd_list, t_data *data)
+static void	get_filename(int k, char *str, t_cmd **cmd_list, t_data *data)
 {
 	char	quote;
 	int		i;
@@ -72,7 +72,7 @@ void	get_filename(int k, char *str, t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->files[k] = safe_strdup(str, data);
 }
 
-void	loop_redir(int j, char **argv, t_cmd **cmd_list, t_data *data)
+static void	loop_redir(int j, char **argv, t_cmd **cmd_list, t_data *data)
 {
 	int		redirection;
 
@@ -96,20 +96,20 @@ void	loop_redir(int j, char **argv, t_cmd **cmd_list, t_data *data)
 }
 
 void	parse_redirections(
-	t_redir *redir, char **argv, t_cmd **cmd_list, t_data *data)
+	char **argv, t_cmd **cmd_list, t_data *data)
 {
 	int		j;
 	char	**existing_files;
 	int		*existing_redir;
 
-	if (!redir && !argv[data->i])
+	if (!data->redir && !argv[data->i])
 		return ;
 	existing_redir = NULL;
 	while (*cmd_list && (*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;
-	parse_redirections_heredoc(argv, *cmd_list, data);
+	parse_redirection_heredoc(argv, *cmd_list, data);
 	existing_files = copy_existing_files(&existing_redir, *cmd_list, data);
-	j = get_length_redir(redir, argv, *cmd_list, data);
+	j = get_length_redir(argv, *cmd_list, data);
 	if (existing_files && existing_redir)
 		fill_existing_files_redir(
 			existing_redir, existing_files, *cmd_list, data);

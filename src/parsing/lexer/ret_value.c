@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 13:03:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:53:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	fill_quotes(t_var *var, char *str, char *new_str, char *value)
 	}
 }
 
-void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
+static void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
 {
 	int		str_length;
 	t_var	*var;

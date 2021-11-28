@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 14:35:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:57:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parse_heredoc_line(char *line, t_data *data)
+static char	*parse_heredoc_line(char *line, t_data *data)
 {
 	char	*new_line;
 	char	*pid_value;
@@ -35,7 +35,7 @@ char	*parse_heredoc_line(char *line, t_data *data)
 	return (new_line);
 }
 
-t_bool	open_heredoc(int *fd, t_cmd *cmd_list)
+static t_bool	open_heredoc(int *fd, t_cmd *cmd_list)
 {
 	*fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*fd == -1)
@@ -47,7 +47,7 @@ t_bool	open_heredoc(int *fd, t_cmd *cmd_list)
 	return (SUCCESS);
 }
 
-void	write_line(int fd, t_bool quotes, char **line, t_data *data)
+static void	write_line(int fd, t_bool quotes, char **line, t_data *data)
 {
 	if (!quotes)
 		*line = parse_heredoc_line(*line, data);

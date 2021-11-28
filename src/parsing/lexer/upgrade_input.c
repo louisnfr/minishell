@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 13:57:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:52:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*transform_home_var(char *str, char *new_str, char *home)
+static char	*transform_home_var(char *str, char *new_str, char *home)
 {
 	int	i;
 	int	j;
@@ -37,7 +37,7 @@ char	*transform_home_var(char *str, char *new_str, char *home)
 	return (new_str);
 }
 
-char	*handle_home_var(char *str, t_data *data)
+static char	*handle_home_var(char *str, t_data *data)
 {
 	char	*new_str;
 	char	*home;
@@ -59,7 +59,7 @@ char	*handle_home_var(char *str, t_data *data)
 	return (str);
 }
 
-void	delete_void_args(
+static void	delete_void_args(
 	int nb_of_args, int new_nb_of_args, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
@@ -125,36 +125,3 @@ void	parse_special_value(t_cmd *cmd_list, t_data *data)
 	clean_free(&ret_value);
 	delete_void_args(i, new_nb_of_args, cmd_list, data);
 }
-
-/*
-void	parse_special_value(t_cmd *cmd_list, t_data *data)
-{
-	int		i;
-	char	*pid_value;
-	char	*ret_value;
-
-	pid_value = safe_itoa(data->pid, data);
-	ret_value = safe_itoa(data->ret_value, data);
-	cmd_list->command = handle_home_var(cmd_list->command, data);
-	cmd_list->command = parse_env_variable(cmd_list->command, data);
-	cmd_list->command = transform_pid_value(cmd_list->command, pid_value, data);
-	cmd_list->command = transform_ret_value(cmd_list->command, ret_value, data);
-	i = 0;
-	while (cmd_list->args && cmd_list->args[i])
-	{
-		cmd_list->args[i] = handle_home_var(cmd_list->args[i], data);
-		cmd_list->args[i] = parse_env_variable(cmd_list->args[i], data);
-		if (cmd_list->args[i])
-		{
-			cmd_list->args[i] = transform_pid_value(
-					cmd_list->args[i], pid_value, data);
-			cmd_list->args[i] = transform_ret_value(
-					cmd_list->args[i], ret_value, data);
-		}
-		i++;
-	}
-	clean_free(&pid_value);
-	clean_free(&ret_value);
-	delete_void_args(i, cmd_list);
-}
-*/

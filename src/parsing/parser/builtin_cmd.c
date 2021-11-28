@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:52:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 13:42:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:51:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	handle_quotes(char *quote, char first_char)
 	return (1);
 }
 
-t_bool	is_option_echo(char **argv, t_data *data)
+static t_bool	is_option_echo(char **argv, t_data *data)
 {
 	int		j;
 	int		ret;

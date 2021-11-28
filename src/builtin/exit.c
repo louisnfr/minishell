@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/26 18:21:41 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:14:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ unsigned long long	ft_atoull(const char *str)
 	return (value);
 }
 
-t_bool	exit_str_is_digit(char *str)
+static t_bool	exit_str_is_digit(char *str)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ t_bool	exit_str_is_digit(char *str)
 	return (SUCCESS);
 }
 
-int	parse_exit_code(char *arg)
+static int	parse_exit_code(char *arg)
 {
 	unsigned long long	nb;
 	int					sign;
@@ -63,7 +63,8 @@ int	parse_exit_code(char *arg)
 	return (nb);
 }
 
-long long	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
+static long long	get_exit_code(
+	t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 {
 	*quit_exit = FALSE;
 	if (cmd_list->args && cmd_list->args[0])
@@ -91,11 +92,6 @@ long long	get_exit_code(t_bool *quit_exit, t_cmd *cmd_list, t_data *data)
 	return (data->ret_value);
 }
 
-void	fonction(void)
-{
-	system("leaks minishell");
-}
-
 t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	long long	exit_code;
@@ -107,7 +103,6 @@ t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 	if (quit_exit)
 		return (FAIL);
 	clean_data(data);
-	// atexit(fonction);
 	exit(exit_code);
 	return (SUCCESS);
 }

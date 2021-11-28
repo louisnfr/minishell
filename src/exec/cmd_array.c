@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 16:23:29 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:08:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**malloc_cmd_array(char **cmd_array, t_cmd *cmd_list)
+static char	**malloc_cmd_array(char **cmd_array, t_cmd *cmd_list)
 {
 	int	i;
 	int	j;
@@ -36,7 +36,7 @@ char	**malloc_cmd_array(char **cmd_array, t_cmd *cmd_list)
 	return (cmd_array);
 }
 
-void	fill_args(char **cmd_array, int *i, t_cmd *cmd_list, t_data *data)
+static void	fill_args(char **cmd_array, int *i, t_cmd *cmd_list, t_data *data)
 {
 	int		j;
 	char	*ret_value;

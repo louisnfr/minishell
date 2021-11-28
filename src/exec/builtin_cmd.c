@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:33:00 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 02:31:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/28 21:07:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_bool	fill_wildcard_arg_builtin(
 	return (SUCCESS);
 }
 
-t_bool	fill_new_args(int new_length, t_cmd *cmd_list, t_data *data)
+static t_bool	fill_new_args(int new_length, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
 	int		j;
@@ -67,7 +67,7 @@ t_bool	fill_new_args(int new_length, t_cmd *cmd_list, t_data *data)
 	return (SUCCESS);
 }
 
-t_bool	parse_wildcard_args(t_cmd *cmd_list, t_data *data)
+static t_bool	parse_wildcard_args(t_cmd *cmd_list, t_data *data)
 {
 	int		i;
 	int		new_length;

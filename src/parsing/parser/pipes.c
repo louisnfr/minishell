@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:59:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 12:47:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:48:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_nb_of_pipes(t_cmd *cmd)
+static int	get_nb_of_pipes(t_cmd *cmd)
 {
 	int		nb_of_pipes;
 
@@ -37,7 +37,7 @@ int	get_nb_of_pipes(t_cmd *cmd)
 	return (nb_of_pipes);
 }
 
-int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd, t_data *data)
+static int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd, t_data *data)
 {
 	int		i;
 	int		**fd_array;
@@ -58,7 +58,7 @@ int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd, t_data *data)
 	return (fd_array);
 }
 
-t_bool	copy_fd_array(int **fd_array, int nb_of_pipes, t_cmd **cmd)
+static t_bool	copy_fd_array(int **fd_array, int nb_of_pipes, t_cmd **cmd)
 {
 	int	i;
 
@@ -78,7 +78,7 @@ t_bool	copy_fd_array(int **fd_array, int nb_of_pipes, t_cmd **cmd)
 	return (SUCCESS);
 }
 
-void	fill_fd_array(t_cmd **cmd, t_data *data)
+static void	fill_fd_array(t_cmd **cmd, t_data *data)
 {
 	int	i;
 	int	**fd_array;

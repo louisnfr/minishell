@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/16 13:23:42 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/28 20:44:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	count_normal_words(char *str, t_data *data)
 	}
 }
 
-t_bool	check_all_delimiters(char *str, int *words, t_data *data)
+static t_bool	check_all_delimiters(char *str, int *words, t_data *data)
 {
 	if (!check_delimiter(str, '|', words, data)
 		|| !check_delimiter(str, ';', words, data)
