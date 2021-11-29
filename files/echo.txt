@@ -122,3 +122,7 @@ export test="  foo  bar " ; echo ab$""test.
 export test="  foo  bar " ; echo ab$"test test".
 export var=at ; c$var Makefile
 export loop='bonjour$loop' ; echo $loop
+echo ok "" ok
+echo ok "" "" "" "" "" "" "" ok
+unset A; export A=ok; echo $A
+echo "ls -la <a | grepx >b"

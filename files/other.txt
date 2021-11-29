@@ -1,3 +1,6 @@
+""
+''
+"ls"
 gdagadgag
 ls -Z
 cd gdhahahad
@@ -46,3 +49,4 @@ ctrl-\
 ctrl-C
 ctrl-D
 /bin/echo bonjour
+touch test.sh ; ./test.sh ; rm test.sh

@@ -6,11 +6,84 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:47:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 15:53:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	reparse_command(t_cmd **cmd_list, t_data *data)
+{
+	char	**strs;
+	int		i;
+
+	strs = safe_split((*cmd_list)->command, 32, data);
+	clean_free(&(*cmd_list)->command);
+	(*cmd_list)->command = safe_strdup(strs[0], data);
+	i = 1;
+	refill_options(&i, strs, cmd_list, data);
+	refill_args(i, strs, cmd_list, data);
+	free_double_str(strs);
+}
+
+static int	get_length(char *command)
+{
+	int		i;
+	int		j;
+	char	quote;
+
+	i = 0;
+	j = 0;
+	while (command[i])
+	{
+		if (command[i] && (command[i] == '\'' || command[i] == '\"'))
+		{
+			quote = command[i++];
+			while (command[i] && command[i] != quote)
+			{
+				j++;
+				i++;
+			}
+			i++;
+		}
+		else
+		{
+			j++;
+			i++;
+		}
+	}
+	return (j);
+}
+
+char	*remove_quote_command(char *command, t_data *data)
+{
+	int		i;
+	int		j;
+	char	quote;
+	char	*new_command;
+
+	j = get_length(command);
+	new_command = (char *)ft_calloc(1, sizeof(char) * (j + 1));
+	if (!new_command)
+		return ((char *)exit_error_void(NULL, "malloc()", data));
+	i = 0;
+	j = 0;
+	while (command[i])
+	{
+		if (command[i] && (command[i] == '\'' || command[i] == '\"'))
+		{
+			quote = command[i++];
+			while (command[i] && command[i] != quote)
+				new_command[j++] = command[i++];
+			i++;
+		}
+		else
+			new_command[j++] = command[i++];
+	}
+	new_command[j] = '\0';
+	clean_free(&command);
+	return (new_command);
+}
 
 void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 {
@@ -19,15 +92,26 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 
 	if (!(*cmd_list)->command)
 		return ;
-	pid_value = safe_itoa(data->pid, data);
-	ret_value = safe_itoa(data->ret_value, data);
-	if (ft_strchr((*cmd_list)->command, '$'))
+	if (!ft_strchr((*cmd_list)->command, '$')
+		&& (ft_strchr((*cmd_list)->command, '\"')
+			|| ft_strchr((*cmd_list)->command, '\'')))
 	{
-		(*cmd_list)->command = transform_str(
-				(*cmd_list)->command, pid_value, ret_value, data);
+		(*cmd_list)->command = remove_quote_command((*cmd_list)->command, data);
 		(*cmd_list)->path = find_cmd_path(
 				(*cmd_list)->command, NULL, data->all_paths, data);
+		return ;
 	}
+	if (!ft_strchr((*cmd_list)->command, '$'))
+		return ;
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
+	// printf("COMMAND = %s\n", ((*cmd_list)->command));
+	(*cmd_list)->command = transform_str(
+			(*cmd_list)->command, pid_value, ret_value, data);
+	if (ft_strchr((*cmd_list)->command, 32))
+		reparse_command(cmd_list, data);
+	(*cmd_list)->path = find_cmd_path(
+			(*cmd_list)->command, NULL, data->all_paths, data);
 	clean_free(&pid_value);
 	clean_free(&ret_value);
 }
@@ -38,7 +122,6 @@ static char	*get_path_executable(char *command, t_data *data)
 	int		i;
 	int		j;
 
-	printf("command = %s\n", command);
 	path = NULL;
 	if (!command)
 		return (path);
@@ -50,7 +133,6 @@ static char	*get_path_executable(char *command, t_data *data)
 	while (command[i])
 		path[j++] = command[i++];
 	path[j] = '\0';
-	printf("path = %s\n", path);
 	return (path);
 }
 

@@ -80,3 +80,5 @@ export "" test=a ; env
 export "" && unset ""
 export "test=ici"=coucou ; echo $test
 export var="cat Makefile | grep >" ; echo $var
+export A="s -la" ; l$A
+export A=p ; export B=w; $A"B"d ; "$A"'$B'd

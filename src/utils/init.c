@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 21:12:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:07:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_data	*init_data(char **envp)
 	data->last_cwd = NULL;
 	data->env_value = NULL;
 	data->redir = NULL;
+	data->par_lvl = 0;
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);
 	if (!data->all_paths)

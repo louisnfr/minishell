@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:57:51 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 20:04:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 18:27:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	print_list(t_cmd *cmd_list)
 			printf("Delimiter = %d\n", tmp->delimiter);
 		print_files(tmp);
 		printf("Parenthese = %d\n", tmp->parenthese);
+		if (tmp->par_lvl)
+			printf("PAR LVL = %d\n", tmp->par_lvl);
 		tmp = tmp->next;
 		printf("\n");
 	}

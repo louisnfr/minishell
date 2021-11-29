@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:11:35 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 12:11:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 18:27:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 	while (cmd_list->files[i + 1])
 		i++;
 	cmd_list->redirection[i] = DOUBLE_RIGHT_MARK;
+	clean_free(&file);
 }
