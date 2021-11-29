@@ -1,114 +1,89 @@
 #include "minishell.h"
 
-char	**copy_strs_and_free(char **strs, t_data *data)
+static int	get_length(char *command)
 {
 	int		i;
-	char	**strs_copy;
+	int		j;
+	char	quote;
 
-	if (!strs)
-		return (NULL);
 	i = 0;
-	while (strs[i])
-		i++;
-	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
-	if (!strs_copy)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
-	i = -1;
-	while (strs[++i])
-		strs_copy[i] = safe_strdup(strs[i], data);
-	strs_copy[i] = NULL;
-	free_double_str(strs);
-	return (strs_copy);
-}
-
-static int	get_nb_of_args(int i, char **existing_args, char **strs)
-{
-	int	existing;	
-	int	new;
-
-	existing = 0;
-	while (existing_args && existing_args[existing])
-		existing++;
-	new = 0;
-	while (strs[i])
-	{
-		new++;
-		i++;
-	}
-	if (!new)
-		return (0);
-	return (existing + new);
-}
-
-void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data)
-{
-	int		j;
-	int		k;
-	char	**existing_args;
-
-	existing_args = copy_strs_and_free((*cmd_list)->args, data);
-	j = get_nb_of_args(i, existing_args, strs);
-	if (!j)
-		return (free_double_str(existing_args));
-	(*cmd_list)->args = (char **)ft_calloc(1, sizeof(char *) * (j + 1));
-	if (!(*cmd_list)->args)
-	{
-		exit_error_bool("malloc()", data);
-		return (free_double_str(existing_args));
-	}
 	j = 0;
-	while (strs[i] && strs[i][0] == '-')
-		(*cmd_list)->args[j++] = safe_strdup(strs[i++], data);
-	k = 0;
-	while (existing_args && existing_args[k])
-		(*cmd_list)->args[j++] = safe_strdup(existing_args[k++], data);
-	(*cmd_list)->args[j] = NULL;
-	free_double_str(existing_args);
-}
-
-static int	get_nb_of_options(char **existing_options, char **strs)
-{
-	int	i;
-	int	existing;	
-	int	new;
-
-	existing = 0;
-	while (existing_options && existing_options[existing])
-		existing++;
-	i = 1;
-	new = 0;
-	while (strs[i] && strs[i][0] == '-')
+	while (command[i])
 	{
-		new++;
-		i++;
+		if (command[i] && (command[i] == '\'' || command[i] == '\"'))
+		{
+			quote = command[i++];
+			while (command[i] && command[i] != quote)
+			{
+				j++;
+				i++;
+			}
+			i++;
+		}
+		else
+		{
+			j++;
+			i++;
+		}
 	}
-	if (!new)
-		return (0);
-	return (existing + new);
+	return (j + 1);
 }
 
-void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data)
+char	*remove_quote_command(char *command, t_data *data)
 {
+	int		i;
 	int		j;
-	int		k;
-	char	**existing_options;
+	char	quote;
+	char	*new_command;
 
-	existing_options = copy_strs_and_free((*cmd_list)->options, data);
-	j = get_nb_of_options(existing_options, strs);
-	if (!j)
-		return (free_double_str(existing_options));
-	(*cmd_list)->options = (char **)ft_calloc(1, sizeof(char *) * (j + 1));
-	if (!(*cmd_list)->options)
-	{
-		exit_error_bool("malloc()", data);
-		return (free_double_str(existing_options));
-	}
+	new_command = (char *)ft_calloc(1, sizeof(char) * get_length(command));
+	if (!new_command)
+		return ((char *)exit_error_void(NULL, "malloc()", data));
+	i = 0;
 	j = 0;
-	while (strs[*i] && strs[*i][0] == '-')
-		(*cmd_list)->options[j++] = safe_strdup(strs[(*i)++], data);
-	k = 0;
-	while (existing_options && existing_options[k])
-		(*cmd_list)->options[j++] = safe_strdup(existing_options[k++], data);
-	(*cmd_list)->options[j] = NULL;
-	free_double_str(existing_options);
+	while (command[i])
+	{
+		if (command[i] && (command[i] == '\'' || command[i] == '\"'))
+		{
+			quote = command[i++];
+			while (command[i] && command[i] != quote)
+				new_command[j++] = command[i++];
+			i++;
+		}
+		else
+			new_command[j++] = command[i++];
+	}
+	new_command[j] = '\0';
+	clean_free(&command);
+	return (new_command);
+}
+
+void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
+{
+	char	*pid_value;
+	char	*ret_value;
+
+	if (!(*cmd_list)->command)
+		return ;
+	if (!ft_strchr((*cmd_list)->command, '$')
+		&& (ft_strchr((*cmd_list)->command, '\"')
+			|| ft_strchr((*cmd_list)->command, '\'')))
+	{
+		(*cmd_list)->command = remove_quote_command((*cmd_list)->command, data);
+		(*cmd_list)->path = find_cmd_path(
+				(*cmd_list)->command, NULL, data->all_paths, data);
+		return ;
+	}
+	if (!ft_strchr((*cmd_list)->command, '$'))
+		return ;
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
+	(*cmd_list)->command = transform_str(
+			(*cmd_list)->command, pid_value, ret_value, data);
+	if (ft_strchr((*cmd_list)->command, 32))
+		reparse_command(cmd_list, data);
+	(*cmd_list)->path = find_cmd_path(
+			(*cmd_list)->command, NULL, data->all_paths, data);
+	clean_free(&pid_value);
+	clean_free(&ret_value);
 }

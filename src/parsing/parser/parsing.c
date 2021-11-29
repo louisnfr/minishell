@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 19:44:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:34:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void	parse_end_cmd(
 void	parse_cmd(int delimiter, char **argv, t_cmd **cmd_list, t_data *data)
 {
 	if (argv[data->i] && str_is_equal(argv[data->i], "("))
-	{
-		data->par_lvl++;
 		handle_parentheses(delimiter, argv, data);
-		data->par_lvl--;
-	}
 	else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
 		handle_builtin_cmd(delimiter, argv, *cmd_list, data);
 	else if (argv[data->i] && !str_is_equal(argv[data->i], ")"))
@@ -87,7 +83,7 @@ static char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	}
 	argv = check_argv(argv, data);
-	clean_free(&input);
+	// clean_free(&input);
 	return (argv);
 }
 

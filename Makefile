@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/29 20:32:16 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/29 23:16:47 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME	= minishell
 ### SOURCE FILES ###
 SOURCES = \
 		main.c \
+		libft.c \
 		\
 		builtin/echo.c \
 		builtin/cd.c \
@@ -70,8 +71,9 @@ SOURCES = \
 		parsing/checker/error_msg.c \
 		parsing/checker/unclosed_char.c \
 		\
-		parsing/utils/get_paths.c \
+		parsing/utils/paths.c \
 		parsing/utils/reparse.c \
+		parsing/utils/refill.c \
 		parsing/utils/linked_list.c \
 		parsing/utils/print_list.c \
 		\
@@ -90,9 +92,11 @@ SOURCES = \
 		exec/pipes.c \
 		exec/pipes_utils.c \
 		exec/close_fd.c \
-		exec/parentheses.c \
-		exec/parentheses_redir.c \
 		exec/wildcard.c \
+		\
+		exec/parentheses/exec.c \
+		exec/parentheses/check.c \
+		exec/parentheses/redir.c \
 		\
 		shell/init/init.c \
 		shell/init/raw.c \
@@ -156,7 +160,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)$@$(NOC)"
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
-	@mkdir -p obj/builtin obj/env obj/exec obj/utils
+	@mkdir -p obj/builtin obj/env obj/exec obj/exec/parentheses obj/utils
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc
 	@mkdir -p obj/parsing/utils obj/parsing/parser obj/parsing/lexer
 	@mkdir -p obj/parsing/redirection obj/shell/init obj/shell/input obj/shell/keys

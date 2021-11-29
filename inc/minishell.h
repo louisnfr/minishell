@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:21:17 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:25:35 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@
 # ifdef __linux__
 #  include <linux/kd.h>
 # endif
+
+/*** libft ***/
+
+char		**copy_strs_and_free(char **strs, t_data *data);
+unsigned long long	ft_atoull(const char *str);
 
 /*** init ***/
 

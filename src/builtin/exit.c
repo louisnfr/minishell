@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:46:42 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:05:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-unsigned long long	ft_atoull(const char *str)
-{
-	unsigned long long	value;
-	size_t				i;
-
-	value = 0;
-	i = 0;
-	if (str[0] == '-' || str[0] == '+')
-		i++;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-		value = value * 10 + str[i++] - 48;
-	return (value);
-}
 
 static t_bool	exit_str_is_digit(char *str)
 {
