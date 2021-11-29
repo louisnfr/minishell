@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:33:05 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:21:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	init_shell(t_confg *sh);
 
 int		read_key(t_confg *sh);
 char	*shell_process_keypress(t_data *data, t_confg *sh, t_hist *hist);
-char	*heredoc_process_keypress(t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
+char	*heredoc_process_keypress(
+			t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
 
 /*** edit input ***/
 
@@ -71,14 +72,17 @@ void	handle_sig(int sig);
 void	init_signals(t_data *data);
 void	handle_status(int status, int *exit_code);
 
-/*** parsing/heredoc ***/
+/*** heredoc ***/
 
 t_bool	process_ctrl_key_hd(t_data *data, t_confg *sh, char *delimiter, int c);
-char	*heredoc_process_keypress(t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
-char	*heredoc_shell(t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
+char	*heredoc_process_keypress(
+			t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
+char	*heredoc_shell(
+			t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
 t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data);
 char	*heredoc_env_variable(char *input, t_data *data);
-char	*heredoc_special_value(char *str, char *value, char character, t_data *data);
+char	*heredoc_special_value(
+			char *str, char *value, char character, t_data *data);
 t_bool	handle_heredoc_quotes(int *i, char **str, char **strs, t_data *data);
 
 /*** lists ***/

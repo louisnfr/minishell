@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 20:01:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:18:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,21 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	t_confg	*sh;
-	t_cmd		*cmd_list;
-	t_env		*env;
-	t_env		*export;
-	t_redir		*redir;
-	char		**all_paths;
-	char		*prpt;
-	int			ret_value;
-	pid_t		pid;
-	int			i;
-	int			double_quotes;
-	char		*env_value;
-	char		**builtins;
-	char		**envp;
-	char		*last_cwd;
-	int			par_lvl;
+	t_cmd	*cmd_list;
+	t_env	*env;
+	t_env	*export;
+	t_redir	*redir;
+	char	**all_paths;
+	char	*prpt;
+	int		ret_value;
+	pid_t	pid;
+	int		i;
+	int		double_quotes;
+	char	*env_value;
+	char	**builtins;
+	char	**envp;
+	char	*last_cwd;
+	int		par_lvl;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

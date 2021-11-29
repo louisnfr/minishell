@@ -6,13 +6,14 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 19:18:26 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:22:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	process_ctrl_d_heredoc(t_data *data, t_confg *sh, char *delimiter)
+static t_bool	process_ctrl_d_heredoc(
+	t_data *data, t_confg *sh, char *delimiter)
 {
 	(void)data;
 	if ((sh->search == sh->h_num && (!sh->current || !ft_strlen(sh->current)))
