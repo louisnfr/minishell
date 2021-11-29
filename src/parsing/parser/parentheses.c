@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:13 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 19:44:09 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:43:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,6 @@ static void	note_parenthese(int parenthese, t_cmd *cmd_list, t_data *data)
 	cmd_list->parenthese = parenthese;
 }
 
-void	parse_cmd_parentheses(int delimiter, char **argv, t_cmd **cmd_list, t_data *data)
-{
-	if (argv[data->i] && str_is_equal(argv[data->i], "("))
-		handle_parentheses(delimiter, argv, data);
-	else if (argv[data->i] && cmd_is_builtin(argv[data->i]))
-		handle_builtin_cmd(delimiter, argv, *cmd_list, data);
-	else if (argv[data->i] && !str_is_equal(argv[data->i], ")"))
-		handle_bin_cmd(delimiter, argv, *cmd_list, data);
-}
-
 static void	fill_parentheses(
 	int delimiter, char **argv, t_cmd *cmd_list, t_data *data)
 {
@@ -51,10 +41,7 @@ static void	fill_parentheses(
 		parse_redirections(argv, &cmd_list, data);
 		return ;
 	}
-	parse_cmd_parentheses(delimiter, argv, &cmd_list, data);
-	while (cmd_list->next)
-		cmd_list = cmd_list->next;
-	cmd_list->par_lvl = data->par_lvl;
+	parse_cmd(delimiter, argv, &cmd_list, data);
 	parse_end_cmd(argv, &cmd_list, data);
 }
 
@@ -67,6 +54,7 @@ void	handle_parentheses(int delimiter, char **argv, t_data *data)
 	is_first = TRUE;
 	cmd_list = data->cmd_list;
 	data->i++;
+	data->par_lvl++;
 	while (argv[data->i])
 	{
 		fill_parentheses(delimiter, argv, cmd_list, data);
@@ -82,4 +70,5 @@ void	handle_parentheses(int delimiter, char **argv, t_data *data)
 	}
 	if (argv[data->i])
 		data->i++;
+	data->par_lvl--;
 }

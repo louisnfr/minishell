@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:08 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 18:03:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:38:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_new_cmd(t_cmd **cmd_list, t_data *data)
 	new_cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!new_cmd)
 		exit_error_void(NULL, "malloc()", data);
-	setup_cmd_list(new_cmd);
+	setup_cmd_list(new_cmd, data);
 	new_cmd->next = NULL;
 	while ((*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;
@@ -27,7 +27,7 @@ void	create_new_cmd(t_cmd **cmd_list, t_data *data)
 	(*cmd_list) = (*cmd_list)->next;
 }
 
-void	setup_cmd_list(t_cmd *cmd_list)
+void	setup_cmd_list(t_cmd *cmd_list, t_data *data)
 {
 	cmd_list->command = NULL;
 	cmd_list->options = NULL;
@@ -39,7 +39,7 @@ void	setup_cmd_list(t_cmd *cmd_list)
 	cmd_list->redir_error = FALSE;
 	cmd_list->files = NULL;
 	cmd_list->parenthese = OUT;
-	cmd_list->par_lvl = 0;
+	cmd_list->par_lvl = data->par_lvl;
 	cmd_list->input = 0;
 	cmd_list->output = 1;
 	cmd_list->error_output = 2;

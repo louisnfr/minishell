@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:57:13 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:06:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@
 #  include <linux/kd.h>
 # endif
 
+/*
+** libft
+*/
+char		**copy_strs_and_free(char **strs, t_data *data);
+unsigned long long	ft_atoull(const char *str);
 /*
 ** init
 */
@@ -97,6 +102,8 @@ t_bool		create_fork(int i, pid_t *pid, t_data *data);
 void		init_fd(int fd, t_data **data);
 t_bool		init_exec(int *exit_code,
 				int *error_file, t_cmd **cmd_list, t_data *data);
+t_bool		check_exec_parentheses(
+				int last_exit_code, t_cmd **cmd_list, t_data *data);
 void		check_redir_parentheses(t_cmd *cmd_list, t_data *data);
 
 /*** exit ***/
@@ -106,8 +113,8 @@ void		free_env(t_env *g_env);
 void		free_split(char **args);
 void		exit_free(t_confg *sh, t_hist *hist);
 void		free_history(t_hist *hist);
-void	display_error_message(char *cmd, char *errno_msg, int fd);
-void	syntax_error_char_msg(int nb, char token);
-char	**syntax_error_str_msg(char *token, char **str);
+void		display_error_message(char *cmd, char *errno_msg, int fd);
+void		syntax_error_char_msg(int nb, char token);
+char		**syntax_error_str_msg(char *token, char **str);
 
 #endif

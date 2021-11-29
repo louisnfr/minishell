@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 20:01:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 21:48:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	t_confg	*sh;
+	t_confg		*sh;
 	t_cmd		*cmd_list;
 	t_env		*env;
 	t_env		*export;
