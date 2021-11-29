@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/22 12:06:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:19:35 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,14 @@ t_bool	check_unset(char *s)
 	return (SUCCESS);
 }
 
-t_bool	unset(t_env *env, t_cmd *cmd_list)
+void	free_env_var(t_env *var)
+{
+	free(var->key);
+	free(var->value);
+	free(var);
+}
+
+t_bool	unset(t_env **env, t_cmd *cmd_list)
 {
 	t_env	*prev;
 	t_env	*tmp;
@@ -42,18 +49,18 @@ t_bool	unset(t_env *env, t_cmd *cmd_list)
 	i = -1;
 	while (cmd_list->args[++i])
 	{
-		if (!get_env(cmd_list->args[i], env))
+		if (!get_env(cmd_list->args[i], *env))
 			return (EXIT_SUCCESS);
-		prev = find_prev_var(cmd_list->args[i], env);
+		prev = find_prev_var(cmd_list->args[i], *env);
 		if (!prev)
 		{
-			tmp = env;
-			free(env);
-			env = tmp->next;
+			tmp = *env;
+			*env = tmp->next;
+			free_env_var(tmp);
 			return (EXIT_SUCCESS);
 		}
 		tmp = prev->next->next;
-		free(prev->next);
+		free_env_var(tmp);
 		prev->next = tmp;
 	}
 	return (EXIT_SUCCESS);
@@ -76,8 +83,8 @@ t_bool	exec_unset(t_cmd *cmd_list, t_data *data)
 			ret = unset_error(cmd_list, i);
 		else
 		{
-			unset(data->env, cmd_list);
-			unset(data->export, cmd_list);
+			unset(&data->env, cmd_list);
+			unset(&data->export, cmd_list);
 		}
 	}
 	return (ret);

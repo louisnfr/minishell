@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 02:16:45 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:00:04 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	handle_status(int status, int *exit_code)
 {
-	int	return_value;
+	int	ret;
 
-	return_value = 0;
+	ret = 0;
 	if (WIFEXITED(status))
-		return_value = WEXITSTATUS(status);
+		ret = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
-		return_value = WTERMSIG(status) + 128;
-		if (return_value == 130)
+		ret = WTERMSIG(status) + 128;
+		if (ret == 130)
 			ft_putstr("\n");
-		if (return_value == 131)
+		if (ret == 131)
 			ft_putstr("Quit (core dumped)\n");
 	}
-	*exit_code = return_value;
+	*exit_code = ret;
 }
 
 void	handle_sig(int sig)

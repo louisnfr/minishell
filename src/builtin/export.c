@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 03:47:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 16:02:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_bool	check_export(char *s, int *append)
 	if (ft_isdigit(s[0]) || s[0] == '=')
 		return (FAIL);
 	i = -1;
-	while (s[++i] != '=')
+	while (s[++i] && s[i] != '=')
 	{
 		if (i > 0 && s[i] == '+' && s[i + 1] == '=')
 		{
