@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 18:52:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:46:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 	waitpid(pid, &exit_code, 0);
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);
+	else
+		handle_status(status, &exit_code);
 	check_exit_code(exit_code, cmd_list);
 	return (exit_code);
 }
