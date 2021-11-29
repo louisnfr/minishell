@@ -6,22 +6,23 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:48:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 20:31:43 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_env(t_data *data, t_env *env)
+static int	get_env_size(t_env *env)
 {
-	char	*tmp;
-	int		i;
+	int	i;
 
-	tmp = get_env("SHLVL", env);
-	i = (ft_atoi(tmp) + 1);
-	tmp = ft_itoa(i);
-	set_env("SHLVL", tmp, env, data);
-	free(tmp);
+	i = 0;
+	while (env)
+	{
+		env = env->next;
+		i++;
+	}
+	return (i);
 }
 
 char	*get_env(char *key, t_env *env)
@@ -38,50 +39,6 @@ char	*get_env(char *key, t_env *env)
 	return (NULL);
 }
 
-void	append_env(char *key, char *new_value, t_env *env, t_data *data)
-{
-	t_env	*head;
-	char	*var;
-	char	*dest;
-
-	head = env;
-	var = get_env(key, data->export);
-	dest = ft_calloc(ft_strlen(var) + ft_strlen(new_value) + 1, sizeof(char));
-	if (!dest)
-		exit_error_bool("malloc()", data);
-	ft_strcat(dest, var);
-	ft_strcat(dest, new_value);
-	while (env)
-	{
-		if (!ft_strcmp(env->key, key))
-			break ;
-		env = env->next;
-	}
-	env->is_value = 1;
-	free(env->value);
-	env->value = ft_calloc((ft_strlen(dest) + 1), sizeof(char));
-	if (!env->value)
-		exit_error_bool("malloc()", data);
-	ft_memcpy(env->value, dest, ft_strlen(dest) + 1);
-	free(dest);
-	env = head;
-}
-
-
-
-int	get_env_size(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	while (env)
-	{
-		env = env->next;
-		i++;
-	}
-	return (i);
-}
-
 t_bool	already_exists(char *var, t_env *env)
 {
 	t_env	*tmp;
@@ -94,4 +51,31 @@ t_bool	already_exists(char *var, t_env *env)
 		tmp = tmp->next;
 	}
 	return (FALSE);
+}
+
+char	**env_to_char(t_env *env, t_data *data)
+{
+	char	**envp;
+	t_env	*tmp;
+	int		i;
+
+	envp = ft_calloc(1, sizeof(char *) * (get_env_size(env) + 1));
+	if (!envp)
+		return ((char **)exit_error_void(NULL, "malloc()", data));
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		envp[i] = ft_calloc(1, sizeof(char)
+				* (ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2));
+		if (!envp[i])
+			return ((char **)exit_error_void(NULL, "malloc()", data));
+		envp[i] = safe_strjoin_and_free(envp[i], tmp->key, data);
+		envp[i] = safe_strjoin_and_free(envp[i], "=", data);
+		envp[i] = safe_strjoin_and_free(envp[i], tmp->value, data);
+		i++;
+		tmp = tmp->next;
+	}
+	envp[i] = 0;
+	return (envp);
 }

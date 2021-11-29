@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 22:56:25 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 03:16:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 20:31:38 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env	*new_var(char *key, char *value, int is_value)
 	return (var);
 }
 
-t_env	*get_last(t_env *g_env)
+static t_env	*get_last(t_env *g_env)
 {
 	if (!g_env)
 		return (NULL);
@@ -51,3 +51,18 @@ void	add_var(t_env **g_env, t_env *new_var)
 		last->next = new_var;
 	}
 }
+
+t_env	*find_prev_var(char *key, t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp->next)
+	{
+		if (!ft_strcmp(tmp->next->key, key))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+

@@ -6,7 +6,7 @@
 #    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/29 20:02:08 by lraffin          ###   ########.fr        #
+#    Updated: 2021/11/29 20:32:16 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,6 @@ SOURCES = \
 		parsing/utils/linked_list.c \
 		parsing/utils/print_list.c \
 		\
-		env/env.c \
 		env/edit.c \
 		env/create.c \
 		env/list.c \
