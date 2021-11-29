@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/28 20:25:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 14:37:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 */
 char		**get_paths(t_data *data);
 void		recheck_cmd_path(t_cmd **cmd_list, t_data *data);
+void		refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data);
+void		refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data);
 void		setup_cmd_list(t_cmd *cmd_list);
 void		clean_cmd_list(t_cmd **cmd_list, t_data *data);
 void		create_new_cmd(t_cmd **cmd_list, t_data *data);

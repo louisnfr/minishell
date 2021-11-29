@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 21:12:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:18:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	clean_data(t_data *data)
 	data->i = 0;
 	data->pid = 0;
 	data->ret_value = 0;
+	data->par_lvl = 0;
 	clean_cmd_list(&data->cmd_list, data);
 	free_double_str(data->all_paths);
 	if (data->envp)

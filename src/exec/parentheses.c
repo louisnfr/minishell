@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 12:08:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 18:52:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 	exit(exit_code);
 }
 
+static t_bool	check_par_lvl(t_cmd **cmd_list)
+{
+	t_cmd	*tmp;
+
+	tmp = *cmd_list;
+	while (tmp && tmp->parenthese)
+	{
+		if (tmp->par_lvl == 1)
+			return (SUCCESS);
+		tmp = tmp->next;
+	}
+	while (*cmd_list && (*cmd_list)->parenthese)
+		*cmd_list = (*cmd_list)->next;
+	return (FAIL);
+}
+
 int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 {
 	int	exit_code;
@@ -62,9 +78,9 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 
 	exit_code = 0;
 	status = 0;
-	if (!is_first_cmd(cmd_list, data)
-		&& !can_exec_parenthese(last_exit_code, cmd_list))
-		return (SUCCESS);
+	if (!check_par_lvl(cmd_list) || (!is_first_cmd(cmd_list, data)
+			&& !can_exec_parenthese(last_exit_code, cmd_list)))
+		return (1);
 	check_redir_parentheses(*cmd_list, data);
 	pid = fork();
 	if (pid < 0)

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 21:04:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 16:15:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,28 @@ static t_bool	check_error_parentheses(int *i, char **argv)
 				&& !is_parenthese(argv[*i])))
 		{
 			display_error_msg_delimiter(1, ')');
+			free_double_str(argv);
 			return (FAIL);
 		}
 		(*i)++;
+	}
+	return (SUCCESS);
+}
+
+t_bool	check_empty_parentheses(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i + 1])
+	{
+		if (str_is_equal(argv[i], "(") && str_is_equal(argv[i + 1], ")"))
+		{
+			display_error_msg_delimiter(1, ')');
+			free_double_str(argv);
+			return (FAIL);
+		}
+		i++;
 	}
 	return (SUCCESS);
 }
@@ -57,6 +76,8 @@ char	**check_argv(char **argv, t_data *data)
 
 	i = 0;
 	if (!argv[i])
+		return (NULL);
+	if (!check_empty_parentheses(argv))
 		return (NULL);
 	if (argv[i] && str_is_equal(argv[i], ".") && !argv[i + 1])
 		return (display_error_msg_simple_dot(argv));

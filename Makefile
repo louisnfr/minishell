@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/28 12:32:19 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/29 14:37:40 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ SOURCES = \
 		parsing/checker/unclosed_char.c \
 		\
 		parsing/utils/get_paths.c \
+		parsing/utils/reparse.c \
 		parsing/utils/linked_list.c \
 		parsing/utils/print_list.c \
 		\
