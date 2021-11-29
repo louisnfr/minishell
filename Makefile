@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/29 23:16:47 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/29 23:38:37 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ NAME	= minishell
 ### SOURCE FILES ###
 SOURCES = \
 		main.c \
-		libft.c \
 		\
 		builtin/echo.c \
 		builtin/cd.c \
@@ -118,6 +117,7 @@ SOURCES = \
 		shell/signal.c \
 		shell/utils.c \
 		\
+		utils/utils.c \
 		utils/free.c \
 		utils/init.c \
 		utils/clean.c \

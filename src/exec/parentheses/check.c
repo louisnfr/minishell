@@ -37,7 +37,7 @@ static t_bool	check_par_lvl(t_cmd **cmd_list)
 }
 
 t_bool	check_exec_parentheses(
-	int last_exit_code, t_cmd **cmd_list, t_data *data)
+		int last_exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (!check_par_lvl(cmd_list) || (!is_first_cmd(cmd_list, data)
 			&& !can_exec_parenthese(last_exit_code, cmd_list)))

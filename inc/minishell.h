@@ -6,16 +6,15 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:25:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:34:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*
-** librairies
-*/
+/*** librairies ***/
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -47,7 +46,6 @@
 /*** libft ***/
 
 char		**copy_strs_and_free(char **strs, t_data *data);
-unsigned long long	ft_atoull(const char *str);
 
 /*** init ***/
 
@@ -102,6 +100,8 @@ void	init_fd(int fd, t_data **data);
 t_bool	init_exec(
 			int *exit_code, int *error_file, t_cmd **cmd_list, t_data *data);
 void	check_redir_parentheses(t_cmd *cmd_list, t_data *data);
+t_bool	check_exec_parentheses(
+			int last_exit_code, t_cmd **cmd_list, t_data *data);
 
 /*** exit ***/
 
