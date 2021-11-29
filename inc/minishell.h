@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:34:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 23:40:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@
 #  include <linux/kd.h>
 # endif
 
-/*** libft ***/
-
-char		**copy_strs_and_free(char **strs, t_data *data);
-
 /*** init ***/
 
 t_bool	init_cmd_list(t_data *data);
@@ -58,7 +54,7 @@ void	clean_data(t_data *data);
 void	*exit_error_void(void *return_value, char *error, t_data *data);
 t_bool	exit_error_bool(char *error, t_data *data);
 
-/*** protected_functions ***/
+/*** protected functions ***/
 
 char	*safe_strdup(char *str, t_data *data);
 char	**safe_split(const char *str, char c, t_data *data);
@@ -70,7 +66,7 @@ t_bool	safe_unlink(char *pathname, t_data *data);
 t_bool	safe_close_fd(int fd, t_data *data);
 char	**safe_double_strdup(char **str, int size, t_data *data);
 
-/*** shell/exec ***/
+/*** exec ***/
 
 int		exec(t_data *data);
 t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data);
@@ -113,5 +109,9 @@ void	free_history(t_hist *hist);
 void	display_error_message(char *cmd, char *errno_msg, int fd);
 void	syntax_error_char_msg(int nb, char token);
 char	**syntax_error_str_msg(char *token, char **str);
+
+/*** utils ***/
+
+char	**copy_strs_and_free(char **strs, t_data *data);
 
 #endif
