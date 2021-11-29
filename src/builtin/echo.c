@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/18 11:20:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:34:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_var(char *key, t_data *data)
-{
-	if (get_env(key, data->env))
-		ft_putstr(get_env(key, data->env));
-	else
-		return ;
-}
 
 t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 {

@@ -6,26 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 19:18:26 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/24 23:53:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	process_ctrl_key_hd(t_data *data, t_config *sh, char *delimiter, int c)
-{
-	if (c == ctrl_key('d'))
-		return (!process_ctrl_d_heredoc(data, sh, delimiter));
-	else if (c == ctrl_key('c'))
-		return (process_ctrl_c_heredoc(data, sh));
-	else if (c == ctrl_key('l'))
-		process_ctrl_l_heredoc(sh);
-	else if (c == ctrl_key('u'))
-		process_ctrl_u(sh, sh->history);
-	return (SUCCESS);
-}
-
-t_bool	process_ctrl_d_heredoc(t_data *data, t_config *sh, char *delimiter)
+static t_bool	process_ctrl_d_heredoc(t_data *data, t_confg *sh, char *delimiter)
 {
 	(void)data;
 	if ((sh->search == sh->h_num && (!sh->current || !ft_strlen(sh->current)))
@@ -40,7 +27,7 @@ t_bool	process_ctrl_d_heredoc(t_data *data, t_config *sh, char *delimiter)
 	return (FAIL);
 }
 
-void	process_ctrl_l_heredoc(t_config *sh)
+static void	process_ctrl_l_heredoc(t_confg *sh)
 {
 	write(1, "\x1b[s", 3);
 	write(1, "\x1b[2J", 4);
@@ -54,11 +41,24 @@ void	process_ctrl_l_heredoc(t_config *sh)
 	write(1, "\x1b[999A", 6);
 }
 
-t_bool	process_ctrl_c_heredoc(t_data *data, t_config *sh)
+static t_bool	process_ctrl_c_heredoc(t_data *data, t_confg *sh)
 {
 	free(sh->current);
 	free(sh->input);
 	write(1, "^C", 2);
 	data->ret_value = 130;
 	return (FAIL);
+}
+
+t_bool	process_ctrl_key_hd(t_data *data, t_confg *sh, char *delimiter, int c)
+{
+	if (c == ctrl_key('d'))
+		return (!process_ctrl_d_heredoc(data, sh, delimiter));
+	else if (c == ctrl_key('c'))
+		return (process_ctrl_c_heredoc(data, sh));
+	else if (c == ctrl_key('l'))
+		process_ctrl_l_heredoc(sh);
+	else if (c == ctrl_key('u'))
+		process_ctrl_u(sh, sh->history);
+	return (SUCCESS);
 }

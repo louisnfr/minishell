@@ -6,26 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 02:18:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	process_ctrl_key(t_data *data, t_config *sh, t_history *hist, int c)
-{
-	if (c == ctrl_key('d'))
-		process_ctrl_d(data, sh);
-	else if (c == ctrl_key('c'))
-		return (process_ctrl_c(data, sh));
-	else if (c == ctrl_key('l'))
-		process_ctrl_l(data, sh);
-	else if (c == ctrl_key('u'))
-		process_ctrl_u(sh, hist);
-	return (SUCCESS);
-}
-
-void	process_ctrl_d(t_data *data, t_config *sh)
+static void	process_ctrl_d(t_data *data, t_confg *sh)
 {
 	int	ret;
 
@@ -46,7 +33,7 @@ void	process_ctrl_d(t_data *data, t_config *sh)
 	}
 }
 
-t_bool	process_ctrl_c(t_data *data, t_config *sh)
+static t_bool	process_ctrl_c(t_data *data, t_confg *sh)
 {
 	free(sh->current);
 	free(sh->input);
@@ -55,7 +42,7 @@ t_bool	process_ctrl_c(t_data *data, t_config *sh)
 	return (FAIL);
 }
 
-void	process_ctrl_l(t_data *data, t_config *sh)
+static void	process_ctrl_l(t_data *data, t_confg *sh)
 {
 	write(1, "\x1b[s", 3);
 	write(1, "\x1b[2J", 4);
@@ -69,7 +56,7 @@ void	process_ctrl_l(t_data *data, t_config *sh)
 	write(1, "\x1b[999A", 6);
 }
 
-void	process_ctrl_u(t_config *sh, t_history *hist)
+void	process_ctrl_u(t_confg *sh, t_hist *hist)
 {
 	if (sh->search == sh->h_num)
 	{
@@ -89,4 +76,17 @@ void	process_ctrl_u(t_config *sh, t_history *hist)
 		sh->cx = 0;
 		sh->cx_max = 0;
 	}
+}
+
+t_bool	process_ctrl_key(t_data *data, t_confg *sh, t_hist *hist, int c)
+{
+	if (c == ctrl_key('d'))
+		process_ctrl_d(data, sh);
+	else if (c == ctrl_key('c'))
+		return (process_ctrl_c(data, sh));
+	else if (c == ctrl_key('l'))
+		process_ctrl_l(data, sh);
+	else if (c == ctrl_key('u'))
+		process_ctrl_u(sh, hist);
+	return (SUCCESS);
 }

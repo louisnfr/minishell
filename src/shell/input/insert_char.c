@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:45:42 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/12 15:51:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:30:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*insert_char(char *s, int cx, char c)
 	return (s);
 }
 
-void	insert_char_history(t_history *hist, int cx, char c, int search)
+void	insert_char_history(t_hist *hist, int cx, char c, int search)
 {
 	while (hist)
 	{

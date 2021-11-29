@@ -3,6 +3,9 @@ export TEST=100
 unset doesntexist
 unset PWD
 unset OLDPWD
+unset 1OLDPWD
+unset OLDP?WD
+unset OLDPWD=
 unset PATH
 unset TES\\\\T
 unset TES;T

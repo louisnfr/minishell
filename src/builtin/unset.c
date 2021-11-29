@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 16:19:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:43:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset_error(t_cmd *cmd_list, int i)
+static int	unset_error(t_cmd *cmd_list, int i)
 {
 	ft_putstr_fd("unset: `", cmd_list->error_output);
 	ft_putstr_fd(cmd_list->args[i], cmd_list->error_output);
@@ -20,7 +20,7 @@ int	unset_error(t_cmd *cmd_list, int i)
 	return (EXIT_FAILURE);
 }
 
-t_bool	check_unset(char *s)
+static t_bool	check_unset(char *s)
 {
 	int	i;
 
@@ -33,14 +33,14 @@ t_bool	check_unset(char *s)
 	return (SUCCESS);
 }
 
-void	free_env_var(t_env *var)
+static void	free_env_var(t_env *var)
 {
 	free(var->key);
 	free(var->value);
 	free(var);
 }
 
-t_bool	unset(t_env **env, t_cmd *cmd_list)
+static t_bool	unset(t_env **env, t_cmd *cmd_list)
 {
 	t_env	*prev;
 	t_env	*tmp;

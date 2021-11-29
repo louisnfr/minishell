@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
+#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/11/28 12:32:19 by efrancon         ###   ########.fr        #
+#    Updated: 2021/11/29 20:00:15 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,8 @@ SOURCES = \
 		parsing/utils/print_list.c \
 		\
 		env/env.c \
+		env/edit.c \
+		env/create.c \
 		env/list.c \
 		env/utils.c \
 		env/print.c \
@@ -110,9 +112,9 @@ SOURCES = \
 		shell/exit.c \
 		shell/shell.c \
 		shell/signal.c \
+		shell/utils.c \
 		\
 		utils/free.c \
-		utils/utils.c \
 		utils/init.c \
 		utils/clean.c \
 		utils/exit_error.c \
@@ -125,7 +127,7 @@ CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) $(DEBUG_F)
 DEBUG_F	= -fsanitize=address
 LIBS	= -lft -lncurses -lreadline
 
-### INCLUDES ###
+### INCLUDES ##
 INCLUDE		= inc
 LIBFT_PATH	= libft
 SRC_PATH	= src
@@ -159,7 +161,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/parsing/utils obj/parsing/parser obj/parsing/lexer
 	@mkdir -p obj/parsing/redirection obj/shell/init obj/shell/input obj/shell/keys
 	@$(CC) $(CFLAGS) -c -o $@ $<
-	@echo "$(BLUE)clang $(WHITE)$(notdir $@)$(NOC)"
+	@echo "$(BLUE)clang $(NOC)$(notdir $@)"
 
 clean:
 	@echo "$(RED)clean$(NOC)"

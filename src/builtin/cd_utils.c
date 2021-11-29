@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 16:43:27 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/22 11:43:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:38:25 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	error_oldpwd(char *oldpwd, char *command)
+static int	error_oldpwd(char *oldpwd, char *command)
 {
 	ft_putstr_fd("chdir: error retrieving current directory: ", 2);
 	ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
@@ -23,7 +23,7 @@ int	error_oldpwd(char *oldpwd, char *command)
 	return (1);
 }
 
-t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
+static t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 {
 	char	*tmp;
 

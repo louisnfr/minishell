@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:23:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/28 12:09:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_error(const char *s, t_config *sh)
+void	exit_error(const char *s, t_confg *sh)
 {
+	// inutile
 	if (errno == 0)
 		write(2, s, ft_strlen(s));
 	else
@@ -23,7 +24,7 @@ void	exit_error(const char *s, t_config *sh)
 	exit(EXIT_FAILURE);
 }
 
-void	exit_free(t_config *sh, t_history *hist)
+void	exit_free(t_confg *sh, t_hist *hist)
 {
 	ft_putstr_fd("exit\n", 2);
 	disable_raw_mode(sh);
@@ -34,9 +35,9 @@ void	exit_free(t_config *sh, t_history *hist)
 	exit(0);
 }
 
-void	free_history(t_history *hist)
+void	free_history(t_hist *hist)
 {
-	t_history	*tmp;
+	t_hist	*tmp;
 
 	tmp = hist;
 	while (tmp)

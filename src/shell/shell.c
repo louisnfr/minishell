@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/12 15:48:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_input(t_config *sh, t_history *hist, int c)
+void	update_input(t_confg *sh, t_hist *hist, int c)
 {
 	sh->cx_max++;
 	if (sh->search == sh->h_num)
@@ -40,7 +40,7 @@ void	update_input(t_config *sh, t_history *hist, int c)
 	}
 }
 
-char	*send_cmd(t_config *sh)
+char	*send_cmd(t_confg *sh)
 {
 	if (sh->current && sh->search == sh->h_num)
 		return (sh->current);
@@ -48,7 +48,7 @@ char	*send_cmd(t_config *sh)
 	return (sh->input);
 }
 
-char	*shell_process_keypress(t_data *data, t_config *sh, t_history *hist)
+char	*shell_process_keypress(t_data *data, t_confg *sh, t_hist *hist)
 {
 	int	c;
 

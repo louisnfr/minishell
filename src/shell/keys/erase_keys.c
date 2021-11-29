@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:39:02 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:30:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_del_key(t_config *sh, t_history *hist)
+void	process_del_key(t_confg *sh, t_hist *hist)
 {
 	if (sh->cx >= 0 && sh->cx < sh->cx_max)
 	{
@@ -33,7 +33,7 @@ void	process_del_key(t_config *sh, t_history *hist)
 	}
 }
 
-void	process_backspace_key(t_config *sh, t_history *hist)
+void	process_backspace_key(t_confg *sh, t_hist *hist)
 {
 	if (sh->cx > 0)
 	{
@@ -46,7 +46,7 @@ void	process_backspace_key(t_config *sh, t_history *hist)
 	}
 }
 
-void	erase_char_current(t_config *sh)
+void	erase_char_current(t_confg *sh)
 {
 	erase_char(sh->current, sh->cx - 1);
 	write(1, "\x1b[s", 3);
@@ -56,7 +56,7 @@ void	erase_char_current(t_config *sh)
 	write(1, "\x1b[1D", 4);
 }
 
-void	erase_char_input(t_config *sh, t_history *hist)
+void	erase_char_input(t_confg *sh, t_hist *hist)
 {
 	write(1, "\x1b[s", 3);
 	erase_char_history(sh->history, sh->cx, sh->search);

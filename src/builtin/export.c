@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 16:02:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:42:20 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	export_error(t_cmd *cmd_list, int i)
+static int	export_error(t_cmd *cmd_list, int i)
 {
 	ft_putstr_fd("export: `", cmd_list->error_output);
 	ft_putstr_fd(cmd_list->args[i], cmd_list->error_output);
@@ -20,7 +20,7 @@ int	export_error(t_cmd *cmd_list, int i)
 	return (EXIT_FAILURE);
 }
 
-t_bool	check_export(char *s, int *append)
+static t_bool	check_export(char *s, int *append)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ t_bool	check_export(char *s, int *append)
 	return (SUCCESS);
 }
 
-void	export_var(t_data *data, t_cmd *cmd_list, int append, int i)
+static void	export_var(t_data *data, t_cmd *cmd_list, int append, int i)
 {
 	if (append)
 		append_var_env(data, cmd_list, i);

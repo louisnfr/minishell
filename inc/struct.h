@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/27 14:27:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_history
 	struct s_history	*next;
 	struct s_history	*previous;
 	int					num;
-}	t_history;
+}	t_hist;
 
 typedef struct s_env
 {
@@ -46,7 +46,7 @@ typedef struct s_config
 	int					cy;
 	int					cx_min;
 	int					cx_max;
-}	t_config;
+}	t_confg;
 
 typedef struct s_var
 {
@@ -85,7 +85,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	t_config	*sh;
+	t_confg	*sh;
 	t_cmd		*cmd_list;
 	t_env		*env;
 	t_env		*export;

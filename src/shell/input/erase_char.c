@@ -6,22 +6,20 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 19:42:10 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 21:15:10 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:30:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	erase_cmd_history(char *input, t_history *history, int search)
+void	erase_char(char *s, int cx)
 {
-	int	i;
-
-	i = ft_strlen(input);
-	while (i)
-		erase_char_history(history, i--, search);
+	if (cx > ft_strlen(s))
+		return ;
+	ft_memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
 }
 
-void	erase_char_history(t_history *hist, int cx, int search)
+void	erase_char_history(t_hist *hist, int cx, int search)
 {
 	while (hist)
 	{
@@ -32,9 +30,11 @@ void	erase_char_history(t_history *hist, int cx, int search)
 	erase_char(hist->new, cx - 1);
 }
 
-void	erase_char(char *s, int cx)
+void	erase_cmd_history(char *input, t_hist *history, int search)
 {
-	if (cx > ft_strlen(s))
-		return ;
-	ft_memmove(&s[cx], &s[cx + 1], ft_strlen(s) - cx);
+	int	i;
+
+	i = ft_strlen(input);
+	while (i)
+		erase_char_history(history, i--, search);
 }

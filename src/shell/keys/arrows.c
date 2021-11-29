@@ -6,29 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:26:09 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/19 16:01:39 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	process_arrow_key(t_config *sh, t_history *hist, int c)
-{
-	if (c == ARROW_LEFT)
-		move_cursor_left(sh);
-	else if (c == ARROW_RIGHT)
-		move_cursor_right(sh);
-	else if (c == ARROW_UP)
-		process_arrow_up(sh, hist);
-	else if (c == ARROW_DOWN)
-	{
-		if (sh->search == sh->h_num)
-			return ;
-		process_arrow_down(sh, hist);
-	}
-}
-
-void	move_cursor_left(t_config *sh)
+static void	move_cursor_left(t_confg *sh)
 {
 	if (sh->cx > sh->cx_min)
 	{
@@ -37,7 +21,7 @@ void	move_cursor_left(t_config *sh)
 	}
 }
 
-void	move_cursor_right(t_config *sh)
+static void	move_cursor_right(t_confg *sh)
 {
 	if (sh->cx < sh->cx_max)
 	{
@@ -46,7 +30,7 @@ void	move_cursor_right(t_config *sh)
 	}
 }
 
-void	process_arrow_up(t_config *sh, t_history *hist)
+static void	process_arrow_up(t_confg *sh, t_hist *hist)
 {
 	sh->prev_cmd = find_cmd_history(hist, sh->search - 1);
 	if (sh->prev_cmd)
@@ -65,7 +49,7 @@ void	process_arrow_up(t_config *sh, t_history *hist)
 	}
 }
 
-void	process_arrow_down(t_config *sh, t_history *hist)
+static void	process_arrow_down(t_confg *sh, t_hist *hist)
 {
 	sh->next_cmd = find_cmd_history(hist, sh->search + 1);
 	clear_prompt(sh->cx, ft_strlen(sh->next_cmd));
@@ -91,4 +75,20 @@ void	process_arrow_down(t_config *sh, t_history *hist)
 		sh->cx_max = ft_strlen(sh->current);
 	}
 	sh->search++;
+}
+
+void	process_arrow_key(t_confg *sh, t_hist *hist, int c)
+{
+	if (c == ARROW_LEFT)
+		move_cursor_left(sh);
+	else if (c == ARROW_RIGHT)
+		move_cursor_right(sh);
+	else if (c == ARROW_UP)
+		process_arrow_up(sh, hist);
+	else if (c == ARROW_DOWN)
+	{
+		if (sh->search == sh->h_num)
+			return ;
+		process_arrow_down(sh, hist);
+	}
 }

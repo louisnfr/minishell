@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:59 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:33:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_shell_values(t_config *sh)
+void	init_shell_values(t_confg *sh)
 {
 	sh->current = NULL;
 	sh->input = NULL;
@@ -25,11 +25,11 @@ void	init_shell_values(t_config *sh)
 	sh->search = sh->h_num;
 }
 
-t_config	*init_config(char **envp)
+t_confg	*init_config(char **envp)
 {
-	t_config	*sh;
+	t_confg	*sh;
 
-	sh = malloc(sizeof(t_config));
+	sh = malloc(sizeof(t_confg));
 	if (!sh)
 		return (NULL);
 	sh->history = NULL;
@@ -39,11 +39,11 @@ t_config	*init_config(char **envp)
 	return (sh);
 }
 
-t_history	*init_history(void)
+t_hist	*init_history(void)
 {
-	t_history	*history;
+	t_hist	*history;
 
-	history = malloc(sizeof(t_history));
+	history = malloc(sizeof(t_hist));
 	if (!history)
 		return (NULL);
 	history = NULL;

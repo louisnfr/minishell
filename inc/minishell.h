@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/28 20:39:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:57:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,13 @@ void		check_redir_parentheses(t_cmd *cmd_list, t_data *data);
 
 /*** exit ***/
 
-void		exit_error(const char *s, t_config *sh);
+void		exit_error(const char *s, t_confg *sh);
 void		free_env(t_env *g_env);
 void		free_split(char **args);
-void		exit_free(t_config *sh, t_history *hist);
-void		free_history(t_history *hist);
+void		exit_free(t_confg *sh, t_hist *hist);
+void		free_history(t_hist *hist);
+void	display_error_message(char *cmd, char *errno_msg, int fd);
+void	syntax_error_char_msg(int nb, char token);
+char	**syntax_error_str_msg(char *token, char **str);
 
 #endif

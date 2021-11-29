@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:36:06 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/11 20:36:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	read_arrow_key(char c)
+static int	read_arrow_key(char c)
 {
 	if (c == 'A')
 		return (ARROW_UP);
@@ -25,7 +25,7 @@ int	read_arrow_key(char c)
 	return ('\x1b');
 }
 
-int	read_escape_seq(void)
+static int	read_escape_seq(void)
 {
 	char	seq[3];
 
@@ -49,7 +49,7 @@ int	read_escape_seq(void)
 	return ('\x1b');
 }
 
-int	read_key(t_config *sh)
+int	read_key(t_confg *sh)
 {
 	int		ret;
 	char	c;

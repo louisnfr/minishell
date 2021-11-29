@@ -28,4 +28,4 @@ ls ; ()
 (ls && pwd | wc) > top ; cat top ; rm top
 (ls && pwd | wc) > top ; (ls && pwd | wc) > top ; cat top
 (ls && pwd | wc) >> top ; cat top
- (ls && pwd | wc) < top ; rm top
+(ls && pwd | wc) < top ; rm top

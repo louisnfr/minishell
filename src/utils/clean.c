@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 21:12:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 18:56:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ void	clean_data(t_data *data)
 		free_double_str(data->envp);
 	free_double_str(data->builtins);
 	clean_free(&data->last_cwd);
+	clean_free(&data->prpt);
+	clean_free(&data->sh->current);
+	clean_free(&data->sh->input);
+	free_history(data->sh->history);
 	free_env(data->env);
 	free_env(data->export);
-	clean_free(&data->prpt);
-	free_history(data->sh->history);
 	free(data->sh);
 	free(data);
 	data = NULL;

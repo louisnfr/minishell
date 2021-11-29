@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/28 20:25:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:25:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,24 +127,5 @@ t_bool		check_unclosed_parentheses(char *input);
 int			get_length_new_argv(char **argv);
 t_bool		fill_new_argv(
 				int length, char **argv, char **new_argv, t_data *data);
-/*
-** parsing/heredoc
-*/
-t_bool		process_ctrl_key_hd(
-				t_data *data, t_config *sh, char *delimiter, int c);
-char		*heredoc_process_keypress(
-				t_data *data, t_config *sh, t_history *hist, char *delimiter);
-t_bool		process_ctrl_d_heredoc(
-				t_data *data, t_config *sh, char *delimiter);
-void		process_ctrl_l_heredoc(t_config *sh);
-t_bool		process_ctrl_c_heredoc(t_data *data, t_config *sh);
-char		*heredoc_shell(
-				t_data *data, t_config *sh, t_history *hist, char *delimiter);
-t_bool		read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data);
-char		*heredoc_env_variable(char *input, t_data *data);
-char		*heredoc_special_value(
-				char *str, char *value, char character, t_data *data);
-t_bool		handle_heredoc_quotes(
-				int *i, char **str, char **strs, t_data *data);
 
 #endif

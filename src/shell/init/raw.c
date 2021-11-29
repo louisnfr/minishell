@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   raw.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:45 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 10:13:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	disable_raw_mode(t_config *sh)
+void	disable_raw_mode(t_confg *sh)
 {
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &sh->orig_termios) < 0)
 		exit_error("tcsetattr", sh);
 }
 
-t_bool	enable_raw_mode(t_config *sh)
+t_bool	enable_raw_mode(t_confg *sh)
 {
 	struct termios	raw;
 
@@ -35,7 +35,7 @@ t_bool	enable_raw_mode(t_config *sh)
 	return (SUCCESS);
 }
 
-void	enable_heredoc_raw_mode(t_config *sh)
+void	enable_heredoc_raw_mode(t_confg *sh)
 {
 	struct termios	raw;
 

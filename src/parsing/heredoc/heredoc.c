@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:57:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
 }
 
 char	*heredoc_shell(
-	t_data *data, t_config *sh, t_history *hist, char *delimiter)
+	t_data *data, t_confg *sh, t_hist *hist, char *delimiter)
 {
 	char	*line;
 

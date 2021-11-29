@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:13:56 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/25 03:16:42 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/29 19:55:12 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*dup_env(char **envp, t_data *data)
+static t_env	*dup_env(char **envp, t_data *data)
 {
 	t_env	*g_env;
 	char	**var;

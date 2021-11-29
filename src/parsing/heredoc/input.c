@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/17 10:13:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*heredoc_process_keypress(
-	t_data *data, t_config *sh, t_history *hist, char *delimiter)
+	t_data *data, t_confg *sh, t_hist *hist, char *delimiter)
 {
 	int	c;
 
