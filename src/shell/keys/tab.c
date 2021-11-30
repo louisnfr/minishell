@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 17:40:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 19:41:27 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static char	*get_current_word(t_confg *sh, t_data *data)
 	int		i;
 
 	input = selected_input(sh);
+	if (!input || !ft_strlen(input))
+		return (NULL);
 	i = sh->cx - 1;
 	while (i > 0 && !is_sep(input[i - 1]))
 		i--;
@@ -38,31 +40,40 @@ static char	*get_current_word(t_confg *sh, t_data *data)
 	return (substr);
 }
 
+static void	update(t_confg *sh, char **input, char *before)
+{
+	*input = ft_calloc(ft_strlen(before), sizeof(char));
+	if (!*input)
+		return (exit_error("malloc()", sh));
+	ft_strlcpy(*input, before, ft_strlen(before));
+	clean_free(&before);
+	clear_prompt(sh->cx, 1);
+	write(1, *input, ft_strlen(*input));
+	sh->cx = ft_strlen(*input);
+	sh->cx_max = ft_strlen(*input);
+}
+
+static void	update_history(t_confg *sh, t_hist *hist, char *input)
+{
+	while (hist)
+	{
+		if (hist->num == sh->search)
+			break ;
+		hist = hist->next;
+	}
+	clean_free(&hist->new);
+	hist->new = ft_calloc(1, sizeof(char) * (ft_strlen(input)));
+	ft_strlcpy(hist->new, input, ft_strlen(input));
+}
+
 static void	update_selected_input(t_confg *sh, char *before)
 {
 	if (sh->search == sh->h_num)
-	{
-		sh->current = ft_calloc(ft_strlen(before), sizeof(char));
-		if (!sh->current)
-			return (exit_error("malloc()", sh));
-		ft_strlcpy(sh->current, before, ft_strlen(before));
-		clean_free(&before);
-		clear_prompt(sh->cx, 1);
-		write(1, sh->current, ft_strlen(sh->current));
-		sh->cx = ft_strlen(sh->current);
-		sh->cx_max = ft_strlen(sh->current);
-	}
+		update(sh, &sh->current, before);
 	else
 	{
-		sh->input = ft_calloc(ft_strlen(before), sizeof(char));
-		if (!sh->input)
-			return (exit_error("malloc()", sh));
-		ft_strlcpy(sh->input, before, ft_strlen(before));
-		clean_free(&before);
-		clear_prompt(sh->cx, 1);
-		write(1, sh->input, ft_strlen(sh->input));
-		sh->cx = ft_strlen(sh->input);
-		sh->cx_max = ft_strlen(sh->input);
+		update(sh, &sh->input, before);
+		update_history(sh, sh->history, sh->input);
 	}
 }
 
@@ -92,7 +103,6 @@ void	process_tab_key(t_confg *sh, t_data *data)
 	char			*current;
 
 	current = get_current_word(sh, data);
-	// printf("current : -%s-\n", current);
 	if (current)
 	{
 		directory = opendir(".");
