@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:11:35 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 17:32:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 18:51:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static void	get_last_file(
 		while (cmd_list->files[i + 1])
 			i++;
 		if (cmd_list->redirection[i] == RIGHT_MARK
-			|| cmd_list->redirection[i] == DOUBLE_RIGHT_MARK)
+			|| cmd_list->redirection[i] == DOUBLE_RIGHT_MARK
+			|| cmd_list->redirection[i] == LEFT_MARK)
 		{
 			*file = safe_strdup(cmd_list->files[i], data);
 			*redirection = cmd_list->redirection[i];
@@ -82,9 +83,11 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 		cmd_list = cmd_list->next;
 	}
 	i = -1;
-	while (cmd_list->files[i + 1])
-		i++;
-	cmd_list->redirection[i] = DOUBLE_RIGHT_MARK;
-	// printf("------------------------------ Command = %s | redir = %d\n", cmd_list->command, cmd_list->redirection[i]);
+	if (redirection == RIGHT_MARK)
+	{
+		while (cmd_list->files[i + 1])
+			i++;
+		cmd_list->redirection[i] = DOUBLE_RIGHT_MARK;
+	}
 	clean_free(&file);
 }

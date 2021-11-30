@@ -6,11 +6,21 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 17:37:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 19:57:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	get_num_parenthese(t_cmd *cmd_list)
+{
+	if (cmd_list && cmd_list->next && cmd_list->next->delimiter == PIPE)
+	{
+		while (cmd_list && cmd_list->next && cmd_list->next->delimiter == PIPE)
+			cmd_list = cmd_list->next;
+	}
+	return (cmd_list->parenthese);
+}
 
 static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 {
@@ -21,7 +31,8 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 	exit_code = EXIT_SUCCESS;
 	while (*cmd_list && (*cmd_list)->parenthese)
 	{
-		parenthese = (*cmd_list)->parenthese;
+		parenthese = get_num_parenthese(*cmd_list);
+		// printf("Exec par = %s | parenthese = %d\n", (*cmd_list)->command, parenthese);
 		error_file = open_files(&exit_code, *cmd_list, data);
 		if (!handle_execution(&exit_code, cmd_list, data))
 		{
@@ -33,7 +44,6 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 		if (parenthese == LAST)
 			break ;
 	}
-	close_fd(cmd_list, data);
 	clean_data(data);
 	exit(exit_code);
 }

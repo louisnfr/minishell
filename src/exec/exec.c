@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 16:54:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 18:39:38 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (*cmd_list && (*cmd_list)->parenthese)
-	{
 		*exit_code = exec_parentheses(*exit_code, cmd_list, data);
-		// printf("************************** Command = %s\n", (*cmd_list)->command);
-	}
 	else if (!handle_execution(exit_code, cmd_list, data))
 	{
 		handle_error_msg_exec(
