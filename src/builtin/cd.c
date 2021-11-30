@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:39:10 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 18:11:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ static void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 		set_env("PWD", pwd, data->env, data);
 		set_env("PWD", pwd, data->export, data);
 	}
-	free(pwd);
-	free(oldpwd);
 }
 
 static t_bool	handle_dash(t_data *data, t_cmd *cmd_list)
@@ -85,5 +83,7 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	pwd = getcwd(NULL, 0);
 	if (ret == 0)
 		update_env_pwd(data, pwd, oldpwd);
+	clean_free(&pwd);
+	clean_free(&oldpwd);
 	return (ret);
 }

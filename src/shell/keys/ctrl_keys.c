@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_keys.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 17:19:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 19:08:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	process_ctrl_d(t_data *data, t_confg *sh)
 	}
 	else if (sh->search != sh->h_num && (!sh->input || !ft_strlen(sh->input)))
 	{
-		printf("ddd\n");
 		disable_raw_mode(sh);
 		write(2, "exit\n", 5);
 		clean_free(&sh->input);

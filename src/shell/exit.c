@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:23:22 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 19:39:49 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	free_history(t_hist *hist)
 	while (tmp)
 	{
 		hist = hist->next;
-		free(tmp->cmd);
-		free(tmp->new);
+		clean_free(&tmp->cmd);
+		clean_free(&tmp->new);
 		free(tmp);
 		tmp = NULL;
 		tmp = hist;
