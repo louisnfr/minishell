@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 14:45:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ void	process_tab_key(t_confg *sh)
 		}
 		free(current);
 		if (!entity)
+		{
+			closedir(directory);
 			return ;
+		}
 		edit_input(sh, entity->d_name);
 		closedir(directory);
 	}
