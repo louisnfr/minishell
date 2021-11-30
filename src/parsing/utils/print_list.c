@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:57:51 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 18:27:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 12:28:38 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	print_files(t_cmd *tmp)
 	{
 		i = -1;
 		while (tmp->files[++i])
-			printf("Files[%d] : |%s|\t", i, tmp->files[i]);
+			printf("Files[%d] : |%s| | redir = %d\t",
+				i, tmp->files[i], tmp->redirection[i]);
 		printf("\n");
 	}
 }

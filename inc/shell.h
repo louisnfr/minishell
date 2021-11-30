@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:22:42 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 11:58:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	erase_char_input(t_confg *sh, t_hist *hist);
 void	process_del_key(t_confg *sh, t_hist *hist);
 void	process_backspace_key(t_confg *sh, t_hist *hist);
 
-void	process_tab_key(t_confg *sh);
+void	process_tab_key(t_confg *sh, t_data *data);
 
 void	process_arrow_key(t_confg *sh, t_hist *hist, int c);
 

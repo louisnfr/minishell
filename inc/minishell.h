@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:40:44 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 12:04:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	**safe_split_on_first(const char *str, char c, t_data *data);
 char	*safe_strjoin(char *s1, char *s2, t_data *data);
 char	*safe_strjoin_and_free(char *s1, char *s2, t_data *data);
 char	*safe_itoa(int n, t_data *data);
+char	*safe_substr(const char *str, int start, int len, t_data *data);
 t_bool	safe_unlink(char *pathname, t_data *data);
 t_bool	safe_close_fd(int fd, t_data *data);
 char	**safe_double_strdup(char **str, int size, t_data *data);

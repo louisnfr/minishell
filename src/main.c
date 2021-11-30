@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 21:42:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 16:56:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int	main(int ac, char **av, char **envp)
 			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
 			init_cmd_list(data);
 			if (parse(input, data))
+			{
+				// print_list(data->cmd_list);
 				exec(data);
-			// print_list(data->cmd_list);
+			}
 			clear_hist(data->sh->history, data->sh->search);
 			clean_cmd_list(&data->cmd_list, data);
 			data->sh->h_num += 1;

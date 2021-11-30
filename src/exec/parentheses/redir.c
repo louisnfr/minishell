@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parentheses_redir.c                                :+:      :+:    :+:   */
+/*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:11:35 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 18:27:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 17:32:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	get_last_file(
 
 	*file = NULL;
 	change_redir = FALSE;
-	while (cmd_list && cmd_list->next && cmd_list->next->parenthese)
+	while (cmd_list && cmd_list->parenthese != LAST)
 	{
 		if (!cmd_list->files && !cmd_list->nb_of_pipes)
 			change_redir = TRUE;
@@ -71,7 +71,7 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 	if (!file)
 		return ;
 	is_first = TRUE;
-	while (cmd_list && cmd_list->next && cmd_list->next->parenthese)
+	while (cmd_list && cmd_list->parenthese != LAST)
 	{
 		if (!cmd_list->files && !cmd_list->nb_of_pipes)
 		{
@@ -85,5 +85,6 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 	while (cmd_list->files[i + 1])
 		i++;
 	cmd_list->redirection[i] = DOUBLE_RIGHT_MARK;
+	// printf("------------------------------ Command = %s | redir = %d\n", cmd_list->command, cmd_list->redirection[i]);
 	clean_free(&file);
 }

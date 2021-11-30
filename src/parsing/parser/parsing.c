@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 21:34:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 17:13:45 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	**get_argv(char *input, t_data *data)
 		return (NULL);
 	}
 	argv = check_argv(argv, data);
-	// clean_free(&input);
+	clean_free(&input);
 	return (argv);
 }
 

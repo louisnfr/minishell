@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 12:07:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	get_cut_pos(t_confg *sh)
 	return (i);
 }
 
-static char	*get_current_word(t_confg *sh)
+static char	*get_current_word(t_confg *sh, t_data *data)
 {
 	char	*input;
 	char	*substr;
@@ -34,7 +34,7 @@ static char	*get_current_word(t_confg *sh)
 	i = sh->cx - 1;
 	while (i > 0 && !is_sep(input[i - 1]))
 		i--;
-	substr = ft_substr(input, i, sh->cx - i);
+	substr = safe_substr(input, i, sh->cx - i, data);
 	return (substr);
 }
 
@@ -66,7 +66,7 @@ static void	update_selected_input(t_confg *sh, char *before)
 	}
 }
 
-static void	edit_input(t_confg *sh, char *entity)
+static void	edit_input(t_confg *sh, char *entity, t_data *data)
 {
 	char	*input;
 	char	*before;
@@ -75,23 +75,23 @@ static void	edit_input(t_confg *sh, char *entity)
 
 	i = get_cut_pos(sh);
 	input = selected_input(sh);
-	after = ft_substr(input, sh->cx, ft_strlen(input));
-	before = ft_substr(input, 0, i);
-	before = ft_strjoin_and_free(before, entity);
-	before = ft_strjoin_and_free(before, after);
+	after = safe_substr(input, sh->cx, ft_strlen(input), data);
+	before = safe_substr(input, 0, i, data);
+	before = safe_strjoin_and_free(before, entity, data);
+	before = safe_strjoin_and_free(before, after, data);
 	clean_free(&after);
-	before = ft_strjoin_and_free(before, "  ");
+	before = safe_strjoin_and_free(before, "  ", data);
 	clean_free(&input);
 	update_selected_input(sh, before);
 }
 
-void	process_tab_key(t_confg *sh)
+void	process_tab_key(t_confg *sh, t_data *data)
 {
 	struct dirent	*entity;
 	DIR				*directory;
 	char			*current;
 
-	current = get_current_word(sh);
+	current = get_current_word(sh, data);
 	// printf("current : -%s-\n", current);
 	if (current)
 	{
@@ -106,7 +106,7 @@ void	process_tab_key(t_confg *sh)
 		free(current);
 		if (!entity)
 			return ;
-		edit_input(sh, entity->d_name);
+		edit_input(sh, entity->d_name, data);
 		closedir(directory);
 	}
 }

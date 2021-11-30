@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reparse.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/30 11:39:54 by efrancon          #+#    #+#             */
+/*   Updated: 2021/11/30 11:39:55 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	get_length(char *command)
@@ -63,7 +75,8 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 	char	*pid_value;
 	char	*ret_value;
 
-	if (!(*cmd_list)->command)
+	if (!(*cmd_list)->command || str_is_equal((*cmd_list)->command, "\"\"")
+		|| str_is_equal((*cmd_list)->command, "\'\'"))
 		return ;
 	if (!ft_strchr((*cmd_list)->command, '$')
 		&& (ft_strchr((*cmd_list)->command, '\"')

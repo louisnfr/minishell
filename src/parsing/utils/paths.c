@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_paths.c                                        :+:      :+:    :+:   */
+/*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 23:09:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 11:36:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ char	*find_cmd_path(
 	i = -1;
 	clean_free(&path);
 	if (command && command[0] && command[0] == '/')
-		return (safe_strdup(command, data));
+	{
+		if (access(command, F_OK) == 0)
+			return (safe_strdup(command, data));
+		return (NULL);
+	}
 	if (command && command[0] && command[0] == '.' && command[1])
 	{
 		if (command[1] == '/')

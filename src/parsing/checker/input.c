@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:58:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 10:57:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ static void	length_quotes(int *length, int input_len, char *input)
 	}
 }
 
-static int	get_length(char *input, int length)
+static int	get_length(char *input)
 {
 	int	input_len;
+	int	length;
 
+	length = 0;
 	if (!input)
 		return (0);
 	input_len = ft_strlen(input);
-	while (length < input_len && input[length++])
+	while (length < input_len && input[length])
 	{
 		while (length < input_len && input[length] && ft_isspace(input[length]))
 			length++;
@@ -60,8 +62,7 @@ static char	*check_comment(char *input, t_data *data)
 	if (!input)
 		return (NULL);
 	new_input = NULL;
-	length = 0;
-	length = get_length(input, length);
+	length = get_length(input);
 	if (length == ft_strlen(input))
 		return (input);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (length + 1));

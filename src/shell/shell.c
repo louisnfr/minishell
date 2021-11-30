@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 17:32:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*send_cmd(t_confg *sh)
 {
 	if (sh->current && sh->search == sh->h_num)
 		return (sh->current);
-	free(sh->current);
 	return (sh->input);
 }
 
@@ -64,7 +63,7 @@ char	*shell_process_keypress(t_data *data, t_confg *sh, t_hist *hist)
 				return (NULL);
 		}
 		else if (c == TAB_KEY)
-			process_tab_key(sh);
+			process_tab_key(sh, data);
 		else if (c == DELETE)
 			process_del_key(sh, hist);
 		else if (c == BACKSPACE)

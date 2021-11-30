@@ -33,3 +33,6 @@ ls ; ()
 (ls && pwd | wc) >> top ; cat top
 (ls && pwd | wc) < top
 rm top
+(ls -z || pwd ; ls)
+ls || (cat Makefile|grep file) ; (pwd|wc)
+ls -z && (ls) ; (pwd)

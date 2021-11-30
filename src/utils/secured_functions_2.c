@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/25 14:51:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 12:03:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,17 @@ char	**safe_double_strdup(char **str, int size, t_data *data)
 			new_str[i] = NULL;
 	}
 	new_str[i] = NULL;
+	return (new_str);
+}
+
+char	*safe_substr(const char *str, int start, int len, t_data *data)
+{
+	char	*new_str;
+
+	if (!str)
+		return (NULL);
+	new_str = ft_substr(str, start, len);
+	if (!new_str)
+		return ((char *)exit_error_void(NULL, "malloc()", data));
 	return (new_str);
 }

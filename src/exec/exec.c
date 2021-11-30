@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 18:51:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 16:54:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	if ((exit_code && (*cmd_list)->delimiter == AND)
 		|| (!exit_code && (*cmd_list)->delimiter == OR))
 	{
-		if (*cmd_list && (*cmd_list)->parenthese == FIRST)
+		// if (*cmd_list && (*cmd_list)->parenthese)
+		if (*cmd_list && ((*cmd_list)->parenthese == FIRST
+				|| (*cmd_list)->parenthese == LAST))
 		{
-			while (*cmd_list && (*cmd_list)->parenthese)
+			while (*cmd_list && (*cmd_list)->parenthese != LAST)
 				*cmd_list = (*cmd_list)->next;
+			*cmd_list = (*cmd_list)->next;
 		}
 		else if (*cmd_list && (*cmd_list)->nb_of_pipes)
 		{
@@ -64,7 +67,10 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (*cmd_list && (*cmd_list)->parenthese)
+	{
 		*exit_code = exec_parentheses(*exit_code, cmd_list, data);
+		// printf("************************** Command = %s\n", (*cmd_list)->command);
+	}
 	else if (!handle_execution(exit_code, cmd_list, data))
 	{
 		handle_error_msg_exec(

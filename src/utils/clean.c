@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 20:01:36 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 17:13:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 	free(*cmd_list);
 	(*cmd_list) = NULL;
 	close_all_fd(data);
+	clean_free(&data->sh->current);
+	clean_free(&data->sh->input);
 }
 
 void	clean_data(t_data *data)
@@ -73,8 +75,6 @@ void	clean_data(t_data *data)
 	free_double_str(data->builtins);
 	clean_free(&data->last_cwd);
 	clean_free(&data->prpt);
-	clean_free(&data->sh->current);
-	clean_free(&data->sh->input);
 	free_history(data->sh->history);
 	free_env(data->env);
 	free_env(data->export);

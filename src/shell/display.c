@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:23:58 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 17:06:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static char	*get_ret_value(t_data *data)
 	char	*ret;
 
 	ret = NULL;
-	value = ft_itoa(data->ret_value);
+	value = safe_itoa(data->ret_value, data);
 	if (!data->ret_value)
-		ret = ft_strjoin_and_free(ret, " \e[0m(\e[32m");
+		ret = safe_strjoin_and_free(ret, " \e[0m(\e[32m", data);
 	else
-		ret = ft_strjoin_and_free(ret, " \e[0m(\e[31m");
-	ret = ft_strjoin_and_free(ret, value);
-	ret = ft_strjoin_and_free(ret, "\e[0m)");
+		ret = safe_strjoin_and_free(ret, " \e[0m(\e[31m", data);
+	ret = safe_strjoin_and_free(ret, value, data);
+	ret = safe_strjoin_and_free(ret, "\e[0m)", data);
 	clean_free(&value);
 	return (ret);
 }
@@ -70,10 +70,8 @@ static char	*prompt(t_data *data)
 	if (ft_strnstr(cwd, get_env("HOME", data->env),
 			ft_strlen(get_env("HOME", data->env))))
 	{
-		tmp = ft_substr(
-				cwd, ft_strlen(get_env("HOME", data->env)), ft_strlen(cwd));
-		if (!tmp)
-			return ((char *)exit_error_void(NULL, "malloc()", data));
+		tmp = safe_substr(cwd, ft_strlen(
+					get_env("HOME", data->env)), ft_strlen(cwd), data);
 		clean_free(&cwd);
 		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
@@ -91,7 +89,8 @@ void	setup_prompt(char **input, t_data *data)
 		clean_free(&data->prpt);
 		data->prpt = prompt(data);
 		write(1, data->prpt, ft_strlen(data->prpt));
-		*input = shell_process_keypress(data, data->sh, data->sh->history);
+		*input = safe_strdup(
+			shell_process_keypress(data, data->sh, data->sh->history), data);
 		disable_raw_mode(data->sh);
 		write(1, "\n", 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:13 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 21:43:48 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 14:33:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	handle_parentheses(int delimiter, char **argv, t_data *data)
 		if (argv[data->i] && str_is_equal(argv[data->i], ")"))
 			break ;
 	}
+	note_parenthese(LAST, cmd_list, data);
 	if (argv[data->i])
 		data->i++;
 	data->par_lvl--;

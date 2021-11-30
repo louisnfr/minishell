@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/12 21:59:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 14:07:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef enum s_parenthese
 	OUT			= 0,
 	IN			= 1,
 	FIRST		= 2,
+	LAST		= 3,
 }	t_parenthese;
 
 typedef enum s_flag
