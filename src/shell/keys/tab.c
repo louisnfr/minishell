@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 12:07:08 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 17:40:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ void	process_tab_key(t_confg *sh, t_data *data)
 		}
 		free(current);
 		if (!entity)
+		{
+			closedir(directory);
 			return ;
+		}
 		edit_input(sh, entity->d_name, data);
 		closedir(directory);
 	}
