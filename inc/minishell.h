@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/01 01:13:18 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 14:35:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char	*safe_getcwd(t_data *data);
 /*** exec ***/
 
 int		exec(t_data *data);
+t_bool	init_exec(
+			int *exit_code, int *error_file, t_cmd **cmd_list, t_data *data);
 t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data);
 void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool	error_bin_cmd(
@@ -86,7 +88,6 @@ t_bool	fill_wildcard_arg(
 int		matching_name(char *filename, char *wildcard);
 void	update_path(t_cmd **cmd_list, t_data *data);
 t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data);
-int		exec_parentheses(int exit_code, t_cmd **cmd_list, t_data *data);
 void	handle_error_msg_exec(int *exit_code, char *command, int fd_error);
 void	check_exit_code(int exit_code, t_cmd **cmd_list);
 int		handle_error_cmd_pipe(t_cmd **cmd_list);
@@ -95,11 +96,19 @@ void	close_other_pipes(t_cmd **cmd, t_data *data);
 void	close_all_pipes(t_cmd **cmd, t_data *data);
 t_bool	create_fork(int i, pid_t *pid, t_data *data);
 void	init_fd(int fd, t_data **data);
-t_bool	init_exec(
-			int *exit_code, int *error_file, t_cmd **cmd_list, t_data *data);
+
+/*** exec/parentheses ***/
+
+int		exec_parentheses(int exit_code, t_cmd **cmd_list, t_data *data);
 void	check_redir_parentheses(t_cmd *cmd_list, t_data *data);
 t_bool	check_exec_parentheses(
 			int last_exit_code, t_cmd **cmd_list, t_data *data);
+int		get_num_parenthese(t_cmd *cmd_list);
+void	close_fd_parentheses(t_cmd **cmd_list, t_data *data);
+void	copy_last_file(char	*file, t_cmd **cmd_list, t_data *data);
+void	copy_last_redirection(
+			t_bool is_first, int redirection, t_cmd **cmd_list, t_data *data);
+void	change_last_redirection(t_cmd **cmd_list);
 
 /*** exit ***/
 

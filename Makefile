@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/12/01 00:19:59 by lraffin          ###   ########.fr        #
+#    Updated: 2021/12/01 14:26:14 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,6 +96,7 @@ SOURCES = \
 		exec/parentheses/exec.c \
 		exec/parentheses/check.c \
 		exec/parentheses/redir.c \
+		exec/parentheses/utils.c \
 		\
 		shell/init/init.c \
 		shell/init/raw.c \

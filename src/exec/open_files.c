@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 15:47:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:10:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
 		handle_opening(i, &error, &cmd_list);
 		if (error)
 		{
+			*exit_code = EXIT_FAILURE;
 			data->ret_value = EXIT_FAILURE;
 			return (TRUE);
 		}

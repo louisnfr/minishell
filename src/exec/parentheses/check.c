@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:38:56 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 15:31:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:36:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ static t_bool	can_exec_parenthese(int last_exit_code, t_cmd **cmd_list)
 static t_bool	check_par_lvl(t_cmd **cmd_list)
 {
 	t_cmd	*tmp;
+	int		parenthese;
 
 	tmp = *cmd_list;
 	while (tmp && tmp->parenthese)
 	{
+		parenthese = get_num_parenthese(tmp);
 		if (tmp->par_lvl == 1)
 			return (SUCCESS);
 		tmp = tmp->next;
+		if (parenthese == LAST)
+			break ;
 	}
 	while (*cmd_list && (*cmd_list)->parenthese)
 		*cmd_list = (*cmd_list)->next;

@@ -6,31 +6,11 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:11:35 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 18:51:11 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:34:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	copy_last_file(char	*file, t_cmd **cmd_list, t_data *data)
-{
-	(*cmd_list)->files = (char **)ft_calloc(1, sizeof(char *) * 2);
-	if (!(*cmd_list)->files)
-		exit_error_bool("malloc()", data);
-	(*cmd_list)->files[0] = safe_strdup(file, data);
-	(*cmd_list)->files[1] = NULL;
-}
-
-static void	copy_last_redirection(
-	t_bool is_first, int redirection, t_cmd **cmd_list, t_data *data)
-{
-	if (redirection == RIGHT_MARK && !is_first)
-		redirection = DOUBLE_RIGHT_MARK;
-	(*cmd_list)->redirection = (int *)ft_calloc(1, sizeof(int) * 1);
-	if (!(*cmd_list)->redirection)
-		exit_error_bool("malloc()", data);
-	(*cmd_list)->redirection[0] = redirection;
-}
 
 static void	get_last_file(
 	int *redirection, char **file, t_cmd *cmd_list, t_data *data)
@@ -42,7 +22,7 @@ static void	get_last_file(
 	change_redir = FALSE;
 	while (cmd_list && cmd_list->parenthese != LAST)
 	{
-		if (!cmd_list->files && !cmd_list->nb_of_pipes)
+		if (!cmd_list->files && cmd_list->delimiter != PIPE)
 			change_redir = TRUE;
 		cmd_list = cmd_list->next;
 	}
@@ -61,9 +41,33 @@ static void	get_last_file(
 	}
 }
 
+void	handle_left_redir(char *file, t_cmd *cmd_list, t_data *data)
+{	
+	t_bool	is_first;	
+
+	is_first = TRUE;
+	while (cmd_list && cmd_list->parenthese != LAST)
+	{
+		if (!cmd_list->files && cmd_list->delimiter != PIPE)
+		{
+			copy_last_file(file, &cmd_list, data);
+			copy_last_redirection(is_first, LEFT_MARK, &cmd_list, data);
+			is_first = FALSE;
+		}
+		cmd_list = cmd_list->next;
+	}
+	if (cmd_list->delimiter == PIPE)
+	{
+		free(cmd_list->redirection);
+		cmd_list->redirection = NULL;
+		free_double_str(cmd_list->files);
+		cmd_list->files = NULL;
+	}
+	clean_free(&file);
+}
+
 void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 {
-	int		i;
 	char	*file;
 	int		redirection;
 	t_bool	is_first;
@@ -71,6 +75,8 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 	get_last_file(&redirection, &file, cmd_list, data);
 	if (!file)
 		return ;
+	if (redirection == LEFT_MARK)
+		return (handle_left_redir(file, cmd_list, data));
 	is_first = TRUE;
 	while (cmd_list && cmd_list->parenthese != LAST)
 	{
@@ -82,12 +88,7 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 		}
 		cmd_list = cmd_list->next;
 	}
-	i = -1;
 	if (redirection == RIGHT_MARK)
-	{
-		while (cmd_list->files[i + 1])
-			i++;
-		cmd_list->redirection[i] = DOUBLE_RIGHT_MARK;
-	}
+		change_last_redirection(&cmd_list);
 	clean_free(&file);
 }

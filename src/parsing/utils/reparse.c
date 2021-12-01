@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 11:39:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:59:42 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,11 @@ char	*remove_quote_command(char *command, t_data *data)
 	return (new_command);
 }
 
-void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
+static t_bool	dont_need_recheck(t_cmd **cmd_list, t_data *data)
 {
-	char	*pid_value;
-	char	*ret_value;
-
 	if (!(*cmd_list)->command || str_is_equal((*cmd_list)->command, "\"\"")
 		|| str_is_equal((*cmd_list)->command, "\'\'"))
-		return ;
+		return (TRUE);
 	if (!ft_strchr((*cmd_list)->command, '$')
 		&& (ft_strchr((*cmd_list)->command, '\"')
 			|| ft_strchr((*cmd_list)->command, '\'')))
@@ -85,9 +82,19 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->command = remove_quote_command((*cmd_list)->command, data);
 		(*cmd_list)->path = find_cmd_path(
 				(*cmd_list)->command, NULL, data->all_paths, data);
-		return ;
+		return (TRUE);
 	}
 	if (!ft_strchr((*cmd_list)->command, '$'))
+		return (TRUE);
+	return (FALSE);
+}
+
+void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
+{
+	char	*pid_value;
+	char	*ret_value;
+
+	if (dont_need_recheck(cmd_list, data))
 		return ;
 	pid_value = safe_itoa(data->pid, data);
 	ret_value = safe_itoa(data->ret_value, data);

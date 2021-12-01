@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 11:36:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:51:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,25 @@ static char	*get_path_executable(char *command, t_data *data)
 	return (path);
 }
 
-char	*find_cmd_path(
-	char *command, char *path, char **all_paths, t_data *data)
+static char	*get_path_command(char *command, char **all_paths, t_data *data)
 {
 	int		i;
 	char	*cmd_path;
 
 	i = -1;
+	while (all_paths && all_paths[++i])
+	{
+		cmd_path = safe_strjoin(all_paths[i], command, data);
+		if (access(cmd_path, F_OK) == 0)
+			return (cmd_path);
+		clean_free(&cmd_path);
+	}
+	return (NULL);
+}
+
+char	*find_cmd_path(
+	char *command, char *path, char **all_paths, t_data *data)
+{
 	clean_free(&path);
 	if (command && command[0] && command[0] == '/')
 	{
@@ -55,14 +67,7 @@ char	*find_cmd_path(
 	}
 	if (command && (str_is_equal(command, ".") || str_is_equal(command, "..")))
 		return (NULL);
-	while (all_paths && all_paths[++i])
-	{
-		cmd_path = safe_strjoin(all_paths[i], command, data);
-		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
-		clean_free(&cmd_path);
-	}
-	return (NULL);
+	return (get_path_command(command, all_paths, data));
 }
 
 char	**get_paths(t_data *data)

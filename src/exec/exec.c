@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 18:39:38 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/01 13:36:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	if ((exit_code && (*cmd_list)->delimiter == AND)
 		|| (!exit_code && (*cmd_list)->delimiter == OR))
 	{
-		// if (*cmd_list && (*cmd_list)->parenthese)
 		if (*cmd_list && ((*cmd_list)->parenthese == FIRST
 				|| (*cmd_list)->parenthese == LAST))
 		{

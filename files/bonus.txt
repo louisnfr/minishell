@@ -29,12 +29,21 @@ ls && (ls)
 ls ; ()
 > pwd (ls)
 (ls && pwd | wc) > top ; cat top ; rm top
-(ls && pwd | wc) > top ; (ls && pwd | wc) > top ; cat top
-echo hello&&(ls && pwd | wc) >> top ; cat top ; rm top
+(ls && pwd | wc) > top ; (ls && pwd | wc) > top ; cat top ; rm top
+(ls && pwd | wc) >> top;echo hello&&(ls && pwd | wc) >> top ; cat top ; rm top
+(pwd|wc)<top
 (ls && pwd | wc) < top
-rm top
+(ls -z || pwd | wc) < top
+echo hello > top ; (pwd|wc) < top ; rm top
+echo hello > top ; (ls && pwd|wc) < top ; rm top
+echo hello > top ; (ls -z || pwd|wc) < top ; rm top
 (ls -z || pwd ; ls)
 ls || (cat Makefile|grep file) ; (pwd|wc)
 ls -z && (ls) ; (pwd)
 (ls > file/file && pwd) > top
 ls > file/file && pwd > top
+(ls && ((pwd)))
+(ls||pwd);(ls||pwd)
+(lss||pwd);(lss||pwd)
+(lss&&pwd);(lss&&pwd)
+(lss||pwd);(lss||pwd)
