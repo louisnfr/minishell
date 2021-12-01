@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 20:31:43 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 00:02:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*get_env(char *key, t_env *env)
 	tmp = env;
 	while (tmp)
 	{
+		// printf("key: -%s-, value: -%s-\n", tmp->key, tmp->value);
 		if (!ft_strcmp(tmp->key, key))
 			return (tmp->value);
 		tmp = tmp->next;

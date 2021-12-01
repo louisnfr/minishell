@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 12:04:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 23:31:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ char	**syntax_error_str_msg(char *token, char **str);
 /*** utils ***/
 
 char	**copy_strs_and_free(char **strs, t_data *data);
+int		ctrl_key(int k);
 
 #endif

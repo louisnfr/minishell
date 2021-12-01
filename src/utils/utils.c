@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:36:57 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 23:29:12 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ char	**copy_strs_and_free(char **strs, t_data *data)
 	strs_copy[i] = NULL;
 	free_double_str(strs);
 	return (strs_copy);
+}
+
+int	ctrl_key(int k)
+{
+	return (k & 0x1f);
 }

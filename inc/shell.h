@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 11:58:00 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 23:30:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	process_del_key(t_confg *sh, t_hist *hist);
 void	process_backspace_key(t_confg *sh, t_hist *hist);
 
 void	process_tab_key(t_confg *sh, t_data *data);
+int		get_cut_pos(t_confg *sh);
+char	*get_current_word(t_confg *sh, t_data *data);
 
 void	process_arrow_key(t_confg *sh, t_hist *hist, int c);
 
@@ -96,7 +98,6 @@ void	clear_hist(t_hist *hist, int search);
 
 /*** utils ***/
 
-int		ctrl_key(int k);
 void	clear_prompt(int cx, int len);
 int		is_sep(int c);
 char	*selected_input(t_confg *sh);

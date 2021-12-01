@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:13 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 11:46:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/11/30 23:44:30 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	update_env(t_data *data, t_env *env)
 	int		i;
 
 	tmp = get_env("SHLVL", env);
+	if (!tmp)
+		return ;
 	i = (ft_atoi(tmp) + 1);
 	tmp = safe_itoa(i, data);
 	set_env("SHLVL", tmp, env, data);

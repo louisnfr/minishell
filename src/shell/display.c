@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 19:42:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/11/30 23:54:20 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char	*get_ret_value(t_data *data)
 
 static void	get_cwd(char *ret, char *usr, char **cwd, t_data *data)
 {
+	if (!usr)
+		usr = safe_strdup("", data);
 	usr = safe_strjoin("\e[92m", usr, data);
 	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
 	usr = safe_strjoin_and_free(usr, "\e[34m", data);
