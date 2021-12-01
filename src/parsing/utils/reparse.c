@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 13:59:42 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 00:19:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,56 @@ char	*remove_quote_command(char *command, t_data *data)
 	return (new_command);
 }
 
-static t_bool	dont_need_recheck(t_cmd **cmd_list, t_data *data)
+static t_bool	check_dollar_simple_quote(char *command)
+{
+	int		i;
+	int		command_length;
+
+	command_length = ft_strlen(command);
+	i = -1;
+	while (++i < command_length && command[i])
+	{
+		if (command[i] && command[i] == '\'')
+		{
+			i++;
+			while (command[i] && command[i] != '\'')
+				i++;
+			i++;
+		}
+		if (command[i] && command[i] == '$')
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+static t_bool	check_dollar_double_quote(char *command)
+{
+	int		i;
+	int		command_length;
+
+	command_length = ft_strlen(command);
+	i = -1;
+	while (++i < command_length && command[i])
+	{
+		if (command[i] && command[i] == '\"')
+		{
+			i++;
+			while (command[i] && command[i] != '\"')
+			{
+				if (command[i] && command[i] == '$')
+					return (TRUE);
+				i++;
+			}
+		}
+	}
+	return (FALSE);
+}
+
+static int	need_recheck(t_cmd **cmd_list, t_data *data)
 {
 	if (!(*cmd_list)->command || str_is_equal((*cmd_list)->command, "\"\"")
 		|| str_is_equal((*cmd_list)->command, "\'\'"))
-		return (TRUE);
+		return (0);
 	if (!ft_strchr((*cmd_list)->command, '$')
 		&& (ft_strchr((*cmd_list)->command, '\"')
 			|| ft_strchr((*cmd_list)->command, '\'')))
@@ -82,25 +127,29 @@ static t_bool	dont_need_recheck(t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->command = remove_quote_command((*cmd_list)->command, data);
 		(*cmd_list)->path = find_cmd_path(
 				(*cmd_list)->command, NULL, data->all_paths, data);
-		return (TRUE);
+		return (0);
 	}
-	if (!ft_strchr((*cmd_list)->command, '$'))
-		return (TRUE);
-	return (FALSE);
+	if (check_dollar_simple_quote((*cmd_list)->command))
+		return (0);
+	if (check_dollar_double_quote((*cmd_list)->command))
+		return (2);
+	return (1);
 }
 
 void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 {
 	char	*pid_value;
 	char	*ret_value;
+	int		ret;
 
-	if (dont_need_recheck(cmd_list, data))
+	ret = need_recheck(cmd_list, data);
+	if (!ret)
 		return ;
 	pid_value = safe_itoa(data->pid, data);
 	ret_value = safe_itoa(data->ret_value, data);
 	(*cmd_list)->command = transform_str(
 			(*cmd_list)->command, pid_value, ret_value, data);
-	if (ft_strchr((*cmd_list)->command, 32))
+	if (ft_strchr((*cmd_list)->command, 32) && ret != 2)
 		reparse_command(cmd_list, data);
 	(*cmd_list)->path = find_cmd_path(
 			(*cmd_list)->command, NULL, data->all_paths, data);
