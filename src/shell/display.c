@@ -6,27 +6,11 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 23:54:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 02:00:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*safe_getcwd(t_data *data)
-{
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		cwd = safe_strdup(data->last_cwd, data);
-	else
-	{
-		if (data->last_cwd)
-			clean_free(&data->last_cwd);
-		data->last_cwd = safe_strdup(cwd, data);
-	}
-	return (cwd);
-}
 
 static char	*get_ret_value(t_data *data)
 {
@@ -45,7 +29,7 @@ static char	*get_ret_value(t_data *data)
 	return (ret);
 }
 
-static void	get_cwd(char *ret, char *usr, char **cwd, t_data *data)
+static void	join_prompt(char *ret, char *usr, char **cwd, t_data *data)
 {
 	if (!usr)
 		usr = safe_strdup("", data);
@@ -57,6 +41,19 @@ static void	get_cwd(char *ret, char *usr, char **cwd, t_data *data)
 	usr = safe_strjoin_and_free(usr, ret, data);
 	clean_free(&ret);
 	*cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
+}
+
+static void	adjust_prompt_length(char **cwd, t_data *data)
+{
+	int	slash_count;
+	int	i;
+
+	slash_count = 0;
+	i = count_slash(*cwd, &slash_count);
+	if (i < 0)
+		return ;
+	*cwd = safe_substr(*cwd, ++i, ft_strlen(*cwd), data);
+	*cwd = safe_strjoin("..", *cwd, data);
 }
 
 static char	*prompt(t_data *data)
@@ -78,7 +75,8 @@ static char	*prompt(t_data *data)
 		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
 	}
-	get_cwd(ret, usr, &cwd, data);
+	adjust_prompt_length(&cwd, data);
+	join_prompt(ret, usr, &cwd, data);
 	return (cwd);
 }
 

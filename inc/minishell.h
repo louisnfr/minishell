@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 23:31:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 01:13:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*safe_substr(const char *str, int start, int len, t_data *data);
 t_bool	safe_unlink(char *pathname, t_data *data);
 t_bool	safe_close_fd(int fd, t_data *data);
 char	**safe_double_strdup(char **str, int size, t_data *data);
+char	*safe_getcwd(t_data *data);
 
 /*** exec ***/
 

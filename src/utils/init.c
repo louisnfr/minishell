@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 00:58:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 02:05:55 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ t_data	*init_data(char **envp)
 	data->par_lvl = 0;
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);
-	// if (!data->all_paths)
-	// 	return ((t_data *)exit_error_void(NULL, "get_paths()", data));
 	data->cmd_list = NULL;
 	return (data);
 }

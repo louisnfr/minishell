@@ -6,11 +6,27 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 23:29:12 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 02:05:36 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*safe_getcwd(t_data *data)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		cwd = safe_strdup(data->last_cwd, data);
+	else
+	{
+		if (data->last_cwd)
+			clean_free(&data->last_cwd);
+		data->last_cwd = safe_strdup(cwd, data);
+	}
+	return (cwd);
+}
 
 char	**copy_strs_and_free(char **strs, t_data *data)
 {
@@ -31,6 +47,20 @@ char	**copy_strs_and_free(char **strs, t_data *data)
 	strs_copy[i] = NULL;
 	free_double_str(strs);
 	return (strs_copy);
+}
+
+int	count_slash(char *cwd, int *slash_count)
+{
+	int	i;
+
+	i = ft_strlen(cwd);
+	while (i >= 0 && *slash_count < 3)
+	{
+		if (cwd[i] == '/')
+			(*slash_count)++;
+		i--;
+	}
+	return (i);
 }
 
 int	ctrl_key(int k)

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 23:30:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/01 01:59:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ void	clear_hist(t_hist *hist, int search);
 void	clear_prompt(int cx, int len);
 int		is_sep(int c);
 char	*selected_input(t_confg *sh);
+int		count_slash(char *cwd, int *slash_count);
 
 #endif
