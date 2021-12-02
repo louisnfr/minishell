@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 18:00:41 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 20:01:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
 
 	ret = -1;
 	if (dir)
+	{
+		if (!ft_strlen(dir))
+			return (EXIT_SUCCESS);
 		ret = chdir(dir);
+	}
 	if (ret < 0)
 	{
 		if (error_msg)

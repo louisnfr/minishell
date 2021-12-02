@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:33:00 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 18:45:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 20:02:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,30 +116,3 @@ t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
 	}
 	return (builtins[i](cmd_list, data));
 }
-
-/*
-t_bool	exec_builtin(t_cmd *cmd_list, t_data *data)
-{
-	parse_special_value(cmd_list, data);
-	parse_wildcard_args(cmd_list);
-	if (cmd_list->input == -1 || cmd_list->output == -1)
-		return (EXIT_FAILURE);
-	if (!ft_strcmp(cmd_list->command, "echo"))
-		return (exec_echo(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "cd"))
-		return (exec_cd(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "pwd"))
-		return (exec_pwd(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "env"))
-		return (exec_env(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "history"))
-		return (exec_history(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "export"))
-		return (exec_export(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "unset"))
-		return (exec_unset(cmd_list, data));
-	else if (!ft_strcmp(cmd_list->command, "exit"))
-		exec_exit(cmd_list, data);
-	return (EXIT_FAILURE);
-}
-*/

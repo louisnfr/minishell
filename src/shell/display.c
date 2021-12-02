@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 19:58:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 20:02:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,37 @@ static char	*get_ret_value(t_data *data)
 	return (ret);
 }
 
-static void	join_prompt(char *ret, char *usr, char **cwd, t_data *data)
+static char	*join_prompt(char *ret, char *usr, char *cwd, t_data *data)
 {
 	if (!usr)
-		usr = safe_strdup("", data);
+		usr = "";
 	usr = safe_strjoin("\e[92m", usr, data);
 	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
 	usr = safe_strjoin_and_free(usr, "\e[34m", data);
-	usr = safe_strjoin_and_free(usr, *cwd, data);
-	clean_free(cwd);
+	usr = safe_strjoin_and_free(usr, cwd, data);
+	clean_free(&cwd);
 	usr = safe_strjoin_and_free(usr, ret, data);
 	clean_free(&ret);
-	*cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
+	cwd = safe_strjoin_and_free(usr, "\e[0m$ ", data);
+	return (cwd);
 }
 
-static void	adjust_prompt_length(char **cwd, t_data *data)
+static char	*adjust_prompt_length(char *cwd, t_data *data)
 {
-	int	slash_count;
-	int	i;
+	char	*tmp;
+	char	*tmp2;
+	int		slash_count;
+	int		i;
 
 	slash_count = 0;
-	i = count_slash(*cwd, &slash_count);
+	i = count_slash(cwd, &slash_count);
 	if (i < 0)
-		return ;
-	*cwd = safe_substr(*cwd, ++i, ft_strlen(*cwd), data);
-	*cwd = safe_strjoin("..", *cwd, data);
+		return (cwd);
+	tmp = safe_substr(cwd, ++i, ft_strlen(cwd), data);
+	clean_free(&cwd);
+	tmp2 = safe_strjoin("..", tmp, data);
+	clean_free(&tmp);
+	return (tmp2);
 }
 
 static char	*prompt(t_data *data)
@@ -75,8 +81,8 @@ static char	*prompt(t_data *data)
 		cwd = safe_strjoin("~", tmp, data);
 		clean_free(&tmp);
 	}
-	adjust_prompt_length(&cwd, data);
-	join_prompt(ret, usr, &cwd, data);
+	cwd = adjust_prompt_length(cwd, data);
+	cwd = join_prompt(ret, usr, cwd, data);
 	return (cwd);
 }
 
