@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 20:00:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 23:04:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		setup_prompt(&input, data);
-		if (input && ft_strlen(input) > 0)
+		if (input && ft_strlen(input) > 0 && !str_is_only_char(input, ' '))
 		{
 			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
 			init_cmd_list(data);
