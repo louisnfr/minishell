@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 19:52:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
 	line = NULL;
 	while (1)
 	{
+		clean_free(&data->sh->current);
+		clean_free(&data->sh->input);
 		line = heredoc_shell(
 				data, data->sh, data->sh->history, cmd_list->heredoc_delimiter);
 		if (!line)
@@ -76,9 +78,9 @@ t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
 		if (line && str_is_equal(line, cmd_list->heredoc_delimiter))
 			break ;
 		write_line(fd, quotes, &line, data);
-		clean_free(&line);
+		// clean_free(&line);
 	}
-	clean_free(&line);
+	// clean_free(&line);
 	return (SUCCESS);
 }
 
