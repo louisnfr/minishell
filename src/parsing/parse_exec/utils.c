@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reparse.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 00:19:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:52:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	get_length(char *command)
 	return (j + 1);
 }
 
-char	*remove_quote_command(char *command, t_data *data)
+static char	*remove_quote_command(char *command, t_data *data)
 {
 	int		i;
 	int		j;
@@ -115,7 +115,7 @@ static t_bool	check_dollar_double_quote(char *command)
 	return (FALSE);
 }
 
-static int	need_recheck(t_cmd **cmd_list, t_data *data)
+int	need_recheck(t_cmd **cmd_list, t_data *data)
 {
 	if (!(*cmd_list)->command || str_is_equal((*cmd_list)->command, "\"\"")
 		|| str_is_equal((*cmd_list)->command, "\'\'"))
@@ -134,25 +134,4 @@ static int	need_recheck(t_cmd **cmd_list, t_data *data)
 	if (check_dollar_double_quote((*cmd_list)->command))
 		return (2);
 	return (1);
-}
-
-void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
-{
-	char	*pid_value;
-	char	*ret_value;
-	int		ret;
-
-	ret = need_recheck(cmd_list, data);
-	if (!ret)
-		return ;
-	pid_value = safe_itoa(data->pid, data);
-	ret_value = safe_itoa(data->ret_value, data);
-	(*cmd_list)->command = transform_str(
-			(*cmd_list)->command, pid_value, ret_value, data);
-	if (ft_strchr((*cmd_list)->command, 32) && ret != 2)
-		reparse_command(cmd_list, data);
-	(*cmd_list)->path = find_cmd_path(
-			(*cmd_list)->command, NULL, data->all_paths, data);
-	clean_free(&pid_value);
-	clean_free(&ret_value);
 }

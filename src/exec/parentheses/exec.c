@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 15:42:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 11:42:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 		{
 			handle_error_msg_exec(
 				&exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
+			close_fd(cmd_list, data);
 			*cmd_list = (*cmd_list)->next;
 			check_exit_code(exit_code, cmd_list);
 		}

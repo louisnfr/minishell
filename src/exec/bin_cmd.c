@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 21:05:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:46:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,29 @@ t_bool	error_bin_cmd(
 	return (FAIL);
 }
 
-void	update_path(t_cmd **cmd_list, t_data *data)
+t_bool	update_path(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
+	if (!(*cmd_list)->path)
+		return (SUCCESS);
 	free_double_str(data->all_paths);
 	data->all_paths = get_paths(data);
 	(*cmd_list)->path = find_cmd_path(
 			(*cmd_list)->command, (*cmd_list)->path, data->all_paths, data);
+	if (!(*cmd_list)->path)
+	{
+		display_error_message((*cmd_list)->command,
+			"No such file or directory", (*cmd_list)->error_output);
+		close_fd(cmd_list, data);
+		*exit_code = 127;
+		return (FAIL);
+	}
+	return (SUCCESS);
 }
 
 static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 {
 	char	**cmd_array;
 
-	update_path(&cmd_list, data);
 	if (cmd_list->input == -1 || cmd_list->output == -1)
 		return (FAIL);
 	*pid = fork();
@@ -58,9 +68,6 @@ static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		close_all_fd(data);
 		cmd_array = fill_cmd_array(cmd_list, data);
 		data->envp = env_to_char(data->env, data);
-		if (!cmd_list->path)
-			return (error_bin_cmd(
-					"No such file or directory", 127, cmd_list, data));
 		execve(cmd_list->path, cmd_array, data->envp);
 		return (
 			error_bin_cmd(strerror(errno), get_error_code(), cmd_list, data));
@@ -73,6 +80,8 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 	int		status;
 	pid_t	pid;
 
+	if (!update_path(exit_code, cmd_list, data))
+		return ;
 	status = 0;
 	if (exec_bin_command(&pid, *cmd_list, data))
 	{
@@ -81,6 +90,6 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 			*exit_code = WEXITSTATUS(status);
 		else
 			handle_status(status, exit_code);
-		close_fd(cmd_list, data);
 	}
+	close_fd(cmd_list, data);
 }

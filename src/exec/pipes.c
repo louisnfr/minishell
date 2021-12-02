@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 18:05:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 15:48:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,21 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	int		exit_code;
 	t_bool	error_file;
 
-	exit_code = EXIT_FAILURE;
-	error_file = open_files(&exit_code, *cmd_list, data);
-	if (!error_file)
+	if (update_path(&exit_code, cmd_list, data))
 	{
-		if ((*cmd_list)->is_builtin)
-			exit_code = exec_builtin(*cmd_list, data);
-		else if ((*cmd_list)->path)
-			exec_cmd_bin_in_pipe(cmd_list, data);
-		else
+		exit_code = EXIT_FAILURE;
+		error_file = open_files(&exit_code, *cmd_list, data);
+		if (!error_file)
 		{
-			parse_special_value(*cmd_list, data);
-			exit_code = (handle_error_cmd_pipe(cmd_list));
+			if ((*cmd_list)->is_builtin)
+				exit_code = exec_builtin(*cmd_list, data);
+			else if ((*cmd_list)->path)
+				exec_cmd_bin_in_pipe(cmd_list, data);
+			else
+			{
+				parse_special_value(*cmd_list, data);
+				exit_code = (handle_error_cmd_pipe(cmd_list));
+			}
 		}
 	}
 	close_all_fd(data);
@@ -62,7 +65,7 @@ static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 	if (!is_child && *cmd_list && (*cmd_list)->next
 		&& (*cmd_list)->next->delimiter == PIPE)
 		recursive_piping(++i, pid, &(*cmd_list)->next, data);
-	if (is_child)
+	if (is_child && *cmd_list)
 		exec_cmd_in_pipe(cmd_list, data);
 }
 
@@ -79,8 +82,6 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	if (!pid)
 		return (exit_error_bool("malloc()", data));
 	exit_code = EXIT_SUCCESS;
-	if ((*cmd_list)->path)
-		update_path(cmd_list, data);
 	recursive_piping(i, pid, cmd_list, data);
 	close_cmd_pipes_fd(cmd_list, data);
 	i = -1;

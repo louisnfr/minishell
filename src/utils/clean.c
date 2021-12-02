@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 17:13:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 16:57:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 	free(*cmd_list);
 	(*cmd_list) = NULL;
 	close_all_fd(data);
-	clean_free(&data->sh->current);
+	// clean_free(&data->sh->current);
 	clean_free(&data->sh->input);
 }
 

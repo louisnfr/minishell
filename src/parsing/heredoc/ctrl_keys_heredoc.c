@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_keys_heredoc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 19:18:26 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:22:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 11:12:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ static void	process_ctrl_l_heredoc(t_confg *sh)
 static t_bool	process_ctrl_c_heredoc(t_data *data, t_confg *sh)
 {
 	free(sh->current);
+	sh->current = NULL;
 	free(sh->input);
+	sh->input = NULL;
 	write(1, "^C", 2);
 	data->ret_value = 130;
 	return (FAIL);

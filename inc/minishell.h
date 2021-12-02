@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/01 14:35:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:42:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_bool	count_wildcard_arg(int *i, char *wildcard_arg);
 t_bool	fill_wildcard_arg(
 			char **cmd_array, int *i, char *wildcard_arg, t_data *data);
 int		matching_name(char *filename, char *wildcard);
-void	update_path(t_cmd **cmd_list, t_data *data);
+t_bool	update_path(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data);
 void	handle_error_msg_exec(int *exit_code, char *command, int fd_error);
 void	check_exit_code(int exit_code, t_cmd **cmd_list);

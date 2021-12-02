@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:39 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:43:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:37:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ static int	handle_split_input(int words, char *str, char **strs, t_data *data)
 			if (!handle_delimiters(i, &str, &(*strs), data))
 				return (FAIL);
 		}
-		if (strs[i] && str_is_equal(strs[i], "<<"))
-			handle_heredoc_quotes(&i, &str, &(*strs), data);
 	}
 	strs[i] = NULL;
 	return (SUCCESS);

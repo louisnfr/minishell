@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 18:11:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 18:00:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
 {
 	int	ret;
 
-	ret = chdir(dir);
+	ret = -1;
+	if (dir)
+		ret = chdir(dir);
 	if (ret < 0)
 	{
 		if (error_msg)
@@ -74,9 +76,10 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	cdpath = get_env("CDPATH", data->env);
 	if (cmd_list->args && cmd_list->args[1])
 		return (cd_error_msg("cd: too many arguments\n", cmd_list));
-	if (!cmd_list->args || !ft_strcmp(cmd_list->args[0], "--"))
+	if (!cmd_list->args || !cmd_list->args[0] || (cmd_list->args
+			&& !ft_strcmp(cmd_list->args[0], "--")))
 		ret = ch_dir(get_env("HOME", data->env), "cd: HOME not set\n", cmd_list);
-	else if (!ft_strcmp(cmd_list->args[0], "-"))
+	else if (cmd_list->args && !ft_strcmp(cmd_list->args[0], "-"))
 		ret = handle_dash(data, cmd_list);
 	else
 		ret = get_ret(oldpwd, cdpath, cmd_list, data);

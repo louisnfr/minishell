@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 13:36:14 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:54:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	else if (*cmd_list && (*cmd_list)->is_builtin)
 	{
 		*exit_code = exec_builtin(*cmd_list, data);
+		close_fd(cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
 	}
 	else if (*cmd_list && (*cmd_list)->path)
@@ -71,6 +72,7 @@ static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 	{
 		handle_error_msg_exec(
 			exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
+		close_fd(cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
 		check_exit_code(*exit_code, cmd_list);
 	}	

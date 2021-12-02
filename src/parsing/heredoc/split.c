@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:45:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 14:13:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:36:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,14 @@ static void	fill_strs(char charset, int *i, char **str, char **strs)
 t_bool	handle_heredoc_quotes(int *i, char **str, char **strs, t_data *data)
 {
 	int		length;
-	char	charset;
 
-	while (**str && ft_isspace(**str))
-		(*str)++;
-	if (!(**str) || (**str && **str != '\'' && **str != '\"'))
+	printf("%s\n", *str);
+	if (!(**str) || !(ft_strchr(*str, '\'') || ft_strchr(*str, '\"')))
 		return (SUCCESS);
-	charset = **str;
-	length = get_length(str, charset, data);
+	length = get_length(str, '\'', data);
 	strs[++(*i)] = (char *)ft_calloc(1, sizeof(char) * (length + 2));
 	if (!strs[*i])
 		return (exit_error_bool("malloc()", data));
-	fill_strs(charset, i, str, strs);
+	fill_strs('\'', i, str, strs);
 	return (SUCCESS);
 }

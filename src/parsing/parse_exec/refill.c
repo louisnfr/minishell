@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:37 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 11:39:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:50:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,4 @@ void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->options[j++] = safe_strdup(existing_options[k++], data);
 	(*cmd_list)->options[j] = NULL;
 	free_double_str(existing_options);
-}
-
-void	reparse_command(t_cmd **cmd_list, t_data *data)
-{
-	char	**strs;
-	int		i;
-
-	strs = safe_split((*cmd_list)->command, 32, data);
-	clean_free(&(*cmd_list)->command);
-	(*cmd_list)->command = safe_strdup(strs[0], data);
-	i = 1;
-	refill_options(&i, strs, cmd_list, data);
-	refill_args(i, strs, cmd_list, data);
-	free_double_str(strs);
 }

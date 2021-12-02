@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_keys.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 19:08:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 11:11:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	process_ctrl_d(t_data *data, t_confg *sh)
 		disable_raw_mode(sh);
 		write(2, "exit\n", 5);
 		clean_free(&sh->current);
+		sh->current = NULL;
 		clean_data(data);
 		exit(ret);
 	}
@@ -30,6 +31,7 @@ static void	process_ctrl_d(t_data *data, t_confg *sh)
 		disable_raw_mode(sh);
 		write(2, "exit\n", 5);
 		clean_free(&sh->input);
+		sh->input = NULL;
 		clean_data(data);
 		exit(ret);
 	}
@@ -38,7 +40,9 @@ static void	process_ctrl_d(t_data *data, t_confg *sh)
 static t_bool	process_ctrl_c(t_data *data, t_confg *sh)
 {
 	free(sh->current);
+	sh->current = NULL;
 	free(sh->input);
+	sh->input = NULL;
 	write(1, "^C", 2);
 	data->ret_value = 130;
 	return (FAIL);

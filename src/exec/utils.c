@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:17:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 12:16:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/02 11:03:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
 {
+	if (!command)
+	{
+		*exit_code = 0;
+		return ;
+	}
 	*exit_code = 127;
 	if (command && ft_strchr(command, '/'))
 		display_error_message(
 			command, "No such file or directory", fd_error);
-	else
+	else if (command)
 		display_error_message(command, "command not found", fd_error);
 }
 
