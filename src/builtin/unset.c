@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/01 00:56:39 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 17:04:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ static t_bool	check_unset(char *s)
 	return (SUCCESS);
 }
 
-// static void	free_env_var(t_env *var)
-// {
-// 	clean_free(&var->key);
-// 	clean_free(&var->value);
-// 	free(var);
-// }
+static void	free_env_var(t_env *var)
+{
+	clean_free(&var->key);
+	clean_free(&var->value);
+	free(var);
+	var = NULL;
+}
 
 static t_bool	unset(t_env **env, t_cmd *cmd_list)
 {
@@ -55,11 +56,13 @@ static t_bool	unset(t_env **env, t_cmd *cmd_list)
 		if (!prev)
 		{
 			tmp = *env;
-			// free_env_var(env);
-			*env = tmp->next;
+			*env = (*env)->next;
+			free_env_var(tmp);
 			return (EXIT_SUCCESS);
 		}
+		tmp = prev->next;
 		prev->next = prev->next->next;
+		free_env_var(tmp);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -82,7 +85,7 @@ t_bool	exec_unset(t_cmd *cmd_list, t_data *data)
 		else
 		{
 			unset(&data->env, cmd_list);
-			unset(&data->export, cmd_list);
+			// unset(&data->export, cmd_list);
 		}
 	}
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 18:11:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 17:32:52 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ t_bool	ch_dir(char *dir, char *error_msg, t_cmd *cmd_list)
 {
 	int	ret;
 
-	ret = chdir(dir);
+	ret = -1;
+	if (dir)
+		ret = chdir(dir);
 	if (ret < 0)
 	{
 		if (error_msg)

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:13 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/01 01:08:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 15:36:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static t_env	*dup_env_export(char **envp, t_data *data)
 	{
 		var = safe_split_on_first(envp[i], '=', data);
 		if (!ft_strcmp(var[0], "_"))
+		{
+			free_split(var);
 			continue ;
+		}
 		add_var(&g_env, new_var(var[0], var[1], 1));
 		free_split(var);
 	}
