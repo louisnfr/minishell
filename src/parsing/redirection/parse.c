@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 19:50:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:11:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,10 @@ void	parse_redirections(
 	existing_redir = NULL;
 	while (*cmd_list && (*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;
-	parse_redirection_heredoc(argv, *cmd_list, data);
 	existing_files = copy_existing_files(&existing_redir, *cmd_list, data);
 	j = get_length_redir(argv, *cmd_list, data);
+	start_heredoc_case(j, argv, cmd_list, data);
+	parse_redirection_heredoc(argv, *cmd_list, data);
 	if (existing_files && existing_redir)
 		fill_existing_files_redir(
 			existing_redir, existing_files, *cmd_list, data);

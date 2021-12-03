@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 17:57:56 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:07:05 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ static void	delete_void_args(
 	if (nb_of_args == new_nb_of_args)
 		return ;
 	if (!new_nb_of_args)
-	{
-		free_double_str(cmd_list->args);
-		return ;
-	}
+		return (free_double_str(cmd_list->args));
 	args = safe_double_strdup(cmd_list->args, nb_of_args, data);
 	free_double_str(cmd_list->args);
 	cmd_list->args = (char **)ft_calloc(

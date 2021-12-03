@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 20:02:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 11:43:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ static void	remove_from_list(t_cmd *cmd_list)
 	free_double_str(cmd_list->options);
 	free_double_str(cmd_list->args);
 	clean_free(&cmd_list->path);
-	if (cmd_list->heredoc)
-	{
-		clean_free(&cmd_list->heredoc);
-		clean_free(&cmd_list->heredoc_delimiter);
-	}
+	clean_free(&cmd_list->heredoc_delimiter);
 	if (cmd_list->pipe_fd)
 		free_fd_array(cmd_list->nb_of_pipes, cmd_list->pipe_fd);
 	free(cmd_list);

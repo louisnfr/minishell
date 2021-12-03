@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 12:51:00 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:15:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 
 # include "struct.h"
 # include "enum.h"
-
-/*** utils ***/
-
-char	**get_paths(t_data *data);
-void	recheck_cmd_path(t_cmd **cmd_list, t_data *data);
-int		need_recheck(t_cmd **cmd_list, t_data *data);
-void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data);
-void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data);
-void	check_expansion_var(char *command, t_data *data);
-void	setup_cmd_list(t_cmd *cmd_list, t_data *data);
-void	clean_cmd_list(t_cmd **cmd_list, t_data *data);
-void	create_new_cmd(t_cmd **cmd_list, t_data *data);
-void	print_list(t_cmd *cmd_list);
 
 /*** parser ***/
 
@@ -48,8 +35,6 @@ int		get_delimiter(char *str);
 t_bool	is_redirection(char *str);
 t_bool	is_parenthese(char *str);
 int		get_redirection(char *str);
-void	parse_redirections(char **argv, t_cmd **cmd_list, t_data *data);
-void	clean_redir(t_data *data);
 void	parse_pipes(t_cmd *cmd_list, t_data *data);
 void	parse_special_value(t_cmd *cmd_list, t_data *data);
 void	handle_parentheses(int delimiter, char **argv, t_data *data);
@@ -60,13 +45,9 @@ void	handle_builtin_cmd(
 void	free_fd_array(int size, int **fd_array);
 void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data);
 void	parse_redirection_heredoc(char **argv, t_cmd *cmd_list, t_data *data);
-t_redir	*parse_start_redirection(char **argv, t_data *data);
-char	**copy_existing_files(int **copy_redir, t_cmd *cmd_list, t_data *data);
-void	fill_existing_files_redir(
-			int *redir, char **files, t_cmd *cmd_list, t_data *data);
-int		malloc_files(int length, t_cmd *cmd_list, t_data *data);
 void	parse_cmd(int delimiter, char **argv, t_cmd **cmd_list, t_data *data);
 void	parse_end_cmd(char **argv, t_cmd **cmd_list, t_data *data);
+void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data);
 
 /*** lexer ***/
 
@@ -118,5 +99,32 @@ t_bool	check_unclosed_quotes(char *input);
 t_bool	check_unclosed_parentheses(char *input);
 int		get_length_new_argv(char **argv);
 t_bool	fill_new_argv(int length, char **argv, char **new_argv, t_data *data);
+
+/*** redirection ***/
+
+void	parse_redirections(char **argv, t_cmd **cmd_list, t_data *data);
+t_redir	*parse_start_redirection(char **argv, t_data *data);
+char	**copy_existing_files(int **copy_redir, t_cmd *cmd_list, t_data *data);
+void	fill_existing_files_redir(
+			int *redir, char **files, t_cmd *cmd_list, t_data *data);
+int		malloc_files(int length, t_cmd *cmd_list, t_data *data);
+void	clean_redir(t_data *data);
+void	start_heredoc_case(int j, char **argv, t_cmd **cmd_list, t_data *data);
+
+/*** parse_exec ***/
+
+void	recheck_cmd_path(t_cmd **cmd_list, t_data *data);
+int		need_recheck(t_cmd **cmd_list, t_data *data);
+void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data);
+void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data);
+void	check_expansion_var(char *command, t_data *data);
+
+/*** utils ***/
+
+char	**get_paths(t_data *data);
+void	setup_cmd_list(t_cmd *cmd_list, t_data *data);
+void	clean_cmd_list(t_cmd **cmd_list, t_data *data);
+void	create_new_cmd(t_cmd **cmd_list, t_data *data);
+void	print_list(t_cmd *cmd_list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:46:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 19:47:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:08:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ void	clean_redir(t_data *data)
 		}
 		free(data->redir);
 		data->redir = NULL;
+	}
+}
+
+void	start_heredoc_case(int j, char **argv, t_cmd **cmd_list, t_data *data)
+{
+	int	i;
+
+	if (!(*cmd_list)->files || !(*cmd_list)->redirection)
+		return ;
+	i = -1;
+	while ((*cmd_list)->files[++i])
+	{
+		if ((*cmd_list)->redirection[i] == HEREDOC)
+			handle_heredoc(&j, argv, *cmd_list, data);
 	}
 }
 

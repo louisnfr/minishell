@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 20:03:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:33:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*parse_heredoc_line(char *line, t_data *data)
 	if (!line || !ft_strchr(line, '$'))
 		return (line);
 	new_line = NULL;
-	new_line = heredoc_env_variable(line, data);
+	new_line = heredoc_env_variable(safe_strdup(line, data), data);
 	if (!ft_strchr(new_line, '$'))
 		return (new_line);
 	pid_value = safe_itoa(data->pid, data);
@@ -35,18 +35,6 @@ static char	*parse_heredoc_line(char *line, t_data *data)
 	return (new_line);
 }
 
-static t_bool	open_heredoc(int *fd, t_cmd *cmd_list)
-{
-	*fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (*fd == -1)
-	{
-		display_error_message(
-			cmd_list->heredoc, strerror(errno), cmd_list->error_output);
-		return (FAIL);
-	}
-	return (SUCCESS);
-}
-
 static void	write_line(int fd, t_bool quotes, char **line, t_data *data)
 {
 	if (!quotes)
@@ -55,31 +43,32 @@ static void	write_line(int fd, t_bool quotes, char **line, t_data *data)
 	write(fd, "\n", 1);
 }
 
-t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data)
+t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data)
 {
 	char	*line;
-	int		fd;
 
-	if (!open_heredoc(&fd, cmd_list))
-		return (FAIL);
+	if (!data->pipe_heredoc)
+	{
+		data->pipe_heredoc = (int *)ft_calloc(1, sizeof(int) * 2);
+		if (!data->pipe_heredoc || pipe(data->pipe_heredoc) == -1)
+			return (exit_error_bool("malloc()", data));
+	}
 	line = NULL;
+	// printf("DELIMITER = %s\n", (*cmd_list)->heredoc_delimiter);
 	while (1)
 	{
 		clean_free(&data->sh->current);
 		clean_free(&data->sh->input);
-		line = heredoc_shell(
-				data, data->sh, data->sh->history, cmd_list->heredoc_delimiter);
-		if (!line)
-		{
-			safe_close_fd(fd, data);
-			fd = open(cmd_list->heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		line = heredoc_shell(data, data->sh, data->sh->history,
+				(*cmd_list)->heredoc_delimiter);
+		// if (!line)
+		// 	break ;
+		if (line && str_is_equal(line, (*cmd_list)->heredoc_delimiter))
 			break ;
-		}
-		if (line && str_is_equal(line, cmd_list->heredoc_delimiter))
-			break ;
-		write_line(fd, quotes, &line, data);
+		write_line(data->pipe_heredoc[1], quotes, &line, data);
 	}
-	safe_close_fd(fd, data);
+	(*cmd_list)->input = data->pipe_heredoc[0];
+	clean_free(&(*cmd_list)->heredoc_delimiter);
 	return (SUCCESS);
 }
 

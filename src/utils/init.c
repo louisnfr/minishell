@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 02:05:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/03 12:10:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_data	*init_data(char **envp)
 	data->par_lvl = 0;
 	data->builtins = setup_builtins(data);
 	data->all_paths = get_paths(data);
+	data->pipe_heredoc = NULL;
 	data->cmd_list = NULL;
 	return (data);
 }

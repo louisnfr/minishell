@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/01 01:59:53 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/03 11:34:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*heredoc_process_keypress(
 			t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
 char	*heredoc_shell(
 			t_data *data, t_confg *sh, t_hist *hist, char *delimiter);
-t_bool	read_heredoc(t_bool quotes, t_cmd *cmd_list, t_data *data);
+t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data);
 char	*heredoc_env_variable(char *input, t_data *data);
 char	*heredoc_special_value(
 			char *str, char *value, char character, t_data *data);

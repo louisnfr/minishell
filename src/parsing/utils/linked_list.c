@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:08 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 21:38:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 12:29:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	setup_cmd_list(t_cmd *cmd_list, t_data *data)
 	cmd_list->error_output = 2;
 	cmd_list->pipe_fd = NULL;
 	cmd_list->nb_of_pipes = 0;
-	cmd_list->heredoc = NULL;
 	cmd_list->heredoc_delimiter = NULL;
 	cmd_list->next = NULL;
 }

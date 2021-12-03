@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:26:08 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/03 12:29:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_cmd
 	t_bool			redir_error;
 	int				parenthese;
 	int				par_lvl;
-	char			*heredoc;
 	char			*heredoc_delimiter;
 	struct s_cmd	*next;
 }			t_cmd;
@@ -102,6 +101,7 @@ typedef struct s_data
 	char	**envp;
 	char	*last_cwd;
 	int		par_lvl;
+	int		*pipe_heredoc;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);
