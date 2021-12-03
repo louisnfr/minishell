@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:54:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:02:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 
 	var = init_var(data);
 	if (!var || !str || !str[var->i])
+	{
+		free_var(var);
 		return (FAIL);
+	}
 	data->double_quotes = 1;
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{

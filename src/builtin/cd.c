@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 20:01:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:09:51 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ t_bool	exec_cd(t_cmd *cmd_list, t_data *data)
 	oldpwd = getcwd(NULL, 0);
 	cdpath = get_env("CDPATH", data->env);
 	if (cmd_list->args && cmd_list->args[1])
+	{
+		clean_free(&oldpwd);
 		return (cd_error_msg("cd: too many arguments\n", cmd_list));
+	}
 	if (!cmd_list->args || !cmd_list->args[0] || (cmd_list->args
 			&& !ft_strcmp(cmd_list->args[0], "--")))
 		ret = ch_dir(get_env("HOME", data->env), "cd: HOME not set\n", cmd_list);

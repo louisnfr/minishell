@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 18:32:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 19:16:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,27 @@ static void	write_line(int fd, t_bool quotes, char **line, t_data *data)
 	clean_free(line);
 }
 
+void	create_pipe_heredoc(t_bool is_ctrl_c, t_data *data)
+{
+	if (is_ctrl_c)
+	{
+		safe_close_fd(data->pipe_heredoc[1], data);
+		safe_close_fd(data->pipe_heredoc[0], data);
+		free(data->pipe_heredoc);
+		data->pipe_heredoc = NULL;
+	}
+	data->pipe_heredoc = (int *)ft_calloc(1, sizeof(int) * 2);
+	if (!data->pipe_heredoc || pipe(data->pipe_heredoc) == -1)
+		exit_error_bool("malloc()", data);
+}
+
 t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data)
 {
 	char	*line;
 
 	if (!data->pipe_heredoc)
-	{
-		data->pipe_heredoc = (int *)ft_calloc(1, sizeof(int) * 2);
-		if (!data->pipe_heredoc || pipe(data->pipe_heredoc) == -1)
-			return (exit_error_bool("malloc()", data));
-	}
+		create_pipe_heredoc(FALSE, data);
 	line = NULL;
-	// printf("DELIMITER = %s\n", (*cmd_list)->heredoc_delimiter);
 	while (1)
 	{
 		clean_free(&data->sh->current);
@@ -64,12 +73,7 @@ t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data)
 				(*cmd_list)->heredoc_delimiter);
 		if (!line)
 		{
-			safe_close_fd(data->pipe_heredoc[1], data);
-			safe_close_fd(data->pipe_heredoc[0], data);
-			free(data->pipe_heredoc);
-			data->pipe_heredoc = (int *)ft_calloc(1, sizeof(int) * 2);
-			if (!data->pipe_heredoc || pipe(data->pipe_heredoc) == -1)
-				return (exit_error_bool("malloc()", data));
+			create_pipe_heredoc(TRUE, data);
 			break ;
 		}
 		if (line && str_is_equal(line, (*cmd_list)->heredoc_delimiter))
