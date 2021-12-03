@@ -6,13 +6,13 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:30:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/02 23:58:56 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_history(t_hist *hist)
+static void	print_history(t_cmd *cmd_list, t_hist *hist)
 {
 	int	i;
 
@@ -20,7 +20,10 @@ void	print_history(t_hist *hist)
 	hist = getlast(hist);
 	while (hist)
 	{
-		printf("%5d  %s\n", i, hist->cmd);
+		ft_putnbr_fd(i, cmd_list->output);
+		ft_putstr_fd(" ", cmd_list->output);
+		ft_putstr_fd(hist->cmd, cmd_list->output);
+		ft_putstr_fd("\n", cmd_list->output);
 		hist = hist->previous;
 		i++;
 	}
@@ -28,7 +31,6 @@ void	print_history(t_hist *hist)
 
 t_bool	exec_history(t_cmd *cmd_list, t_data *data)
 {
-	(void)cmd_list;
-	print_history(data->sh->history);
+	print_history(cmd_list, data->sh->history);
 	return (EXIT_SUCCESS);
 }
