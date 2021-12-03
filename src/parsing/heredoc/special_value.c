@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:45:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 13:17:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 17:10:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ char	*heredoc_special_value(
 	length = heredoc_get_length(str, ft_strlen(value), character);
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
+	{
+		clean_free(&value);
 		return ((char *)exit_error_void(NULL, "malloc()", data));
+	}
 	heredoc_fill_new_str(&(*str), &(*new_str), value, character);
 	clean_free(&str);
 	return (new_str);

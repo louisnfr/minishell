@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 14:07:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 17:58:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef enum s_boolean
 	CHILD	= 0,
 	FAIL	= 0,
 	SUCCESS = 1,
+	CTRL_D	= 2,
+	CTRL_C	= 3,
 }	t_boolean;
 
 typedef enum s_parenthese

@@ -6,16 +6,30 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 11:57:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:31:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*send_cmd_hd(t_data *data, t_confg *sh)
+{
+	if (sh->current && sh->search == sh->h_num)
+		return (sh->current);
+	else if (sh->input && sh->search != sh->h_num)
+		return (sh->input);
+	else
+	{
+		sh->current = safe_strdup("", data);
+		return (sh->current);
+	}
+}
+
 char	*heredoc_process_keypress(
 	t_data *data, t_confg *sh, t_hist *hist, char *delimiter)
 {
 	int	c;
+	int	ret;
 
 	c = 0;
 	init_shell_values(sh);
@@ -25,8 +39,11 @@ char	*heredoc_process_keypress(
 		if (c == ctrl_key('c') || c == ctrl_key('d')
 			|| c == ctrl_key('u') || c == ctrl_key('l'))
 		{
-			if (!process_ctrl_key_hd(data, sh, delimiter, c))
+			ret = process_ctrl_key_hd(data, sh, delimiter, c);
+			if (ret == CTRL_D)
 				return (delimiter);
+			else if (ret == CTRL_C)
+				return (NULL);
 		}
 		else if (c == TAB_KEY)
 			process_tab_key(sh, data);
@@ -39,5 +56,5 @@ char	*heredoc_process_keypress(
 		else if (ft_isprint(c))
 			update_input(sh, hist, c);
 	}
-	return (send_cmd(sh));
+	return (send_cmd_hd(data, sh));
 }

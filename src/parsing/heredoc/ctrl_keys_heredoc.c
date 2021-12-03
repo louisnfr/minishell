@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 19:18:26 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 11:12:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:26:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_bool	process_ctrl_d_heredoc(
 			56);
 		write(1, delimiter, ft_strlen(delimiter));
 		write(1, "')", 2);
-		return (SUCCESS);
+		return (CTRL_D);
 	}
 	return (FAIL);
 }
@@ -50,13 +50,13 @@ static t_bool	process_ctrl_c_heredoc(t_data *data, t_confg *sh)
 	sh->input = NULL;
 	write(1, "^C", 2);
 	data->ret_value = 130;
-	return (FAIL);
+	return (CTRL_C);
 }
 
 t_bool	process_ctrl_key_hd(t_data *data, t_confg *sh, char *delimiter, int c)
 {
 	if (c == ctrl_key('d'))
-		return (!process_ctrl_d_heredoc(data, sh, delimiter));
+		return (process_ctrl_d_heredoc(data, sh, delimiter));
 	else if (c == ctrl_key('c'))
 		return (process_ctrl_c_heredoc(data, sh));
 	else if (c == ctrl_key('l'))
