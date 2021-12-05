@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/03 13:40:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/05 19:41:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	process_ctrl_u(t_confg *sh, t_hist *hist);
 
 /*** signals ***/
 
-void	handle_sig(int sig);
 void	init_signals(t_data *data);
 void	handle_status(int status, int *exit_code);
 
@@ -97,6 +96,7 @@ void	clear_hist(t_hist *hist, int search);
 
 /*** utils ***/
 
+int		check_gnl(char *str);
 void	clear_prompt(int cx, int len);
 int		is_sep(int c);
 char	*selected_input(t_confg *sh);

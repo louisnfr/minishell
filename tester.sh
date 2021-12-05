@@ -78,7 +78,7 @@ END_HEREDOC
 	        echo -e "     ${RED}Your exit_status${RESET}\t   :  $MY_EXIT_STATUS" >> "$ERRORS_FILE"
 	        echo -e "     ${ORANGE}Expected exit_status${RESET}  :  $REF_EXIT_STATUS" >> "$ERRORS_FILE"
 		fi
-		echo "" >> "$ERRORS_FILE" 
+		echo "" >> "$ERRORS_FILE"
 	fi
 }
 
