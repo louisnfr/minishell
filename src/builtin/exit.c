@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 23:05:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/05 22:22:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,5 @@ t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 	if (quit_exit)
 		return (FAIL);
 	clean_data(data);
-	exit(exit_code);
 	return (SUCCESS);
 }

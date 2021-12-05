@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 20:06:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:48:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ char	*transform_str(
 	if (!str)
 		return (NULL);
 	str = handle_home_var(str, data);
-	str = parse_env_variable(str, data);
 	if (str)
 	{
+		str = parse_env_variable(str, data);
 		str = transform_pid_value(str, pid_value, data);
 		str = transform_ret_value(str, ret_value, data);
 	}
