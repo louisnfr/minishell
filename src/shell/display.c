@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 20:02:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/05 19:44:22 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	setup_prompt(char **input, t_data *data)
 	*input = NULL;
 	if (isatty(STDIN_FILENO))
 	{
+		init_signals(data);
 		enable_raw_mode(data->sh);
 		clean_free(&data->prpt);
 		data->prpt = prompt(data);
@@ -102,5 +103,13 @@ void	setup_prompt(char **input, t_data *data)
 		write(1, "\n", 1);
 	}
 	else
-		*input = readline("minishell> ");
+	{
+		// *input = readline("minishell> ");
+		get_next_line(STDIN_FILENO, input);
+		if (!check_gnl(*input))
+		{
+			clean_free(input);
+			exit_error_void(NULL, "terminal", data);
+		}
+	}
 }
