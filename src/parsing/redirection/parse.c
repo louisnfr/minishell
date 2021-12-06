@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 13:11:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 14:54:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,6 @@ static void	check_output_error(char **argv, t_cmd *cmd_list, t_data *data)
 	}
 }
 
-static void	get_filename(int k, char *str, t_cmd **cmd_list, t_data *data)
-{
-	char	quote;
-	int		i;
-	int		j;
-
-	if (str && (str[0] == '\'' || str[0] == '\"'))
-	{
-		quote = str[0];
-		i = 0;
-		j = 0;
-		while (str[++i] && str[i] != quote)
-			j++;
-		(*cmd_list)->files[k] = (char *)ft_calloc(1, sizeof(char) * (j + 1));
-		if (!(*cmd_list)->files[k])
-			exit_error_void(NULL, "malloc()", data);
-		i = 1;
-		j = 0;
-		while (str[i] && str[i] != quote)
-			(*cmd_list)->files[k][j++] = str[i++];
-		(*cmd_list)->files[k][j] = '\0';
-	}
-	else
-		(*cmd_list)->files[k] = safe_strdup(str, data);
-}
-
 static void	loop_redir(int j, char **argv, t_cmd **cmd_list, t_data *data)
 {
 	int		redirection;
@@ -85,7 +59,7 @@ static void	loop_redir(int j, char **argv, t_cmd **cmd_list, t_data *data)
 			break ;
 		if (redirection != HEREDOC)
 		{
-			get_filename(j, argv[data->i], cmd_list, data);
+			(*cmd_list)->files[j] = safe_strdup(argv[data->i], data);
 			(*cmd_list)->redirection[j++] = redirection;
 		}
 		data->i++;

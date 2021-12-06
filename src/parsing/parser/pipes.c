@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:59:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/30 15:13:41 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:39:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,15 @@ static void	fill_fd_array(t_cmd **cmd, t_data *data)
 	while ((*cmd)->next && (*cmd)->next->delimiter == PIPE)
 	{
 		copy_fd_array(fd_array, nb_of_pipes, cmd);
-		(*cmd)->input = fd_array[i][0];
+		if (!(*cmd)->heredoc)
+			(*cmd)->input = fd_array[i][0];
 		(*cmd)->output = fd_array[i + 1][1];
 		*cmd = (*cmd)->next;
 		i++;
 	}
 	copy_fd_array(fd_array, nb_of_pipes, cmd);
-	(*cmd)->input = fd_array[i][0];
+	if (!(*cmd)->heredoc)
+		(*cmd)->input = fd_array[i][0];
 	free_fd_array(nb_of_pipes, fd_array);
 }
 

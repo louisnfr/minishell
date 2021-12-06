@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:02:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 18:53:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 14:26:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->path = find_cmd_path(
 				(*cmd_list)->command, NULL, data->all_paths, data);
 	}
+	if (!(*cmd_list)->command || !(*cmd_list)->command[0])
+		clean_free(&(*cmd_list)->path);
 	clean_free(&pid_value);
 	clean_free(&ret_value);
 }

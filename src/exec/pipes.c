@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 15:48:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:59:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	int		exit_code;
 	t_bool	error_file;
 
-	if (update_path(&exit_code, cmd_list, data))
+	printf("heredoc_failed = %d\n", (*cmd_list)->heredoc_failed);
+	if ((*cmd_list)->heredoc_failed)
+		exit_code = 130;
+	else if (update_path(&exit_code, cmd_list, data))
 	{
 		exit_code = EXIT_FAILURE;
 		error_file = open_files(&exit_code, *cmd_list, data);
@@ -69,6 +72,24 @@ static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 		exec_cmd_in_pipe(cmd_list, data);
 }
 
+void	check_failure_heredoc(t_cmd *cmd_list)
+{
+	t_bool	hd_failed;
+
+	hd_failed = FALSE;
+	if (cmd_list->heredoc_failed)
+		hd_failed = TRUE;
+	cmd_list = cmd_list->next;
+	while (cmd_list && cmd_list->delimiter == PIPE)
+	{
+		if (cmd_list->heredoc_failed)
+			hd_failed = TRUE;
+		if (hd_failed && !cmd_list->heredoc_failed)
+			cmd_list->heredoc_failed = TRUE;
+		cmd_list = cmd_list->next;
+	}
+}
+
 int	exec_pipes(t_cmd **cmd_list, t_data *data)
 {
 	int		exit_code;
@@ -78,6 +99,7 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 
 	i = 0;
 	nb_of_cmd = (*cmd_list)->nb_of_pipes + 1;
+	check_failure_heredoc(*cmd_list);
 	pid = (pid_t *)ft_calloc(1, sizeof(pid_t) * nb_of_cmd);
 	if (!pid)
 		return (exit_error_bool("malloc()", data));

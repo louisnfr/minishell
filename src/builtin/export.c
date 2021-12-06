@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:42:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 14:31:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,19 @@ static void	export_var(t_data *data, t_cmd *cmd_list, int append, int i)
 		add_var_env(data, cmd_list, i);
 }
 
+t_bool	all_args_empty(char **args)
+{
+	int	i;
+
+	i = -1;
+	while (args && args[++i])
+	{
+		if (args[i][0])
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
 t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 {
 	int		append;
@@ -57,7 +70,7 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 	append = false;
 	ret = EXIT_SUCCESS;
 	i = -1;
-	if (!cmd_list->args)
+	if (!cmd_list->args || (cmd_list->args && all_args_empty(cmd_list->args)))
 		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{

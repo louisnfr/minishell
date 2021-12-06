@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 11:43:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:11:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,17 @@ void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 	clean_free(&data->sh->input);
 }
 
+void	free_pipe_heredoc(t_data *data)
+{
+	if (data->pipe_heredoc)
+	{
+		safe_close_fd(data->pipe_heredoc[0], data);
+		safe_close_fd(data->pipe_heredoc[1], data);
+		free(data->pipe_heredoc);
+		data->pipe_heredoc = NULL;
+	}
+}
+
 void	clean_data(t_data *data)
 {
 	if (!data)
@@ -66,6 +77,7 @@ void	clean_data(t_data *data)
 	data->par_lvl = 0;
 	clean_cmd_list(&data->cmd_list, data);
 	free_double_str(data->all_paths);
+	free_pipe_heredoc(data);
 	if (data->envp)
 		free_double_str(data->envp);
 	free_double_str(data->builtins);

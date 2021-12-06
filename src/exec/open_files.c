@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 11:39:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 14:45:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,19 @@ static void	handle_opening(int i, int *error, t_cmd **cmd_list)
 		(*cmd_list)->error_output = (*cmd_list)->output;
 }
 
+static void	transform_filename(int i, t_cmd *cmd_list, t_data *data)
+{
+	char	*pid_value;
+	char	*ret_value;
+
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
+	cmd_list->files[i] = transform_str(
+			cmd_list->files[i], pid_value, ret_value, data);
+	clean_free(&pid_value);
+	clean_free(&ret_value);
+}
+
 t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
@@ -75,6 +88,7 @@ t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
 	while (cmd_list->files[++i])
 	{
 		error = FALSE;
+		transform_filename(i, cmd_list, data);
 		handle_opening(i, &error, &cmd_list);
 		if (error)
 		{

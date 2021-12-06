@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/05 22:22:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 15:59:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	parse_exit_code(char *arg)
 		ft_putstr_fd(": numeric argument required\n", 2);
 		return (2);
 	}
-	return (nb);
+	return (nb * sign);
 }
 
 static long long	get_exit_code(
@@ -80,12 +80,20 @@ t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 {
 	long long	exit_code;
 	t_bool		quit_exit;
+	t_bool		is_in_pipe;
 
-	if (isatty(STDIN_FILENO))
+	is_in_pipe = FALSE;
+	if (cmd_list->nb_of_pipes)
+		is_in_pipe = TRUE;
+	if (isatty(STDIN_FILENO) && !is_in_pipe)
 		ft_putstr_fd("exit\n", 2);
 	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
 		return (FAIL);
-	clean_data(data);
+	if (!is_in_pipe)
+	{
+		clean_data(data);
+		exit(exit_code);
+	}
 	return (SUCCESS);
 }

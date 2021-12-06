@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 16:43:27 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 19:38:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 12:12:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 				get_env("CDPATH", data->env), cmd_list->args[0], data);
 	if (chdir(tmp) < 0)
 	{
+		clean_free(&tmp);
 		if (chdir(cmd_list->args[0]) < 0)
 			return (cd_error(cmd_list));
 	}
@@ -46,7 +47,7 @@ static t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 		ft_putstr_fd(tmp, cmd_list->output);
 		ft_putstr_fd("\n", cmd_list->output);
 	}
-	free(tmp);
+	clean_free(&tmp);
 	return (EXIT_SUCCESS);
 }
 

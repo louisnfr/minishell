@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 02:03:04 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 14:00:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_status(int sig, int *exit_code)
 		[SIGTRAP] = "Trace/Breakpoint Trap\n",
 		[SIGBUS] = "Bus Error\n",
 	};
-	
+
 	if (signums[sig])
 		ft_putstr_fd(signums[sig], STDERR_FILENO);
 	*exit_code = (sig + 128);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 14:42:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:10:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_data	*init_data(char **envp);
 void	clean_data(t_data *data);
 void	*exit_error_void(void *return_value, char *error, t_data *data);
 t_bool	exit_error_bool(char *error, t_data *data);
+void	free_pipe_heredoc(t_data *data);
 
 /*** protected functions ***/
 

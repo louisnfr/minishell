@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 16:50:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 19:03:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 
 void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 {
+	cmd_list->heredoc = TRUE;
 	redir_heredoc(j, argv, cmd_list, data);
 	(*j)++;
 	if (argv[*j] && str_is_equal(argv[*j], "2>&1"))

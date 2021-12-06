@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 00:22:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 12:42:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	{
 		handle_bin_command(exit_code, cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
+	}
+	else if (!(*cmd_list)->command || !(*cmd_list)->command[0])
+	{
+		*exit_code = 0;
+		*cmd_list = (*cmd_list)->next;
+		return (SUCCESS);
 	}
 	else
 	{

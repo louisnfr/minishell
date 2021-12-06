@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 16:39:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:24:02 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ void	init_fd(int fd, t_data **data)
 void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data)
 {
 	close_all_pipes(cmd_list, data);
+	close_fd(cmd_list, data);
 	*cmd_list = (*cmd_list)->next;
 	while ((*cmd_list) && (*cmd_list)->delimiter == PIPE)
+	{
+		close_fd(cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
+	}
 }
 
 t_bool	create_fork(int i, pid_t *pid, t_data *data)
