@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:17:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 12:37:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 19:14:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ void	ignore_signals(void)
 	signal(SIGABRT, SIG_IGN);
 	signal(SIGTRAP, SIG_IGN);
 	signal(SIGBUS, SIG_IGN);
+}
+
+void	recover_signals(void)
+{
+	signal(SIGSEGV, SIG_DFL);
+	signal(SIGABRT, SIG_DFL);
+	signal(SIGTRAP, SIG_DFL);
+	signal(SIGBUS, SIG_DFL);
 }
 
 void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)

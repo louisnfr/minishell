@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 14:31:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 19:14:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static t_bool	check_export(char *s, int *append)
 {
 	int	i;
 
+	if (s && !ft_strlen(s))
+		return (FAIL);
 	if (ft_isdigit(s[0]) || s[0] == '=')
 		return (FAIL);
 	i = -1;
@@ -74,6 +76,8 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 		print_export(cmd_list, data);
 	while (cmd_list->args && cmd_list->args[++i])
 	{
+		for(int q=0; cmd_list->args[q]; q++)
+			printf("cmd_list->args[%d]: %s\n", q, cmd_list->args[q]);
 		if (!check_export(cmd_list->args[i], &append))
 			ret = export_error(cmd_list, i);
 		else if (!ft_strnstr(cmd_list->args[i], "=",

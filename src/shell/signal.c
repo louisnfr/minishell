@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 14:00:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 19:13:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	handle_sig(int sig)
 
 void	handle_status(int sig, int *exit_code)
 {
-	char	*signums[32] = {
+	char	*signums[] = {
 		[SIGINT] = "\n",
 		[SIGSEGV] = "Segmentation fault\n",
 		[SIGABRT] = "Abort\n",

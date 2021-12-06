@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 00:52:37 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:25:39 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	process_ctrl_u(t_confg *sh, t_hist *hist);
 void	init_signals(t_data *data);
 void	handle_status(int sig, int *exit_code);
 void	ignore_signals(void);
+void	recover_signals(void);
 
 /*** heredoc ***/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 20:01:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:18:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static t_bool	check_unset(char *s)
 {
 	int	i;
 
+	if (s && !ft_strlen(s))
+		return (FAIL);
 	if (ft_isdigit(s[0]) || s[0] == '=')
 		return (FAIL);
 	i = -1;
@@ -41,29 +43,24 @@ static void	free_env_var(t_env *var)
 	var = NULL;
 }
 
-static t_bool	unset(t_env **env, t_cmd *cmd_list)
+static t_bool	unset(t_env **env, char *var)
 {
 	t_env	*prev;
 	t_env	*tmp;
-	int		i;
 
-	i = -1;
-	while (cmd_list->args[++i])
+	if (!get_env(var, *env))
+		return (EXIT_SUCCESS);
+	prev = find_prev_var(var, *env);
+	if (!prev)
 	{
-		if (!get_env(cmd_list->args[i], *env))
-			return (EXIT_SUCCESS);
-		prev = find_prev_var(cmd_list->args[i], *env);
-		if (!prev)
-		{
-			tmp = *env;
-			*env = (*env)->next;
-			free_env_var(tmp);
-			return (EXIT_SUCCESS);
-		}
-		tmp = prev->next;
-		prev->next = prev->next->next;
+		tmp = *env;
+		*env = (*env)->next;
 		free_env_var(tmp);
+		return (EXIT_SUCCESS);
 	}
+	tmp = prev->next;
+	prev->next = prev->next->next;
+	free_env_var(tmp);
 	return (EXIT_SUCCESS);
 }
 
@@ -78,14 +75,15 @@ t_bool	exec_unset(t_cmd *cmd_list, t_data *data)
 	if (cmd_list && cmd_list->next && cmd_list->next->delimiter == PIPE)
 		return (EXIT_SUCCESS);
 	i = -1;
-	while (cmd_list->args[++i])
+	while (cmd_list->args && cmd_list->args[++i])
 	{
+		printf("arg: %s\n", cmd_list->args[i]);
 		if (!check_unset(cmd_list->args[i]))
 			ret = unset_error(cmd_list, i);
 		else
 		{
-			unset(&data->env, cmd_list);
-			unset(&data->export, cmd_list);
+			unset(&data->env, cmd_list->args[i]);
+			unset(&data->export, cmd_list->args[i]);
 		}
 	}
 	return (ret);

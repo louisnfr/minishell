@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 03:42:18 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:26:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 			handle_status(WTERMSIG(status), exit_code);
 		if (WIFEXITED(status))
 			*exit_code = WEXITSTATUS(status);
+		recover_signals();
 	}
 	close_fd(cmd_list, data);
 }
