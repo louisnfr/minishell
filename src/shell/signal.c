@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/05 19:52:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 02:03:04 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,20 @@ static void	handle_sig(int sig)
 	(void)sig;
 }
 
-static void	ignore_signals(void)
+void	handle_status(int sig, int *exit_code)
 {
-	signal(SIGSEGV, SIG_IGN);
-	signal(SIGABRT, SIG_IGN);
-	signal(SIGTRAP, SIG_IGN);
-	signal(SIGBUS, SIG_IGN);
-}
-
-void	handle_status(int status, int *exit_code)
-{
-	int	ret;
-
-	ret = 0;
-	ignore_signals();
-	if (WIFEXITED(status))
-		ret = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-	{
-		ret = WTERMSIG(status) + 128;
-		if (ret == 130)
-			ft_putstr("\n");
-		if (ret == 131)
-			ft_putstr("Quit (core dumped)\n");
-	}
-	*exit_code = ret;
+	char	*signums[32] = {
+		[SIGINT] = "\n",
+		[SIGSEGV] = "Segmentation fault\n",
+		[SIGABRT] = "Abort\n",
+		[SIGQUIT] = "Quit\n",
+		[SIGTRAP] = "Trace/Breakpoint Trap\n",
+		[SIGBUS] = "Bus Error\n",
+	};
+	
+	if (signums[sig])
+		ft_putstr_fd(signums[sig], STDERR_FILENO);
+	*exit_code = (sig + 128);
 }
 
 void	init_signals(t_data *data)

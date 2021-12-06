@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 20:09:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 00:22:24 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 		close_fd(cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
 		check_exit_code(*exit_code, cmd_list);
-	}	
+	}
 }
 
 int	exec(t_data *data)

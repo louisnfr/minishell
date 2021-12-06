@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:17:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 11:03:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 01:51:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ignore_signals(void)
+{
+	signal(SIGSEGV, SIG_IGN);
+	signal(SIGABRT, SIG_IGN);
+	signal(SIGTRAP, SIG_IGN);
+	signal(SIGBUS, SIG_IGN);
+}
 
 void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
 {
@@ -36,7 +44,7 @@ t_bool	init_exec(
 	{
 		data->ret_value = *exit_code;
 		return (0);
-	}	
+	}
 	*cmd_list = data->cmd_list->next;
 	return (1);
 }

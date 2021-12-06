@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 18:46:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 02:04:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 	status = 0;
 	if (exec_bin_command(&pid, *cmd_list, data))
 	{
-		waitpid(pid, &status, 0);
+		ignore_signals();
+		waitpid(pid, &status, WUNTRACED | WCONTINUED);
+		if (WIFSIGNALED(status))
+			handle_status(WTERMSIG(status), exit_code);
 		if (WIFEXITED(status))
 			*exit_code = WEXITSTATUS(status);
-		else
-			handle_status(status, exit_code);
 	}
 	close_fd(cmd_list, data);
 }
