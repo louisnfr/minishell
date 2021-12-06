@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 02:04:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 03:42:18 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 	if (exec_bin_command(&pid, *cmd_list, data))
 	{
 		ignore_signals();
-		waitpid(pid, &status, WUNTRACED | WCONTINUED);
+		waitpid(pid, &status, 0);
 		if (WIFSIGNALED(status))
 			handle_status(WTERMSIG(status), exit_code);
 		if (WIFEXITED(status))

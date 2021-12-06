@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 02:18:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 03:43:01 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,10 @@ int	check_gnl(char *str)
 	i = -1;
 	while (++i < len)
 	{
-		printf("check\n");
 		if (!str[i] || !ft_isprint(str[i]))
-			return (0);
+			return (FAIL);
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 int	ctrl_key(int k)

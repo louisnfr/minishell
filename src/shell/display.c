@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 02:17:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 03:41:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	setup_prompt(char **input, t_data *data)
 	}
 	else
 	{
-		// *input = readline("minishell> ");
 		if (get_next_line(STDIN_FILENO, input) == -1 || !check_gnl(*input))
 		{
 			clean_free(input);
