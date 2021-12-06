@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/03 20:09:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:24:25 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 static void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 {
-	if (!get_env("PWD", data->env))
-	{
-		add_var(&data->env, new_var("PWD", pwd, 1));
-		add_var(&data->export, new_var("PWD", pwd, 1));
-	}
 	if (!get_env("OLDPWD", data->env))
 	{
 		add_var(&data->env, new_var("OLDPWD", oldpwd, 1));
@@ -29,7 +24,7 @@ static void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 		set_env("OLDPWD", oldpwd, data->env, data);
 		set_env("OLDPWD", oldpwd, data->export, data);
 	}
-	if (pwd)
+	if (get_env("PWD", data->env) && pwd)
 	{
 		set_env("PWD", pwd, data->env, data);
 		set_env("PWD", pwd, data->export, data);

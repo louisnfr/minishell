@@ -3,6 +3,6 @@
 
 int	main(void)
 {
-	kill(0, SIGABRT);
+	kill(0, SIGTRAP);
 	return (0);
 }

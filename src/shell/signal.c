@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 02:03:04 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 17:29:45 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	handle_sig(int sig)
 
 void	handle_status(int sig, int *exit_code)
 {
-	char	*signums[32] = {
+	char	*signums[] = {
 		[SIGINT] = "\n",
 		[SIGSEGV] = "Segmentation fault\n",
 		[SIGABRT] = "Abort\n",
@@ -27,7 +27,7 @@ void	handle_status(int sig, int *exit_code)
 		[SIGTRAP] = "Trace/Breakpoint Trap\n",
 		[SIGBUS] = "Bus Error\n",
 	};
-	
+
 	if (signums[sig])
 		ft_putstr_fd(signums[sig], STDERR_FILENO);
 	*exit_code = (sig + 128);

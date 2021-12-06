@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 16:43:27 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/29 19:38:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 18:59:23 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ static int	error_oldpwd(char *oldpwd, char *command)
 static t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 {
 	char	*tmp;
+	// char	*try;
 
 	tmp = NULL;
+	// try = ft_strtrim(cmd_list->args[0], "/");
 	if (cdpath[ft_strlen(cdpath) - 1] != '/')
 	{
 		tmp = safe_strjoin(get_env("CDPATH", data->env), "/", data);
