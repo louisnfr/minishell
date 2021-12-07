@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 16:43:27 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 01:37:04 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 02:51:02 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,3 @@ t_bool	cd_error_msg(char *s, t_cmd *cmd_list)
 	ft_putstr_fd(s, cmd_list->error_output);
 	return (EXIT_FAILURE);
 }
-
-
-/*
-mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ;
-cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
-*/

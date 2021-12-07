@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:15:38 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 19:13:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 02:49:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static void	handle_sig(int sig)
 
 void	handle_status(int sig, int *exit_code)
 {
-	char	*signums[] = {
-		[SIGINT] = "\n",
-		[SIGSEGV] = "Segmentation fault\n",
-		[SIGABRT] = "Abort\n",
-		[SIGQUIT] = "Quit\n",
-		[SIGTRAP] = "Trace/Breakpoint Trap\n",
-		[SIGBUS] = "Bus Error\n",
+	const char	*signums[] = {
+	[SIGINT] = "\n",
+	[SIGSEGV] = "Segmentation fault\n",
+	[SIGABRT] = "Abort\n",
+	[SIGQUIT] = "Quit\n",
+	[SIGTRAP] = "Trace/Breakpoint Trap\n",
+	[SIGBUS] = "Bus Error\n",
 	};
 
 	if (signums[sig])
-		ft_putstr_fd(signums[sig], STDERR_FILENO);
+		ft_putstr_fd((char *)signums[sig], STDERR_FILENO);
 	*exit_code = (sig + 128);
 }
 
