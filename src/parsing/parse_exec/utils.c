@@ -5,133 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 11:39:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 12:52:29 by efrancon         ###   ########.fr       */
+/*   Created: 2021/12/07 18:52:51 by efrancon          #+#    #+#             */
+/*   Updated: 2021/12/07 18:59:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_length(char *command)
+char	*transform_cmd_reparse(char *str, t_data *data)
 {
-	int		i;
-	int		j;
-	char	quote;
+	char	*pid_value;
+	char	*ret_value;
 
-	i = 0;
-	j = 0;
-	while (command[i])
+	if (!str)
+		return (NULL);
+	str = handle_home_var(str, data);
+	str = parse_env_variable(str, data);
+	if (str && !str_is_equal(str, "\"\"") && !str_is_equal(str, "\'\'"))
 	{
-		if (command[i] && (command[i] == '\'' || command[i] == '\"'))
-		{
-			quote = command[i++];
-			while (command[i] && command[i] != quote)
-			{
-				j++;
-				i++;
-			}
-			i++;
-		}
-		else
-		{
-			j++;
-			i++;
-		}
+		pid_value = safe_itoa(data->pid, data);
+		ret_value = safe_itoa(data->ret_value, data);
+		str = transform_pid_value(str, pid_value, data);
+		str = transform_ret_value(str, ret_value, data);
+		clean_free(&pid_value);
+		clean_free(&ret_value);
 	}
-	return (j + 1);
+	return (str);
 }
 
-static char	*remove_quote_command(char *command, t_data *data)
+char	*transform_cmd(
+	char *str, char *pid_value, char *ret_value, t_data *data)
 {
-	int		i;
-	int		j;
-	char	quote;
-	char	*new_command;
-
-	new_command = (char *)ft_calloc(1, sizeof(char) * get_length(command));
-	if (!new_command)
-		return ((char *)exit_error_void(NULL, "malloc()", data));
-	i = 0;
-	j = 0;
-	while (command[i])
+	if (!str)
+		return (NULL);
+	str = handle_home_var(str, data);
+	if (str)
 	{
-		if (command[i] && (command[i] == '\'' || command[i] == '\"'))
-		{
-			quote = command[i++];
-			while (command[i] && command[i] != quote)
-				new_command[j++] = command[i++];
-			i++;
-		}
-		else
-			new_command[j++] = command[i++];
+		str = parse_env_variable(str, data);
+		str = transform_pid_value(str, pid_value, data);
+		str = transform_ret_value(str, ret_value, data);
 	}
-	new_command[j] = '\0';
-	clean_free(&command);
-	return (new_command);
-}
-
-static t_bool	check_dollar_simple_quote(char *command)
-{
-	int		i;
-	int		command_length;
-
-	command_length = ft_strlen(command);
-	i = -1;
-	while (++i < command_length && command[i])
-	{
-		if (command[i] && command[i] == '\'')
-		{
-			i++;
-			while (command[i] && command[i] != '\'')
-				i++;
-			i++;
-		}
-		if (command[i] && command[i] == '$')
-			return (FALSE);
-	}
-	return (TRUE);
-}
-
-static t_bool	check_dollar_double_quote(char *command)
-{
-	int		i;
-	int		command_length;
-
-	command_length = ft_strlen(command);
-	i = -1;
-	while (++i < command_length && command[i])
-	{
-		if (command[i] && command[i] == '\"')
-		{
-			i++;
-			while (command[i] && command[i] != '\"')
-			{
-				if (command[i] && command[i] == '$')
-					return (TRUE);
-				i++;
-			}
-		}
-	}
-	return (FALSE);
-}
-
-int	need_recheck(t_cmd **cmd_list, t_data *data)
-{
-	if (!(*cmd_list)->command || str_is_equal((*cmd_list)->command, "\"\"")
-		|| str_is_equal((*cmd_list)->command, "\'\'"))
-		return (0);
-	if (!ft_strchr((*cmd_list)->command, '$')
-		&& (ft_strchr((*cmd_list)->command, '\"')
-			|| ft_strchr((*cmd_list)->command, '\'')))
-	{
-		(*cmd_list)->command = remove_quote_command((*cmd_list)->command, data);
-		(*cmd_list)->path = find_cmd_path(
-				(*cmd_list)->command, NULL, data->all_paths, data);
-		return (0);
-	}
-	if (check_dollar_simple_quote((*cmd_list)->command))
-		return (0);
-	if (check_dollar_double_quote((*cmd_list)->command))
-		return (2);
-	return (1);
+	return (str);
 }

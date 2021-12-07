@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_length.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 23:46:27 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 18:50:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handle_env_variable(
 	env_key = get_env_key(str, &var->i, data);
 	var->j += get_length_env_value(double_quotes, env_key, data);
 	clean_free(&env_key);
-	// env_key = NULL;
+	env_key = NULL;
 	if (!str[var->i])
 		var->j--;
 }

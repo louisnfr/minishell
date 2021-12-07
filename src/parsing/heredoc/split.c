@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:45:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 22:32:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 18:49:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_bool	handle_heredoc_quotes(int *i, char **str, char **strs, t_data *data)
 {
 	int		length;
 
-	// printf("%s\n", *str);
 	if (!(**str) || !(ft_strchr(*str, '\'') || ft_strchr(*str, '\"')))
 		return (SUCCESS);
 	length = get_length(str, '\'', data);

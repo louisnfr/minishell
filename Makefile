@@ -77,6 +77,7 @@ SOURCES = \
 		\
 		parsing/parse_exec/reparse.c \
 		parsing/parse_exec/refill.c \
+		parsing/parse_exec/recheck.c \
 		parsing/parse_exec/utils.c \
 		\
 		env/edit.c \
@@ -125,13 +126,14 @@ SOURCES = \
 		utils/free.c \
 		utils/init.c \
 		utils/clean.c \
+		utils/clean_2.c \
 		utils/exit_error.c \
 		utils/secured_functions_1.c \
 		utils/secured_functions_2.c
 
 ### COMPILATION ###
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) $(DEBUG_F)
+CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) #$(DEBUG_F)
 DEBUG_F	= -fsanitize=address
 LIBS	= -lft -lncurses -lreadline
 

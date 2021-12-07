@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 22:32:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 15:12:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	int		exit_code;
 	t_bool	error_file;
 
-	// printf("heredoc_failed = %d\n", (*cmd_list)->heredoc_failed);
 	if ((*cmd_list)->heredoc_failed)
 		exit_code = 130;
 	else if (update_path(&exit_code, cmd_list, data))
@@ -55,6 +54,7 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 			}
 		}
 	}
+	close_all_pipes(cmd_list, data);
 	close_all_fd(data);
 	clean_data(data);
 	exit(exit_code);

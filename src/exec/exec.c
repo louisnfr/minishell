@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 13:31:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 19:09:02 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	}
 }
 
+static t_bool	handle_other_cases(
+	int *exit_code, t_cmd **cmd_list, t_data *data)
+{
+	if (!(*cmd_list)->command || !(*cmd_list)->command[0])
+	{
+		*exit_code = 0;
+		*cmd_list = (*cmd_list)->next;
+		return (SUCCESS);
+	}
+	parse_special_value(*cmd_list, data);
+	return (FAIL);
+}
+
 t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (!(*cmd_list)->path)
@@ -55,17 +68,8 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 		handle_bin_command(exit_code, cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
 	}
-	else if (!(*cmd_list)->command || !(*cmd_list)->command[0])
-	{
-		*exit_code = 0;
-		*cmd_list = (*cmd_list)->next;
-		return (SUCCESS);
-	}
 	else
-	{
-		parse_special_value(*cmd_list, data);
-		return (FAIL);
-	}
+		return (handle_other_cases(exit_code, cmd_list, data));
 	check_exit_code(*exit_code, cmd_list);
 	return (SUCCESS);
 }

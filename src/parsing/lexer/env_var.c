@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 20:02:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 18:12:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,25 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	return (SUCCESS);
 }
 
+static char	*handle_special_case(char *input, t_data *data)
+{
+	if (str_is_equal(input, "$\"\""))
+	{
+		clean_free(&input);
+		return (safe_strdup("\"\"", data));
+	}
+	clean_free(&input);
+	return (safe_strdup("\'\'", data));
+}
+
 char	*parse_env_variable(char *input, t_data *data)
 {
 	char	*new_input;
 	int		new_length;
 
 	new_input = NULL;
+	if (str_is_equal(input, "$\"\"") || str_is_equal(input, "$\'\'"))
+		return (handle_special_case(input, data));
 	new_length = get_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)

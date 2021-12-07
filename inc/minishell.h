@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:43:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 19:02:51 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	clean_data(t_data *data);
 void	*exit_error_void(void *return_value, char *error, t_data *data);
 t_bool	exit_error_bool(char *error, t_data *data);
 void	free_pipe_heredoc(t_data *data);
+void	clean_free_double_str(int nb_of_str, t_cmd **cmd_list);
+void	free_args(int nb_of_str, char **args);
 
 /*** protected functions ***/
 
