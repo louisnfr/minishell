@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:13 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 15:36:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 01:26:45 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 static void	update_env(t_data *data, t_env *env)
 {
+	char	*cwd;
 	char	*tmp;
 	int		i;
 
 	tmp = get_env("SHLVL", env);
-	if (!tmp)
-		return ;
-	i = (ft_atoi(tmp) + 1);
-	tmp = safe_itoa(i, data);
-	set_env("SHLVL", tmp, env, data);
-	free(tmp);
+	if (tmp)
+	{
+		i = (ft_atoi(tmp) + 1);
+		tmp = safe_itoa(i, data);
+		set_env("SHLVL", tmp, env, data);
+		clean_free(&tmp);
+	}
+	tmp = get_env("SHELL", env);
+	if (tmp)
+	{
+		cwd = getcwd(NULL, 0);
+		set_env("SHELL", cwd, env, data);
+		clean_free(&cwd);
+	}
 }
 
 static t_env	*dup_env_export(char **envp, t_data *data)

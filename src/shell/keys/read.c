@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:36:06 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:36:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,17 @@ static int	read_escape_seq(void)
 	return ('\x1b');
 }
 
-int	read_key(t_confg *sh)
+int	read_key(t_confg *sh, t_data *data)
 {
 	int		ret;
 	char	c;
 
+	(void)sh;
 	while (1)
 	{
 		ret = read(STDIN_FILENO, &c, 1);
 		if (ret == -1 && errno != EAGAIN)
-			exit_error("read", sh);
+			exit_error_bool("read", data);
 		if (ret == 1)
 			break ;
 	}

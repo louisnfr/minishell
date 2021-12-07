@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 17:25:39 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:35:55 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_shell(t_confg *sh);
 
 /*** read input ***/
 
-int		read_key(t_confg *sh);
+int		read_key(t_confg *sh, t_data *data);
 char	*shell_process_keypress(t_data *data, t_confg *sh, t_hist *hist);
 char	*heredoc_process_keypress(
 			t_data *data, t_confg *sh, t_hist *hist, char *delimiter);

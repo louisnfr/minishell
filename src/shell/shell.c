@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 02:07:14 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 19:32:02 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:34:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*shell_process_keypress(t_data *data, t_confg *sh, t_hist *hist)
 	init_shell_values(sh);
 	while (c != 13)
 	{
-		c = read_key(sh);
+		c = read_key(sh, data);
 		if (c == ctrl_key('c') || c == ctrl_key('d')
 			|| c == ctrl_key('u') || c == ctrl_key('l'))
 		{

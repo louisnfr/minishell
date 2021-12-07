@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 23:49:45 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:45:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	process_tab_key(t_confg *sh, t_data *data)
 				break ;
 			entity = readdir(directory);
 		}
-		free(current);
+		clean_free(&current);
 		if (!entity)
 		{
 			closedir(directory);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 18:10:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 23:43:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,8 @@ void	change_last_redirection(t_cmd **cmd_list);
 
 /*** exit ***/
 
-void	exit_error(const char *s, t_confg *sh);
 void	free_env(t_env *g_env);
 void	free_split(char **args);
-void	exit_free(t_confg *sh, t_hist *hist);
 void	free_history(t_hist *hist);
 void	display_error_message(char *cmd, char *errno_msg, int fd);
 void	syntax_error_char_msg(int nb, char token);

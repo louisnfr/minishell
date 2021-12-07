@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 14:52:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/03 18:31:23 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 23:48:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*heredoc_process_keypress(
 	init_shell_values(sh);
 	while (c != 13)
 	{
-		c = read_key(sh);
+		c = read_key(sh, data);
 		if (c == ctrl_key('c') || c == ctrl_key('d')
 			|| c == ctrl_key('u') || c == ctrl_key('l'))
 		{

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:26:09 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:45:10 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	process_arrow_up(t_confg *sh, t_hist *hist)
 	{
 		sh->search--;
 		if (sh->input)
-			free(sh->input);
+			clean_free(&sh->input);
 		sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
 		if (!sh->input)
 			return ;
@@ -56,7 +56,7 @@ static void	process_arrow_down(t_confg *sh, t_hist *hist)
 	if (sh->next_cmd)
 	{
 		if (sh->input)
-			free(sh->input);
+			clean_free(&sh->input);
 		sh->input = malloc(sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
 		if (!sh->input)
 			return ;
@@ -67,7 +67,7 @@ static void	process_arrow_down(t_confg *sh, t_hist *hist)
 	}
 	else if (!sh->next_cmd)
 	{
-		free(sh->input);
+		clean_free(&sh->input);
 		sh->input = NULL;
 		if (sh->current)
 			write(1, sh->current, ft_strlen(sh->current));

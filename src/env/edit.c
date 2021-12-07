@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:29 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 20:28:13 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 01:03:39 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	set_env(char *key, char *new_value, t_env *env, t_data *data)
 		env = env->next;
 	}
 	env->is_value = 1;
-	free(env->value);
+	clean_free(&env->value);
 	env->value = ft_calloc(1, sizeof(char) + (ft_strlen(new_value) + 1));
 	if (!env->value)
 		exit_error_bool("malloc()", data);
@@ -53,12 +53,12 @@ static void	append_env(char *key, char *new_value, t_env *env, t_data *data)
 		env = env->next;
 	}
 	env->is_value = 1;
-	free(env->value);
+	clean_free(&env->value);
 	env->value = ft_calloc((ft_strlen(dest) + 1), sizeof(char));
 	if (!env->value)
 		exit_error_bool("malloc()", data);
 	ft_memcpy(env->value, dest, ft_strlen(dest) + 1);
-	free(dest);
+	clean_free(&dest);
 	env = head;
 }
 

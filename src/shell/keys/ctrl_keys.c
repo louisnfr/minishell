@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrl_keys.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 11:11:09 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/06 23:47:01 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void	process_ctrl_d(t_data *data, t_confg *sh)
 
 static t_bool	process_ctrl_c(t_data *data, t_confg *sh)
 {
-	free(sh->current);
+	clean_free(&sh->current);
 	sh->current = NULL;
-	free(sh->input);
+	clean_free(&sh->input);
 	sh->input = NULL;
 	write(1, "^C", 2);
 	data->ret_value = 130;
@@ -66,7 +66,7 @@ void	process_ctrl_u(t_confg *sh, t_hist *hist)
 {
 	if (sh->search == sh->h_num)
 	{
-		free(sh->current);
+		clean_free(&sh->current);
 		sh->current = NULL;
 		clear_prompt(sh->cx, 1);
 		sh->cx = 0;

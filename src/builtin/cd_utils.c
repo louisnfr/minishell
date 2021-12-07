@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 16:43:27 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 19:14:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 01:37:04 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ static int	error_oldpwd(char *oldpwd, char *command)
 static t_bool	try_cdpath(char *cdpath, t_data *data, t_cmd *cmd_list)
 {
 	char	*tmp;
-	// char	*try;
 
 	tmp = NULL;
-	// try = ft_strtrim(cmd_list->args[0], "/");
+	cmd_list->args[0] = ft_strtrim(cmd_list->args[0], "/");
 	if (cdpath[ft_strlen(cdpath) - 1] != '/')
 	{
 		tmp = safe_strjoin(get_env("CDPATH", data->env), "/", data);
-		tmp = safe_strjoin(tmp, cmd_list->args[0], data);
+		tmp = safe_strjoin_and_free(tmp, cmd_list->args[0], data);
 	}
 	else
 		tmp = safe_strjoin(
@@ -61,7 +60,7 @@ int	get_ret(char *oldpwd, char *cdpath, t_cmd *cmd_list, t_data *data)
 			|| str_is_equal(cmd_list->args[0], "..")))
 		ret = error_oldpwd(oldpwd, cmd_list->args[0]);
 	else if (ft_strlen(cdpath) > 0 && ft_strcmp(cmd_list->args[0], ".")
-		&& ft_strcmp(cmd_list->args[0], ".."))
+		&& ft_strcmp(cmd_list->args[0], "..") && cmd_list->args[0][0] != '/')
 		ret = try_cdpath(cdpath, data, cmd_list);
 	else
 		ret = ch_dir(cmd_list->args[0], NULL, cmd_list);
@@ -81,3 +80,9 @@ t_bool	cd_error_msg(char *s, t_cmd *cmd_list)
 	ft_putstr_fd(s, cmd_list->error_output);
 	return (EXIT_FAILURE);
 }
+
+
+/*
+mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ;
+cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
+*/

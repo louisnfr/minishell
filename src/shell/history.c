@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:30:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:44:02 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	clear_hist(t_hist *hist, int search)
 	{
 		if (hist->new && hist->num == search)
 		{
-			free(hist->new);
+			clean_free(&hist->new);
 			hist->new = malloc(sizeof(char) * (ft_strlen(hist->cmd) + 1));
 			if (hist->new)
 				ft_strcpy(hist->new, hist->cmd);
