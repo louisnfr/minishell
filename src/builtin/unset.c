@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:58 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 18:18:59 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/07 11:47:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_bool	exec_unset(t_cmd *cmd_list, t_data *data)
 	i = -1;
 	while (cmd_list->args && cmd_list->args[++i])
 	{
-		printf("arg: %s\n", cmd_list->args[i]);
+		// printf("arg: %s\n", cmd_list->args[i]);
 		if (!check_unset(cmd_list->args[i]))
 			ret = unset_error(cmd_list, i);
 		else

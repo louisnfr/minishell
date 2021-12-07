@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/03 13:15:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 12:10:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*transform_str(
 			char *str, char *pid_value, char *ret_value, t_data *data);
 char	*transform_pid_value(char *str, char *value, t_data *data);
 char	*transform_ret_value(char *str, char *value, t_data *data);
+char	*handle_home_var(char *str, t_data *data);
 void	handle_env_variable(
 			int double_quotes, t_var *var, char *str, t_data *data);
 void	fill_env_value(char *new_str, t_var *var, char *str, t_data *data);
@@ -94,7 +95,7 @@ t_bool	check_error_redir(char *str, int *i);
 int		is_error_redir(char *str, int j);
 int		check_right_marks(char *str, int j);
 int		check_left_marks(char *str, int j);
-char	**check_argv(char **argv, t_data *data);
+char	**check_argv(char *input, char **argv, t_data *data);
 t_bool	check_unclosed_quotes(char *input);
 t_bool	check_unclosed_parentheses(char *input);
 int		get_length_new_argv(char **argv);

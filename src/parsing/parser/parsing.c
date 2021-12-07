@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 17:08:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 11:30:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,7 @@ static char	**get_argv(char *input, t_data *data)
 		clean_free(&input);
 		return (NULL);
 	}
-
-	// int i = -1;
-	// while (argv[++i])
-	// 	printf("argv[%d] = %s\n", i, argv[i]);
-
-	argv = check_argv(argv, data);
+	argv = check_argv(input, argv, data);
 	clean_free(&input);
 	return (argv);
 }

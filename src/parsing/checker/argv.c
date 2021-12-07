@@ -6,17 +6,41 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 19:40:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/07 11:31:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**handle_error_redirections(char **argv, t_data *data)
+t_bool	str_is_in_str(char *s1, char *s2)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (s1[++i])
+	{
+		if (s1[i] == s2[j])
+		{
+			while (s1[i] && s2[j] && s1[i++] == s2[j])
+				j++;
+			break ;
+		}
+	}
+	if (s2[j])
+		return (FAIL);
+	return (SUCCESS);
+}
+
+static char	**handle_error_redirections(char *input, char **argv, t_data *data)
 {
 	char	**new_argv;
 	int		length;
 
+	if (!str_is_in_str(input, "2>") && !str_is_in_str(input, "2>>")
+		&& !str_is_in_str(input, "2>&1"))
+		return (argv);
 	length = get_length_new_argv(argv);
 	if (length == -1)
 		return (argv);
@@ -25,7 +49,10 @@ static char	**handle_error_redirections(char **argv, t_data *data)
 	if (!new_argv)
 		return ((char **)exit_error_void(NULL, "malloc()", data));
 	if (!fill_new_argv(length, argv, new_argv, data))
+	{
+		free_double_str(&(*argv));
 		return (NULL);
+	}
 	free_double_str(&(*argv));
 	return (new_argv);
 }
@@ -70,7 +97,7 @@ t_bool	check_empty_parentheses(char **argv)
 	return (SUCCESS);
 }
 
-char	**check_argv(char **argv, t_data *data)
+char	**check_argv(char *input, char **argv, t_data *data)
 {
 	int	i;
 
@@ -84,7 +111,7 @@ char	**check_argv(char **argv, t_data *data)
 	if (argv[i] && (is_delimiter(argv[i]) || str_is_equal(argv[i], "&")))
 		return (syntax_error_str_msg(argv[i], argv));
 	if (argv[i] && (str_is_equal(argv[i], "<<<") || str_is_equal(argv[i], "2>")
-			|| str_is_equal(argv[i], "2>")))
+			|| str_is_equal(argv[i], "2>>")))
 		return (syntax_error_str_msg("newline", argv));
 	if (!check_error_parentheses(&i, argv))
 		return (NULL);
@@ -92,6 +119,6 @@ char	**check_argv(char **argv, t_data *data)
 		return (syntax_error_str_msg(argv[i], argv));
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))
 		return (syntax_error_str_msg("newline", argv));
-	argv = handle_error_redirections(&(*argv), data);
+	argv = handle_error_redirections(input, &(*argv), data);
 	return (argv);
 }
