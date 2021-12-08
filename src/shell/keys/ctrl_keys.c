@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:13:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:47:01 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 22:56:38 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,15 @@ static t_bool	process_ctrl_c(t_data *data, t_confg *sh)
 
 static void	process_ctrl_l(t_data *data, t_confg *sh)
 {
-	write(1, "\x1b[s", 3);
 	write(1, "\x1b[2J", 4);
 	write(1, "\x1b[H", 3);
+	write(1, "\x1b[999A", 6);
+	write(1, "\x1b[999D", 6);
 	write(1, data->prpt, ft_strlen(data->prpt));
 	if (sh->current && sh->search == sh->h_num)
 		write(1, sh->current, ft_strlen(sh->current));
 	else
 		write(1, sh->input, ft_strlen(sh->input));
-	write(1, "\x1b[u", 3);
-	write(1, "\x1b[999A", 6);
 }
 
 void	process_ctrl_u(t_confg *sh, t_hist *hist)
