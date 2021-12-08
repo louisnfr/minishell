@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:02:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 17:47:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:34:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	reparse_command(t_cmd **cmd_list, t_data *data)
 	refill_options(&i, strs, cmd_list, data);
 	refill_args(i, strs, cmd_list, data);
 	free_double_str(strs);
-	print_list(data->cmd_list);
 }
 
 void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:17:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 18:31:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:34:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	handle_error_msg_exec(int *exit_code, char *command, int fd_error)
 t_bool	init_exec(
 	int *exit_code, int *error_file, t_cmd **cmd_list, t_data *data)
 {
-	print_list(data->cmd_list);
 	*error_file = FALSE;
 	*exit_code = EXIT_FAILURE;
 	if (data->heredoc_failed)
