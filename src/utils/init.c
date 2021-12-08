@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 11:22:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:44:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ static char	**setup_builtins(t_data *data)
 	return (builtins);
 }
 
+static void	init_var_data(t_data *data)
+{
+	if (data->all_paths)
+		free_double_str(data->all_paths);
+	data->all_paths = get_paths(data);
+	data->i = 0;
+	data->heredoc_failed = FALSE;
+	data->pipe_heredoc = NULL;
+	data->ret_value = 0;
+	data->double_quotes = 1;
+	data->redir = NULL;
+	data->par_lvl = 0;
+}
+
 t_data	*init_data(char **envp)
 {
 	t_data	*data;
@@ -56,18 +70,12 @@ t_data	*init_data(char **envp)
 	if (!data)
 		return ((t_data *)exit_error_void(NULL, "malloc()", NULL));
 	create_update_env(envp, data);
-	data->i = 0;
 	data->pid = pid;
-	data->ret_value = 0;
-	data->double_quotes = 1;
 	data->envp = NULL;
 	data->last_cwd = NULL;
 	data->env_value = NULL;
-	data->redir = NULL;
-	data->par_lvl = 0;
 	data->builtins = setup_builtins(data);
-	data->all_paths = get_paths(data);
-	data->pipe_heredoc = NULL;
+	init_var_data(data);
 	data->cmd_list = NULL;
 	return (data);
 }
@@ -78,8 +86,6 @@ t_bool	init_cmd_list(t_data *data)
 	if (!data->cmd_list)
 		return (exit_error_bool("malloc()", data));
 	setup_cmd_list(data->cmd_list, data);
-	if (data->all_paths)
-		free_double_str(data->all_paths);
-	data->all_paths = get_paths(data);
+	init_var_data(data);
 	return (SUCCESS);
 }

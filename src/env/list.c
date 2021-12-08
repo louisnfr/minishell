@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 22:56:25 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 16:25:44 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:04:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ t_env	*new_var(char *key, char *value, int is_value)
 {
 	t_env	*var;
 
-	var = malloc(sizeof(t_env));
+	var = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!var)
 		return (NULL);
-	var->key = malloc(sizeof(char) + (ft_strlen(key) + 1));
-	var->value = malloc(sizeof(char) + (ft_strlen(value) + 1));
+	var->key = (char *)ft_calloc(1, sizeof(char) + (ft_strlen(key) + 1));
+	var->value = (char *)ft_calloc(1, sizeof(char) + (ft_strlen(value) + 1));
 	if (!var->key || !var->value)
 		return (NULL);
 	ft_memcpy(var->key, key, ft_strlen(key) + 1);

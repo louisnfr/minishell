@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 19:02:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:59:07 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_cmd
 	int				parenthese;
 	int				par_lvl;
 	t_bool			heredoc;
-	t_bool			heredoc_failed;
 	char			*heredoc_delimiter;
 	struct s_cmd	*next;
 }			t_cmd;
@@ -104,6 +103,7 @@ typedef struct s_data
 	char	*last_cwd;
 	int		par_lvl;
 	int		*pipe_heredoc;
+	t_bool	heredoc_failed;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

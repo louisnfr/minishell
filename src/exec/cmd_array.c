@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 21:08:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 14:50:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ char	**fill_cmd_array(t_cmd *cmd_list, t_data *data)
 	if (!cmd_list || !cmd_list->command)
 		return (NULL);
 	cmd_array = NULL;
+	parse_special_value(cmd_list, data);
 	cmd_array = malloc_cmd_array(cmd_array, cmd_list);
 	if (!cmd_array)
 		return (NULL);
-	parse_special_value(cmd_list, data);
 	cmd_array[0] = safe_strdup(cmd_list->command, data);
 	i = 0;
 	while (cmd_list->options && cmd_list->options[i])

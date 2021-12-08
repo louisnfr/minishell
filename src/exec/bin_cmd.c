@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 12:18:20 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:00:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ int	get_error_code(void)
 }
 
 t_bool	error_bin_cmd(
-	char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data)
+	char *error_msg, int exit_code, t_cmd **cmd_list, t_data *data)
 {
 	display_error_message(
-		cmd_list->command, error_msg, cmd_list->error_output);
-	close_fd(&cmd_list, data);
+		(*cmd_list)->command, error_msg, (*cmd_list)->error_output);
 	clean_data(data);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	exit(exit_code);
 	return (FAIL);
 }
@@ -69,8 +71,9 @@ static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		cmd_array = fill_cmd_array(cmd_list, data);
 		data->envp = env_to_char(data->env, data);
 		execve(cmd_list->path, cmd_array, data->envp);
+		free_double_str(cmd_array);
 		return (
-			error_bin_cmd(strerror(errno), get_error_code(), cmd_list, data));
+			error_bin_cmd(strerror(errno), get_error_code(), &cmd_list, data));
 	}
 	return (SUCCESS);
 }

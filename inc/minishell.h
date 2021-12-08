@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/08 13:29:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:58:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	display_error_redir(int fd, char *filename, char *errno_msg);
 void	handle_ambiguous_redir(int *error, int i, t_cmd *cmd_list);
 void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool	error_bin_cmd(
-			char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);
+			char *error_msg, int exit_code, t_cmd **cmd_list, t_data *data);
 char	**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int		exec_pipes(t_cmd **cmd_list, t_data *data);
 void	close_all_fd(t_data *data);
@@ -101,7 +101,6 @@ void	close_other_pipes(t_cmd **cmd, t_data *data);
 void	close_all_pipes(t_cmd **cmd, t_data *data);
 t_bool	create_fork(int i, pid_t *pid, t_data *data);
 void	init_fd(int fd, t_data **data);
-void	check_failure_heredoc(t_cmd *cmd_list);
 
 /*** exec/parentheses ***/
 

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:19 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 15:11:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:26:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	close_all_pipes(t_cmd **cmd, t_data *data)
 	int	i;
 
 	i = -1;
-	while (++i < (*cmd)->nb_of_pipes)
+	while ((*cmd)->nb_of_pipes && ++i < (*cmd)->nb_of_pipes)
 	{
 		safe_close_fd((*cmd)->pipe_fd[i][0], data);
 		init_fd((*cmd)->pipe_fd[i][0], &data);
@@ -33,7 +33,7 @@ void	close_other_pipes(t_cmd **cmd, t_data *data)
 	int	i;
 
 	i = -1;
-	while (++i < (*cmd)->nb_of_pipes)
+	while ((*cmd)->nb_of_pipes && ++i < (*cmd)->nb_of_pipes)
 	{
 		if ((*cmd)->input != (*cmd)->pipe_fd[i][0])
 		{
@@ -53,7 +53,7 @@ void	close_pipe(t_cmd **cmd, t_data *data)
 	int	i;
 
 	i = -1;
-	while (++i < (*cmd)->nb_of_pipes)
+	while ((*cmd)->nb_of_pipes && ++i < (*cmd)->nb_of_pipes)
 	{
 		if ((*cmd)->input == (*cmd)->pipe_fd[i][0])
 		{

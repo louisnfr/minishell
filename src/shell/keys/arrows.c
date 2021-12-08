@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arrows.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:26:09 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:45:10 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:02:07 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	process_arrow_up(t_confg *sh, t_hist *hist)
 		sh->search--;
 		if (sh->input)
 			clean_free(&sh->input);
-		sh->input = malloc(sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
+		sh->input = ft_calloc(1, sizeof(char) * (ft_strlen(sh->prev_cmd) + 1));
 		if (!sh->input)
 			return ;
 		ft_strcpy(sh->input, sh->prev_cmd);
@@ -57,7 +57,7 @@ static void	process_arrow_down(t_confg *sh, t_hist *hist)
 	{
 		if (sh->input)
 			clean_free(&sh->input);
-		sh->input = malloc(sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
+		sh->input = ft_calloc(1, sizeof(char) * (ft_strlen(sh->next_cmd) + 1));
 		if (!sh->input)
 			return ;
 		ft_strcpy(sh->input, sh->next_cmd);

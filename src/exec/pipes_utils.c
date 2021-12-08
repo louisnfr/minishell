@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 13:28:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:58:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,4 @@ t_bool	create_fork(int i, pid_t *pid, t_data *data)
 		return (1);
 	}
 	return (0);
-}
-
-void	check_failure_heredoc(t_cmd *cmd_list)
-{
-	t_bool	hd_failed;
-
-	hd_failed = FALSE;
-	if (cmd_list->heredoc_failed)
-		hd_failed = TRUE;
-	cmd_list = cmd_list->next;
-	while (cmd_list && cmd_list->delimiter == PIPE)
-	{
-		if (cmd_list->heredoc_failed)
-			hd_failed = TRUE;
-		if (hd_failed && !cmd_list->heredoc_failed)
-			cmd_list->heredoc_failed = TRUE;
-		cmd_list = cmd_list->next;
-	}
 }

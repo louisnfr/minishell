@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:44:02 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:03:59 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ t_hist	*new_cmd(char *cmd, int num)
 {
 	t_hist	*ncmd;
 
-	ncmd = malloc(sizeof(t_hist));
+	ncmd = (t_hist *)ft_calloc(1, sizeof(t_hist));
 	if (!ncmd)
 		return (NULL);
 	ncmd->num = num;
-	ncmd->cmd = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
-	ncmd->new = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
+	ncmd->cmd = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(cmd) + 1));
+	ncmd->new = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!ncmd->cmd || !ncmd->new)
 		return (NULL);
 	ft_strcpy(ncmd->cmd, cmd);
@@ -74,7 +74,7 @@ void	clear_hist(t_hist *hist, int search)
 		if (hist->new && hist->num == search)
 		{
 			clean_free(&hist->new);
-			hist->new = malloc(sizeof(char) * (ft_strlen(hist->cmd) + 1));
+			hist->new = ft_calloc(1, sizeof(char) * (ft_strlen(hist->cmd) + 1));
 			if (hist->new)
 				ft_strcpy(hist->new, hist->cmd);
 		}

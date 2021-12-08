@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 11:30:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:30:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ t_bool	parse(char *input, t_data *data)
 	data->i = 0;
 	parse_argv(argv, cmd_list, data);
 	free_double_str(argv);
-	parse_pipes(cmd_list, data);
+	if (!data->heredoc_failed)
+		parse_pipes(cmd_list, data);
 	return (SUCCESS);
 }

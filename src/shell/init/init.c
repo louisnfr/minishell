@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:59 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:31:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:02:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_confg	*init_config(char **envp)
 {
 	t_confg	*sh;
 
-	sh = malloc(sizeof(t_confg));
+	sh = NULL;
+	sh = (t_confg *)ft_calloc(1, sizeof(t_confg));
 	if (!sh)
 		return (NULL);
 	sh->history = NULL;
@@ -43,7 +44,7 @@ t_hist	*init_history(void)
 {
 	t_hist	*history;
 
-	history = malloc(sizeof(t_hist));
+	history = (t_hist *)ft_calloc(1, sizeof(t_hist));
 	if (!history)
 		return (NULL);
 	history = NULL;

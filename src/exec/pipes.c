@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 13:28:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:58:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ static t_bool	exec_cmd_bin_in_pipe(t_cmd **cmd_list, t_data *data)
 	data->envp = env_to_char(data->env, data);
 	if (!(*cmd_list)->path)
 		return (error_bin_cmd(
-				"No such file or directory", 127, *cmd_list, data));
+				"No such file or directory", 127, cmd_list, data));
 	execve((*cmd_list)->path, cmd_array, data->envp);
-	return (error_bin_cmd(strerror(errno), get_error_code(), *cmd_list, data));
+	free_double_str(cmd_array);
+	return (error_bin_cmd(strerror(errno), get_error_code(), cmd_list, data));
 }
 
 void	clean_exit_fork(int exit_code, t_cmd **cmd_list, t_data *data)
@@ -35,6 +36,9 @@ void	clean_exit_fork(int exit_code, t_cmd **cmd_list, t_data *data)
 	close_all_pipes(cmd_list, data);
 	close_all_fd(data);
 	clean_data(data);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 	exit(exit_code);
 }
 
@@ -43,18 +47,14 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 	int		exit_code;
 	t_bool	error_file;
 
-	if ((*cmd_list)->heredoc_failed)
-		exit_code = 130;
-	else if (update_path(&exit_code, cmd_list, data))
+	if (update_path(&exit_code, cmd_list, data))
 	{
 		exit_code = EXIT_FAILURE;
 		error_file = open_files(&exit_code, *cmd_list, data);
 		if (!error_file)
 		{
 			if ((*cmd_list)->is_builtin)
-			{
 				exit_code = exec_builtin(*cmd_list, data);
-			}
 			else if ((*cmd_list)->path)
 				exec_cmd_bin_in_pipe(cmd_list, data);
 			else
@@ -88,7 +88,6 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 
 	i = 0;
 	nb_of_cmd = (*cmd_list)->nb_of_pipes + 1;
-	check_failure_heredoc(*cmd_list);
 	pid = (pid_t *)ft_calloc(1, sizeof(pid_t) * nb_of_cmd);
 	if (!pid)
 		return (exit_error_bool("malloc()", data));

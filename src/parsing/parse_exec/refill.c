@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:37 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 12:50:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 15:19:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data)
 		return (free_double_str(existing_args));
 	}
 	j = 0;
-	while (strs[i] && strs[i][0] == '-')
+	while (strs[i])
 		(*cmd_list)->args[j++] = safe_strdup(strs[i++], data);
 	k = 0;
 	while (existing_args && existing_args[k])

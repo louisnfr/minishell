@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insert_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:45:42 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/30 19:32:48 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 15:02:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*insert_char(char *s, int cx, char c)
 	}
 	else
 	{
-		s = malloc(sizeof(char) * 2);
+		s = (char *)ft_calloc(1, sizeof(char) * 2);
 		if (!s)
 			return (NULL);
 		s[0] = c;
