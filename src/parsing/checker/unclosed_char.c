@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:35:52 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/27 17:57:11 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:55:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ t_bool	check_unclosed_parentheses(char *input)
 			parenthese++;
 		else if (input[i] && input[i] == ')')
 			parenthese--;
+		if (parenthese < 0)
+			break ;
 	}
-	if (parenthese)
+	if (parenthese != 0)
 	{
 		ft_putstr_fd("bash: syntax error: unclosed parentheses\n", 2);
 		return (FAIL);

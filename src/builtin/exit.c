@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:28 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/07 13:30:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:24:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,12 @@ t_bool	exec_exit(t_cmd *cmd_list, t_data *data)
 	exit_code = get_exit_code(&quit_exit, cmd_list, data);
 	if (quit_exit)
 		return (EXIT_FAILURE);
-	if (!is_in_pipe)
+	if (is_in_pipe)
 	{
-		clean_data(data);
-		exit(exit_code);
+		close_all_pipes(&cmd_list, data);
+		close_all_fd(data);
 	}
+	clean_data(data);
+	exit(exit_code);
 	return (EXIT_SUCCESS);
 }

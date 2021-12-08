@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/07 19:02:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:48:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int		exec(t_data *data);
 t_bool	init_exec(
 			int *exit_code, int *error_file, t_cmd **cmd_list, t_data *data);
 t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data);
+void	display_error_redir(int fd, char *filename, char *errno_msg);
+void	handle_ambiguous_redir(int *error, int i, t_cmd *cmd_list);
 void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool	error_bin_cmd(
 			char *error_msg, int exit_code, t_cmd *cmd_list, t_data *data);

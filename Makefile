@@ -89,6 +89,7 @@ SOURCES = \
 		exec/exec.c \
 		exec/utils.c \
 		exec/open_files.c \
+		exec/error_files.c \
 		exec/bin_cmd.c \
 		exec/cmd_array.c \
 		exec/builtin_cmd.c \

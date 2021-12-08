@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 15:12:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:20:52 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ static t_bool	exec_cmd_bin_in_pipe(t_cmd **cmd_list, t_data *data)
 	return (error_bin_cmd(strerror(errno), get_error_code(), *cmd_list, data));
 }
 
+void	clean_exit_fork(int exit_code, t_cmd **cmd_list, t_data *data)
+{
+	close_all_pipes(cmd_list, data);
+	close_all_fd(data);
+	clean_data(data);
+	exit(exit_code);
+}
+
 static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 {
 	int		exit_code;
@@ -44,7 +52,9 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 		if (!error_file)
 		{
 			if ((*cmd_list)->is_builtin)
+			{
 				exit_code = exec_builtin(*cmd_list, data);
+			}
 			else if ((*cmd_list)->path)
 				exec_cmd_bin_in_pipe(cmd_list, data);
 			else
@@ -54,10 +64,11 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 			}
 		}
 	}
-	close_all_pipes(cmd_list, data);
-	close_all_fd(data);
-	clean_data(data);
-	exit(exit_code);
+	clean_exit_fork(exit_code, cmd_list, data);
+	// close_all_pipes(cmd_list, data);
+	// close_all_fd(data);
+	// clean_data(data);
+	// exit(exit_code);
 }
 
 static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:20:12 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/03 17:58:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:39:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef enum s_delimiter
 	ERROR_AND_STDOUT	= 11,
 	L_PARENTHESE		= 12,
 	R_PARENTHESE		= 13,
+	AMBIGUOUS_REDIR		= 14,
 }	t_delimiter;
 
 #endif

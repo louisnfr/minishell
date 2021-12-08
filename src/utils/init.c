@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 12:10:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:22:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,8 @@ t_bool	init_cmd_list(t_data *data)
 	if (!data->cmd_list)
 		return (exit_error_bool("malloc()", data));
 	setup_cmd_list(data->cmd_list, data);
+	if (data->all_paths)
+		free_double_str(data->all_paths);
+	data->all_paths = get_paths(data);
 	return (SUCCESS);
 }

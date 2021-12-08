@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 17:26:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/08 12:18:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bool	error_bin_cmd(
 
 t_bool	update_path(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
-	if (!(*cmd_list)->path)
+	if ((*cmd_list)->is_builtin)
 		return (SUCCESS);
 	free_double_str(data->all_paths);
 	data->all_paths = get_paths(data);

@@ -6,20 +6,11 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 14:45:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:08:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	display_error_redir(int fd, char *filename, char *errno_msg)
-{
-	ft_putstr_fd("bash: ", fd);
-	ft_putstr_fd(filename, fd);
-	ft_putstr_fd(": ", fd);
-	ft_putstr_fd(errno_msg, fd);
-	ft_putchar_fd('\n', fd);
-}
 
 static int	open_a_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
 {
@@ -45,6 +36,8 @@ static int	open_a_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
 
 static void	handle_opening(int i, int *error, t_cmd **cmd_list)
 {
+	if ((*cmd_list)->redirection[i] == AMBIGUOUS_REDIR)
+		return (handle_ambiguous_redir(error, i, *cmd_list));
 	if ((*cmd_list)->redirection[i] == RIGHT_MARK)
 		(*cmd_list)->output = open_a_file(
 				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
@@ -68,13 +61,22 @@ static void	transform_filename(int i, t_cmd *cmd_list, t_data *data)
 {
 	char	*pid_value;
 	char	*ret_value;
+	char	*tmp;
 
 	pid_value = safe_itoa(data->pid, data);
 	ret_value = safe_itoa(data->ret_value, data);
+	tmp = ft_strdup(cmd_list->files[i]);
 	cmd_list->files[i] = transform_str(
 			cmd_list->files[i], pid_value, ret_value, data);
+	if (!cmd_list->files[i] || str_is_equal(cmd_list->files[i], "*"))
+	{
+		if (!cmd_list->files[i])
+			cmd_list->files[i] = ft_strdup(tmp);
+		cmd_list->redirection[i] = AMBIGUOUS_REDIR;
+	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);
+	clean_free(&tmp);
 }
 
 t_bool	open_files(int *exit_code, t_cmd *cmd_list, t_data *data)
