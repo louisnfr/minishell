@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 12:20:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 13:28:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,6 @@ static void	exec_cmd_in_pipe(t_cmd **cmd_list, t_data *data)
 		}
 	}
 	clean_exit_fork(exit_code, cmd_list, data);
-	// close_all_pipes(cmd_list, data);
-	// close_all_fd(data);
-	// clean_data(data);
-	// exit(exit_code);
 }
 
 static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
@@ -81,24 +77,6 @@ static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 		recursive_piping(++i, pid, &(*cmd_list)->next, data);
 	if (is_child && *cmd_list)
 		exec_cmd_in_pipe(cmd_list, data);
-}
-
-void	check_failure_heredoc(t_cmd *cmd_list)
-{
-	t_bool	hd_failed;
-
-	hd_failed = FALSE;
-	if (cmd_list->heredoc_failed)
-		hd_failed = TRUE;
-	cmd_list = cmd_list->next;
-	while (cmd_list && cmd_list->delimiter == PIPE)
-	{
-		if (cmd_list->heredoc_failed)
-			hd_failed = TRUE;
-		if (hd_failed && !cmd_list->heredoc_failed)
-			cmd_list->heredoc_failed = TRUE;
-		cmd_list = cmd_list->next;
-	}
 }
 
 int	exec_pipes(t_cmd **cmd_list, t_data *data)
