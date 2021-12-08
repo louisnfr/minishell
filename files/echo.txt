@@ -126,3 +126,4 @@ echo ok "" ok
 echo ok "" "" "" "" "" "" "" ok
 unset A; export A=ok; echo $A
 echo "ls -la <a | grepx >b"
+export var="  -n hello" ; echo $var

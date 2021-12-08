@@ -35,6 +35,7 @@ SOURCES = \
 		parsing/lexer/env_var_utils.c \
 		parsing/lexer/pid_value.c \
 		parsing/lexer/ret_value.c \
+		parsing/lexer/check_options.c \
 		parsing/lexer/utils.c \
 		\
 		parsing/split/split.c \

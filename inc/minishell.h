@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/08 17:58:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 21:28:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	**syntax_error_str_msg(char *token, char **str);
 /*** utils ***/
 
 char	**copy_strs_and_free(char **strs, t_data *data);
+t_bool	str_is_in_str(char *s1, char *s2);
 int		ctrl_key(int k);
 
 #endif

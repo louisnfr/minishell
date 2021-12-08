@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 19:02:24 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 22:21:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ void	parse_special_value(t_cmd *cmd_list, t_data *data)
 	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);
+	// check_options_in_args(cmd_list, data);
 	delete_void_args(i, new_nb_of_args, cmd_list, data);
+	// print_list(data->cmd_list);
 }

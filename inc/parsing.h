@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/07 18:57:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/08 21:19:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	handle_env_variable(
 			int double_quotes, t_var *var, char *str, t_data *data);
 void	fill_env_value(char *new_str, t_var *var, char *str, t_data *data);
 void	fill_with_value(t_var *var, char *new_str, char *value);
+void	check_options_in_args(t_cmd *cmd_list, t_data *data);
 t_var	*init_var(t_data *data);
 void	free_var(t_var *var);
 int		setup_variables(int *i, int *count, int *double_quotes, char *str);
