@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:50:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 19:59:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 22:00:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,20 @@ static int	get_nb_of_args(int i, char **existing_args, char **strs)
 	return (existing + new);
 }
 
+static void	free_cmd_args(t_cmd **cmd_list)
+{
+	int	i;
+
+	i = -1;
+	if ((*cmd_list)->args)
+	{
+		while ((*cmd_list)->args[++i])
+			clean_free(&(*cmd_list)->args[i]);
+		free((*cmd_list)->args);
+		(*cmd_list)->args = NULL;
+	}
+}
+
 void	refill_args_after_check(
 	int i, char **strs, t_cmd **cmd_list, t_data *data)
 {
@@ -92,15 +106,7 @@ void	refill_args_after_check(
 	char	**existing_args;
 
 	existing_args = copy_args((*cmd_list)->args, data);
-	if ((*cmd_list)->args)
-	{
-		int t = -1;
-		while ((*cmd_list)->args[++t])
-			clean_free(&(*cmd_list)->args[t]);
-		free((*cmd_list)->args);
-		(*cmd_list)->args = NULL;
-	}
-
+	free_cmd_args(cmd_list);
 	j = get_nb_of_args(i, existing_args, strs);
 	if (!j)
 		return (free_double_str(existing_args));

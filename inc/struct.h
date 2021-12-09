@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/09 17:51:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:51:52 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_data
 	int		*pipe_heredoc;
 	t_bool	heredoc_failed;
 	char	*to_suppress;
+	t_bool	to_reparse;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

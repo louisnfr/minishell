@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 16:08:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:58:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ t_bool	safe_close_fd(int fd, t_data *data)
 		return (SUCCESS);
 	ret = close(fd);
 	if (ret == -1)
-	{
-		printf("\nfd = %d\n", fd);
 		return (exit_error_bool("close()", data));
-	}
 	return (SUCCESS);
 }
 

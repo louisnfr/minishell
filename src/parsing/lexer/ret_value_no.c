@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 15:34:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:58:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ char	*transform_ret_value(char *str, char *value, t_data *data)
 	if (!new_str)
 		return ((char *)exit_error_void(NULL, "malloc()", data));
 	fill_new_str(&(*str), &(*new_str), value, data);
-	printf("length = %d | str = %s | new_str = %s\n", length, str, new_str);
 	clean_free(&str);
 	return (new_str);
 }
