@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 17:44:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:51:56 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	init_var_data(t_data *data)
 	data->double_quotes = 1;
 	data->redir = NULL;
 	data->par_lvl = 0;
+	data->to_suppress = NULL;
 }
 
 t_data	*init_data(char **envp)
