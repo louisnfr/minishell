@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+int	check_raw_input(char *input)
+{
+	int	i;
+
+	if (str_is_only_char(input, ' '))
+		return (FAIL);
+	i = 0;
+	while (input[i] == 32)
+		i++;
+	if (input[i] == '#')
+		return (FAIL);
+	return (SUCCESS);
+}
+
 int	count_slash(char *cwd, int *slash_count)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 02:33:02 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/10 03:34:31 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		setup_prompt(&input, data);
-		if (input && ft_strlen(input) > 0 && !str_is_only_char(input, ' '))
+		if (input && ft_strlen(input) > 0 && check_raw_input(input))
 		{
 			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
 			init_cmd_list(data);
@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 			data->sh->h_num += 1;
 		}
 		else
-			free_inputs(&input, data->sh);
+			free_inputs(&input, data);
 	}
 	return (0);
 }
