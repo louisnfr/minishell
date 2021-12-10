@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 21:50:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 18:45:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	delete_void_args(
 	int		j;
 	char	**args;
 
-	if (nb_of_args == new_nb_of_args)
+	if (!cmd_list->args || nb_of_args == new_nb_of_args)
 		return ;
 	if (!new_nb_of_args)
 		return (clean_free_double_str(nb_of_args, &cmd_list));
@@ -110,8 +110,8 @@ char	*transform_str(char *str, t_data *data)
 
 void	parse_special_value(t_cmd *cmd_list, t_data *data)
 {
-	int		i;
-	int		new_nb_of_args;
+	int	i;
+	int	new_nb_of_args;
 
 	data->to_reparse = FALSE;
 	cmd_list->command = transform_str(cmd_list->command, data);
@@ -126,7 +126,10 @@ void	parse_special_value(t_cmd *cmd_list, t_data *data)
 			new_nb_of_args++;
 		i++;
 	}
-	if (data->to_reparse)
-		check_options_in_args(cmd_list, data);
 	delete_void_args(i, new_nb_of_args, cmd_list, data);
+	if (data->to_reparse)
+	{
+		check_options_in_args(cmd_list, data);
+		// delete_void_args(new_nb_of_args, ret, cmd_list, data);
+	}
 }

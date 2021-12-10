@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 21:58:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 17:23:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ char	**safe_double_strdup(char **str, int size, t_data *data)
 	char	**new_str;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	new_str = (char **)ft_calloc(1, sizeof(char *) * (size + 1));
 	if (!new_str)
 		return ((char **)exit_error_void(NULL, "malloc()", data));
 	i = -1;
-	while (++i < size)
+	while (str && ++i < size)
 	{
 		if (str[i])
 			new_str[i] = safe_strdup(str[i], data);

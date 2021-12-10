@@ -12,17 +12,17 @@ ls -z || (cd ../../..&&pwd)
 (ls && pwd) > test ; cat test ; rm test
 (> pwd)
 (< pwd) ; rm pwd
-((ls))
+( ( ls ) )
 > test (ls && pwd)
 ()
-(())
-(((())))
-((ls))
-(((((pwd)))))
-(()ls)
-((ls&&pwd))
-((ls)&&pwd) ; ls
-(((ls|wc) ; cat Makefile|grep oui))
+( ( ) )
+( ( ( ( ) ) ) )
+( ( ls ) )
+( ( ( ( ( pwd) ) ) ) )
+( ( ) ls )
+( ( ls&&pwd ) )
+( ( ls ) &&pwd ) ; ls
+( ( ( ls|wc ) ; cat Makefile|grep oui ) )
 () pwd
 ls && (ls)
 () ls
@@ -41,8 +41,8 @@ echo hello > top ; (ls -z || pwd|wc) < top ; rm top
 ls || (cat Makefile|grep file) ; (pwd|wc)
 ls -z && (ls) ; (pwd)
 (ls > file/file && pwd) > top
-ls > file/file && pwd > top
-(ls && ((pwd)))
+ls > file/file && pwd > top ; rm top
+(ls && ( ( pwd ) ) )
 (ls||pwd);(ls||pwd)
 (lss||pwd);(lss||pwd)
 (lss&&pwd);(lss&&pwd)

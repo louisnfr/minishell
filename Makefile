@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/12/10 02:43:10 by lraffin          ###   ########.fr        #
+#    Updated: 2021/12/10 11:53:34 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SOURCES = \
 		parsing/lexer/pid_value.c \
 		parsing/lexer/ret_value.c \
 		parsing/lexer/options.c \
+		parsing/lexer/option_echo.c \
 		parsing/lexer/options_utils.c \
 		parsing/lexer/utils.c \
 		\

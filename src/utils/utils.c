@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/10 02:41:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/10 15:08:54 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ char	**copy_strs(char **strs, t_data *data)
 	i = 0;
 	while (strs[i])
 		i++;
+	if (i < 1)
+	{
+		free(strs);
+		strs = NULL;
+		return (NULL);
+	}
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
 	if (!strs_copy)
 		return ((char **)exit_error_void(NULL, "malloc()", data));

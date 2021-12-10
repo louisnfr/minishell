@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 14:58:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:58:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 	if ((exit_code && (*cmd_list)->delimiter == AND)
 		|| (!exit_code && (*cmd_list)->delimiter == OR))
 	{
-		if (*cmd_list && ((*cmd_list)->parenthese == FIRST
-				|| (*cmd_list)->parenthese == LAST))
+		if (*cmd_list && (*cmd_list)->parenthese == FIRST)
 		{
 			while (*cmd_list && (*cmd_list)->parenthese != LAST)
 				*cmd_list = (*cmd_list)->next;
@@ -33,6 +32,11 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 					|| (*cmd_list)->delimiter == OR))
 				*cmd_list = (*cmd_list)->next;
 		}
+		else if ((*cmd_list)->delimiter == OR)
+		{
+			while (*cmd_list && (*cmd_list)->delimiter == OR)
+				*cmd_list = (*cmd_list)->next;
+		}
 		else
 			*cmd_list = (*cmd_list)->next;
 	}
@@ -43,6 +47,7 @@ static t_bool	handle_other_cases(
 {
 	if (!(*cmd_list)->command || !(*cmd_list)->command[0])
 	{
+		close_fd(cmd_list, data);
 		*exit_code = 0;
 		*cmd_list = (*cmd_list)->next;
 		return (SUCCESS);

@@ -6,64 +6,40 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 17:11:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:58:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	recheck_par_lvl(int par_lvl, t_cmd *tmp)
-{
-	int	parenthese;
+// static void	recheck_num_parenthese(
+// 	int exit_code, int *parenthese, t_cmd *cmd_list)
+// {
+// 	if (cmd_list && cmd_list->delimiter == OR && !exit_code)
+// 	{
+// 		while (cmd_list && cmd_list->delimiter == OR)
+// 			cmd_list = cmd_list->next;
+// 		*parenthese = cmd_list->parenthese;
+// 	}
+// 	else if (cmd_list && cmd_list->delimiter == AND && exit_code)
+// 	{
+// 		while (cmd_list && cmd_list->delimiter == AND)
+// 			cmd_list = cmd_list->next;
+// 		*parenthese = cmd_list->parenthese;
+// 	}
+// }
 
-	if (par_lvl < 2)
-		return (SUCCESS);
-	while (tmp && tmp->parenthese)
-	{
-		parenthese = get_num_parenthese(tmp);
-		if (tmp->par_lvl == par_lvl - 1)
-			return (SUCCESS);
-		tmp = tmp->next;
-		if (parenthese == LAST)
-			break ;
-	}
-	return (FAIL);
-}
-
-static void	recheck_num_parenthese(
-	int exit_code, int *parenthese, t_cmd *cmd_list)
-{
-	if (cmd_list && cmd_list->next
-		&& cmd_list->next->delimiter == OR && !exit_code)
-	{
-		while (cmd_list && cmd_list->next && cmd_list->next->delimiter == OR)
-			cmd_list = cmd_list->next;
-		*parenthese = cmd_list->parenthese;
-	}
-	else if (cmd_list && cmd_list->next
-		&& cmd_list->next->delimiter == AND && exit_code)
-	{
-		while (cmd_list && cmd_list->next && cmd_list->next->delimiter == AND)
-			cmd_list = cmd_list->next;
-		*parenthese = cmd_list->parenthese;
-	}
-}
-
-static t_bool	exec_must_stop(
-	int exit_code, int parenthese, t_cmd *tmp, t_cmd **cmd_list)
-{
-	recheck_num_parenthese(exit_code, &parenthese, *cmd_list);
-	if (parenthese == LAST)
-		return (TRUE);
-	if (*cmd_list && !recheck_par_lvl((*cmd_list)->par_lvl, tmp))
-	{
-		parenthese = get_num_parenthese(*cmd_list);
-		*cmd_list = (*cmd_list)->next;
-		if (parenthese == LAST)
-			return (TRUE);
-	}
-	return (FALSE);
-}
+// static t_bool	exec_must_stop(
+// 	int exit_code, int parenthese, t_cmd **cmd_list)
+// {
+// 	if (parenthese == LAST)
+// 		return (TRUE);
+// 	recheck_num_parenthese(exit_code, &parenthese, *cmd_list);
+// 	printf("parenthese = %d\n", parenthese);
+// 	if (parenthese == LAST)
+// 		return (TRUE);
+// 	return (FALSE);
+// }
 
 static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 {
@@ -86,7 +62,9 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 			*cmd_list = (*cmd_list)->next;
 			check_exit_code(exit_code, cmd_list);
 		}
-		if (exec_must_stop(exit_code, parenthese, tmp, cmd_list))
+		// printf("***** cmd = %s | delimiter = %d\n", (*cmd_list)->command, (*cmd_list)->delimiter);
+		// if (!*cmd_list || exec_must_stop(exit_code, parenthese, cmd_list))
+		if (!*cmd_list || parenthese == LAST)
 			break ;
 	}
 	clean_data(data);

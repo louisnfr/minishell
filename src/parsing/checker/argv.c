@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 11:31:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 17:01:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,30 @@ t_bool	check_empty_parentheses(char **argv)
 	return (SUCCESS);
 }
 
+t_bool	is_check_redir(char *arg)
+{
+	return (str_is_equal(arg, "<") || str_is_equal(arg, ">")
+		|| str_is_equal(arg, "<<") || str_is_equal(arg, ">>"));
+}
+
+t_bool	check_redir_parenthese(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv && argv[i] && argv[i + 1])
+	{
+		if (is_check_redir(argv[i]) && str_is_equal(argv[i + 1], ")"))
+		{
+			display_error_msg_delimiter(1, ')');
+			free_double_str(argv);
+			return (FAIL);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
 char	**check_argv(char *input, char **argv, t_data *data)
 {
 	int	i;
@@ -120,5 +144,7 @@ char	**check_argv(char *input, char **argv, t_data *data)
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))
 		return (syntax_error_str_msg("newline", argv));
 	argv = handle_error_redirections(input, &(*argv), data);
+	if (!check_redir_parenthese(argv))
+		return (NULL);
 	return (argv);
 }

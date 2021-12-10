@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/09 21:51:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 11:51:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	refill_args_after_check(
 			int i, char **strs, t_cmd **cmd_list, t_data *data);
 void	refill_options_after_check(
 			int *i, char **strs, t_cmd **cmd_list, t_data *data);
+char	**copy_args(char **strs, t_data *data);
+void	handle_option_echo(int j, t_cmd **cmd_list, t_data *data);
 t_var	*init_var(t_data *data);
 void	free_var(t_var *var);
 int		setup_variables(int *i, int *count, int *double_quotes, char *str);

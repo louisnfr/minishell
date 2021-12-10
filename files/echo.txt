@@ -1,3 +1,4 @@
+echo -n
 echo $USEER
 echo $?
 echo test tout
@@ -22,7 +23,7 @@ echo -n -n -n bonjour ; echo test
 echo "-n" bonjour ; echo bonjour
 echo -n"-n" bonjour
 echo "-nnnn" bonjour ; echo test
-echo "-n -n -n"-n bonjour
+echo "-n -n -n"-n bonjoum
 echo "-n '-n'" bonjour
 echo ~
 echo "~"
@@ -129,4 +130,4 @@ echo "ls -la <a | grepx >b"
 export var="  -n hello" ; echo $var
 export var="  -l bonjour" ; ls $var
 echo "-n" hello
-echo "-n hello"
+echo "-n hello" ; rm c
