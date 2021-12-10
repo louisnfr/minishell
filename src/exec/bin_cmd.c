@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 17:00:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 22:06:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool	error_bin_cmd(
 
 t_bool	update_path(int *exit_code, t_cmd **cmd_list, t_data *data)
 {
-	if ((*cmd_list)->is_builtin)
+	if (!(*cmd_list)->path)
 		return (SUCCESS);
 	free_double_str(data->all_paths);
 	data->all_paths = get_paths(data);

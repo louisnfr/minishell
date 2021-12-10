@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 22:21:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:50:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,15 @@ static void	delete_void_args(
 	free_args(nb_of_args, args);
 }
 
-char	*transform_str(
-	char *str, char *pid_value, char *ret_value, t_data *data)
+char	*transform_str(char *str, t_data *data)
 {
+	char	*pid_value;
+	char	*ret_value;
+
 	if (!str)
 		return (NULL);
+	pid_value = safe_itoa(data->pid, data);
+	ret_value = safe_itoa(data->ret_value, data);
 	str = handle_home_var(str, data);
 	str = parse_env_variable(str, data);
 	if (str)
@@ -99,33 +103,30 @@ char	*transform_str(
 		str = transform_pid_value(str, pid_value, data);
 		str = transform_ret_value(str, ret_value, data);
 	}
+	clean_free(&pid_value);
+	clean_free(&ret_value);
 	return (str);
 }
 
 void	parse_special_value(t_cmd *cmd_list, t_data *data)
 {
 	int		i;
-	char	*pid_value;
-	char	*ret_value;
 	int		new_nb_of_args;
 
-	pid_value = safe_itoa(data->pid, data);
-	ret_value = safe_itoa(data->ret_value, data);
-	cmd_list->command = transform_str(
-			cmd_list->command, pid_value, ret_value, data);
+	data->to_reparse = FALSE;
+	cmd_list->command = transform_str(cmd_list->command, data);
 	i = 0;
 	new_nb_of_args = 0;
 	while (cmd_list->args && cmd_list->args[i])
 	{
-		cmd_list->args[i] = transform_str(
-				cmd_list->args[i], pid_value, ret_value, data);
+		if (ft_strchr(cmd_list->args[i], '$'))
+			data->to_reparse = TRUE;
+		cmd_list->args[i] = transform_str(cmd_list->args[i], data);
 		if (cmd_list->args[i])
 			new_nb_of_args++;
 		i++;
 	}
-	clean_free(&pid_value);
-	clean_free(&ret_value);
-	// check_options_in_args(cmd_list, data);
+	if (data->to_reparse)
+		check_options_in_args(cmd_list, data);
 	delete_void_args(i, new_nb_of_args, cmd_list, data);
-	// print_list(data->cmd_list);
 }

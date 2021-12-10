@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/08 21:19:41 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:51:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ char	*get_env_val(char *str, int *i, t_data *data);
 char	*get_env_key(char *str, int *i, t_data *data);
 int		get_length_env_value(int double_quotes, char *env_key, t_data *data);
 int		get_length_new_input(char *str, t_data *data);
-char	*transform_str(
-			char *str, char *pid_value, char *ret_value, t_data *data);
+char	*transform_str(char *str, t_data *data);
 char	*transform_pid_value(char *str, char *value, t_data *data);
 char	*transform_ret_value(char *str, char *value, t_data *data);
 char	*handle_home_var(char *str, t_data *data);
@@ -68,6 +67,10 @@ void	handle_env_variable(
 void	fill_env_value(char *new_str, t_var *var, char *str, t_data *data);
 void	fill_with_value(t_var *var, char *new_str, char *value);
 void	check_options_in_args(t_cmd *cmd_list, t_data *data);
+void	refill_args_after_check(
+			int i, char **strs, t_cmd **cmd_list, t_data *data);
+void	refill_options_after_check(
+			int *i, char **strs, t_cmd **cmd_list, t_data *data);
 t_var	*init_var(t_data *data);
 void	free_var(t_var *var);
 int		setup_variables(int *i, int *count, int *double_quotes, char *str);

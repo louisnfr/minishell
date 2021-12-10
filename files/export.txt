@@ -12,10 +12,7 @@ export TEST=LOL; export TEST+=LOL ; echo $TEST ; $ENV_SHOW
 $ENV_SHOW
 $EXPORT_SHOW
 export TEST="ls       -l     - a" ; echo $TEST ; $LS ; $ENV_SHOW
-env | grep "_="
 export | grep "SHLVL"
-export | grep "OLDPWD"
-export | grep "PWD"
 export $?
 export TEST
 export TEST=
@@ -74,9 +71,7 @@ export TES\~T=123
 export TEST+=100
 export var=a ; export $var=test ; echo $var $a
 export $var=test
-export var=test1 ; export var=test2 ; export
 export "" test=a
-export "" test=a ; env
 export "" && unset ""
 export "test=ici"=coucou ; echo $test
 export var="cat Makefile | grep >" ; echo $var
@@ -84,4 +79,3 @@ export A="s -la" ; l$A
 export A=p ; export B=w; $A"B"d ; "$A"'$B'd
 export A="s -la" ; l$A ; l"$A" ; l'$A'
 export A="l" ; $As
-export A="l" ; $As ; echo $? ; $As pwd

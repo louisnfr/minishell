@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 17:58:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:51:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,16 @@ static void	handle_opening(int i, int *error, t_cmd **cmd_list)
 
 static void	transform_filename(int i, t_cmd *cmd_list, t_data *data)
 {
-	char	*pid_value;
-	char	*ret_value;
 	char	*tmp;
 
-	pid_value = safe_itoa(data->pid, data);
-	ret_value = safe_itoa(data->ret_value, data);
 	tmp = safe_strdup(cmd_list->files[i], data);
-	cmd_list->files[i] = transform_str(
-			cmd_list->files[i], pid_value, ret_value, data);
+	cmd_list->files[i] = transform_str(cmd_list->files[i], data);
 	if (!cmd_list->files[i] || str_is_equal(cmd_list->files[i], "*"))
 	{
 		if (!cmd_list->files[i])
 			cmd_list->files[i] = safe_strdup(tmp, data);
 		cmd_list->redirection[i] = AMBIGUOUS_REDIR;
 	}
-	clean_free(&pid_value);
-	clean_free(&ret_value);
 	clean_free(&tmp);
 }
 

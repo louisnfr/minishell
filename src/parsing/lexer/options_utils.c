@@ -1,16 +1,69 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   refill.c                                           :+:      :+:    :+:   */
+/*   options_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 11:39:37 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 12:28:35 by efrancon         ###   ########.fr       */
+/*   Created: 2021/12/09 18:50:20 by efrancon          #+#    #+#             */
+/*   Updated: 2021/12/09 22:00:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**copy_args(char **strs, t_data *data)
+{
+	int		i;
+	int		j;
+	char	**strs_copy;
+
+	if (!strs)
+		return (NULL);
+	i = 0;
+	while (strs[i])
+		i++;
+	if (i < 2)
+		return (NULL);
+	strs_copy = (char **)ft_calloc(1, sizeof(char *) * i);
+	if (!strs_copy)
+		return ((char **)exit_error_void(NULL, "malloc()", data));
+	i = -1;
+	j = 0;
+	while (strs[++i])
+	{
+		if (!str_is_equal(strs[i], data->to_suppress))
+			strs_copy[j++] = safe_strdup(strs[i], data);
+	}
+	strs_copy[j] = NULL;
+	return (strs_copy);
+}
+
+char	**copy_options_and_free(char **strs, t_data *data)
+{
+	int		i;
+	char	**strs_copy;
+
+	if (!strs)
+		return (NULL);
+	i = 0;
+	while (strs[i])
+		i++;
+	if (i < 1)
+	{
+		free_double_str(strs);
+		return (NULL);
+	}
+	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
+	if (!strs_copy)
+		return ((char **)exit_error_void(NULL, "malloc()", data));
+	i = -1;
+	while (strs[++i])
+		strs_copy[i] = safe_strdup(strs[i], data);
+	strs_copy[i] = NULL;
+	free_double_str(strs);
+	return (strs_copy);
+}
 
 static int	get_nb_of_args(int i, char **existing_args, char **strs)
 {
@@ -31,13 +84,29 @@ static int	get_nb_of_args(int i, char **existing_args, char **strs)
 	return (existing + new);
 }
 
-void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data)
+static void	free_cmd_args(t_cmd **cmd_list)
+{
+	int	i;
+
+	i = -1;
+	if ((*cmd_list)->args)
+	{
+		while ((*cmd_list)->args[++i])
+			clean_free(&(*cmd_list)->args[i]);
+		free((*cmd_list)->args);
+		(*cmd_list)->args = NULL;
+	}
+}
+
+void	refill_args_after_check(
+	int i, char **strs, t_cmd **cmd_list, t_data *data)
 {
 	int		j;
 	int		k;
 	char	**existing_args;
 
-	existing_args = copy_strs_and_free((*cmd_list)->args, data);
+	existing_args = copy_args((*cmd_list)->args, data);
+	free_cmd_args(cmd_list);
 	j = get_nb_of_args(i, existing_args, strs);
 	if (!j)
 		return (free_double_str(existing_args));
@@ -66,7 +135,7 @@ static int	get_nb_of_options(char **existing_options, char **strs)
 	existing = 0;
 	while (existing_options && existing_options[existing])
 		existing++;
-	i = 1;
+	i = 0;
 	new = 0;
 	while (strs[i] && strs[i][0] == '-')
 	{
@@ -78,13 +147,14 @@ static int	get_nb_of_options(char **existing_options, char **strs)
 	return (existing + new);
 }
 
-void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data)
+void	refill_options_after_check(
+	int *i, char **strs, t_cmd **cmd_list, t_data *data)
 {
 	int		j;
 	int		k;
 	char	**existing_options;
 
-	existing_options = copy_strs_and_free((*cmd_list)->options, data);
+	existing_options = copy_options_and_free((*cmd_list)->options, data);
 	j = get_nb_of_options(existing_options, strs);
 	if (!j)
 		return (free_double_str(existing_options));
