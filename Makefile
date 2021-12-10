@@ -126,6 +126,7 @@ SOURCES = \
 		shell/utils.c \
 		\
 		utils/utils.c \
+		utils/utils_2.c \
 		utils/free.c \
 		utils/init.c \
 		utils/clean.c \

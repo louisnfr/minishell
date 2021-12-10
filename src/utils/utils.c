@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/10 02:01:38 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/10 02:41:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,38 +67,4 @@ char	**copy_strs(char **strs, t_data *data)
 		strs_copy[i] = safe_strdup(strs[i], data);
 	strs_copy[i] = NULL;
 	return (strs_copy);
-}
-
-int	count_slash(char *cwd, int *slash_count)
-{
-	int	i;
-
-	i = ft_strlen(cwd);
-	while (i >= 0 && *slash_count < 3)
-	{
-		if (cwd[i] == '/')
-			(*slash_count)++;
-		i--;
-	}
-	return (i);
-}
-
-int	check_gnl(char *str)
-{
-	int	len;
-	int	i;
-
-	len = ft_strlen(str);
-	i = -1;
-	while (++i < len)
-	{
-		if (!str[i] || !ft_isprint(str[i]))
-			return (FAIL);
-	}
-	return (SUCCESS);
-}
-
-int	ctrl_key(int k)
-{
-	return (k & 0x1f);
 }
