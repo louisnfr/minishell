@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 19:01:05 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 19:02:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 02:33:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ void	clean_free_double_str(int nb_of_str, t_cmd **cmd_list)
 	}
 	free((*cmd_list)->args);
 	(*cmd_list)->args = NULL;
+}
+
+void	free_inputs(char **input, t_confg *sh)
+{
+	clean_free(input);
+	clean_free(&sh->input);
+	clean_free(&sh->current);
 }

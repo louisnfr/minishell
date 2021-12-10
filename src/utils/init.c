@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 21:52:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/10 02:17:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_data	*init_data(char **envp)
 	data->builtins = setup_builtins(data);
 	init_var_data(data);
 	data->cmd_list = NULL;
+	data->sh = init_config(envp);
 	return (data);
 }
 

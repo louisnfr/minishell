@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/10 01:17:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/10 02:19:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	setup_prompt(char **input, t_data *data)
 		disable_raw_mode(data->sh);
 		write(1, "\n", 1);
 	}
-	else if (get_next_line(STDIN_FILENO, &(*input)) <= 0 || !check_gnl(*input))
+	else if (get_next_line(STDIN_FILENO, input) <= 0 || !check_gnl(*input))
 	{
 		clean_free(input);
 		if (data)

@@ -6,7 +6,7 @@
 /*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 01:19:06 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/10 02:33:02 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int ac, char **av, char **envp)
 	data = init_data(envp);
 	if (!data)
 		return (EXIT_FAILURE);
-	data->sh = init_config(envp);
 	while (1)
 	{
 		setup_prompt(&input, data);
@@ -37,6 +36,8 @@ int	main(int ac, char **av, char **envp)
 			clean_cmd_list(&data->cmd_list, data);
 			data->sh->h_num += 1;
 		}
+		else
+			free_inputs(&input, data->sh);
 	}
 	return (0);
 }
