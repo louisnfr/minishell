@@ -187,10 +187,6 @@ fclean: clean
 
 re: fclean all
 
-debug: CFLAGS += $(DEBUG_F)
-debug: fclean
-debug: re
-
 norm:
 	-@norminette $(SRC_PATH)
 	-@norminette $(INCLUDE)
