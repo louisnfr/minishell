@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/10 11:51:24 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:27:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_bool	check_unclosed_quotes(char *input);
 t_bool	check_unclosed_parentheses(char *input);
 int		get_length_new_argv(char **argv);
 t_bool	fill_new_argv(int length, char **argv, char **new_argv, t_data *data);
+t_bool	check_redir_parenthese(char **argv);
 
 /*** redirection ***/
 

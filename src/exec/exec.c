@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 19:58:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:29:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	check_exit_code(int exit_code, t_cmd **cmd_list)
 {
-	if (!*cmd_list)
-		return ;
-	if ((exit_code && (*cmd_list)->delimiter == AND)
-		|| (!exit_code && (*cmd_list)->delimiter == OR))
+	if (*cmd_list && ((exit_code && (*cmd_list)->delimiter == AND)
+			|| (!exit_code && (*cmd_list)->delimiter == OR)))
 	{
 		if (*cmd_list && (*cmd_list)->parenthese == FIRST)
 		{
@@ -32,12 +30,12 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 					|| (*cmd_list)->delimiter == OR))
 				*cmd_list = (*cmd_list)->next;
 		}
-		else if ((*cmd_list)->delimiter == OR)
+		else if (*cmd_list && (*cmd_list)->delimiter == OR)
 		{
 			while (*cmd_list && (*cmd_list)->delimiter == OR)
 				*cmd_list = (*cmd_list)->next;
 		}
-		else
+		else if (*cmd_list)
 			*cmd_list = (*cmd_list)->next;
 	}
 }
@@ -45,7 +43,7 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 static t_bool	handle_other_cases(
 	int *exit_code, t_cmd **cmd_list, t_data *data)
 {
-	if (!(*cmd_list)->command || !(*cmd_list)->command[0])
+	if (*cmd_list && (!(*cmd_list)->command || !(*cmd_list)->command[0]))
 	{
 		close_fd(cmd_list, data);
 		*exit_code = 0;
@@ -75,7 +73,8 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	}
 	else
 		return (handle_other_cases(exit_code, cmd_list, data));
-	check_exit_code(*exit_code, cmd_list);
+	if (*cmd_list)
+		check_exit_code(*exit_code, cmd_list);
 	return (SUCCESS);
 }
 

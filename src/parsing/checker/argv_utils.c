@@ -6,11 +6,35 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:35:51 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 12:35:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:27:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_bool	is_check_redir(char *arg)
+{
+	return (str_is_equal(arg, "<") || str_is_equal(arg, ">")
+		|| str_is_equal(arg, "<<") || str_is_equal(arg, ">>"));
+}
+
+t_bool	check_redir_parenthese(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv && argv[i] && argv[i + 1])
+	{
+		if (is_check_redir(argv[i]) && str_is_equal(argv[i + 1], ")"))
+		{
+			display_error_msg_delimiter(1, ')');
+			free_double_str(argv);
+			return (FAIL);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
 
 int	get_length_new_argv(char **argv)
 {

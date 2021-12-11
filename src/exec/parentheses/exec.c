@@ -6,40 +6,41 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 19:58:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 13:54:42 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	recheck_num_parenthese(
-// 	int exit_code, int *parenthese, t_cmd *cmd_list)
-// {
-// 	if (cmd_list && cmd_list->delimiter == OR && !exit_code)
-// 	{
-// 		while (cmd_list && cmd_list->delimiter == OR)
-// 			cmd_list = cmd_list->next;
-// 		*parenthese = cmd_list->parenthese;
-// 	}
-// 	else if (cmd_list && cmd_list->delimiter == AND && exit_code)
-// 	{
-// 		while (cmd_list && cmd_list->delimiter == AND)
-// 			cmd_list = cmd_list->next;
-// 		*parenthese = cmd_list->parenthese;
-// 	}
-// }
+static void	recheck_num_parenthese(
+	int exit_code, int *parenthese, t_cmd *cmd_list)
+{
+	if (cmd_list && !exit_code && cmd_list->next
+		&& cmd_list->next->delimiter == OR)
+	{
+		while (cmd_list && cmd_list->next && cmd_list->next->delimiter == OR)
+			cmd_list = cmd_list->next;
+		*parenthese = cmd_list->parenthese;
+	}
+	else if (cmd_list && exit_code && cmd_list->next
+		&& cmd_list->next->delimiter == AND)
+	{
+		while (cmd_list && cmd_list->next && cmd_list->next->delimiter == AND)
+			cmd_list = cmd_list->next;
+		*parenthese = cmd_list->parenthese;
+	}
+}
 
-// static t_bool	exec_must_stop(
-// 	int exit_code, int parenthese, t_cmd **cmd_list)
-// {
-// 	if (parenthese == LAST)
-// 		return (TRUE);
-// 	recheck_num_parenthese(exit_code, &parenthese, *cmd_list);
-// 	printf("parenthese = %d\n", parenthese);
-// 	if (parenthese == LAST)
-// 		return (TRUE);
-// 	return (FALSE);
-// }
+static t_bool	exec_must_stop(
+	int exit_code, int parenthese, t_cmd *tmp)
+{
+	if (parenthese == LAST)
+		return (TRUE);
+	recheck_num_parenthese(exit_code, &parenthese, tmp);
+	if (parenthese == LAST)
+		return (TRUE);
+	return (FALSE);
+}
 
 static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 {
@@ -47,10 +48,10 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 	int		parenthese;
 	t_cmd	*tmp;
 
-	tmp = *cmd_list;
 	exit_code = EXIT_SUCCESS;
 	while (*cmd_list && (*cmd_list)->parenthese)
 	{
+		tmp = *cmd_list;
 		parenthese = get_num_parenthese(*cmd_list);
 		if (open_files(&exit_code, *cmd_list, data))
 			break ;
@@ -62,9 +63,7 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 			*cmd_list = (*cmd_list)->next;
 			check_exit_code(exit_code, cmd_list);
 		}
-		// printf("***** cmd = %s | delimiter = %d\n", (*cmd_list)->command, (*cmd_list)->delimiter);
-		// if (!*cmd_list || exec_must_stop(exit_code, parenthese, cmd_list))
-		if (!*cmd_list || parenthese == LAST)
+		if (!*cmd_list || exec_must_stop(exit_code, parenthese, tmp))
 			break ;
 	}
 	clean_data(data);
