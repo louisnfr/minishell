@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 18:01:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:44:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data)
 	}
 	clean_free(&line);
 	(*cmd_list)->input = data->pipe_heredoc[0];
-	clean_free(&(*cmd_list)->heredoc_delimiter);
 	return (SUCCESS);
 }
 

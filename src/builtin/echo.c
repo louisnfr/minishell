@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:26:31 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 19:34:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/11 16:00:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_bool	exec_echo(t_cmd *cmd_list, t_data *data)
 	(void)data;
 	if (!cmd_list->args)
 	{
-		ft_putchar_fd('\n', cmd_list->output);
+		if (!cmd_list->options)
+			ft_putchar_fd('\n', cmd_list->output);
 		return (EXIT_SUCCESS);
 	}
 	eol = 1;

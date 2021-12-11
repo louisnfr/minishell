@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 15:24:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:26:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void	parse_redirections(
 	char	**existing_files;
 	int		*existing_redir;
 
+	// if ((!data->redir && !argv[data->i]) || is_parenthese(argv[data->i]))
+	// if (!argv[data->i]) || (argv[data->i] && !is_redirection(argv[data->i])))
 	if (!data->redir && !argv[data->i])
 		return ;
+	// printf("argv[%d] = %s\n", data->i, argv[data->i]);
 	existing_redir = NULL;
 	while (*cmd_list && (*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;

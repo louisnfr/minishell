@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 15:50:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:25:31 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	parse_end_cmd(
 						argv, (*cmd_list)->args, data);
 		}
 	}
-	else if (argv[data->i])
+	else //if (argv[data->i])
 		parse_redirections(argv, cmd_list, data);
 }
 

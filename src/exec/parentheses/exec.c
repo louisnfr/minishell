@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 13:54:42 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:22:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 		if (!*cmd_list || exec_must_stop(exit_code, parenthese, tmp))
 			break ;
 	}
+	close_all_fd(data);
 	clean_data(data);
 	exit(exit_code);
 }

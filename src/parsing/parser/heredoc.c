@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 19:03:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:44:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ static void	redir_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
 			quotes = 1;
 		}
 	}
-	read_heredoc(quotes, &cmd_list, data);
+	if (!data->heredoc_failed)
+		read_heredoc(quotes, &cmd_list, data);
+	clean_free(&cmd_list->heredoc_delimiter);
 }
 
 void	handle_heredoc(int *j, char **argv, t_cmd *cmd_list, t_data *data)
