@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:00:14 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 21:19:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**setup_builtins(t_data *data)
 
 	builtins = (char **)ft_calloc(1, sizeof(char *) * 9);
 	if (!builtins)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_str(NULL, "malloc()", data);
 	builtins[0] = safe_strdup("echo", data);
 	builtins[1] = safe_strdup("cd", data);
 	builtins[2] = safe_strdup("pwd", data);
@@ -59,6 +59,7 @@ static void	init_var_data(t_data *data)
 	data->to_suppress = NULL;
 	data->to_reparse = FALSE;
 	data->tmp_args = NULL;
+	data->argv = NULL;
 }
 
 t_data	*init_data(char **envp)
@@ -84,11 +85,11 @@ t_data	*init_data(char **envp)
 	return (data);
 }
 
-t_bool	init_cmd_list(t_data *data)
+t_bool	init_cmd_list(char *input, t_data *data)
 {
 	data->cmd_list = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!data->cmd_list)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_str(input, "malloc()", data);
 	setup_cmd_list(data->cmd_list, data);
 	init_var_data(data);
 	return (SUCCESS);

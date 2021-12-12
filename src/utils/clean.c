@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:26:26 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 21:11:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 	close_all_fd(data);
 	clean_free(&data->sh->current);
 	clean_free(&data->sh->input);
+	if (data->to_suppress)
+		clean_free(&data->to_suppress);
 }
 
 void	free_pipe_heredoc(t_data *data)
@@ -76,6 +78,7 @@ void	clean_data(t_data *data)
 	data->pid = 0;
 	data->ret_value = 0;
 	data->par_lvl = 0;
+	clean_redir(data);
 	free_pipe_heredoc(data);
 	clean_cmd_list(&data->cmd_list, data);
 	free_double_str(data->all_paths);
@@ -84,7 +87,8 @@ void	clean_data(t_data *data)
 	free_double_str(data->builtins);
 	clean_free(&data->last_cwd);
 	clean_free(&data->prpt);
-	free_history(data->sh->history);
+	if (data->sh && data->sh->history)
+		free_history(data->sh->history);
 	free_env(data->env);
 	free_env(data->export);
 	free(data->sh);

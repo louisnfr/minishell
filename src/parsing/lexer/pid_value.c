@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:59:13 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 21:10:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ static t_bool	fill_new_str(
 	return (SUCCESS);
 }
 
-char	*transform_pid_value(char *str, char *value, t_data *data)
+char	*transform_pid_value(
+	char *str, char *value, char *ret_value, t_data *data)
 {
 	char	*new_str;
 	int		length;
@@ -95,7 +96,13 @@ char	*transform_pid_value(char *str, char *value, t_data *data)
 	length = get_length(str, ft_strlen(value), '$');
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str || !fill_new_str(&(*str), &(*new_str), value, '$'))
-		exit_error_str(str, "malloc()", data); // leaks non verifie
+	{
+		clean_free(&ret_value);
+		clean_free(&value);
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(str, "malloc()", data);
+	}
 	clean_free(&str);
 	return (new_str);
 }

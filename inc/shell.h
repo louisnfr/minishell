@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 17:36:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 20:44:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data);
 char	*heredoc_env_variable(char *input, t_data *data);
 char	*heredoc_special_value(
 			char *str, char *value, char character, t_data *data);
-t_bool	handle_heredoc_quotes(int *i, char **str, char **strs, t_data *data);
 
 /*** lists ***/
 

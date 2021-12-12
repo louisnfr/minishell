@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 18:36:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:05:14 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 20:13:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	get_length_redir(
 		if (argv[i] && str_is_equal(argv[i], "2>&1"))
 			i++;
 	}
-	return (malloc_files(length, cmd_list, data));
+	return (malloc_files(argv, length, cmd_list, data));
 }
 
 static void	check_output_error(char **argv, t_cmd *cmd_list, t_data *data)
@@ -81,7 +81,8 @@ void	parse_redirections(
 	existing_redir = NULL;
 	while (*cmd_list && (*cmd_list)->next)
 		(*cmd_list) = (*cmd_list)->next;
-	existing_files = copy_existing_files(&existing_redir, *cmd_list, data);
+	existing_files = copy_existing_files(
+			argv, &existing_redir, *cmd_list, data);
 	j = get_length_redir(argv, *cmd_list, data);
 	start_heredoc_case(j, argv, cmd_list, data);
 	parse_redirection_heredoc(argv, *cmd_list, data);

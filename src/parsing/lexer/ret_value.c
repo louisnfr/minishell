@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ret_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:59:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 21:09:52 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ static void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
 	free_var(var);
 }
 
-char	*transform_ret_value(char *str, char *value, t_data *data)
+char	*transform_ret_value(
+	char *str, char *value, char *pid_value, t_data *data)
 {
 	char	*new_str;
 	int		length;
@@ -122,7 +123,13 @@ char	*transform_ret_value(char *str, char *value, t_data *data)
 	length = get_length(str, ft_strlen(value));
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
-		exit_error_str(str, "malloc()", data); // leaks non verifie
+	{
+		clean_free(&value);
+		clean_free(&pid_value);
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(str, "malloc()", data);
+	}
 	fill_new_str(&(*str), &(*new_str), value, data);
 	clean_free(&str);
 	return (new_str);

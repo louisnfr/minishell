@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:01:08 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:54:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	exit_error_fd_array(int **fd_array, int nb_of_pipes, t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < nb_of_pipes)
+	{
+		safe_close_fd(fd_array[i][0], data);
+		safe_close_fd(fd_array[i][1], data);
+	}
+	free_fd_array(nb_of_pipes, fd_array);
+	exit_error_str(NULL, "malloc()", data);
+}
 
 void	exit_error_child(char *str, char *error, t_data *data)
 {

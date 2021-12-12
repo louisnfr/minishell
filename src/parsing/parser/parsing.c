@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 16:23:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 20:29:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_bool	parse(char *input, t_data *data)
 		data->ret_value = 2;
 		return (FAIL);
 	}
+	data->argv = &argv;
 	data->i = 0;
 	parse_argv(argv, cmd_list, data);
 	free_double_str(argv);

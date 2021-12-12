@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upgrade_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:13:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 20:59:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ char	*transform_str(char *str, t_data *data)
 	str = parse_env_variable(str, data);
 	if (str)
 	{
-		str = transform_pid_value(str, pid_value, data);
-		str = transform_ret_value(str, ret_value, data);
+		str = transform_pid_value(str, pid_value, ret_value, data);
+		str = transform_ret_value(str, ret_value, pid_value, data);
 	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);

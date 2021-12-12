@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:59:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:00:50 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:54:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,21 @@ static int	**create_fd_array(int *nb_of_pipes, t_cmd *cmd, t_data *data)
 	*nb_of_pipes = get_nb_of_pipes(cmd);
 	fd_array = (int **)ft_calloc(1, sizeof(int *) * *nb_of_pipes);
 	if (!fd_array)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_str(NULL, "malloc()", data);
 	i = -1;
 	while (++i < *nb_of_pipes)
 	{
 		fd_array[i] = (int *)ft_calloc(1, sizeof(int) * 2);
 		if (!fd_array[i])
-			exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		{
+			free_fd_array(i, fd_array);
+			exit_error_strs(NULL, "malloc()", data);
+		}
 		if (pipe(fd_array[i]) == -1)
-			exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		{
+			free_fd_array(i + 1, fd_array);
+			exit_error_strs(NULL, "pipe()", data);
+		}
 	}
 	return (fd_array);
 }
@@ -87,7 +93,7 @@ static void	fill_fd_array(t_cmd **cmd, t_data *data)
 	i = 0;
 	fd_array = create_fd_array(&nb_of_pipes, *cmd, data);
 	if (!copy_fd_array(fd_array, nb_of_pipes, cmd))
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_fd_array(fd_array, nb_of_pipes, data);
 	(*cmd)->output = fd_array[0][1];
 	if ((*cmd)->next)
 		*cmd = (*cmd)->next;

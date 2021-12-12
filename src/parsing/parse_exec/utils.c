@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 18:52:51 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 18:59:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 20:59:52 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*transform_cmd_reparse(char *str, t_data *data)
 	{
 		pid_value = safe_itoa(data->pid, data);
 		ret_value = safe_itoa(data->ret_value, data);
-		str = transform_pid_value(str, pid_value, data);
-		str = transform_ret_value(str, ret_value, data);
+		str = transform_pid_value(str, pid_value, ret_value, data);
+		str = transform_ret_value(str, ret_value, pid_value, data);
 		clean_free(&pid_value);
 		clean_free(&ret_value);
 	}
@@ -42,8 +42,8 @@ char	*transform_cmd(
 	if (str)
 	{
 		str = parse_env_variable(str, data);
-		str = transform_pid_value(str, pid_value, data);
-		str = transform_ret_value(str, ret_value, data);
+		str = transform_pid_value(str, pid_value, ret_value, data);
+		str = transform_ret_value(str, ret_value, pid_value, data);
 	}
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/11 14:27:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 20:57:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ char	*get_env_key(char *str, int *i, t_data *data);
 int		get_length_env_value(int double_quotes, char *env_key, t_data *data);
 int		get_length_new_input(char *str, t_data *data);
 char	*transform_str(char *str, t_data *data);
-char	*transform_pid_value(char *str, char *value, t_data *data);
-char	*transform_ret_value(char *str, char *value, t_data *data);
+char	*transform_pid_value(
+			char *str, char *value, char *ret_value, t_data *data);
+char	*transform_ret_value(
+			char *str, char *value, char *pid_value, t_data *data);
 char	*handle_home_var(char *str, t_data *data);
 void	handle_env_variable(
 			int double_quotes, t_var *var, char *str, t_data *data);
@@ -112,10 +114,11 @@ t_bool	check_redir_parenthese(char **argv);
 
 void	parse_redirections(char **argv, t_cmd **cmd_list, t_data *data);
 t_redir	*parse_start_redirection(char **argv, t_data *data);
-char	**copy_existing_files(int **copy_redir, t_cmd *cmd_list, t_data *data);
+char	**copy_existing_files(
+			char **argv, int **copy_redir, t_cmd *cmd_list, t_data *data);
 void	fill_existing_files_redir(
 			int *redir, char **files, t_cmd *cmd_list, t_data *data);
-int		malloc_files(int length, t_cmd *cmd_list, t_data *data);
+int		malloc_files(char **argv, int length, t_cmd *cmd_list, t_data *data);
 void	clean_redir(t_data *data);
 void	start_heredoc_case(int j, char **argv, t_cmd **cmd_list, t_data *data);
 
