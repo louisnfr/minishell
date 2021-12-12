@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 18:25:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:10:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_exit_code(int exit_code, t_cmd **cmd_list)
+void	check_exit_code(int exit_code, t_cmd **cmd_list, t_data *data)
 {
 	if (*cmd_list && ((exit_code && (*cmd_list)->delimiter == AND)
 			|| (!exit_code && (*cmd_list)->delimiter == OR)))
@@ -20,23 +20,23 @@ void	check_exit_code(int exit_code, t_cmd **cmd_list)
 		if (*cmd_list && (*cmd_list)->parenthese == FIRST)
 		{
 			while (*cmd_list && (*cmd_list)->parenthese != LAST)
-				*cmd_list = (*cmd_list)->next;
-			*cmd_list = (*cmd_list)->next;
+				get_next_cmd(cmd_list, data);
+			get_next_cmd(cmd_list, data);
 		}
 		else if (*cmd_list && (*cmd_list)->nb_of_pipes)
 		{
-			*cmd_list = (*cmd_list)->next;
+			get_next_cmd(cmd_list, data);
 			while (*cmd_list && ((*cmd_list)->delimiter == PIPE
 					|| (*cmd_list)->delimiter == OR))
-				*cmd_list = (*cmd_list)->next;
+				get_next_cmd(cmd_list, data);
 		}
 		else if (*cmd_list && (*cmd_list)->delimiter == OR)
 		{
 			while (*cmd_list && (*cmd_list)->delimiter == OR)
-				*cmd_list = (*cmd_list)->next;
+				get_next_cmd(cmd_list, data);
 		}
 		else if (*cmd_list)
-			*cmd_list = (*cmd_list)->next;
+			get_next_cmd(cmd_list, data);
 	}
 }
 
@@ -74,7 +74,7 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	else
 		return (handle_other_cases(exit_code, cmd_list, data));
 	if (*cmd_list)
-		check_exit_code(*exit_code, cmd_list);
+		check_exit_code(*exit_code, cmd_list, data);
 	return (SUCCESS);
 }
 
@@ -88,7 +88,7 @@ static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 			exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
 		close_fd(cmd_list, data);
 		*cmd_list = (*cmd_list)->next;
-		check_exit_code(*exit_code, cmd_list);
+		check_exit_code(*exit_code, cmd_list, data);
 	}
 }
 
@@ -108,6 +108,7 @@ int	exec(t_data *data)
 			error_file = open_files(&exit_code, cmd_list, data);
 		if (error_file)
 		{
+			close_fd(&cmd_list, data);
 			data->ret_value = exit_code;
 			cmd_list = cmd_list->next;
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 14:27:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:00:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ static char	**handle_error_redirections(char *input, char **argv, t_data *data)
 		return (NULL);
 	}
 	free_double_str(&(*argv));
+	if (new_argv && new_argv[0] && str_is_equal(new_argv[0], "2>&1")
+		&& !new_argv[1])
+		return (syntax_error_str_msg(">", new_argv));
 	return (new_argv);
 }
 
@@ -120,7 +123,7 @@ char	**check_argv(char *input, char **argv, t_data *data)
 	if (argv[i] && (is_redirection(argv[i]) || str_is_equal(argv[i], "<<<")))
 		return (syntax_error_str_msg("newline", argv));
 	argv = handle_error_redirections(input, &(*argv), data);
-	if (!check_redir_parenthese(argv))
+	if (argv && !check_redir_parenthese(argv))
 		return (NULL);
 	return (argv);
 }

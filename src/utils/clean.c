@@ -6,16 +6,18 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 14:56:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:21:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	remove_from_list(t_cmd *cmd_list)
+static void	remove_from_list(t_cmd *cmd_list, t_data *data)
 {
 	if (!cmd_list)
 		return ;
+	if (cmd_list->pipe_fd)
+		free_fd_array(cmd_list->nb_of_pipes, cmd_list->pipe_fd);
 	clean_free(&cmd_list->command);
 	free_double_str(cmd_list->files);
 	if (cmd_list->redirection)
@@ -27,8 +29,6 @@ static void	remove_from_list(t_cmd *cmd_list)
 	free_double_str(cmd_list->args);
 	clean_free(&cmd_list->path);
 	clean_free(&cmd_list->heredoc_delimiter);
-	if (cmd_list->pipe_fd)
-		free_fd_array(cmd_list->nb_of_pipes, cmd_list->pipe_fd);
 	free(cmd_list);
 	cmd_list = NULL;
 }
@@ -41,12 +41,12 @@ void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 		return ;
 	tmp = *cmd_list;
 	*cmd_list = (*cmd_list)->next;
-	remove_from_list(tmp);
+	remove_from_list(tmp, data);
 	tmp = *cmd_list;
 	while (tmp)
 	{
 		*cmd_list = (*cmd_list)->next;
-		remove_from_list(tmp);
+		remove_from_list(tmp, data);
 		tmp = *cmd_list;
 	}
 	free(*cmd_list);
@@ -75,9 +75,9 @@ void	clean_data(t_data *data)
 	data->pid = 0;
 	data->ret_value = 0;
 	data->par_lvl = 0;
+	free_pipe_heredoc(data);
 	clean_cmd_list(&data->cmd_list, data);
 	free_double_str(data->all_paths);
-	free_pipe_heredoc(data);
 	if (data->envp)
 		free_double_str(data->envp);
 	free_double_str(data->builtins);

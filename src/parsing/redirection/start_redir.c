@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:46:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 18:36:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:51:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_redir	*malloc_redir(char **argv, t_data *data)
 
 	count = 0;
 	i = data->i;
-	while (argv[i] && is_redirection(argv[i]))
+	while (argv && argv[i] && is_redirection(argv[i]))
 	{
 		count++;
 		i += 2;
