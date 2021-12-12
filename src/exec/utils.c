@@ -6,11 +6,17 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:17:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 18:34:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:03:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	get_next_cmd(t_cmd **cmd_list, t_data *data)
+{
+	close_fd(cmd_list, data);
+	*cmd_list = (*cmd_list)->next;
+}
 
 void	ignore_signals(void)
 {

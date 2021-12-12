@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:09:49 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:24:42 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 				&exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
 			close_fd(cmd_list, data);
 			*cmd_list = (*cmd_list)->next;
-			check_exit_code(exit_code, cmd_list);
+			check_exit_code(exit_code, cmd_list, data);
 		}
 		if (!*cmd_list || exec_must_stop(exit_code, parenthese, tmp))
 			break ;
@@ -92,6 +92,6 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 		exit_code = WEXITSTATUS(status);
 	else
 		handle_status(status, &exit_code);
-	check_exit_code(exit_code, cmd_list);
+	check_exit_code(exit_code, cmd_list, data);
 	return (exit_code);
 }

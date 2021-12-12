@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 19:00:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:24:50 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int		matching_name(char *filename, char *wildcard);
 t_bool	update_path(int *exit_code, t_cmd **cmd_list, t_data *data);
 t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data);
 void	handle_error_msg_exec(int *exit_code, char *command, int fd_error);
-void	check_exit_code(int exit_code, t_cmd **cmd_list);
+void	check_exit_code(int exit_code, t_cmd **cmd_list, t_data *data);
+void	get_next_cmd(t_cmd **cmd_list, t_data *data);
 int		handle_error_cmd_pipe(t_cmd **cmd_list);
 void	close_pipe(t_cmd **cmd, t_data *data);
 void	close_other_pipes(t_cmd **cmd, t_data *data);
