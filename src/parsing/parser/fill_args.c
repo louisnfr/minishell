@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/26 14:34:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:00:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**find_cmd_args_end(char **argv, char **args, t_data *data)
 	{
 		new_args = (char **)ft_calloc(1, sizeof(char *) * (nb_of_args + 1));
 		if (!new_args)
-			exit_error_void(NULL, "malloc()", data);
+			exit_error_str(NULL, "malloc()", data); // leaks non verifie
 		j = 0;
 		while (args && args[j])
 		{
@@ -86,7 +86,7 @@ char	**find_cmd_args(char **argv, t_data *data)
 	{
 		args = (char **)ft_calloc(1, sizeof(char *) * (nb_of_args + 1));
 		if (!args)
-			return ((char **)exit_error_void(NULL, "malloc()", data));
+			exit_error_str(NULL, "malloc()", data); // leaks non verifie
 		j = 0;
 		while (j < nb_of_args)
 		{

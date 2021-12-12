@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/02 18:09:51 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 17:01:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**env_to_char(t_env *env, t_data *data)
 
 	envp = ft_calloc(1, sizeof(char *) * (get_env_size(env) + 1));
 	if (!envp)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_child(NULL, "malloc()", data); // leaks
 	tmp = env;
 	i = 0;
 	while (tmp)
@@ -69,7 +69,7 @@ char	**env_to_char(t_env *env, t_data *data)
 		envp[i] = ft_calloc(1, sizeof(char)
 				* (ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2));
 		if (!envp[i])
-			return ((char **)exit_error_void(NULL, "malloc()", data));
+			exit_error_child(NULL, "malloc()", data); // leaks
 		envp[i] = safe_strjoin_and_free(envp[i], tmp->key, data);
 		envp[i] = safe_strjoin_and_free(envp[i], "=", data);
 		envp[i] = safe_strjoin_and_free(envp[i], tmp->value, data);

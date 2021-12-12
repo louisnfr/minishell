@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:35:55 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 17:36:07 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_hist	*new_cmd(char *cmd, int num);
 t_hist	*getlast(t_hist *hist);
 void	add_cmd(t_hist **hist, t_hist *new);
 char	*find_cmd_history(t_hist *hist, int h_num);
-void	clear_hist(t_hist *hist, int search);
+void	clear_hist(t_hist *hist, int search, t_data *data);
 
 /*** utils ***/
 

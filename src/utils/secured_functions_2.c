@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   secured_functions_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 13:53:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:00:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*safe_itoa(int n, t_data *data)
 
 	new_str = ft_itoa(n);
 	if (!new_str)
-		return ((char *)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	return (new_str);
 }
 
@@ -30,7 +30,7 @@ t_bool	safe_unlink(char *pathname, t_data *data)
 	{
 		ret = unlink(pathname);
 		if (ret == -1)
-			return (exit_error_bool("unlink()", data));
+			exit_error_str(NULL, "unlink()", data); // leaks non verifie
 	}
 	return (SUCCESS);
 }
@@ -43,7 +43,7 @@ t_bool	safe_close_fd(int fd, t_data *data)
 		return (SUCCESS);
 	ret = close(fd);
 	if (ret == -1)
-		return (exit_error_bool("close()", data));
+		exit_error_str(NULL, "close()", data); // leaks non verifie
 	return (SUCCESS);
 }
 
@@ -56,7 +56,7 @@ char	**safe_double_strdup(char **str, int size, t_data *data)
 		return (NULL);
 	new_str = (char **)ft_calloc(1, sizeof(char *) * (size + 1));
 	if (!new_str)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	i = -1;
 	while (str && ++i < size)
 	{
@@ -77,6 +77,6 @@ char	*safe_substr(const char *str, int start, int len, t_data *data)
 		return (NULL);
 	new_str = ft_substr(str, start, len);
 	if (!new_str)
-		return ((char *)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	return (new_str);
 }

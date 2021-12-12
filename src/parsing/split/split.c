@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:39 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/02 18:37:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:59:39 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	handle_delimiters(int i, char **str, char **strs, t_data *data)
 	int		j;
 
 	if (!malloc_strs(i, str, strs, data))
-		return (exit_error_bool("malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	j = 0;
 	if (**str == '(' || **str == ')')
 	{
@@ -62,7 +62,7 @@ static t_bool	fill_words(int i, char **str, char **strs, t_data *data)
 
 	strs[i] = (char *)ft_calloc(1, sizeof(char) * (get_count(str, data) + 1));
 	if (!strs[i])
-		return (exit_error_bool("malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	j = 0;
 	while (**str && !is_charset_split(**str))
 	{
@@ -112,7 +112,7 @@ char	**split_input(char *str, t_data *data)
 		return (NULL);
 	strs = (char **)ft_calloc(1, sizeof(char *) * (words + 1));
 	if (!strs)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	if (!handle_split_input(words, str, strs, data))
 		return (NULL);
 	return (strs);

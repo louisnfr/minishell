@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ret_value_no.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 14:19:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:59:25 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,7 @@ char	*transform_ret_value(char *str, char *value, t_data *data)
 	length = get_length(str, ft_strlen(value));
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str)
-	{
-		clean_free(&str);
-		return ((char *)exit_error_void(NULL, "malloc()", data));
-	}
+		exit_error_str(str, "malloc()", data); // leaks non verifie
 	fill_new_str(&(*str), &(*new_str), value, data);
 	clean_free(&str);
 	return (new_str);

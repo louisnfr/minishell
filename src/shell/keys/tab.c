@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:45:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 18:01:24 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	update(t_data *data, t_confg *sh, char **input, char *before)
 {
 	*input = ft_calloc(ft_strlen(before), sizeof(char));
 	if (!*input)
-		exit_error_void(NULL, "malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	ft_strlcpy(*input, before, ft_strlen(before));
 	clean_free(&before);
 	clear_prompt(sh->cx, 1);
@@ -36,7 +36,7 @@ static void	update_history(t_data *data, t_confg *sh, t_hist *hist, char *input)
 	clean_free(&hist->new);
 	hist->new = ft_calloc(1, sizeof(char) * (ft_strlen(input)));
 	if (!hist->new)
-		exit_error_void(NULL, "malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	ft_strlcpy(hist->new, input, ft_strlen(input));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/03 11:57:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:49:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*heredoc_env_variable(char *input, t_data *data)
 	new_length = heredoc_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
-		return ((char *)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(input, "malloc()", data); // leaks
 	heredoc_fill_new_input(new_input, input, data);
 	clean_free(&input);
 	return (new_input);

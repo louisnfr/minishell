@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 11:14:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:00:14 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**setup_builtins(t_data *data)
 
 	builtins = (char **)ft_calloc(1, sizeof(char *) * 9);
 	if (!builtins)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	builtins[0] = safe_strdup("echo", data);
 	builtins[1] = safe_strdup("cd", data);
 	builtins[2] = safe_strdup("pwd", data);
@@ -68,10 +68,10 @@ t_data	*init_data(char **envp)
 
 	pid = ft_getpid();
 	if (pid == -1)
-		return ((t_data *)exit_error_void(NULL, "fork()", NULL));
+		exit(1);
 	data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!data)
-		return ((t_data *)exit_error_void(NULL, "malloc()", NULL));
+		exit(1);
 	create_update_env(envp, data);
 	data->pid = pid;
 	data->envp = NULL;
@@ -88,7 +88,7 @@ t_bool	init_cmd_list(t_data *data)
 {
 	data->cmd_list = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!data->cmd_list)
-		return (exit_error_bool("malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	setup_cmd_list(data->cmd_list, data);
 	init_var_data(data);
 	return (SUCCESS);

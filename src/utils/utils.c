@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/10 15:08:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:02:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**copy_strs_and_free(char **strs, t_data *data)
 		i++;
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
 	if (!strs_copy)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	i = -1;
 	while (strs[++i])
 		strs_copy[i] = safe_strdup(strs[i], data);
@@ -67,7 +67,7 @@ char	**copy_strs(char **strs, t_data *data)
 	}
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
 	if (!strs_copy)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	i = -1;
 	while (strs[++i])
 		strs_copy[i] = safe_strdup(strs[i], data);

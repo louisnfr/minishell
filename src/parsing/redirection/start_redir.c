@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:46:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/06 18:36:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:55:10 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static t_redir	*malloc_redir(char **argv, t_data *data)
 	}
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	redir->redirection = (int *)ft_calloc(1, sizeof(int) * count);
 	if (!redir->redirection)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	redir->files = (char **)ft_calloc(1, sizeof(char *) * (count + 1));
 	if (!redir->files)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	redir->count = count;
 	return (redir);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   refill.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:37 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 12:28:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:54:34 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	get_nb_of_args(int i, char **existing_args, char **strs)
 {
-	int	existing;	
+	int	existing;
 	int	new;
 
 	existing = 0;
@@ -43,10 +43,7 @@ void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data)
 		return (free_double_str(existing_args));
 	(*cmd_list)->args = (char **)ft_calloc(1, sizeof(char *) * (j + 1));
 	if (!(*cmd_list)->args)
-	{
-		exit_error_bool("malloc()", data);
-		return (free_double_str(existing_args));
-	}
+		exit_error_strs(existing_args, "malloc()", data); // leaks non verifie
 	j = 0;
 	while (strs[i])
 		(*cmd_list)->args[j++] = safe_strdup(strs[i++], data);
@@ -60,7 +57,7 @@ void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data)
 static int	get_nb_of_options(char **existing_options, char **strs)
 {
 	int	i;
-	int	existing;	
+	int	existing;
 	int	new;
 
 	existing = 0;
@@ -90,10 +87,7 @@ void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data)
 		return (free_double_str(existing_options));
 	(*cmd_list)->options = (char **)ft_calloc(1, sizeof(char *) * (j + 1));
 	if (!(*cmd_list)->options)
-	{
-		exit_error_bool("malloc()", data);
-		return (free_double_str(existing_options));
-	}
+		exit_error_strs(existing_options, "malloc()", data); // leaks non verifie
 	j = 0;
 	while (strs[*i] && strs[*i][0] == '-')
 		(*cmd_list)->options[j++] = safe_strdup(strs[(*i)++], data);

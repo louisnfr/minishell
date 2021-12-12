@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:36:06 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 23:36:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 18:59:44 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	read_key(t_confg *sh, t_data *data)
 	{
 		ret = read(STDIN_FILENO, &c, 1);
 		if (ret == -1 && errno != EAGAIN)
-			exit_error_bool("read", data);
+			exit_error_str(NULL, "malloc()", data); // leaks non verifie
 		if (ret == 1)
 			break ;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upgrade_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 13:00:23 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:13:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*handle_home_var(char *str, t_data *data)
 		total_length = ft_strlen(str) + ft_strlen(home);
 		new_str = (char *)ft_calloc(1, sizeof(char) * total_length);
 		if (!new_str)
-			return (exit_error_void(NULL, "malloc()", data));
+			exit_error_str(NULL, "malloc()", data); // leaks non verifie
 		new_str = transform_home_var(str, new_str, home);
 		return (new_str);
 	}
@@ -75,7 +75,7 @@ static void	delete_void_args(
 	cmd_list->args = (char **)ft_calloc(
 			1, sizeof(char *) * (new_nb_of_args + 1));
 	if (!cmd_list->args)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	j = 0;
 	i = -1;
 	while (++i < nb_of_args)

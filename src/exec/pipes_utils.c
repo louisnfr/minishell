@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 12:29:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:17:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_bool	create_fork(int i, pid_t *pid, t_data *data)
 {
 	pid[i] = fork();
 	if (pid[i] < 0)
-		return (exit_error_bool("fork()", data));
+		exit_error_str(NULL, "fork()", data); // leaks
 	if (pid[i] == CHILD)
 	{
 		free(pid);

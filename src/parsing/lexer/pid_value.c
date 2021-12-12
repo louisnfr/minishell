@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 14:20:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:59:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ char	*transform_pid_value(char *str, char *value, t_data *data)
 	length = get_length(str, ft_strlen(value), '$');
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_str || !fill_new_str(&(*str), &(*new_str), value, '$'))
-	{
-		clean_free(&str);
-		return ((char *)exit_error_void(NULL, "malloc()", data));
-	}
+		exit_error_str(str, "malloc()", data); // leaks non verifie
 	clean_free(&str);
 	return (new_str);
 }

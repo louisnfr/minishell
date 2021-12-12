@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 18:12:11 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:57:32 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,7 @@ char	*parse_env_variable(char *input, t_data *data)
 	new_length = get_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
-	{
-		clean_free(&input);
-		return ((char *)exit_error_void(NULL, "malloc()", data));
-	}
+		exit_error_str(input, "malloc()", data); // leaks
 	fill_new_input(new_input, input, data);
 	clean_free(&input);
 	if (new_input && new_input[0] == '\0')

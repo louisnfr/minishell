@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/08 15:03:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:41:21 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_hist	*new_cmd(char *cmd, int num)
 	ncmd->cmd = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(cmd) + 1));
 	ncmd->new = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!ncmd->cmd || !ncmd->new)
-		return (NULL);
+		return (NULL); //exit
 	ft_strcpy(ncmd->cmd, cmd);
 	ft_strcpy(ncmd->new, cmd);
 	ncmd->next = NULL;
@@ -67,7 +67,7 @@ char	*find_cmd_history(t_hist *hist, int h_num)
 	return (NULL);
 }
 
-void	clear_hist(t_hist *hist, int search)
+void	clear_hist(t_hist *hist, int search, t_data *data)
 {
 	while (hist)
 	{
@@ -75,8 +75,9 @@ void	clear_hist(t_hist *hist, int search)
 		{
 			clean_free(&hist->new);
 			hist->new = ft_calloc(1, sizeof(char) * (ft_strlen(hist->cmd) + 1));
-			if (hist->new)
-				ft_strcpy(hist->new, hist->cmd);
+			if (!hist->new)
+				exit_error_str(NULL, "malloc()", data);
+			ft_strcpy(hist->new, hist->cmd);
 		}
 		hist = hist->next;
 	}

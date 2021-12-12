@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   options.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 12:02:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 18:48:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:59:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**copy_args(char **strs, t_data *data)
 		return (NULL);
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * i);
 	if (!strs_copy)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	i = -1;
 	j = 0;
 	while (strs[++i])

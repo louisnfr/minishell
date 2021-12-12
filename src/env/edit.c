@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:29 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/07 01:03:39 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 17:13:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_env(char *key, char *new_value, t_env *env, t_data *data)
 	clean_free(&env->value);
 	env->value = ft_calloc(1, sizeof(char) + (ft_strlen(new_value) + 1));
 	if (!env->value)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks segfault
 	if (new_value)
 		ft_memcpy(env->value, new_value, ft_strlen(new_value) + 1);
 	env = head;
@@ -43,7 +43,7 @@ static void	append_env(char *key, char *new_value, t_env *env, t_data *data)
 	var = get_env(key, data->export);
 	dest = ft_calloc(ft_strlen(var) + ft_strlen(new_value) + 1, sizeof(char));
 	if (!dest)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data);
 	ft_strcat(dest, var);
 	ft_strcat(dest, new_value);
 	while (env)
@@ -56,7 +56,7 @@ static void	append_env(char *key, char *new_value, t_env *env, t_data *data)
 	clean_free(&env->value);
 	env->value = ft_calloc((ft_strlen(dest) + 1), sizeof(char));
 	if (!env->value)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data);
 	ft_memcpy(env->value, dest, ft_strlen(dest) + 1);
 	clean_free(&dest);
 	env = head;

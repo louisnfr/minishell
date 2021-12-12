@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:09:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 15:44:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:16:06 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	create_pipe_heredoc(t_bool is_ctrl_c, t_data *data)
 		data->heredoc_failed = TRUE;
 	}
 	data->pipe_heredoc = (int *)ft_calloc(1, sizeof(int) * 2);
-	if (!data->pipe_heredoc || pipe(data->pipe_heredoc) == -1)
-		exit_error_bool("malloc()", data);
+	if (data->pipe_heredoc || pipe(data->pipe_heredoc) == -1)
+		exit_error_str(NULL, "malloc()", data); // leaks
 }
 
 t_bool	read_heredoc(t_bool quotes, t_cmd **cmd_list, t_data *data)

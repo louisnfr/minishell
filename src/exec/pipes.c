@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 22:07:41 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:19:49 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	i = 0;
 	nb_of_cmd = (*cmd_list)->nb_of_pipes + 1;
 	pid = (pid_t *)ft_calloc(1, sizeof(pid_t) * nb_of_cmd);
-	if (!pid)
-		return (exit_error_bool("malloc()", data));
+	if (pid)
+		exit_error_str(NULL, "malloc()", data); // leaks
 	exit_code = EXIT_SUCCESS;
 	recursive_piping(i, pid, cmd_list, data);
 	close_cmd_pipes_fd(cmd_list, data);

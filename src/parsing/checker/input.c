@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:40:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 03:28:51 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 16:41:57 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	*check_comment(char *input, t_data *data)
 		return (input);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (length + 1));
 	if (!new_input)
-		return ((char *)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(input, "malloc()", data);
 	i = -1;
 	while (++i < length)
 		new_input[i] = input[i];

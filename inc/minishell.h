@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 14:25:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:00:56 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ t_data	*init_data(char **envp);
 /*** clean ***/
 
 void	clean_data(t_data *data);
-void	*exit_error_void(void *return_value, char *error, t_data *data);
-t_bool	exit_error_bool(char *error, t_data *data);
 void	exit_error_str(char *str, char *error, t_data *data);
 void	exit_error_strs(char **strs, char *error, t_data *data);
+void	exit_error_child(char *str, char *error, t_data *data);
 void	free_pipe_heredoc(t_data *data);
 void	clean_free_double_str(int nb_of_str, t_cmd **cmd_list);
 void	free_args(int nb_of_str, char **args);
@@ -121,7 +120,7 @@ void	change_last_redirection(t_cmd **cmd_list);
 
 /*** exit ***/
 
-void	free_env(t_env *g_env);
+void	free_env(t_env *env);
 void	free_split(char **args);
 void	free_history(t_hist *hist);
 void	display_error_message(char *cmd, char *errno_msg, int fd);

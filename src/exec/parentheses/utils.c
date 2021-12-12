@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:35:58 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 15:25:20 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:14:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	copy_last_file(char	*file, t_cmd **cmd_list, t_data *data)
 {
 	(*cmd_list)->files = (char **)ft_calloc(1, sizeof(char *) * 2);
 	if (!(*cmd_list)->files)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	(*cmd_list)->files[0] = safe_strdup(file, data);
 	(*cmd_list)->files[1] = NULL;
 }
@@ -52,7 +52,7 @@ void	copy_last_redirection(
 		redirection = DOUBLE_RIGHT_MARK;
 	(*cmd_list)->redirection = (int *)ft_calloc(1, sizeof(int) * 1);
 	if (!(*cmd_list)->redirection)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	(*cmd_list)->redirection[0] = redirection;
 }
 

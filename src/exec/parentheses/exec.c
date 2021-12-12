@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 16:22:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:09:49 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 		return (1);
 	pid = fork();
 	if (pid < 0)
-		return (exit_error_bool("fork()", data));
+		exit_error_str(NULL, "fork()", data); // leaks non verifie
 	if (pid == CHILD)
 		exec_cmd_parenthese(cmd_list, data);
 	close_fd_parentheses(cmd_list, data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 22:06:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:13:27 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		return (FAIL);
 	*pid = fork();
 	if (*pid < 0)
-		return (exit_error_bool("fork()", data));
+		exit_error_str(NULL, "fork()", data); // no leak
 	if (*pid == CHILD)
 	{
 		dup2(cmd_list->input, STDIN_FILENO);
@@ -95,6 +95,8 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 		if (WIFEXITED(status))
 			*exit_code = WEXITSTATUS(status);
 		recover_signals();
+		if (*exit_code == 42)
+			exit_error_str(NULL, "child", data);
 	}
 	close_fd(cmd_list, data);
 }

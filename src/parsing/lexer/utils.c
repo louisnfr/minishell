@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:41:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/15 13:05:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:59:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_var	*init_var(t_data *data)
 
 	var = (t_var *)ft_calloc(1, sizeof(t_var));
 	if (data && !var)
-		return ((t_var *)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	else if (!data && !var)
 		return (NULL);
 	var->i = 0;

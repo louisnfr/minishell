@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   option_echo.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 11:43:28 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 18:50:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:10:10 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	handle_option_echo(int j, t_cmd **cmd_list, t_data *data)
 	{
 		(*cmd_list)->options = (char **)ft_calloc(1, sizeof(char *) * 2);
 		if (!(*cmd_list)->options)
-			exit_error_bool("malloc()", data);
+			exit_error_str(NULL, "malloc()", data); // leaks non verifie
 		(*cmd_list)->options[0] = safe_strdup("-n", data);
 		(*cmd_list)->options[1] = NULL;
 	}

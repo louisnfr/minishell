@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:30:38 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 16:45:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:54:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	malloc_files(int length, t_cmd *cmd_list, t_data *data)
 	}
 	cmd_list->redirection = (int *)ft_calloc(1, sizeof(int) * length);
 	if (!cmd_list->redirection)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	cmd_list->files = (char **)ft_calloc(1, sizeof(char *) * (length + 1));
 	if (!cmd_list->files)
-		exit_error_bool("malloc()", data);
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	if (data->redir)
 		return (fill_files(nb_existing_files, cmd_list, data));
 	return (nb_existing_files);
@@ -91,10 +91,10 @@ char	**copy_existing_files(int **copy_redir, t_cmd *cmd_list, t_data *data)
 		count++;
 	copy_files = (char **)ft_calloc(1, sizeof(char *) * (count + 1));
 	if (!copy_files)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	*copy_redir = (int *)ft_calloc(1, sizeof(int) * count);
 	if (!*copy_redir)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(NULL, "malloc()", data); // leaks non verifie
 	i = -1;
 	while (cmd_list->files[++i])
 		copy_files[i] = safe_strdup(cmd_list->files[i], data);

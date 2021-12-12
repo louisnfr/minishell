@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 14:27:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:46:12 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	**handle_error_redirections(char *input, char **argv, t_data *data)
 	new_argv = NULL;
 	new_argv = (char **)ft_calloc(1, sizeof(char *) * (length + 1));
 	if (!new_argv)
-		return ((char **)exit_error_void(NULL, "malloc()", data));
+		exit_error_str(input, "malloc()", data); // leaks
 	if (!fill_new_argv(length, argv, new_argv, data))
 	{
 		free_double_str(&(*argv));

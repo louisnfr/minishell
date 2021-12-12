@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/23 16:56:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:49:46 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_env_key(char *str, int *i, t_data *data)
 		env_var = NULL;
 		env_var = (char *)ft_calloc(1, sizeof(char) * (var_length + 1));
 		if (!env_var)
-			return ((char *)exit_error_void(NULL, "malloc()", data));
+			exit_error_str(NULL, "malloc()", data); // leaks
 		var_length = 0;
 		while (str && str[++(*i)] && !is_charset_env(str[*i]))
 			env_var[var_length++] = str[*i];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:33:00 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/08 12:15:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:07:59 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static t_bool	fill_new_args(int new_length, t_cmd *cmd_list, t_data *data)
 	char	**new_args;
 
 	new_args = (char **)ft_calloc(1, sizeof(char *) * (new_length + 1));
-	if (!new_length)
-		return (exit_error_bool("malloc()", data));
+	if (!new_args)
+		exit_error_str(NULL, "malloc()", data);
 	i = -1;
 	j = 0;
 	while (cmd_list->args[++i])
