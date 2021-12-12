@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 20:57:00 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:42:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int		is_charset_split(char c);
 int		is_delimiter_split(char c);
 void	count_in_quotes_split(int *j, char *tmp);
 void	fill_quotes_split(char **str, char **strs, int *i, int *j);
+void	exit_error_split(char **strs, t_data *data);
 
 /*** checker ***/
 

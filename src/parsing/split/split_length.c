@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:49:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:44:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:42:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,11 @@ int	split_count_words(char *str, t_data *data)
 	}
 	data->i = 0;
 	return (words);
+}
+
+void	exit_error_split(char **strs, t_data *data)
+{
+	if (data->input && *data->input)
+		clean_free(data->input);
+	exit_error_strs(strs, "malloc()", data);
 }

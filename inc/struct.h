@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 21:21:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:36:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_data
 	t_bool	to_reparse;
 	char	**tmp_args;
 	char	***argv;
+	char	**input;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

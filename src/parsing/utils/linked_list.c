@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:08 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:01:11 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 21:31:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ void	create_new_cmd(t_cmd **cmd_list, t_data *data)
 
 	new_cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!new_cmd)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(NULL, "malloc()", data);
+	}
 	setup_cmd_list(new_cmd, data);
 	new_cmd->next = NULL;
 	while ((*cmd_list)->next)

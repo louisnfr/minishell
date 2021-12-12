@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 21:21:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:36:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**setup_builtins(t_data *data)
 
 	builtins = (char **)ft_calloc(1, sizeof(char *) * 9);
 	if (!builtins)
-		exit_error_str(NULL, "malloc()", data); // leaks segfault
+		exit_error_str(NULL, "malloc()", data);
 	builtins[0] = safe_strdup("echo", data);
 	builtins[1] = safe_strdup("cd", data);
 	builtins[2] = safe_strdup("pwd", data);
@@ -60,6 +60,7 @@ static void	init_var_data(t_data *data)
 	data->to_reparse = FALSE;
 	data->tmp_args = NULL;
 	data->argv = NULL;
+	data->input = NULL;
 }
 
 t_data	*init_data(char **envp)

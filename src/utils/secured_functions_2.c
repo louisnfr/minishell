@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   secured_functions_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:00:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 21:27:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*safe_itoa(int n, t_data *data)
 
 	new_str = ft_itoa(n);
 	if (!new_str)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_str(NULL, "malloc()", data);
 	return (new_str);
 }
 
@@ -56,7 +56,7 @@ char	**safe_double_strdup(char **str, int size, t_data *data)
 		return (NULL);
 	new_str = (char **)ft_calloc(1, sizeof(char *) * (size + 1));
 	if (!new_str)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_strs(str, "malloc()", data); // leaks non verifie
 	i = -1;
 	while (str && ++i < size)
 	{
