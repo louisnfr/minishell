@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/12/11 15:25:50 by efrancon         ###   ########.fr        #
+#    Updated: 2021/12/12 16:17:29 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,11 +137,11 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -g3 -I$(INCLUDE) #$(DEBUG_F)
-DEBUG_F	= -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -MMD -MP -I$(INCLUDE) #$(DEBUG_F)
+DEBUG_F	= -g3 -fsanitize=address
 LIBS	= -lft -lncurses -lreadline
 
-### INCLUDES ##
+### INCLUDES ###
 INCLUDE		= inc
 LIBFT_PATH	= libft
 SRC_PATH	= src
@@ -150,6 +150,7 @@ OBJ_PATH	= obj
 ### OBJECTS ###
 SRC	= $(addprefix $(SRC_PATH)/,$(SOURCES))
 OBJ	= $(addprefix $(OBJ_PATH)/,$(SOURCES:.c=.o))
+DEP	= $(addprefix $(OBJ_PATH)/,$(SOURCES:.c=.d))
 
 ### COLORS ###
 NOC		= \033[0m
@@ -161,14 +162,15 @@ WHITE	= \033[1;37m
 
 ### RULES ###
 
-all: $(NAME)
+
+all: libs 
+	@make -s $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "$(YELLOW)libft..$(NOC)"
-	@make -sC $(LIBFT_PATH)
 	@$(CC) $(CFLAGS) -L $(LIBFT_PATH) -o $@ $^ $(LIBS)
 	@echo "$(GREEN)$@$(NOC)"
 
+-include $(DEP)
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/builtin obj/env obj/exec obj/exec/parentheses obj/utils
 	@mkdir -p obj/parsing/split obj/parsing/checker obj/parsing/heredoc
@@ -176,6 +178,9 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INCLUDE)/$(NAME).h
 	@mkdir -p obj/parsing/redirection obj/shell/init obj/shell/input obj/shell/keys
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "$(BLUE)clang $(NOC)$(notdir $@)"
+
+libs:
+	@make -sC libft
 
 clean:
 	@echo "$(RED)clean$(NOC)"
@@ -199,4 +204,4 @@ push:
 	git commit -m minishell
 	git push
 
-.PHONY:	all clean fclean re debug norm push
+.PHONY:	all clean fclean re debug norm push libs
