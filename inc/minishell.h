@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 19:24:50 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 20:14:51 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 /*** init ***/
 
-t_bool	init_cmd_list(t_data *data);
+t_bool	init_cmd_list(t_data *data, char *input);
 t_data	*init_data(char **envp);
 
 /*** clean ***/

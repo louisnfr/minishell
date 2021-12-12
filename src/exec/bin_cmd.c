@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:13:27 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:34:00 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		return (FAIL);
 	*pid = fork();
 	if (*pid < 0)
-		exit_error_str(NULL, "fork()", data); // no leak
+		exit_error_str(NULL, "fork()", data);
 	if (*pid == CHILD)
 	{
 		dup2(cmd_list->input, STDIN_FILENO);
