@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:24:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:26:26 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	remove_from_list(t_cmd *cmd_list, t_data *data)
 {
+	(void)data;
 	if (!cmd_list)
 		return ;
 	if (cmd_list->pipe_fd)
