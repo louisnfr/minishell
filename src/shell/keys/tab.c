@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 18:01:24 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 19:55:01 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static void	update(t_data *data, t_confg *sh, char **input, char *before)
 {
 	*input = ft_calloc(ft_strlen(before), sizeof(char));
 	if (!*input)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+	{
+		closedir(sh->directory);
+		exit_error_str(before, "malloc()", data);
+	}
 	ft_strlcpy(*input, before, ft_strlen(before));
 	clean_free(&before);
 	clear_prompt(sh->cx, 1);
@@ -35,8 +38,11 @@ static void	update_history(t_data *data, t_confg *sh, t_hist *hist, char *input)
 	}
 	clean_free(&hist->new);
 	hist->new = ft_calloc(1, sizeof(char) * (ft_strlen(input)));
-	if (!hist->new)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+	if (hist->new)
+	{
+		closedir(sh->directory);
+		exit_error_str(NULL, "malloc()", data);
+	}
 	ft_strlcpy(hist->new, input, ft_strlen(input));
 }
 
@@ -73,27 +79,26 @@ static void	edit_input(t_confg *sh, char *entity, t_data *data)
 void	process_tab_key(t_confg *sh, t_data *data)
 {
 	struct dirent	*entity;
-	DIR				*directory;
 	char			*current;
 
 	current = get_current_word(sh, data);
 	if (current)
 	{
-		directory = opendir(".");
-		entity = readdir(directory);
+		sh->directory = opendir(".");
+		entity = readdir(sh->directory);
 		while (entity != NULL)
 		{
 			if (ft_strnstr(entity->d_name, current, ft_strlen(current)))
 				break ;
-			entity = readdir(directory);
+			entity = readdir(sh->directory);
 		}
 		clean_free(&current);
 		if (!entity)
 		{
-			closedir(directory);
+			closedir(sh->directory);
 			return ;
 		}
 		edit_input(sh, entity->d_name, data);
-		closedir(directory);
+		closedir(sh->directory);
 	}
 }

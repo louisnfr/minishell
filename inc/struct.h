@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 20:52:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:21:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_config
 {
 	struct termios		orig_termios;
 	t_bool				init_termios;
+	DIR					*directory;
 	char				**envp;
 	struct s_history	*history;
 	char				*input;

@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/12/12 20:45:32 by efrancon         ###   ########.fr        #
+#    Updated: 2021/12/12 21:20:47 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -162,7 +162,7 @@ WHITE	= \033[1;37m
 ### RULES ###
 
 
-all: libs 
+all: libs
 	@make -s $(NAME)
 
 $(NAME): $(OBJ)
