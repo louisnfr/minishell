@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 17:23:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 13:53:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ t_bool	safe_unlink(char *pathname, t_data *data)
 {
 	int	ret;
 
-	ret = unlink(pathname);
-	if (ret == -1)
-		return (exit_error_bool("unlink()", data));
+	if (pathname)
+	{
+		ret = unlink(pathname);
+		if (ret == -1)
+			return (exit_error_bool("unlink()", data));
+	}
 	return (SUCCESS);
 }
 

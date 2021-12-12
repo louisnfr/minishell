@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/11 18:25:31 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 12:57:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	parse_end_cmd(
 	char **argv, t_cmd **cmd_list, t_data *data)
 {
+	if (argv[data->i] && str_is_equal(argv[data->i], ")"))
+		return ;
 	if (argv[data->i] && !is_delimiter(argv[data->i])
 		&& !is_parenthese(argv[data->i]))
 	{
@@ -30,7 +32,7 @@ void	parse_end_cmd(
 						argv, (*cmd_list)->args, data);
 		}
 	}
-	else //if (argv[data->i])
+	else
 		parse_redirections(argv, cmd_list, data);
 }
 

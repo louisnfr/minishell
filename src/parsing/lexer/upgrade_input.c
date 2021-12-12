@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 18:45:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 13:00:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,5 @@ void	parse_special_value(t_cmd *cmd_list, t_data *data)
 	}
 	delete_void_args(i, new_nb_of_args, cmd_list, data);
 	if (data->to_reparse)
-	{
 		check_options_in_args(cmd_list, data);
-		// delete_void_args(new_nb_of_args, ret, cmd_list, data);
-	}
 }

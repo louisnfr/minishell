@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 10:43:24 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/11 18:57:15 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/12 12:31:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	display_error_message(char *cmd, char *errno_msg, int fd)
 {
-	ft_putstr_fd("bash: ", fd);
-	ft_putstr_fd(cmd, fd);
-	ft_putstr_fd(": ", fd);
-	ft_putstr_fd(errno_msg, fd);
-	ft_putchar_fd('\n', fd);
+	char	*message;
+
+	message = ft_strjoin("bash: ", cmd);
+	message = ft_strjoin_and_free(message, ": ");
+	message = ft_strjoin_and_free(message, errno_msg);
+	message = ft_strjoin_and_free(message, "\n");
+	ft_putstr_fd(message, fd);
+	clean_free(&message);
 }
 
 void	syntax_error_char_msg(int nb, char token)

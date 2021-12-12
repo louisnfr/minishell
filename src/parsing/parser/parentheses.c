@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:13 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/10 15:50:14 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/12 12:57:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ t_bool	is_parenthese(char *str)
 		|| str_is_equal(str, ")"));
 }
 
-static void	note_parenthese(int parenthese, t_cmd *cmd_list, t_data *data)
+static void	note_parenthese(int parenthese, t_cmd *cmd_list)
 {
-	(void)data;
 	while (cmd_list->next)
 		cmd_list = cmd_list->next;
 	cmd_list->parenthese = parenthese;
@@ -60,15 +59,15 @@ void	handle_parentheses(int delimiter, char **argv, t_data *data)
 		fill_parentheses(delimiter, argv, cmd_list, data);
 		if (is_first)
 		{
-			note_parenthese(FIRST, cmd_list, data);
+			note_parenthese(FIRST, cmd_list);
 			is_first = FALSE;
 		}
 		else
-			note_parenthese(IN, cmd_list, data);
+			note_parenthese(IN, cmd_list);
 		if (argv[data->i] && str_is_equal(argv[data->i], ")"))
 			break ;
 	}
-	note_parenthese(LAST, cmd_list, data);
+	note_parenthese(LAST, cmd_list);
 	if (argv[data->i])
 		data->i++;
 	data->par_lvl--;
