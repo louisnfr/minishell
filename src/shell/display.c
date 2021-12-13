@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 18:04:54 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:33:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static char	*get_ret_value(t_data *data)
 	ret = NULL;
 	value = safe_itoa(data->ret_value, data);
 	if (!data->ret_value)
-		ret = safe_strjoin_and_free(ret, " \e[0m(\e[32m", data);
+		ret = safe_strjoin_and_free2(ret, " \e[0m(\e[32m", data, &value);
 	else
-		ret = safe_strjoin_and_free(ret, " \e[0m(\e[31m", data);
-	ret = safe_strjoin_and_free(ret, value, data);
-	ret = safe_strjoin_and_free(ret, "\e[0m)", data);
+		ret = safe_strjoin_and_free2(ret, " \e[0m(\e[31m", data, &value);
+	ret = safe_strjoin_and_free2(ret, value, data, &value);
+	ret = safe_strjoin_and_free2(ret, "\e[0m)", data, &ret);
 	clean_free(&value);
 	return (ret);
 }
@@ -34,9 +34,9 @@ static char	*join_prompt(char *ret, char *usr, char *cwd, t_data *data)
 	if (!usr)
 		usr = "";
 	usr = safe_strjoin("\e[92m", usr, data);
-	usr = safe_strjoin_and_free(usr, "\e[0m:", data);
-	usr = safe_strjoin_and_free(usr, "\e[34m", data);
-	usr = safe_strjoin_and_free(usr, cwd, data);
+	usr = safe_strjoin_and_free2(usr, "\e[0m:", data, &cwd);
+	usr = safe_strjoin_and_free2(usr, "\e[34m", data, &cwd);
+	usr = safe_strjoin_and_free2(usr, cwd, data, &cwd);
 	clean_free(&cwd);
 	usr = safe_strjoin_and_free(usr, ret, data);
 	clean_free(&ret);

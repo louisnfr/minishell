@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   refill.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:37 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 13:47:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:04:08 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data)
 	int		k;
 	char	**existing_options;
 
-	existing_options = copy_strs_and_free((*cmd_list)->options, data);
+	existing_options = copy_strs_and_free((*cmd_list)->options, data, strs);
 	j = get_nb_of_options(existing_options, strs);
 	if (!j)
 		return (free_double_str(existing_options));

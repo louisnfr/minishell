@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 17:45:09 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:19:05 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*safe_getcwd(t_data *data)
 	return (cwd);
 }
 
-char	**copy_strs_and_free(char **strs, t_data *data)
+char	**copy_strs_and_free(char **strs, t_data *data, char **free)
 {
 	int		i;
 	char	**strs_copy;
@@ -40,7 +40,7 @@ char	**copy_strs_and_free(char **strs, t_data *data)
 		i++;
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
 	if (!strs_copy)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_strs(free, "malloc()", data);
 	i = -1;
 	while (strs[++i])
 		strs_copy[i] = safe_strdup(strs[i], data);
@@ -67,7 +67,7 @@ char	**copy_strs(char **strs, t_data *data)
 	}
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * (i + 1));
 	if (!strs_copy)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_str(NULL, "malloc()", data);
 	i = -1;
 	while (strs[++i])
 		strs_copy[i] = safe_strdup(strs[i], data);
