@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recheck.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 18:53:13 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:59:58 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:53:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*remove_quote_command(char *command, t_data *data)
 
 	new_command = (char *)ft_calloc(1, sizeof(char) * get_length(command));
 	if (!new_command)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_str(NULL, "malloc()", data);
 	i = 0;
 	j = 0;
 	while (command[i])

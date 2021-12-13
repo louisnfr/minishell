@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   refill.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:39:37 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:54:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:47:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ void	refill_args(int i, char **strs, t_cmd **cmd_list, t_data *data)
 	int		k;
 	char	**existing_args;
 
-	existing_args = copy_strs_and_free((*cmd_list)->args, data);
+	existing_args = copy_strs((*cmd_list)->args, data);
 	j = get_nb_of_args(i, existing_args, strs);
 	if (!j)
 		return (free_double_str(existing_args));
+	free_double_str((*cmd_list)->args);
 	(*cmd_list)->args = (char **)ft_calloc(1, sizeof(char *) * (j + 1));
 	if (!(*cmd_list)->args)
-		exit_error_strs(existing_args, "malloc()", data); // leaks non verifie
+	{
+		free_double_str(strs);
+		exit_error_strs(existing_args, "malloc()", data);
+	}
 	j = 0;
 	while (strs[i])
 		(*cmd_list)->args[j++] = safe_strdup(strs[i++], data);
@@ -87,7 +91,10 @@ void	refill_options(int *i, char **strs, t_cmd **cmd_list, t_data *data)
 		return (free_double_str(existing_options));
 	(*cmd_list)->options = (char **)ft_calloc(1, sizeof(char *) * (j + 1));
 	if (!(*cmd_list)->options)
-		exit_error_strs(existing_options, "malloc()", data); // leaks non verifie
+	{
+		free_double_str(strs);
+		exit_error_strs(existing_options, "malloc()", data);
+	}
 	j = 0;
 	while (strs[*i] && strs[*i][0] == '-')
 		(*cmd_list)->options[j++] = safe_strdup(strs[(*i)++], data);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/07 18:50:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:00:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	get_length_new_input(char *str, t_data *data)
 	t_var	*var;
 	int		length;
 
-	var = init_var(data);
+	var = init_var(str, data);
 	if (!var || !str || !str[var->i])
 	{
 		free_var(var);

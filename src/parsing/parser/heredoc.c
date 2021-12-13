@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:00:34 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:07:41 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static char	*parse_heredoc_delimiter(char *delimiter, t_data *data)
 	}
 	new_delimiter = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!new_delimiter)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(NULL, "malloc()", data);
+	}
 	i = -1;
 	j = 0;
 	while (delimiter[++i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:46:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:24:35 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:18:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,26 @@ void	start_heredoc_case(int j, char **argv, t_cmd **cmd_list, t_data *data)
 	}
 }
 
+static void	exit_error_redir(char **argv, t_redir *redir, t_data *data)
+{
+	if (redir)
+	{
+		if (redir->redirection)
+		{
+			free(redir->redirection);
+			redir->redirection = NULL;
+		}
+		if (redir->files)
+		{
+			free(redir->files);
+			redir->files = NULL;
+		}
+		free(redir);
+		redir = NULL;
+	}
+	exit_error_strs(argv, "malloc()", data);
+}
+
 static t_redir	*malloc_redir(char **argv, t_data *data)
 {
 	int		count;
@@ -60,13 +80,13 @@ static t_redir	*malloc_redir(char **argv, t_data *data)
 	}
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_redir(argv, redir, data);
 	redir->redirection = (int *)ft_calloc(1, sizeof(int) * count);
 	if (!redir->redirection)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_redir(argv, redir, data);
 	redir->files = (char **)ft_calloc(1, sizeof(char *) * (count + 1));
 	if (!redir->files)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_redir(argv, redir, data);
 	redir->count = count;
 	return (redir);
 }

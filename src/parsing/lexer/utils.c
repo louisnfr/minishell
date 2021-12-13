@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:41:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:59:51 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 14:01:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,17 @@ void	free_var(t_var *var)
 	var = NULL;
 }
 
-t_var	*init_var(t_data *data)
+t_var	*init_var(char *str, t_data *data)
 {
 	t_var	*var;
 
 	var = (t_var *)ft_calloc(1, sizeof(t_var));
 	if (data && !var)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(str, "malloc()", data); // leaks non verifie
+	}
 	else if (!data && !var)
 		return (NULL);
 	var->i = 0;

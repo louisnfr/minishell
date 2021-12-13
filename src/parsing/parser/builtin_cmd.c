@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:52:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:54:43 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:50:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_builtin_cmd(
 		{
 			cmd_list->options = (char **)ft_calloc(1, sizeof(char *) * 2);
 			if (!cmd_list->options)
-				exit_error_str(NULL, "malloc()", data); // leaks non verifie
+				exit_error_strs(argv, "malloc()", data);
 			cmd_list->options[0] = safe_strdup("-n", data);
 			cmd_list->options[1] = NULL;
 		}

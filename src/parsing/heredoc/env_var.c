@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:49:06 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 14:00:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	heredoc_length_new_input(char *str, t_data *data)
 	t_var	*var;
 	int		length;
 
-	var = init_var(data);
+	var = init_var(str, data);
 	if (!var || !str || !str[var->i])
 		return (0);
 	while (str && str[var->i] && str[var->i + 1])
@@ -69,7 +69,7 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
 
-	var = init_var(data);
+	var = init_var(str, data);
 	if (!var || !str || !str[var->i])
 		return (FAIL);
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])

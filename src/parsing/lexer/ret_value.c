@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 21:09:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 13:59:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
 	int		str_length;
 	t_var	*var;
 
-	var = init_var(data);
+	var = init_var(value, data);
 	str_length = ft_strlen(str);
 	while (str && var->i < str_length && str[var->i] && str[var->i + 1])
 	{

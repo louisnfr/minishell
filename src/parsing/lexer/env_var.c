@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:57:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 14:00:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
 
-	var = init_var(data);
+	var = init_var(str, data);
 	if (!var || !str || !str[var->i])
 	{
 		free_var(var);
