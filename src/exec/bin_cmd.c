@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:34:00 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 14:49:22 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		dup2(cmd_list->error_output, STDERR_FILENO);
 		close_all_fd(data);
 		cmd_array = fill_cmd_array(cmd_list, data);
-		data->envp = env_to_char(data->env, data);
+		data->envp = env_to_char(data->env, data, cmd_array);
 		execve(cmd_list->path, cmd_array, data->envp);
 		free_double_str(cmd_array);
 		return (

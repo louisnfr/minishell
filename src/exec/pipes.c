@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 21:21:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:26:58 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_bool	exec_cmd_bin_in_pipe(t_cmd **cmd_list, t_data *data)
 	dup2((*cmd_list)->error_output, STDERR_FILENO);
 	close_pipe(cmd_list, data);
 	cmd_array = fill_cmd_array(*cmd_list, data);
-	data->envp = env_to_char(data->env, data);
+	data->envp = env_to_char(data->env, data, cmd_array);
 	if (!(*cmd_list)->path)
 		return (error_bin_cmd(
 				"No such file or directory", 127, cmd_list, data));
