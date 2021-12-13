@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:46:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 13:59:20 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:42:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_bool	fill_new_str(
 	int		double_quotes;
 	t_var	*var;
 
-	var = init_var(value, NULL);
+	var = init_var();
 	if (!var)
 		return (FAIL);
 	double_quotes = 1;
@@ -99,6 +99,7 @@ char	*transform_pid_value(
 	{
 		clean_free(&ret_value);
 		clean_free(&value);
+		clean_free(&new_str);
 		if (data->argv && *data->argv)
 			free_double_str(*data->argv);
 		exit_error_str(str, "malloc()", data);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:00:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:38:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ static int	heredoc_length_new_input(char *str, t_data *data)
 	t_var	*var;
 	int		length;
 
-	var = init_var(str, data);
-	if (!var || !str || !str[var->i])
+	var = init_var();
+	if (!var)
+		exit_error_str(str, "malloc()", data); // leaks non verifie
+	if (!str || !str[var->i])
 		return (0);
 	while (str && str[var->i] && str[var->i + 1])
 	{
@@ -69,8 +71,13 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
 
-	var = init_var(str, data);
-	if (!var || !str || !str[var->i])
+	var = init_var();
+	if (!var)
+	{
+		clean_free(&new_str);
+		exit_error_str(str, "malloc()", data); // leaks non verifie
+	}
+	if (!str || !str[var->i])
 		return (FAIL);
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:00:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:40:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,14 @@ int	get_length_new_input(char *str, t_data *data)
 	t_var	*var;
 	int		length;
 
-	var = init_var(str, data);
-	if (!var || !str || !str[var->i])
+	var = init_var();
+	if (!var)
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(str, "malloc()", data); // leaks non verifie
+	}
+	if (!str || !str[var->i])
 	{
 		free_var(var);
 		return (FAIL);

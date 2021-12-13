@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:41:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:01:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:41:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,12 @@ void	free_var(t_var *var)
 	var = NULL;
 }
 
-t_var	*init_var(char *str, t_data *data)
+t_var	*init_var(void)
 {
 	t_var	*var;
 
 	var = (t_var *)ft_calloc(1, sizeof(t_var));
-	if (data && !var)
-	{
-		if (data->argv && *data->argv)
-			free_double_str(*data->argv);
-		exit_error_str(str, "malloc()", data); // leaks non verifie
-	}
-	else if (!data && !var)
+	if (!var) // leaks non verifie
 		return (NULL);
 	var->i = 0;
 	var->j = 0;

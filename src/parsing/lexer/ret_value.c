@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 13:59:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:42:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,14 @@ static void	fill_quotes(t_var *var, char *str, char *new_str, char *value)
 	}
 }
 
-static void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
+static t_bool	fill_new_str(char *str, char *new_str, char *value)
 {
 	int		str_length;
 	t_var	*var;
 
-	var = init_var(value, data);
+	var = init_var();
+	if (!var)
+		return (FAIL);
 	str_length = ft_strlen(str);
 	while (str && var->i < str_length && str[var->i] && str[var->i + 1])
 	{
@@ -111,6 +113,7 @@ static void	fill_new_str(char *str, char *new_str, char *value, t_data *data)
 		new_str[var->j++] = str[var->i];
 	new_str[var->j] = '\0';
 	free_var(var);
+	return (SUCCESS);
 }
 
 char	*transform_ret_value(
@@ -122,15 +125,15 @@ char	*transform_ret_value(
 	new_str = NULL;
 	length = get_length(str, ft_strlen(value));
 	new_str = (char *)ft_calloc(1, sizeof(char) * (length + 1));
-	if (!new_str)
+	if (!new_str || !fill_new_str(&(*str), &(*new_str), value))
 	{
 		clean_free(&value);
 		clean_free(&pid_value);
+		clean_free(&new_str);
 		if (data->argv && *data->argv)
 			free_double_str(*data->argv);
 		exit_error_str(str, "malloc()", data);
 	}
-	fill_new_str(&(*str), &(*new_str), value, data);
 	clean_free(&str);
 	return (new_str);
 }

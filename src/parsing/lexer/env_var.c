@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:00:08 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:53:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,13 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
 
-	var = init_var(str, data);
-	if (!var || !str || !str[var->i])
+	var = init_var();
+	if (!var)
+	{
+		clean_free(&new_str);
+		exit_error_str(str, "malloc()", data); // leaks non verifie
+	}
+	if (!str || !str[var->i])
 	{
 		free_var(var);
 		return (FAIL);
@@ -100,7 +105,8 @@ static char	*handle_special_case(char *input, t_data *data)
 	return (safe_strdup("\'\'", data));
 }
 
-char	*parse_env_variable(char *input, t_data *data)
+char	*parse_env_variable(
+	char *ret_value, char *pid_value, char *input, t_data *data)
 {
 	char	*new_input;
 	int		new_length;
@@ -110,8 +116,14 @@ char	*parse_env_variable(char *input, t_data *data)
 		return (handle_special_case(input, data));
 	new_length = get_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
-	if (!new_input)
-		exit_error_str(input, "malloc()", data); // leaks
+	if (new_input)
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		clean_free(&pid_value);
+		clean_free(&ret_value);
+		exit_error_str(input, "malloc()", data);
+	}
 	fill_new_input(new_input, input, data);
 	clean_free(&input);
 	if (new_input && new_input[0] == '\0')
