@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:40:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:52:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_env_variable(
 	char	*env_key;
 
 	env_key = NULL;
-	env_key = get_env_key(str, &var->i, data);
+	env_key = get_env_key(str, &var->i, var, data);
 	var->j += get_length_env_value(double_quotes, env_key, data);
 	clean_free(&env_key);
 	env_key = NULL;
@@ -88,18 +88,30 @@ static void	dollar_case(t_var *var, char *str, t_data *data)
 		increment_i_j(var);
 }
 
-int	get_length_new_input(char *str, t_data *data)
+t_var	*secured_init_var_env(
+	char *ret_value, char *pid_value, char *str, t_data *data)
 {
 	t_var	*var;
-	int		length;
 
 	var = init_var();
 	if (!var)
 	{
 		if (data->argv && *data->argv)
 			free_double_str(*data->argv);
-		exit_error_str(str, "malloc()", data); // leaks non verifie
+		clean_free(&pid_value);
+		clean_free(&ret_value);
+		exit_error_str(str, "malloc()", data);
 	}
+	return (var);
+}
+
+int	get_length_new_input(
+	char *ret_value, char *pid_value, char *str, t_data *data)
+{
+	t_var	*var;
+	int		length;
+
+	var = secured_init_var_env(pid_value, ret_value, str, data);
 	if (!str || !str[var->i])
 	{
 		free_var(var);

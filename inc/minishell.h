@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 18:04:19 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:48:20 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		handle_error_cmd_pipe(t_cmd **cmd_list);
 void	close_pipe(t_cmd **cmd, t_data *data);
 void	close_other_pipes(t_cmd **cmd, t_data *data);
 void	close_all_pipes(t_cmd **cmd, t_data *data);
-t_bool	create_fork(int i, pid_t *pid, t_data *data);
+t_bool	create_fork(int i, pid_t *pid, t_cmd **cmd_list, t_data *data);
 void	init_fd(int fd, t_data **data);
 
 /*** exec/parentheses ***/
@@ -116,9 +116,9 @@ t_bool	check_exec_parentheses(
 			int last_exit_code, t_cmd **cmd_list, t_data *data);
 int		get_num_parenthese(t_cmd *cmd_list);
 void	close_fd_parentheses(t_cmd **cmd_list, t_data *data);
-void	copy_last_file(char	*file, t_cmd **cmd_list, t_data *data);
-void	copy_last_redirection(
-			t_bool is_first, int redirection, t_cmd **cmd_list, t_data *data);
+t_bool	copy_last_file(char	*file, t_cmd **cmd_list, t_data *data);
+t_bool	copy_last_redirection(
+			t_bool is_first, int redirection, t_cmd **cmd_list);
 void	change_last_redirection(t_cmd **cmd_list);
 
 /*** exit ***/
@@ -134,7 +134,6 @@ char	**syntax_error_str_msg(char *token, char **str);
 
 char	**copy_strs_and_free(char **strs, t_data *data);
 char	**copy_strs(char **strs, t_data *data);
-char	**copy_args(char **strs, t_data *data);
 t_bool	str_is_in_str(char *s1, char *s2);
 int		ctrl_key(int k);
 

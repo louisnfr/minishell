@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 12:11:35 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/01 14:34:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:44:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	handle_left_redir(char *file, t_cmd *cmd_list, t_data *data)
 	{
 		if (!cmd_list->files && cmd_list->delimiter != PIPE)
 		{
-			copy_last_file(file, &cmd_list, data);
-			copy_last_redirection(is_first, LEFT_MARK, &cmd_list, data);
+			if (!copy_last_file(file, &cmd_list, data)
+				|| !copy_last_redirection(is_first, LEFT_MARK, &cmd_list))
+				exit_error_str(file, "malloc()", data);
 			is_first = FALSE;
 		}
 		cmd_list = cmd_list->next;
@@ -82,8 +83,9 @@ void	check_redir_parentheses(t_cmd *cmd_list, t_data *data)
 	{
 		if (!cmd_list->files && !cmd_list->nb_of_pipes)
 		{
-			copy_last_file(file, &cmd_list, data);
-			copy_last_redirection(is_first, redirection, &cmd_list, data);
+			if (!copy_last_file(file, &cmd_list, data)
+				|| !copy_last_redirection(is_first, redirection, &cmd_list))
+				exit_error_str(file, "malloc()", data);
 			is_first = FALSE;
 		}
 		cmd_list = cmd_list->next;

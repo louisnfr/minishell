@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:17:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:30:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,15 @@ void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data)
 	}
 }
 
-t_bool	create_fork(int i, pid_t *pid, t_data *data)
+t_bool	create_fork(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 {
 	pid[i] = fork();
 	if (pid[i] < 0)
-		exit_error_str(NULL, "fork()", data); // leaks
+	{
+		free(pid);
+		close_cmd_pipes_fd(cmd_list, data);
+		exit_error_str(NULL, "fork()", data);
+	}
 	if (pid[i] == CHILD)
 	{
 		free(pid);

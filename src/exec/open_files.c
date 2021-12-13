@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 15:23:32 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:48:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	transform_filename(int i, t_cmd *cmd_list, t_data *data)
 	char	*tmp;
 
 	tmp = safe_strdup(cmd_list->files[i], data);
-	cmd_list->files[i] = transform_str(cmd_list->files[i], data);
+	cmd_list->files[i] = transform_str(cmd_list->files[i], cmd_list, data);
 	if (!cmd_list->files[i] || str_is_equal(cmd_list->files[i], "*"))
 	{
 		if (!cmd_list->files[i])

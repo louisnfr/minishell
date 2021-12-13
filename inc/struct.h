@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 16:31:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:48:17 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,10 @@ typedef struct s_data
 	char	**tmp_args;
 	char	***argv;
 	char	**input;
+	char	**pid_str;
+	char	**ret_str;
+	char	*tmp_path;
+	t_bool	tmp_is_builtin;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

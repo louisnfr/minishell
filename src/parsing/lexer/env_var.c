@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 15:02:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:48:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 
 	var = init_var();
 	if (!var)
-	{
-		clean_free(&new_str);
-		exit_error_str(str, "malloc()", data); // leaks non verifie
-	}
+		return (-1);
 	if (!str || !str[var->i])
 	{
 		free_var(var);
@@ -114,17 +111,17 @@ char	*parse_env_variable(
 	new_input = NULL;
 	if (str_is_equal(input, "$\"\"") || str_is_equal(input, "$\'\'"))
 		return (handle_special_case(input, data));
-	new_length = get_length_new_input(input, data);
+	new_length = get_length_new_input(ret_value, pid_value, input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
-	if (!new_input)
+	if (!new_input || (fill_new_input(new_input, input, data) == -1))
 	{
 		if (data->argv && *data->argv)
 			free_double_str(*data->argv);
 		clean_free(&pid_value);
 		clean_free(&ret_value);
+		clean_free(&new_input);
 		exit_error_str(input, "malloc()", data);
 	}
-	fill_new_input(new_input, input, data);
 	clean_free(&input);
 	if (new_input && new_input[0] == '\0')
 		clean_free(&new_input);

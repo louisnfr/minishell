@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 18:45:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 18:04:31 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:48:13 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ t_bool	already_exists(char *var, t_env *env)
 	return (FALSE);
 }
 
+void	exit_error_env_to_char(char **envp, char **cmd_array, t_data *data)
+{
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	exit_error_child(envp, cmd_array, "malloc()", data);
+}
+
 char	**env_to_char(t_env *env, t_data *data, char **cmd_array)
 {
 	char	**envp;
@@ -61,7 +69,7 @@ char	**env_to_char(t_env *env, t_data *data, char **cmd_array)
 
 	envp = ft_calloc(1, sizeof(char *) * (get_env_size(env) + 1));
 	if (!envp)
-		exit_error_child(cmd_array, NULL, "malloc()", data); // leaks fd
+		exit_error_env_to_char(envp, cmd_array, data);
 	tmp = env;
 	i = 0;
 	while (tmp)
@@ -69,7 +77,7 @@ char	**env_to_char(t_env *env, t_data *data, char **cmd_array)
 		envp[i] = ft_calloc(1, sizeof(char)
 				* (ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2));
 		if (!envp[i])
-			exit_error_child(envp, cmd_array, "malloc()", data); // leaks fd
+			exit_error_env_to_char(envp, cmd_array, data);
 		envp[i] = safe_strjoin_and_free(envp[i], tmp->key, data);
 		envp[i] = safe_strjoin_and_free(envp[i], "=", data);
 		envp[i] = safe_strjoin_and_free(envp[i], tmp->value, data);

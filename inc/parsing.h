@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 14:49:48 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:54:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,18 @@ char	*parse_env_variable(
 			char *ret_value, char *pid_value, char *input, t_data *data);
 void	fill_env_value(char *new_str, t_var *var, char *str, t_data *data);
 int		is_charset_env(char c);
-char	*get_env_val(char *str, int *i, t_data *data);
-char	*get_env_key(char *str, int *i, t_data *data);
+char	*get_env_val(char *str, int *i, t_var *var, t_data *data);
+char	*get_env_key(char *str, int *i, t_var *var, t_data *data);
 int		get_length_env_value(int double_quotes, char *env_key, t_data *data);
-int		get_length_new_input(char *str, t_data *data);
-char	*transform_str(char *str, t_data *data);
+int		get_length_new_input(
+			char *ret_value, char *pid_value, char *str, t_data *data);
+char	*transform_str(char *str, t_cmd *cmd_list, t_data *data);
 char	*transform_pid_value(
 			char *str, char *value, char *ret_value, t_data *data);
 char	*transform_ret_value(
 			char *str, char *value, char *pid_value, t_data *data);
 char	*handle_home_var(char *str, t_data *data);
+char	*transform_home_var(char *str, char *new_str, char *home);
 void	handle_env_variable(
 			int double_quotes, t_var *var, char *str, t_data *data);
 void	fill_env_value(char *new_str, t_var *var, char *str, t_data *data);
@@ -74,7 +76,7 @@ void	refill_args_after_check(
 			int i, char **strs, t_cmd **cmd_list, t_data *data);
 void	refill_options_after_check(
 			int *i, char **strs, t_cmd **cmd_list, t_data *data);
-char	**copy_args(char **strs, t_data *data);
+char	**copy_args(char **strs, char **strs_2, t_cmd *cmd_list, t_data *data);
 void	handle_option_echo(int j, t_cmd **cmd_list, t_data *data);
 t_var	*init_var(void);
 void	free_var(t_var *var);

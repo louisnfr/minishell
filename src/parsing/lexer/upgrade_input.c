@@ -6,13 +6,13 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 16:06:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:47:41 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*transform_home_var(char *str, char *new_str, char *home)
+char	*transform_home_var(char *str, char *new_str, char *home)
 {
 	int	i;
 	int	j;
@@ -37,6 +37,21 @@ static char	*transform_home_var(char *str, char *new_str, char *home)
 	return (new_str);
 }
 
+void	exit_error_home(
+	char *pid_value, char *ret_value, t_cmd *cmd_list, t_data *data)
+{
+	clean_free(&pid_value);
+	clean_free(&ret_value);
+	if (cmd_list->path)
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+		exit_error_child(NULL, NULL, "malloc()", data);
+	}
+	exit_error_str(NULL, "malloc()", data);
+}
+
 char	*handle_home_var(char *str, t_data *data)
 {
 	char	*new_str;
@@ -52,11 +67,25 @@ char	*handle_home_var(char *str, t_data *data)
 		total_length = ft_strlen(str) + ft_strlen(home);
 		new_str = (char *)ft_calloc(1, sizeof(char) * total_length);
 		if (!new_str)
-			exit_error_str(NULL, "malloc()", data); // leaks non verifie
+			return (NULL);
 		new_str = transform_home_var(str, new_str, home);
 		return (new_str);
 	}
 	return (str);
+}
+
+void	exit_error_args(
+	int nb_of_args, char **args, t_cmd *cmd_list, t_data *data)
+{
+	free_args(nb_of_args, args);
+	if (cmd_list->path)
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+		exit_error_child(NULL, NULL, "malloc()", data);
+	}
+	exit_error_str(NULL, "malloc()", data);
 }
 
 static void	delete_void_args(
@@ -75,7 +104,7 @@ static void	delete_void_args(
 	cmd_list->args = (char **)ft_calloc(
 			1, sizeof(char *) * (new_nb_of_args + 1));
 	if (!cmd_list->args)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_args(nb_of_args, args, cmd_list, data);
 	j = 0;
 	i = -1;
 	while (++i < nb_of_args)
@@ -87,16 +116,22 @@ static void	delete_void_args(
 	free_args(nb_of_args, args);
 }
 
-char	*transform_str(char *str, t_data *data)
+char	*transform_str(char *str, t_cmd *cmd_list, t_data *data)
 {
 	char	*pid_value;
 	char	*ret_value;
 
 	if (!str)
 		return (NULL);
+	str = handle_home_var(str, data);
+	if (!str)
+		exit_error_home(NULL, NULL, cmd_list, data);
 	pid_value = safe_itoa(data->pid, data);
 	ret_value = safe_itoa(data->ret_value, data);
-	str = handle_home_var(str, data);
+	data->pid_str = &pid_value;
+	data->ret_str = &ret_value;
+	data->tmp_path = cmd_list->path;
+	data->tmp_is_builtin = cmd_list->is_builtin;
 	str = parse_env_variable(ret_value, pid_value, str, data);
 	if (str)
 	{
@@ -105,6 +140,10 @@ char	*transform_str(char *str, t_data *data)
 	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);
+	data->pid_str = NULL;
+	data->ret_str = NULL;
+	data->tmp_path = NULL;
+	data->tmp_is_builtin = FALSE;
 	return (str);
 }
 
@@ -114,14 +153,14 @@ void	parse_special_value(t_cmd *cmd_list, t_data *data)
 	int	new_nb_of_args;
 
 	data->to_reparse = FALSE;
-	cmd_list->command = transform_str(cmd_list->command, data);
+	cmd_list->command = transform_str(cmd_list->command, cmd_list, data);
 	i = 0;
 	new_nb_of_args = 0;
 	while (cmd_list->args && cmd_list->args[i])
 	{
 		if (ft_strchr(cmd_list->args[i], '$'))
 			data->to_reparse = TRUE;
-		cmd_list->args[i] = transform_str(cmd_list->args[i], data);
+		cmd_list->args[i] = transform_str(cmd_list->args[i], cmd_list, data);
 		if (cmd_list->args[i])
 			new_nb_of_args++;
 		i++;

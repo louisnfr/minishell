@@ -6,13 +6,27 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 12:02:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:57:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 16:46:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**copy_args(char **strs, t_data *data)
+void	exit_error_copy_args(
+	char **strs, char **strs_2, t_cmd *cmd_list, t_data *data)
+{
+	if (cmd_list->path)
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+		exit_error_child(strs, strs_2, "malloc()", data);
+	}
+	free_double_str(strs_2);
+	exit_error_strs(strs, "malloc()", data);
+}
+
+char	**copy_args(char **strs, char **strs_2, t_cmd *cmd_list, t_data *data)
 {
 	int		i;
 	int		j;
@@ -27,7 +41,7 @@ char	**copy_args(char **strs, t_data *data)
 		return (NULL);
 	strs_copy = (char **)ft_calloc(1, sizeof(char *) * i);
 	if (!strs_copy)
-		exit_error_str(NULL, "malloc()", data); // leaks non verifie
+		exit_error_copy_args(strs, strs_2, cmd_list, data);
 	i = -1;
 	j = 0;
 	while (strs[++i])

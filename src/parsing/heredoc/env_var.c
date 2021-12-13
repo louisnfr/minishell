@@ -6,11 +6,27 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:38:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:21:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_var	*secured_init_var_heredoc(char *str, char *new_str, t_data *data)
+{
+	t_var	*var;
+
+	var = init_var();
+	if (!var)
+	{
+		if (new_str)
+			clean_free(&new_str);
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(str, "malloc()", data);
+	}
+	return (var);
+}
 
 static int	heredoc_double_dollars(t_var *var, char *str)
 {
@@ -32,9 +48,7 @@ static int	heredoc_length_new_input(char *str, t_data *data)
 	t_var	*var;
 	int		length;
 
-	var = init_var();
-	if (!var)
-		exit_error_str(str, "malloc()", data); // leaks non verifie
+	var = secured_init_var_heredoc(str, NULL, data);
 	if (!str || !str[var->i])
 		return (0);
 	while (str && str[var->i] && str[var->i + 1])
@@ -71,12 +85,7 @@ static int	heredoc_fill_new_input(char *new_str, char *str, t_data *data)
 {
 	t_var	*var;
 
-	var = init_var();
-	if (!var)
-	{
-		clean_free(&new_str);
-		exit_error_str(str, "malloc()", data); // leaks non verifie
-	}
+	var = secured_init_var_heredoc(str, new_str, data);
 	if (!str || !str[var->i])
 		return (FAIL);
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
@@ -109,7 +118,11 @@ char	*heredoc_env_variable(char *input, t_data *data)
 	new_length = heredoc_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
 	if (!new_input)
-		exit_error_str(input, "malloc()", data); // leaks
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+		exit_error_str(input, "malloc()", data);
+	}
 	heredoc_fill_new_input(new_input, input, data);
 	clean_free(&input);
 	return (new_input);
