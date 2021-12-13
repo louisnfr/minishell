@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 17:49:46 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:44:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,33 @@ int	get_length_env_value(int double_quotes, char *env_key, t_data *data)
 	return (length);
 }
 
-char	*get_env_key(char *str, int *i, t_data *data)
+void	exit_error_env_key(char *str, t_var *var, t_data *data)
+{
+	(void)str;
+	if (var)
+		free(var);
+	if (!data->tmp_path && !data->tmp_is_builtin)
+	{
+		if (data->argv && *data->argv)
+			free_double_str(*data->argv);
+	}
+	if (data->pid_str)
+		clean_free(data->pid_str);
+	if (data->ret_str)
+		clean_free(data->ret_str);
+	if (data->tmp_path)
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+		exit_error_child(NULL, NULL, "malloc()", data);
+	}
+	if (!data->tmp_is_builtin)
+		exit_error_str(str, "malloc()", data); // leak
+	exit_error_str(NULL, "malloc()", data);
+}
+
+char	*get_env_key(char *str, int *i, t_var *var, t_data *data)
 {
 	char	*env_var;
 	int		var_length;
@@ -76,7 +102,7 @@ char	*get_env_key(char *str, int *i, t_data *data)
 		env_var = NULL;
 		env_var = (char *)ft_calloc(1, sizeof(char) * (var_length + 1));
 		if (!env_var)
-			exit_error_str(NULL, "malloc()", data); // leaks
+			exit_error_env_key(str, var, data);
 		var_length = 0;
 		while (str && str[++(*i)] && !is_charset_env(str[*i]))
 			env_var[var_length++] = str[*i];
@@ -85,14 +111,14 @@ char	*get_env_key(char *str, int *i, t_data *data)
 	return (env_var);
 }
 
-char	*get_env_val(char *str, int *i, t_data *data)
+char	*get_env_val(char *str, int *i, t_var *var, t_data *data)
 {
 	char	*env_key;
 	char	*env_value;
 
 	env_key = NULL;
 	env_value = NULL;
-	env_key = get_env_key(str, &(*i), data);
+	env_key = get_env_key(str, &(*i), var, data);
 	env_value = get_env(env_key, data->env);
 	clean_free(&env_key);
 	return (env_value);

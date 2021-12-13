@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:35:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:39:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	init_var_data(t_data *data)
 	data->i = 0;
 	data->heredoc_failed = FALSE;
 	data->pipe_heredoc = NULL;
-	data->ret_value = 0;
 	data->double_quotes = 1;
 	data->redir = NULL;
 	data->par_lvl = 0;
@@ -61,6 +60,10 @@ static void	init_var_data(t_data *data)
 	data->tmp_args = NULL;
 	data->argv = NULL;
 	data->input = NULL;
+	data->pid_str = NULL;
+	data->ret_str = NULL;
+	data->tmp_path = NULL;
+	data->tmp_is_builtin = FALSE;
 }
 
 t_data	*init_data(char **envp)
@@ -76,6 +79,7 @@ t_data	*init_data(char **envp)
 		exit(1);
 	create_update_env(envp, data);
 	data->pid = pid;
+	data->ret_value = 0;
 	data->envp = NULL;
 	data->last_cwd = NULL;
 	data->env_value = NULL;

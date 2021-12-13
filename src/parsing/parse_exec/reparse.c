@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:02:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/09 11:19:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:40:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 			(*cmd_list)->is_builtin = TRUE;
 		return ;
 	}
+	data->tmp_path = (*cmd_list)->path;
+	data->tmp_is_builtin = (*cmd_list)->is_builtin;
 	(*cmd_list)->command = transform_cmd_reparse(
 			(*cmd_list)->command, data);
 	if ((*cmd_list)->command)
@@ -48,6 +50,8 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 	}
 	if (!(*cmd_list)->command || !(*cmd_list)->command[0])
 		clean_free(&(*cmd_list)->path);
+	data->tmp_path = NULL;
+	data->tmp_is_builtin = FALSE;
 }
 
 void	check_expansion_var(char *command, t_data *data)
@@ -59,6 +63,8 @@ void	check_expansion_var(char *command, t_data *data)
 	command_tmp = safe_strdup(command, data);
 	pid_value = safe_itoa(data->pid, data);
 	ret_value = safe_itoa(data->ret_value, data);
+	data->pid_str = &pid_value;
+	data->ret_str = &ret_value;
 	command_tmp = transform_cmd(
 			command_tmp, pid_value, ret_value, data);
 	if (!command_tmp)
@@ -66,4 +72,6 @@ void	check_expansion_var(char *command, t_data *data)
 	clean_free(&command_tmp);
 	clean_free(&pid_value);
 	clean_free(&ret_value);
+	data->pid_str = NULL;
+	data->ret_str = NULL;
 }

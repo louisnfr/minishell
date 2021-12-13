@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 20:29:14 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:41:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	parse_end_cmd(
 
 void	parse_cmd(int delimiter, char **argv, t_cmd **cmd_list, t_data *data)
 {
+	data->tmp_path = (*cmd_list)->path;
+	data->tmp_is_builtin = (*cmd_list)->is_builtin;
 	check_expansion_var(argv[data->i], data);
 	if (argv[data->i] && str_is_equal(argv[data->i], "("))
 		handle_parentheses(delimiter, argv, data);
@@ -47,6 +49,8 @@ void	parse_cmd(int delimiter, char **argv, t_cmd **cmd_list, t_data *data)
 		handle_builtin_cmd(delimiter, argv, *cmd_list, data);
 	else if (argv[data->i] && !str_is_equal(argv[data->i], ")"))
 		handle_bin_cmd(delimiter, argv, *cmd_list, data);
+	data->tmp_path = NULL;
+	data->tmp_is_builtin = FALSE;
 }
 
 static void	parse_argv(char **argv, t_cmd *cmd_list, t_data *data)

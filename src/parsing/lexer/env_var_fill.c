@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 22:30:46 by efrancon          #+#    #+#             */
-/*   Updated: 2021/11/28 20:56:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:54:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_bool	put_space(char *str, int k, t_var *var, t_data *data)
 static t_bool	get_env_value(t_var *var, char *str, t_data *data)
 {
 	data->env_value = NULL;
-	data->env_value = get_env_val(str, &var->i, data);
+	data->env_value = get_env_val(str, &var->i, var, data);
 	if (!data->env_value)
 		return (FAIL);
 	return (SUCCESS);

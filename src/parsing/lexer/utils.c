@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:41:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:41:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:01:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_var	*init_var(void)
 	t_var	*var;
 
 	var = (t_var *)ft_calloc(1, sizeof(t_var));
-	if (!var) // leaks non verifie
+	if (!var)
 		return (NULL);
 	var->i = 0;
 	var->j = 0;

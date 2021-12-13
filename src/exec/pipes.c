@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:26:58 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:19:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	recursive_piping(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 {
 	int		is_child;
 
-	is_child = create_fork(i, pid, data);
+	is_child = create_fork(i, pid, cmd_list, data);
 	if (!is_child && *cmd_list && (*cmd_list)->next
 		&& (*cmd_list)->next->delimiter == PIPE)
 		recursive_piping(++i, pid, &(*cmd_list)->next, data);
@@ -90,7 +90,10 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	nb_of_cmd = (*cmd_list)->nb_of_pipes + 1;
 	pid = (pid_t *)ft_calloc(1, sizeof(pid_t) * nb_of_cmd);
 	if (!pid)
-		exit_error_str(NULL, "malloc()", data); // leaks
+	{
+		close_cmd_pipes_fd(cmd_list, data);
+		exit_error_str(NULL, "pid()", data);
+	}
 	exit_code = EXIT_SUCCESS;
 	recursive_piping(i, pid, cmd_list, data);
 	close_cmd_pipes_fd(cmd_list, data);
@@ -102,5 +105,7 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	else
 		handle_status(exit_code, &exit_code);
 	free(pid);
+	if (exit_code == 42)
+		exit_error_str(NULL, "child", data);
 	return (exit_code);
 }
