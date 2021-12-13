@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:54:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 14:30:27 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	exit_error_fd_array(int **fd_array, int nb_of_pipes, t_data *data)
 	exit_error_str(NULL, "malloc()", data);
 }
 
-void	exit_error_child(char *str, char *error, t_data *data)
+void	exit_error_child(char **strs, char **strs2, char *error, t_data *data)
 {
-	if (str)
-		clean_free(&str);
+	if (strs)
+		free_double_str(strs);
+	if (strs2)
+		free_double_str(strs2);
 	if (data)
 		clean_data(data);
 	ft_putstr_fd("minishell: error ", 2);

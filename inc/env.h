@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:31:17 by lraffin           #+#    #+#             */
-/*   Updated: 2021/11/29 20:32:07 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 14:25:28 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	print_export(t_cmd *cmd_list, t_data *data);
 
 char	*get_env(char *key, t_env *env);
 t_bool	already_exists(char *var, t_env *env);
-char	**env_to_char(t_env *env, t_data *data);
+char	**env_to_char(t_env *env, t_data *data, char **cmd_array);
 
 #endif
