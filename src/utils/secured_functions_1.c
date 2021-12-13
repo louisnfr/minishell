@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 11:59:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 18:45:28 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:48:33 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ char	*safe_strjoin_and_free(char *s1, char *s2, t_data *data)
 		return (NULL);
 	new_str = ft_strjoin_and_free(s1, s2);
 	if (!new_str)
-		exit_error_str(NULL, "malloc()", data); // leaks
+	{
+		clean_free(&data->sh->ret);
+		exit_error_str(NULL, "malloc()", data);
+	}
 	return (new_str);
 }
 

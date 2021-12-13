@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 19:48:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:27:15 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	**syntax_error_str_msg(char *token, char **str);
 
 /*** utils ***/
 
-char	**copy_strs_and_free(char **strs, t_data *data);
+char	**copy_strs_and_free(char **strs, t_data *data, char **free);
 char	**copy_strs(char **strs, t_data *data);
 t_bool	str_is_in_str(char *s1, char *s2);
 int		ctrl_key(int k);
