@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   secured_functions_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 19:46:12 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:51:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*safe_itoa(int n, t_data *data)
 	return (new_str);
 }
 
-t_bool	safe_close_fd(int fd, t_data *data)
+t_bool	safe_close_fd(int fd, pid_t *pid, t_data *data)
 {
 	int	ret;
 
@@ -30,7 +30,18 @@ t_bool	safe_close_fd(int fd, t_data *data)
 		return (SUCCESS);
 	ret = close(fd);
 	if (ret == -1)
-		exit_error_str(NULL, "close()", data); // leaks pas possible de close?
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+		close_all_fd(pid, data);
+		if (pid)
+		{
+			free(pid);
+			pid = NULL;
+		}
+		exit_error_str(NULL, "close()", data);
+	}
 	return (SUCCESS);
 }
 

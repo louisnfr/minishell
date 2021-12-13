@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 19:48:09 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:39:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,31 +64,31 @@ static void	handle_opening(int i, int *error, t_cmd **cmd_list, t_data *data)
 		return (handle_ambiguous_redir(error, i, *cmd_list));
 	if ((*cmd_list)->redirection[i] == RIGHT_MARK)
 	{
-		safe_close_fd((*cmd_list)->output, data);
+		safe_close_fd((*cmd_list)->output, NULL, data);
 		(*cmd_list)->output = open_a_file(
 				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
 	}
 	else if ((*cmd_list)->redirection[i] == DOUBLE_RIGHT_MARK)
 	{
-		safe_close_fd((*cmd_list)->output, data);
+		safe_close_fd((*cmd_list)->output, NULL, data);
 		(*cmd_list)->output = open_a_file(
 				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
 	}
 	else if ((*cmd_list)->redirection[i] == LEFT_MARK)
 	{
-		safe_close_fd((*cmd_list)->input, data);
+		safe_close_fd((*cmd_list)->input, NULL, data);
 		(*cmd_list)->input = open_a_file(
 				error, (*cmd_list)->files[i], READ, *cmd_list);
 	}
 	else if ((*cmd_list)->redirection[i] == ERROR)
 	{
-		safe_close_fd((*cmd_list)->error_output, data);
+		safe_close_fd((*cmd_list)->error_output, NULL, data);
 		(*cmd_list)->error_output = open_a_file(
 				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
 	}
 	else if ((*cmd_list)->redirection[i] == DOUBLE_ERROR)
 	{
-		safe_close_fd((*cmd_list)->error_output, data);
+		safe_close_fd((*cmd_list)->error_output, NULL, data);
 		(*cmd_list)->error_output = open_a_file(
 				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
 	}

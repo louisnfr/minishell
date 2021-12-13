@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:49:22 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:34:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_bool	update_path(int *exit_code, t_cmd **cmd_list, t_data *data)
 	{
 		display_error_message((*cmd_list)->command,
 			"No such file or directory", (*cmd_list)->error_output);
-		close_fd(cmd_list, data);
+		close_fd(cmd_list, NULL, data);
 		*exit_code = 127;
 		return (FAIL);
 	}
@@ -67,7 +67,7 @@ static t_bool	exec_bin_command(pid_t *pid, t_cmd *cmd_list, t_data *data)
 		dup2(cmd_list->input, STDIN_FILENO);
 		dup2(cmd_list->output, STDOUT_FILENO);
 		dup2(cmd_list->error_output, STDERR_FILENO);
-		close_all_fd(data);
+		close_all_fd(NULL, data);
 		cmd_array = fill_cmd_array(cmd_list, data);
 		data->envp = env_to_char(data->env, data, cmd_array);
 		execve(cmd_list->path, cmd_array, data->envp);
@@ -98,5 +98,5 @@ void	handle_bin_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 		if (*exit_code == 42)
 			exit_error_str(NULL, "child", data);
 	}
-	close_fd(cmd_list, data);
+	close_fd(cmd_list, NULL, data);
 }

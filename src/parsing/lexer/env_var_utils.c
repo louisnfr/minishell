@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 19:44:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 19:50:02 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	exit_error_env_key(char *str, t_var *var, t_data *data)
 		exit_error_child(NULL, NULL, "malloc()", data);
 	}
 	if (!data->tmp_is_builtin)
-		exit_error_str(str, "malloc()", data); // leak
+		exit_error_str(str, "malloc()", data); // leaks
 	exit_error_str(NULL, "malloc()", data);
 }
 

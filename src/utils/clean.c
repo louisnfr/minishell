@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 18:30:56 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:36:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	clean_cmd_list(t_cmd **cmd_list, t_data *data)
 	}
 	free(*cmd_list);
 	(*cmd_list) = NULL;
-	close_all_fd(data);
+	close_all_fd(NULL, data);
 	clean_free(&data->sh->current);
 	clean_free(&data->sh->input);
 	if (data->to_suppress)
@@ -63,8 +63,8 @@ void	free_pipe_heredoc(t_data *data)
 {
 	if (data->pipe_heredoc)
 	{
-		safe_close_fd(data->pipe_heredoc[0], data);
-		safe_close_fd(data->pipe_heredoc[1], data);
+		safe_close_fd(data->pipe_heredoc[0], NULL, data);
+		safe_close_fd(data->pipe_heredoc[1], NULL, data);
 		free(data->pipe_heredoc);
 		data->pipe_heredoc = NULL;
 	}

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:17:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 18:03:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:38:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	get_next_cmd(t_cmd **cmd_list, t_data *data)
 {
-	close_fd(cmd_list, data);
+	close_fd(cmd_list, NULL, data);
 	*cmd_list = (*cmd_list)->next;
 }
 
@@ -56,7 +56,7 @@ t_bool	init_exec(
 	*exit_code = EXIT_FAILURE;
 	if (data->heredoc_failed)
 	{
-		close_all_fd(data);
+		close_all_fd(NULL, data);
 		*exit_code = 130;
 	}
 	if (data->heredoc_failed || !data->cmd_list->next)

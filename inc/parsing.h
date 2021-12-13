@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 18:54:08 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:20:07 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	handle_bin_cmd(
 void	handle_builtin_cmd(
 			int delimiter, char **argv, t_cmd *cmd_list, t_data *data);
 void	free_fd_array(int size, int **fd_array);
-void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data);
+void	close_cmd_pipes_fd(t_cmd **cmd_list, pid_t *pid, t_data *data);
 void	parse_redirection_heredoc(char **argv, t_cmd *cmd_list, t_data *data);
 void	parse_cmd(int delimiter, char **argv, t_cmd **cmd_list, t_data *data);
 void	parse_end_cmd(char **argv, t_cmd **cmd_list, t_data *data);

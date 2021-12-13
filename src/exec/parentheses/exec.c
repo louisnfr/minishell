@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:37:30 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:40:51 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ static void	exec_cmd_parenthese(t_cmd **cmd_list, t_data *data)
 		{
 			handle_error_msg_exec(
 				&exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
-			close_fd(cmd_list, data);
+			close_fd(cmd_list, NULL, data);
 			*cmd_list = (*cmd_list)->next;
 			check_exit_code(exit_code, cmd_list, data);
 		}
 		if (!*cmd_list || exec_must_stop(exit_code, parenthese, tmp))
 			break ;
 	}
-	close_all_fd(data);
+	close_all_fd(NULL, data);
 	clean_data(data);
 	exit(exit_code);
 }

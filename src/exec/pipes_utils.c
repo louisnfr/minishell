@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 18:30:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:47:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	init_fd(int fd, t_data **data)
 	}
 }
 
-void	close_cmd_pipes_fd(t_cmd **cmd_list, t_data *data)
+void	close_cmd_pipes_fd(t_cmd **cmd_list, pid_t *pid, t_data *data)
 {
-	close_all_pipes(cmd_list, data);
-	close_fd(cmd_list, data);
+	close_all_pipes(cmd_list, pid, data);
+	close_fd(cmd_list, pid, data);
 	*cmd_list = (*cmd_list)->next;
 	while ((*cmd_list) && (*cmd_list)->delimiter == PIPE)
 	{
-		close_fd(cmd_list, data);
+		close_fd(cmd_list, pid, data);
 		*cmd_list = (*cmd_list)->next;
 	}
 }
@@ -56,12 +56,14 @@ t_bool	create_fork(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 	if (pid[i] < 0)
 	{
 		free(pid);
-		close_cmd_pipes_fd(cmd_list, data);
+		pid = NULL;
+		close_cmd_pipes_fd(cmd_list, NULL, data);
 		exit_error_str(NULL, "fork()", data);
 	}
 	if (pid[i] == CHILD)
 	{
 		free(pid);
+		pid = NULL;
 		return (1);
 	}
 	return (0);

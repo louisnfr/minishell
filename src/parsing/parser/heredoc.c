@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 13:07:41 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:37:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	parse_redirection_heredoc(char **argv, t_cmd *cmd_list, t_data *data)
 	}
 	if (data->pipe_heredoc)
 	{
-		safe_close_fd(data->pipe_heredoc[1], data);
+		safe_close_fd(data->pipe_heredoc[1], NULL, data);
 		free(data->pipe_heredoc);
 		data->pipe_heredoc = NULL;
 	}

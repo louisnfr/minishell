@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:35:58 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 17:42:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:35:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	close_fd_parentheses(t_cmd **cmd_list, t_data *data)
 	while (*cmd_list && (*cmd_list)->parenthese)
 	{
 		parenthese = (*cmd_list)->parenthese;
-		close_fd(cmd_list, data);
+		close_fd(cmd_list, NULL, data);
 		*cmd_list = (*cmd_list)->next;
 		if (parenthese == LAST)
 			break ;

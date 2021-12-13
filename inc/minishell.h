@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 19:48:20 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:33:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*safe_strjoin_and_free(char *s1, char *s2, t_data *data);
 char	*safe_strjoin_and_free2(char *s1, char *s2, t_data *data, char **strs);
 char	*safe_itoa(int n, t_data *data);
 char	*safe_substr(char *str, int start, int len, t_data *data);
-t_bool	safe_close_fd(int fd, t_data *data);
+t_bool	safe_close_fd(int fd, pid_t *pid, t_data *data);
 char	**safe_double_strdup(char **str, int size, t_data *data);
 char	*safe_getcwd(t_data *data);
 
@@ -89,8 +89,8 @@ t_bool	error_bin_cmd(
 			char *error_msg, int exit_code, t_cmd **cmd_list, t_data *data);
 char	**fill_cmd_array(t_cmd *cmd_list, t_data *data);
 int		exec_pipes(t_cmd **cmd_list, t_data *data);
-void	close_all_fd(t_data *data);
-void	close_fd(t_cmd **cmd_list, t_data *data);
+void	close_all_fd(pid_t *pid, t_data *data);
+void	close_fd(t_cmd **cmd_list, pid_t *pid, t_data *data);
 int		get_error_code(void);
 t_bool	count_wildcard_arg(int *i, char *wildcard_arg);
 t_bool	fill_wildcard_arg(
@@ -102,9 +102,9 @@ void	handle_error_msg_exec(int *exit_code, char *command, int fd_error);
 void	check_exit_code(int exit_code, t_cmd **cmd_list, t_data *data);
 void	get_next_cmd(t_cmd **cmd_list, t_data *data);
 int		handle_error_cmd_pipe(t_cmd **cmd_list);
-void	close_pipe(t_cmd **cmd, t_data *data);
-void	close_other_pipes(t_cmd **cmd, t_data *data);
-void	close_all_pipes(t_cmd **cmd, t_data *data);
+void	close_pipe(t_cmd **cmd, pid_t *pid, t_data *data);
+void	close_other_pipes(t_cmd **cmd, pid_t *pid, t_data *data);
+void	close_all_pipes(t_cmd **cmd, pid_t *pid, t_data *data);
 t_bool	create_fork(int i, pid_t *pid, t_cmd **cmd_list, t_data *data);
 void	init_fd(int fd, t_data **data);
 

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 19:36:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:38:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_bool	handle_other_cases(
 {
 	if (*cmd_list && (!(*cmd_list)->command || !(*cmd_list)->command[0]))
 	{
-		close_fd(cmd_list, data);
+		close_fd(cmd_list, NULL, data);
 		*exit_code = 0;
 		*cmd_list = (*cmd_list)->next;
 		return (SUCCESS);
@@ -63,7 +63,7 @@ t_bool	handle_execution(int *exit_code, t_cmd **cmd_list, t_data *data)
 	else if (*cmd_list && (*cmd_list)->is_builtin)
 	{
 		*exit_code = exec_builtin(*cmd_list, data);
-		close_fd(cmd_list, data);
+		close_fd(cmd_list, NULL, data);
 		*cmd_list = (*cmd_list)->next;
 	}
 	else if (*cmd_list && (*cmd_list)->path)
@@ -86,7 +86,7 @@ static void	exec_command(int *exit_code, t_cmd **cmd_list, t_data *data)
 	{
 		handle_error_msg_exec(
 			exit_code, (*cmd_list)->command, (*cmd_list)->error_output);
-		close_fd(cmd_list, data);
+		close_fd(cmd_list, NULL, data);
 		*cmd_list = (*cmd_list)->next;
 		check_exit_code(*exit_code, cmd_list, data);
 	}
@@ -108,7 +108,7 @@ int	exec(t_data *data)
 			error_file = open_files(&exit_code, cmd_list, data);
 		if (error_file)
 		{
-			close_fd(&cmd_list, data);
+			close_fd(&cmd_list, NULL, data);
 			data->ret_value = exit_code;
 			cmd_list = cmd_list->next;
 			continue ;

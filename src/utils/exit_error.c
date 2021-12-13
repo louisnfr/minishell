@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 16:45:10 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 20:41:54 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	exit_error_fd_array(int **fd_array, int nb_of_pipes, t_data *data)
 	i = -1;
 	while (++i < nb_of_pipes)
 	{
-		safe_close_fd(fd_array[i][0], data);
-		safe_close_fd(fd_array[i][1], data);
+		safe_close_fd(fd_array[i][0], NULL, data);
+		safe_close_fd(fd_array[i][1], NULL, data);
 	}
 	free_fd_array(nb_of_pipes, fd_array);
 	exit_error_str(NULL, "malloc()", data);
