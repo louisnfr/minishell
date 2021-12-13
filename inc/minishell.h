@@ -6,7 +6,7 @@
 /*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 14:30:40 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:04:19 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ int		check_raw_input(char *input);
 /*** protected functions ***/
 
 char	*safe_strdup(char *str, t_data *data);
+char	*safe_strdup_free(char *str, t_data *data, char **strs);
 char	**safe_split(const char *str, char c, t_data *data);
-char	**safe_split_on_first(const char *str, char c, t_data *data);
+char	**safe_split_on_first(char *str, char c, t_data *data);
 char	*safe_strjoin(char *s1, char *s2, t_data *data);
 char	*safe_strjoin_and_free(char *s1, char *s2, t_data *data);
+char	*safe_strjoin_and_free2(char *s1, char *s2, t_data *data, char **strs);
 char	*safe_itoa(int n, t_data *data);
-char	*safe_substr(const char *str, int start, int len, t_data *data);
-t_bool	safe_unlink(char *pathname, t_data *data);
+char	*safe_substr(char *str, int start, int len, t_data *data);
 t_bool	safe_close_fd(int fd, t_data *data);
 char	**safe_double_strdup(char **str, int size, t_data *data);
 char	*safe_getcwd(t_data *data);

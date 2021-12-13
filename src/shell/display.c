@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:06:40 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/10 02:19:47 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:04:54 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ static char	*prompt(t_data *data)
 	char	*usr;
 	char	*cwd;
 	char	*tmp;
-	char	*ret;
 
-	ret = get_ret_value(data);
+	data->sh->ret = get_ret_value(data);
 	usr = get_env("USER", data->env);
 	cwd = safe_getcwd(data);
 	if (ft_strnstr(cwd, get_env("HOME", data->env),
@@ -82,7 +81,7 @@ static char	*prompt(t_data *data)
 		clean_free(&tmp);
 	}
 	cwd = adjust_prompt_length(cwd, data);
-	cwd = join_prompt(ret, usr, cwd, data);
+	cwd = join_prompt(data->sh->ret, usr, cwd, data);
 	return (cwd);
 }
 

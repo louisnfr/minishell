@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:35:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:28:47 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static char	**setup_builtins(t_data *data)
 	builtins = (char **)ft_calloc(1, sizeof(char *) * 9);
 	if (!builtins)
 		exit_error_str(NULL, "malloc()", data);
-	builtins[0] = safe_strdup("echo", data);
-	builtins[1] = safe_strdup("cd", data);
-	builtins[2] = safe_strdup("pwd", data);
-	builtins[3] = safe_strdup("env", data);
-	builtins[4] = safe_strdup("history", data);
-	builtins[5] = safe_strdup("export", data);
-	builtins[6] = safe_strdup("unset", data);
-	builtins[7] = safe_strdup("exit", data);
+	builtins[0] = safe_strdup_free("echo", data, builtins);
+	builtins[1] = safe_strdup_free("cd", data, builtins);
+	builtins[2] = safe_strdup_free("pwd", data, builtins);
+	builtins[3] = safe_strdup_free("env", data, builtins);
+	builtins[4] = safe_strdup_free("history", data, builtins);
+	builtins[5] = safe_strdup_free("export", data, builtins);
+	builtins[6] = safe_strdup_free("unset", data, builtins);
+	builtins[7] = safe_strdup_free("exit", data, builtins);
 	builtins[8] = NULL;
 	return (builtins);
 }

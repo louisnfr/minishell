@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 14:53:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:02:16 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	*parse_env_variable(
 		return (handle_special_case(input, data));
 	new_length = get_length_new_input(input, data);
 	new_input = (char *)ft_calloc(1, sizeof(char) * (new_length + 1));
-	if (new_input)
+	if (!new_input)
 	{
 		if (data->argv && *data->argv)
 			free_double_str(*data->argv);

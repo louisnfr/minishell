@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 23:36:51 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 21:28:09 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:45:09 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ char	*safe_getcwd(t_data *data)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		cwd = safe_strdup(data->last_cwd, data);
+		cwd = safe_strdup_free(data->last_cwd, data, &data->sh->ret);
 	else
 	{
 		if (data->last_cwd)
 			clean_free(&data->last_cwd);
-		data->last_cwd = safe_strdup(cwd, data);
+		data->last_cwd = safe_strdup_free(cwd, data, &data->sh->ret);
 	}
 	return (cwd);
 }

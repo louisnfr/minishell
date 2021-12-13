@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:51:18 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 21:30:07 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:33:37 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ char	**get_paths(t_data *data)
 	all_paths = safe_split(path_variable, ':', data);
 	i = -1;
 	while (all_paths[++i])
-		all_paths[i] = safe_strjoin_and_free(all_paths[i], "/", data);
+		all_paths[i] = safe_strjoin_and_free2(
+						all_paths[i], "/", data, all_paths);
 	all_paths[i] = NULL;
 	return (all_paths);
 }
