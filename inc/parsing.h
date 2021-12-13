@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:25:37 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 20:20:07 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:34:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,19 @@ void	setup_cmd_list(t_cmd *cmd_list, t_data *data);
 void	clean_cmd_list(t_cmd **cmd_list, t_data *data);
 void	create_new_cmd(t_cmd **cmd_list, t_data *data);
 void	print_list(t_cmd *cmd_list);
+t_var	*secured_init_var_heredoc(char *str, char *new_str, t_data *data);
+t_var	*secured_init_var_env(
+			char *ret_value, char *pid_value, char *str, t_data *data);
+void	exit_error_files(char **copy_files, char **argv, t_data *data);
+void	exit_error_redirections(char *input, char **argv, t_data *data);
+int		error_new_input(t_var *var, char *str);
+void	exit_error_refill(char **existing_options,
+			char **strs, t_cmd *cmd_list, t_data *data);
+void	exit_error_home(
+			char *pid_value, char *ret_value, t_cmd *cmd_list, t_data *data);
+void	exit_error_args(
+			int nb_of_args, char **args, t_cmd *cmd_list, t_data *data);
+void	re_init_data_var(t_data *data);
+void	exit_error_env_key(char *str, t_var *var, t_data *data);
 
 #endif

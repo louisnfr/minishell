@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upgrade_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 19:47:41 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 23:32:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@ char	*transform_home_var(char *str, char *new_str, char *home)
 	return (new_str);
 }
 
-void	exit_error_home(
-	char *pid_value, char *ret_value, t_cmd *cmd_list, t_data *data)
-{
-	clean_free(&pid_value);
-	clean_free(&ret_value);
-	if (cmd_list->path)
-	{
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		close(STDERR_FILENO);
-		exit_error_child(NULL, NULL, "malloc()", data);
-	}
-	exit_error_str(NULL, "malloc()", data);
-}
-
 char	*handle_home_var(char *str, t_data *data)
 {
 	char	*new_str;
@@ -72,20 +57,6 @@ char	*handle_home_var(char *str, t_data *data)
 		return (new_str);
 	}
 	return (str);
-}
-
-void	exit_error_args(
-	int nb_of_args, char **args, t_cmd *cmd_list, t_data *data)
-{
-	free_args(nb_of_args, args);
-	if (cmd_list->path)
-	{
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		close(STDERR_FILENO);
-		exit_error_child(NULL, NULL, "malloc()", data);
-	}
-	exit_error_str(NULL, "malloc()", data);
 }
 
 static void	delete_void_args(
@@ -140,10 +111,7 @@ char	*transform_str(char *str, t_cmd *cmd_list, t_data *data)
 	}
 	clean_free(&pid_value);
 	clean_free(&ret_value);
-	data->pid_str = NULL;
-	data->ret_str = NULL;
-	data->tmp_path = NULL;
-	data->tmp_is_builtin = FALSE;
+	re_init_data_var(data);
 	return (str);
 }
 

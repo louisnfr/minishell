@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:30:38 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/12 20:16:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:08:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,7 @@ char	**copy_existing_files(
 		exit_error_strs(argv, "malloc()", data);
 	*copy_redir = (int *)ft_calloc(1, sizeof(int) * count);
 	if (!*copy_redir)
-	{
-		free(copy_files);
-		copy_files = NULL;
-		exit_error_strs(argv, "malloc()", data);
-	}
+		exit_error_files(copy_files, argv, data);
 	i = -1;
 	while (cmd_list->files[++i])
 		copy_files[i] = safe_strdup(cmd_list->files[i], data);

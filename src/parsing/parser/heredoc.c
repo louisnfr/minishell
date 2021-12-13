@@ -6,11 +6,18 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:58:16 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:37:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:02:38 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	exit_error_heredoc(t_data *data)
+{
+	if (data->argv && *data->argv)
+		free_double_str(*data->argv);
+	exit_error_str(NULL, "malloc()", data);
+}
 
 static char	*parse_heredoc_delimiter(char *delimiter, t_data *data)
 {
@@ -27,11 +34,7 @@ static char	*parse_heredoc_delimiter(char *delimiter, t_data *data)
 	}
 	new_delimiter = (char *)ft_calloc(1, sizeof(char) * (j + 1));
 	if (!new_delimiter)
-	{
-		if (data->argv && *data->argv)
-			free_double_str(*data->argv);
-		exit_error_str(NULL, "malloc()", data);
-	}
+		exit_error_heredoc(data);
 	i = -1;
 	j = 0;
 	while (delimiter[++i])

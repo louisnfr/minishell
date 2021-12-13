@@ -6,27 +6,11 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 14:08:45 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 15:21:34 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:05:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_var	*secured_init_var_heredoc(char *str, char *new_str, t_data *data)
-{
-	t_var	*var;
-
-	var = init_var();
-	if (!var)
-	{
-		if (new_str)
-			clean_free(&new_str);
-		if (data->argv && *data->argv)
-			free_double_str(*data->argv);
-		exit_error_str(str, "malloc()", data);
-	}
-	return (var);
-}
 
 static int	heredoc_double_dollars(t_var *var, char *str)
 {

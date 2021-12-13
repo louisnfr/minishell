@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:39:48 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 18:32:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:12:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ static char	**handle_error_redirections(char *input, char **argv, t_data *data)
 	new_argv = NULL;
 	new_argv = (char **)ft_calloc(1, sizeof(char *) * (length + 1));
 	if (!new_argv)
-	{
-		free_double_str(argv);
-		exit_error_str(input, "malloc()", data);
-	}
+		exit_error_redirections(input, argv, data);
 	if (!fill_new_argv(length, argv, new_argv, data))
 	{
 		free_double_str(&(*argv));

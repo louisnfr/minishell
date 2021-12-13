@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:35:53 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:47:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:42:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,10 @@ t_bool	create_fork(int i, pid_t *pid, t_cmd **cmd_list, t_data *data)
 		return (1);
 	}
 	return (0);
+}
+
+void	exit_error_pipes(t_cmd **cmd_list, t_data *data)
+{
+	close_cmd_pipes_fd(cmd_list, NULL, data);
+	exit_error_str(NULL, "pid()", data);
 }

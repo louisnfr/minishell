@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:09 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:52:21 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:33:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,6 @@ int	get_length_env_value(int double_quotes, char *env_key, t_data *data)
 		return (value_length);
 	length = count_length(env_value, value_length);
 	return (length);
-}
-
-void	exit_error_env_key(char *str, t_var *var, t_data *data)
-{
-	(void)str;
-	if (var)
-		free(var);
-	if (!data->tmp_path && !data->tmp_is_builtin)
-	{
-		if (data->argv && *data->argv)
-			free_double_str(*data->argv);
-	}
-	if (data->pid_str)
-		clean_free(data->pid_str);
-	if (data->ret_str)
-		clean_free(data->ret_str);
-	if (data->tmp_path)
-	{
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		close(STDERR_FILENO);
-		exit_error_child(NULL, NULL, "malloc()", data);
-	}
-	if (!data->tmp_is_builtin)
-		exit_error_str(str, "malloc()", data); // leaks
-	exit_error_str(NULL, "malloc()", data);
 }
 
 char	*get_env_key(char *str, int *i, t_var *var, t_data *data)

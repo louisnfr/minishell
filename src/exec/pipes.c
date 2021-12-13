@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:37:47 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:49:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:40:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ int	exec_pipes(t_cmd **cmd_list, t_data *data)
 	nb_of_cmd = (*cmd_list)->nb_of_pipes + 1;
 	pid = (pid_t *)ft_calloc(1, sizeof(pid_t) * nb_of_cmd);
 	if (!pid)
-	{
-		close_cmd_pipes_fd(cmd_list, NULL, data);
-		exit_error_str(NULL, "pid()", data);
-	}
+		exit_error_pipes(cmd_list, data);
 	exit_code = EXIT_SUCCESS;
 	recursive_piping(i, pid, cmd_list, data);
 	close_cmd_pipes_fd(cmd_list, pid, data);

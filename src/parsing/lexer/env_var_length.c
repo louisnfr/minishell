@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:37:17 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 18:52:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:24:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,6 @@ static void	dollar_case(t_var *var, char *str, t_data *data)
 		increment_i_j(var);
 }
 
-t_var	*secured_init_var_env(
-	char *ret_value, char *pid_value, char *str, t_data *data)
-{
-	t_var	*var;
-
-	var = init_var();
-	if (!var)
-	{
-		if (data->argv && *data->argv)
-			free_double_str(*data->argv);
-		clean_free(&pid_value);
-		clean_free(&ret_value);
-		exit_error_str(str, "malloc()", data);
-	}
-	return (var);
-}
-
 int	get_length_new_input(
 	char *ret_value, char *pid_value, char *str, t_data *data)
 {
@@ -113,10 +96,7 @@ int	get_length_new_input(
 
 	var = secured_init_var_env(pid_value, ret_value, str, data);
 	if (!str || !str[var->i])
-	{
-		free_var(var);
-		return (FAIL);
-	}
+		return (error_new_input(var, str));
 	data->double_quotes = 1;
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{

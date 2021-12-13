@@ -6,26 +6,11 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:50:20 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 17:27:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:25:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exit_error_refill(
-	char **existing_options, char **strs, t_cmd *cmd_list, t_data *data)
-{
-	free_double_str(strs);
-	free_double_str(data->tmp_args);
-	if (cmd_list->path)
-	{
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		close(STDERR_FILENO);
-		exit_error_child(existing_options, NULL, "malloc()", data);
-	}
-	exit_error_strs(existing_options, "malloc()", data);
-}
 
 static int	get_nb_of_args(int i, char **existing_args, char **strs)
 {

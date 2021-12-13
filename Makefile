@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/12/12 21:20:47 by efrancon         ###   ########.fr        #
+#    Updated: 2021/12/13 23:51:00 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,9 @@ SOURCES = \
 		parsing/utils/paths.c \
 		parsing/utils/linked_list.c \
 		parsing/utils/print_list.c \
+		parsing/utils/exit_error.c \
+		parsing/utils/exit_error_2.c \
+		parsing/utils/secured.c \
 		\
 		parsing/parse_exec/reparse.c \
 		parsing/parse_exec/refill.c \
@@ -132,7 +135,8 @@ SOURCES = \
 		utils/clean_2.c \
 		utils/exit_error.c \
 		utils/secured_functions_1.c \
-		utils/secured_functions_2.c
+		utils/secured_functions_2.c \
+		utils/secured_functions_3.c
 
 ### COMPILATION ###
 CC		= clang

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:51:25 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:39:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:45:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,25 @@ static int	open_a_file(t_bool *error, char *file, int flag, t_cmd *cmd_list)
 	return (fd);
 }
 
-// static void	handle_opening(int i, int *error, t_cmd **cmd_list)
-// {
-// 	if ((*cmd_list)->redirection[i] == AMBIGUOUS_REDIR)
-// 		return (handle_ambiguous_redir(error, i, *cmd_list));
-// 	if ((*cmd_list)->redirection[i] == RIGHT_MARK)
-// 		(*cmd_list)->output = open_a_file(
-// 				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
-// 	else if ((*cmd_list)->redirection[i] == DOUBLE_RIGHT_MARK)
-// 		(*cmd_list)->output = open_a_file(
-// 				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
-// 	else if ((*cmd_list)->redirection[i] == LEFT_MARK)
-// 		(*cmd_list)->input = open_a_file(
-// 				error, (*cmd_list)->files[i], READ, *cmd_list);
-// 	else if ((*cmd_list)->redirection[i] == ERROR)
-// 		(*cmd_list)->error_output = open_a_file(
-// 				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
-// 	else if ((*cmd_list)->redirection[i] == DOUBLE_ERROR)
-// 		(*cmd_list)->error_output = open_a_file(
-// 				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
-// 	if ((*cmd_list)->redir_error)
-// 		(*cmd_list)->error_output = (*cmd_list)->output;
-// }
+static void	handle_opening_error_redir(
+	int i, int *error, t_cmd **cmd_list, t_data *data)
+{
+	if ((*cmd_list)->redirection[i] == ERROR)
+	{
+		safe_close_fd((*cmd_list)->error_output, NULL, data);
+		(*cmd_list)->error_output = open_a_file(
+				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
+	}
+	else if ((*cmd_list)->redirection[i] == DOUBLE_ERROR)
+	{
+		safe_close_fd((*cmd_list)->error_output, NULL, data);
+		(*cmd_list)->error_output = open_a_file(
+				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
+	}
+}
 
 static void	handle_opening(int i, int *error, t_cmd **cmd_list, t_data *data)
 {
-	(void)data;
 	if ((*cmd_list)->redirection[i] == AMBIGUOUS_REDIR)
 		return (handle_ambiguous_redir(error, i, *cmd_list));
 	if ((*cmd_list)->redirection[i] == RIGHT_MARK)
@@ -80,18 +73,8 @@ static void	handle_opening(int i, int *error, t_cmd **cmd_list, t_data *data)
 		(*cmd_list)->input = open_a_file(
 				error, (*cmd_list)->files[i], READ, *cmd_list);
 	}
-	else if ((*cmd_list)->redirection[i] == ERROR)
-	{
-		safe_close_fd((*cmd_list)->error_output, NULL, data);
-		(*cmd_list)->error_output = open_a_file(
-				error, (*cmd_list)->files[i], WRITE_TRUNC, *cmd_list);
-	}
-	else if ((*cmd_list)->redirection[i] == DOUBLE_ERROR)
-	{
-		safe_close_fd((*cmd_list)->error_output, NULL, data);
-		(*cmd_list)->error_output = open_a_file(
-				error, (*cmd_list)->files[i], WRITE_APPEND, *cmd_list);
-	}
+	else
+		handle_opening_error_redir(i, error, cmd_list, data);
 	if ((*cmd_list)->redir_error)
 		(*cmd_list)->error_output = (*cmd_list)->output;
 }

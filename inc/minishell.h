@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 20:52:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:42:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	close_other_pipes(t_cmd **cmd, pid_t *pid, t_data *data);
 void	close_all_pipes(t_cmd **cmd, pid_t *pid, t_data *data);
 t_bool	create_fork(int i, pid_t *pid, t_cmd **cmd_list, t_data *data);
 void	init_fd(int fd, t_data **data);
+void	exit_error_pipes(t_cmd **cmd_list, t_data *data);
 
 /*** exec/parentheses ***/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 17:39:03 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 19:48:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/13 23:17:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,8 @@ static int	fill_new_input(char *new_str, char *str, t_data *data)
 	t_var	*var;
 
 	var = init_var();
-	if (!var)
-		return (-1);
-	if (!str || !str[var->i])
-	{
-		free_var(var);
-		return (FAIL);
-	}
+	if (!var || !str || !str[var->i])
+		return (error_new_input(var, str));
 	data->double_quotes = 1;
 	while (var->i < (int)ft_strlen(str) && str[var->i] && str[var->i + 1])
 	{
