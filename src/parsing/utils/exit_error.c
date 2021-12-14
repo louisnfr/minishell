@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:20:43 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 23:33:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:38:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	exit_error_refill(
 
 void	exit_error_env_key(char *str, t_var *var, t_data *data)
 {
-	(void)str;
 	if (var)
 		free(var);
-	if (!data->tmp_path && !data->tmp_is_builtin)
+	if (!data->tmp_cmd)
 	{
+		clean_free(&str);
 		if (data->argv && *data->argv)
 			free_double_str(*data->argv);
 	}
@@ -73,7 +73,5 @@ void	exit_error_env_key(char *str, t_var *var, t_data *data)
 		close(STDERR_FILENO);
 		exit_error_child(NULL, NULL, "malloc()", data);
 	}
-	if (!data->tmp_is_builtin)
-		exit_error_str(str, "malloc()", data); // leaks
 	exit_error_str(NULL, "malloc()", data);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:03:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/06 18:24:25 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/14 13:52:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	update_env_pwd(t_data *data, char *pwd, char *oldpwd)
 {
 	if (!get_env("OLDPWD", data->env))
 	{
-		add_var(&data->env, new_var("OLDPWD", oldpwd, 1));
-		add_var(&data->export, new_var("OLDPWD", oldpwd, 1));
+		add_var(&data->env, new_var("OLDPWD", oldpwd, 1, data));
+		add_var(&data->export, new_var("OLDPWD", oldpwd, 1, data));
 	}
 	if (oldpwd)
 	{

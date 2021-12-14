@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:18:41 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 20:10:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:36:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_data
 	char	**pid_str;
 	char	**ret_str;
 	char	*tmp_path;
-	t_bool	tmp_is_builtin;
+	char	*tmp_cmd;
 }	t_data;
 
 typedef t_bool	t_op(t_cmd *cmd_list, t_data *data);

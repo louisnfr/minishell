@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:02:55 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 19:40:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:36:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 		return ;
 	}
 	data->tmp_path = (*cmd_list)->path;
-	data->tmp_is_builtin = (*cmd_list)->is_builtin;
+	data->tmp_cmd = (*cmd_list)->command;
 	(*cmd_list)->command = transform_cmd_reparse(
 			(*cmd_list)->command, data);
 	if ((*cmd_list)->command)
@@ -51,7 +51,7 @@ void	recheck_cmd_path(t_cmd **cmd_list, t_data *data)
 	if (!(*cmd_list)->command || !(*cmd_list)->command[0])
 		clean_free(&(*cmd_list)->path);
 	data->tmp_path = NULL;
-	data->tmp_is_builtin = FALSE;
+	data->tmp_cmd = NULL;
 }
 
 void	check_expansion_var(char *command, t_data *data)

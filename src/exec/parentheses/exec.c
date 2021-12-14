@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:36:40 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:52:29 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:02:13 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_parentheses(int last_exit_code, t_cmd **cmd_list, t_data *data)
 		return (1);
 	pid = fork();
 	if (pid < 0)
-		exit_error_str(NULL, "fork()", data); // no leaks mais chelou (ls)
+		exit_error_str(NULL, "fork()", data);
 	if (pid == CHILD)
 		exec_cmd_parenthese(cmd_list, data);
 	close_fd_parentheses(cmd_list, data);

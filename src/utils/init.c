@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:31:57 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:10:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:20:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	init_var_data(t_data *data)
 	data->pid_str = NULL;
 	data->ret_str = NULL;
 	data->tmp_path = NULL;
-	data->tmp_is_builtin = FALSE;
+	data->tmp_cmd = NULL;
 }
 
 t_data	*init_data(char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:29 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 15:16:33 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/14 13:51:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	append_var_env(t_data *data, t_cmd *cmd_list, int i)
 	var = safe_split_on_first(cmd_list->args[i], '=', data);
 	var[0] = ft_strtrim(var[0], "+");
 	if (!already_exists(var[0], data->env))
-		add_var(&data->env, new_var(var[0], var[1], 1));
+		add_var(&data->env, new_var(var[0], var[1], 1, data));
 	else
 		append_env(var[0], var[1], data->env, data);
 	if (!already_exists(var[0], data->export))
-		add_var(&data->export, new_var(var[0], var[1], 1));
+		add_var(&data->export, new_var(var[0], var[1], 1, data));
 	else
 		append_env(var[0], var[1], data->export, data);
 	free_split(var);
@@ -89,11 +89,11 @@ void	add_var_env(t_data *data, t_cmd *cmd_list, int i)
 	var = safe_split_on_first(cmd_list->args[i], '=', data);
 	var[0] = ft_strtrim(var[0], "+");
 	if (!already_exists(var[0], data->env))
-		add_var(&data->env, new_var(var[0], var[1], 1));
+		add_var(&data->env, new_var(var[0], var[1], 1, data));
 	else
 		set_env(var[0], var[1], data->env, data);
 	if (!already_exists(var[0], data->export))
-		add_var(&data->export, new_var(var[0], var[1], 1));
+		add_var(&data->export, new_var(var[0], var[1], 1, data));
 	else
 		set_env(var[0], var[1], data->export, data);
 	free_split(var);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:27:04 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/07 19:12:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:52:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ t_bool	exec_export(t_cmd *cmd_list, t_data *data)
 				ft_strlen(cmd_list->args[i])))
 		{
 			if (!already_exists(cmd_list->args[i], data->export))
-				add_var(&data->export, new_var(cmd_list->args[i], "\0", 0));
+				add_var(
+					&data->export, new_var(cmd_list->args[i], "\0", 0, data));
 		}
 		else
 			export_var(data, cmd_list, append, i);

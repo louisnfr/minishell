@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:13 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 15:16:16 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/14 13:52:05 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_env	*dup_env_export(char **envp, t_data *data)
 			free_split(var);
 			continue ;
 		}
-		add_var(&g_env, new_var(var[0], var[1], 1));
+		add_var(&g_env, new_var(var[0], var[1], 1, data));
 		free_split(var);
 	}
 	return (g_env);
@@ -68,7 +68,7 @@ static t_env	*dup_env(char **envp, t_data *data)
 	while (envp[++i])
 	{
 		var = safe_split_on_first(envp[i], '=', data);
-		add_var(&g_env, new_var(var[0], var[1], 1));
+		add_var(&g_env, new_var(var[0], var[1], 1, data));
 		free_split(var);
 	}
 	return (g_env);

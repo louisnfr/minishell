@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:26:54 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 23:32:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:36:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void	re_init_data_var(t_data *data)
 	data->pid_str = NULL;
 	data->ret_str = NULL;
 	data->tmp_path = NULL;
-	data->tmp_is_builtin = FALSE;
+	data->tmp_cmd = NULL;
 }

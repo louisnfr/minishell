@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:32:15 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 13:31:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:41:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	main(int ac, char **av, char **envp)
 		setup_prompt(&input, data);
 		if (input && ft_strlen(input) > 0 && check_raw_input(input))
 		{
-			add_cmd(&data->sh->history, new_cmd(input, data->sh->h_num));
+			add_cmd(&data->sh->history, new_cmd(
+					input, data->sh->h_num, input, data));
 			init_cmd_list(data, input);
 			if (parse(input, data))
 				exec(data);

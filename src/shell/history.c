@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 09:09:55 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/12 17:41:21 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/14 14:04:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_hist	*new_cmd(char *cmd, int num)
+t_hist	*new_cmd(char *cmd, int num, char *input, t_data *data)
 {
 	t_hist	*ncmd;
 
@@ -23,7 +23,14 @@ t_hist	*new_cmd(char *cmd, int num)
 	ncmd->cmd = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(cmd) + 1));
 	ncmd->new = (char *)ft_calloc(1, sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!ncmd->cmd || !ncmd->new)
-		return (NULL); //exit
+	{
+		if (ncmd->cmd)
+			free(ncmd->cmd);
+		free(ncmd);
+		exit_error_str(input, "data()", data);
+	}
+	// if (!ncmd->cmd || !ncmd->new)
+		// return (NULL); // exit
 	ft_strcpy(ncmd->cmd, cmd);
 	ft_strcpy(ncmd->new, cmd);
 	ncmd->next = NULL;

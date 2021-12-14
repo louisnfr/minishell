@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 12:00:02 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 20:52:11 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:39:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,23 @@ t_bool	safe_close_fd(int fd, pid_t *pid, t_data *data)
 	return (SUCCESS);
 }
 
-char	**safe_double_strdup(char **str, int size, t_data *data)
+void	exit_error_double_strdup(
+	char **str, int size, t_cmd *cmd_list, t_data *data)
+{
+	free_args(size, str);
+	cmd_list->args = NULL;
+	if (cmd_list->path)
+	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
+		exit_error_child(NULL, NULL, "malloc()", data);
+	}
+	exit_error_strs(NULL, "malloc()", data);
+}
+
+char	**safe_double_strdup(
+	char **str, int size, t_cmd *cmd_list, t_data *data)
 {
 	char	**new_str;
 	int		i;
@@ -54,7 +70,7 @@ char	**safe_double_strdup(char **str, int size, t_data *data)
 		return (NULL);
 	new_str = (char **)ft_calloc(1, sizeof(char *) * (size + 1));
 	if (!new_str)
-		exit_error_strs(NULL, "malloc()", data); // leaks
+		exit_error_double_strdup(str, size, cmd_list, data);
 	i = -1;
 	while (str && ++i < size)
 	{

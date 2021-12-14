@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 13:37:00 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 23:42:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:33:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ char	*safe_strjoin_and_free2(char *s1, char *s2, t_data *data, char **strs);
 char	*safe_itoa(int n, t_data *data);
 char	*safe_substr(char *str, int start, int len, t_data *data);
 t_bool	safe_close_fd(int fd, pid_t *pid, t_data *data);
-char	**safe_double_strdup(char **str, int size, t_data *data);
+char	**safe_double_strdup(
+			char **str, int size, t_cmd *cmd_list, t_data *data);
 char	*safe_getcwd(t_data *data);
 
 /*** exec ***/

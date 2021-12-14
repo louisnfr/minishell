@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 20:34:44 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/13 18:05:03 by lraffin          ###   ########.fr       */
+/*   Updated: 2021/12/14 12:06:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	update_history(t_data *data, t_confg *sh, t_hist *hist, char *input)
 	}
 	clean_free(&hist->new);
 	hist->new = ft_calloc(1, sizeof(char) * (ft_strlen(input)));
-	if (hist->new)
+	if (!hist->new)
 	{
 		closedir(sh->directory);
 		exit_error_str(NULL, "malloc()", data);

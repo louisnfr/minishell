@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:47:26 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/13 23:32:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:35:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	delete_void_args(
 		return ;
 	if (!new_nb_of_args)
 		return (clean_free_double_str(nb_of_args, &cmd_list));
-	args = safe_double_strdup(cmd_list->args, nb_of_args, data);
+	args = safe_double_strdup(cmd_list->args, nb_of_args, cmd_list, data);
 	clean_free_double_str(nb_of_args, &cmd_list);
 	cmd_list->args = (char **)ft_calloc(
 			1, sizeof(char *) * (new_nb_of_args + 1));
@@ -102,7 +102,7 @@ char	*transform_str(char *str, t_cmd *cmd_list, t_data *data)
 	data->pid_str = &pid_value;
 	data->ret_str = &ret_value;
 	data->tmp_path = cmd_list->path;
-	data->tmp_is_builtin = cmd_list->is_builtin;
+	data->tmp_cmd = cmd_list->command;
 	str = parse_env_variable(ret_value, pid_value, str, data);
 	if (str)
 	{
