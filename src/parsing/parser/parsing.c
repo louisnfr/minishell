@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 14:48:29 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/14 10:36:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:20:42 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	parse_end_cmd(
 		{
 			parse_redirections(argv, cmd_list, data);
 			clean_redir(data);
-			if (argv[data->i] && argv[data->i][0] == '-')
+			if (argv[data->i] && argv[data->i][0] == '-'
+					&& !(*cmd_list)->is_builtin)
 				(*cmd_list)->options = find_cmd_options_end(argv, data);
 			if (argv[data->i] && !is_delimiter(argv[data->i]))
 				(*cmd_list)->args = find_cmd_args_end(
