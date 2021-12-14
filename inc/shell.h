@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 12:17:46 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/14 13:40:51 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:54:03 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*heredoc_special_value(
 
 /*** lists ***/
 
-t_hist	*new_cmd(char *cmd, int num, char *input, t_data *s_data);
+t_hist	*new_cmd(char *input, int num, t_data *s_data);
 t_hist	*getlast(t_hist *hist);
 void	add_cmd(t_hist **hist, t_hist *new);
 char	*find_cmd_history(t_hist *hist, int h_num);

@@ -36,4 +36,4 @@ cat Makefile | grep pr | head -n 5 | cd file_not_exit
 cat Makefile | grep pr | head -n 5 | hello
 ls | exit
 sleep 1 | exit
-echo test > a ; >>b echo hehehe ; cat a | <b cat | cat > c | cat ; rm a b c./
+echo test > a ; >>b echo hehehe ; cat a | <b cat | cat > c | cat ; rm a b c test

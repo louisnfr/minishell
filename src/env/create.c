@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:47:13 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/14 13:52:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:56:35 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static t_env	*dup_env_export(char **envp, t_data *data)
 static t_env	*dup_env(char **envp, t_data *data)
 {
 	t_env	*g_env;
+	t_env	*nvar;
 	char	**var;
 	int		i;
 
@@ -68,7 +69,10 @@ static t_env	*dup_env(char **envp, t_data *data)
 	while (envp[++i])
 	{
 		var = safe_split_on_first(envp[i], '=', data);
-		add_var(&g_env, new_var(var[0], var[1], 1, data));
+		nvar = new_var(var[0], var[1], 1, data);
+		if (!nvar)
+			exit_error_strs(var, "malloc()", data);
+		add_var(&g_env, nvar);
 		free_split(var);
 	}
 	return (g_env);

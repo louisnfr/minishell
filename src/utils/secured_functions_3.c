@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   secured_functions_3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:50:07 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/14 14:02:52 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:38:23 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*safe_strjoin_and_free2(char *s1, char *s2, t_data *data, char **strs)
 	if (!s1 && !s2)
 		return (NULL);
 	new_str = ft_strjoin_and_free(s1, s2);
-	if (new_str)
+	if (!new_str)
 	{
 		i = 0;
 		while (strs[++i])

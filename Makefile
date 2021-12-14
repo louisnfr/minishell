@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 04:32:29 by lraffin           #+#    #+#              #
-#    Updated: 2021/12/13 23:51:00 by efrancon         ###   ########.fr        #
+#    Updated: 2021/12/14 15:01:28 by lraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,7 +140,7 @@ SOURCES = \
 
 ### COMPILATION ###
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g3 -I$(INCLUDE) #$(DEBUG_F)
+CFLAGS	= -Wall -Wextra -Werror -MMD -MP -I$(INCLUDE)
 DEBUG_F	= -g3 -fsanitize=address
 LIBS	= -lft -lncurses -lreadline
 

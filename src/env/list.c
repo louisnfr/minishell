@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lraffin <lraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 22:56:25 by lraffin           #+#    #+#             */
-/*   Updated: 2021/12/14 14:00:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/14 14:58:53 by lraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ t_env	*new_var(char *key, char *value, int is_value, t_data *data)
 {
 	t_env	*var;
 
+	(void)data;
 	var = (t_env *)ft_calloc(1, sizeof(t_env));
 	if (!var)
 		return (NULL);
 	var->key = (char *)ft_calloc(1, sizeof(char) + (ft_strlen(key) + 1));
 	var->value = (char *)ft_calloc(1, sizeof(char) + (ft_strlen(value) + 1));
-	// if (!var->key || !var->value)
 	if (!var->key || !var->value)
-		exit_error_str(value, "malloc()", data);
-		// return (NULL); // exit ?
+	{
+		free_env(var);
+		return (NULL);
+	}
 	ft_memcpy(var->key, key, ft_strlen(key) + 1);
 	ft_memcpy(var->value, value, ft_strlen(value) + 1);
 	var->is_value = is_value;
