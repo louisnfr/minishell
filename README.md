@@ -1,6 +1,6 @@
 # minishell
 
-[![jaeskim's 42Project Score](https://badge42.herokuapp.com/api/project/lraffin/minishell)](https://github.com/JaeSeoKim/badge42)
+[![lraffin's 42 minishell Score](https://badge42.vercel.app/api/v2/cl1i27ilm001109l1ep0jx30g/project/2357162)](https://github.com/JaeSeoKim/badge42)
 
 42Paris, October 2021.
 
